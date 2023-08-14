@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label>Confirm Passcode</label>
                 <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
-                  <input class="form-control" name="login[password]" [type]="show ? 'text' : 'password'" required="" placeholder="Enter your passcode" formControlName="confirm-passcode">
+                  <input class="form-control" name="login[password]" [type]="show ? 'text' : 'password'" required="" placeholder="Enter your passcode" formControlName="confirmPasscode">
                   <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
                   <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
                 </div>
