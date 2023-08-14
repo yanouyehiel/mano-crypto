@@ -1,0 +1,58 @@
+/* ---------------------
+	*** Theme Scss ***
+-----------------------*/
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "node_modules/ngx-bar-rating/themes/br-horizontal-theme";
+@import "node_modules/ngx-bar-rating/themes/br-vertical-theme";
+@import "node_modules/ngx-bar-rating/themes/br-default-theme";
+@import "node_modules/ngx-bar-rating/themes/br-stars-theme";
+@import "node_modules/ngx-bar-rating/themes/br-movie-theme";
+@import "node_modules/ngx-bar-rating/themes/br-square-theme";
+
+@import "./todo.scss";
+
+// calendar
+@import "node_modules/angular-calendar/css/angular-calendar.css";
+
+// @import "~flatpickr/dist/flatpickr.css";
+
+// @import "~ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "/node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss";
+// @import "~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+@import "/node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+
+@import "node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss";
+@import "node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss";
+
+/* Scrollbar */
+@import "node_modules/perfect-scrollbar/css/perfect-scrollbar.css";
+
+// /* Dragula */
+// @import "/node_modules/dragula/dist/dragula.css";
+
+// /* Toastr */
+@import "/node_modules/ngx-toastr/toastr";
+
+// tree view
+@import "/node_modules/@circlon/angular-tree-component/css/angular-tree-component.css";
+
+
+/* Leaflet Map */
+@import "~leaflet/dist/leaflet.css";
+
+// angular-archwizard user forms
+// @import "../node_modules/angular-archwizard/styles/archwizard.css";
+
+@import "node_modules/@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
+
+@import "chartist/chartist-settings";
+@import "chartist/chartist";
+@import "style";
+
+@import "./fontawesome.scss";
+// @import "./feather-icon.scss";
+@import "./icofont.scss";
+@import "./themify.scss";
+@import "./whether-icon.scss";
+@import "animate.scss";
