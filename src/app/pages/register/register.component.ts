@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms"
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/User';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -17,11 +18,13 @@ export class RegisterComponent {
   public user!: User;
 
   constructor(private fb: FormBuilder, public router: Router) {
+    
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.email],
-      passcode: ['', Validators.required],
-      confirmPasscode: ['', Validators.required]
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      phoneNumber: ['', Validators.required]
     })
   }
 
@@ -29,7 +32,18 @@ export class RegisterComponent {
     this.show = !this.show;
   }
 
-  register() {
-    console.log(this.registerForm.value)
+  register(): void {
+    //this.authService.register(this.registerForm.value);
+    //this.router.navigate(['/pages/login'])
+    if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
+      this.user = {
+        name: this.registerForm.controls['name'].value,
+        email: this.registerForm.controls['email'].value,
+        password: this.registerForm.controls['password'].value,
+        phoneNumber: this.registerForm.controls['phoneNumber'].value
+      }
+
+      console.log(this.user)
+    }
   }
 }

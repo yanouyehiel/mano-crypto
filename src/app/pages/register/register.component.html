@@ -12,7 +12,7 @@
               <input
                 class="form-control"
                 type="text"
-                required
+                required=""
                 placeholder="Enter your name"
                 formControlName="name"
               />
@@ -25,7 +25,7 @@
               <input
                 class="form-control"
                 type="email"
-                required
+                required=""
                 placeholder="Enter your email address or username"
                 formControlName="email"
               />
@@ -37,11 +37,11 @@
               <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
               <input
                 class="form-control"
-                name="login[password]"
+                name="password"
                 [type]="show ? 'text' : 'password'"
                 required=""
                 placeholder="Enter your passcode"
-                formControlName="passcode"
+                formControlName="password"
               />
               <div class="show-hide" (click)="showPassword()" *ngIf="!show">
                 <span class="show text-primary"></span>
@@ -57,11 +57,11 @@
               <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
               <input
                 class="form-control"
-                name="login[password]"
+                name="confirmPassword"
                 [type]="show ? 'text' : 'password'"
                 required=""
                 placeholder="Enter your passcode"
-                formControlName="confirmPasscode"
+                formControlName="confirmPassword"
               />
               <div class="show-hide" (click)="showPassword()" *ngIf="!show">
                 <span class="show text-primary"></span>
@@ -69,6 +69,32 @@
               <div class="show-hide" (click)="showPassword()" *ngIf="show">
                 <span class="Hide text-primary"></span>
               </div>
+            </div>
+            <div
+              *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value != registerForm.controls['confirmPassword'].value)"
+              class="text text-danger mt-1"
+            >
+              Passcodes did not match
+            </div>
+            <div
+              *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value.length < 8 || registerForm.controls['confirmPassword'].value.length < 8)"
+              class="text text-danger mt-1"
+            >
+            Passcodes length must have more 8 caracters
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="icon-phone text-primary"></i></span>
+              <input
+                class="form-control"
+                type="tel"
+                required=""
+                name="phoneNumber"
+                placeholder="Enter your phone number"
+                formControlName="phoneNumber"
+              />
             </div>
           </div>
           <div class="form-group">
@@ -82,7 +108,7 @@
           </div>
           <div class="form-group">
             <button
-              class="btn btn-primary btn-block"
+              class="btn btn-primary"
               type="submit"
               [disabled]="!registerForm.valid"
               (click)="register()"

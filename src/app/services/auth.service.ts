@@ -12,13 +12,16 @@ export class AuthService {
   private config = {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      "json" :"application/json"
     }
   };
 
   constructor(private httpClient: HttpClient) { }
 
   register(user: any) {
-    return user;
+    this.httpClient.post(`${this.url}/auth/register`, user, this.config).subscribe(res => {
+      console.log(res)
+    });
   }
 }
