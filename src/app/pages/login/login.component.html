@@ -1,50 +1,82 @@
 <div class="container-fluid p-0">
-    <div class="row">
-      <div class="col-12">
-        <div class="login-card">
-          <form class="theme-form login-form" [formGroup]="loginForm">
-            <h4>Sign-In</h4>
-            <h6>Access the Dashlite panel using yout email and Passcode</h6>
-            <div class="form-group">
-              <label>Email Address</label>
-              <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
-               <input class="form-control" type="email" placeholder="Enter yout email address or username" formControlName="email">
-                <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']"
-                   class="text text-danger mt-1">
-                   Email is required
-               </div>
-               <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']"
-                   class="text text-danger mt-1">
-                   Invalid Email
-               </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="login-card">
+        <form class="theme-form login-form" [formGroup]="loginForm">
+          <h4>Sign-In</h4>
+          <h6>Access the Dashlite panel using yout email and Passcode</h6>
+          <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="icon-email text-primary"></i></span>
+              <input
+                class="form-control"
+                type="email"
+                placeholder="Enter yout email address or username"
+                formControlName="email"
+              />
+              <div
+                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']"
+                class="text text-danger mt-1"
+              >
+                Email is required
+              </div>
+              <div
+                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']"
+                class="text text-danger mt-1"
+              >
+                Invalid Email
               </div>
             </div>
-            <div class="form-group">
-              <label>Password</label>
-              <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
-               <input class="form-control" [type]="show ? 'text' : 'password'" name="login[password]" required="" placeholder="Enter your passcode">
-               <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
-                 <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
-                 <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
-                       class="text text-danger mt-1">
-                       Password is required
-                 </div>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
+              <input
+                class="form-control"
+                [type]="show ? 'text' : 'password'"
+                name="login[password]"
+                required=""
+                placeholder="Enter your passcode"
+              />
+              <div class="show-hide" (click)="showPassword()" *ngIf="!show">
+                <span class="show text-primary"></span>
+              </div>
+              <div class="show-hide" (click)="showPassword()" *ngIf="show">
+                <span class="Hide text-primary"></span>
+              </div>
+              <div
+                *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
+                class="text text-danger mt-1"
+              >
+                Password is required
               </div>
             </div>
-            <div class="form-group">
-              <div class="checkbox ms-1">
-                <input id="checkbox1" type="checkbox">
-                <label for="checkbox1">Remember password</label>
-              </div><a class="link" href="/authentication/forgot-password" [routerLink]="'/authentication/forgot-password'">Forgot password?</a>
+          </div>
+          <div class="form-group">
+            <div class="checkbox ms-1">
+              <input id="checkbox1" type="checkbox" />
+              <label for="checkbox1">Remember password</label>
             </div>
-            <div class="form-group">
-             <button class="btn btn-primary btn-block"
-                [disabled]="!loginForm.valid"
-                (click)="login()"
-                type="button">Sign In
-           </button>
-           </div>
-            <!-- <div class="login-social-title">                
+            <a
+              class="link text-primary"
+              href="/authentication/forgot-password"
+              [routerLink]="'/authentication/forgot-password'"
+              >Forgot password?</a
+            >
+          </div>
+          <div class="form-group">
+            <button
+              class="btn btn-primary btn-block"
+              [disabled]="!loginForm.valid"
+              (click)="login()"
+              type="button"
+            >
+              Sign In
+            </button>
+          </div>
+          <!-- <div class="login-social-title">
               <h5>Sign in with</h5>
             </div>
             <div class="form-group">
@@ -55,8 +87,13 @@
                <li><a href="https://www.instagram.com" target="_blank"><app-feather-icons [icon]="'instagram'"></app-feather-icons></a></li>
               </ul>
             </div> -->
-            <p>New on our platform ?<a class="ms-2" href="/pages/register">Create an account</a></p>
-          </form>
-        </div>
+          <p>
+            New on our platform ?<a class="ms-2 text-primary" href="/pages/register"
+              >Create an account</a
+            >
+          </p>
+        </form>
+      </div>
     </div>
-  </div> 
+  </div>
+</div>

@@ -218,14 +218,14 @@ aw-wizard-navigation-bar{
 .mat-toolbar.mat-primary{
   background-color: $primary-color;
 }
-.mat-flat-button.mat-primary, 
-.mat-raised-button.mat-primary, 
-.mat-fab.mat-primary, 
+.mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
 .mat-mini-fab.mat-primary{
   background-color: $primary-color;
 }
-.mat-button.mat-primary, 
-.mat-icon-button.mat-primary, 
+.mat-button.mat-primary,
+.mat-icon-button.mat-primary,
 .mat-stroked-button.mat-primary{
   color: $primary-color;
 }
@@ -239,7 +239,7 @@ aw-wizard-navigation-bar{
   .owl-dt-calendar-cell-selected{
     background-color: $primary-color;
   }
-} 
+}
 fieldset {
   .bootstrap-touchspin-postfix,
   .bootstrap-touchspin-prefix {
@@ -290,7 +290,7 @@ ngb-typeahead-window{
       color: $primary-color;
     }
   }
-} 
+}
 .br-square{
   .br-unit-inner{
     border: 2px solid $primary-color;
@@ -358,7 +358,7 @@ ngb-datepicker-navigation-select{
   .ng-clear-wrapper{
     height: 17px;
   }
-} 
+}
 .calendar-event {
   tbody {
     tr {
@@ -378,7 +378,7 @@ ngb-datepicker-navigation-select{
   .cal-day-badge{
     background-color: $primary-color;
   }
-} 
+}
 .swal2-actions{
   button{
     + button{

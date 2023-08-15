@@ -18,7 +18,7 @@ export class BackendInterceptor implements HttpInterceptor {
     constructor() {}
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-        
+
         if (request.headers.has(SkipInterceptor)) {
             const headers: HttpHeaders = request.headers.delete(SkipInterceptor);
             return next.handle(request.clone({headers}));
