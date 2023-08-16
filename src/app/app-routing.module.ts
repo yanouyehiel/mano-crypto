@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { DashbordUserComponent } from './pages/dashbord-user/dashbord-user.component';
+import { ValidationComponent } from './pages/validation/validation.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     path: 'pages/dashbord',
     component: DashbordUserComponent
+  },
+  {
+    path: 'pages/validation-compte',
+    component: ValidationComponent
+  },
+  {
+    path: 'pages/forgot-password',
+    component: ForgotPasswordComponent
   }
 ];
 
