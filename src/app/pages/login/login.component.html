@@ -6,7 +6,7 @@
           <h4>Sign-In</h4>
           <h6>Access the Dashlite panel using yout email and Passcode</h6>
           <div class="form-group">
-            <label>Email Address</label>
+            <label>Email or Username</label>
             <div class="input-group">
               <span class="input-group-text"><i class="icon-email text-primary"></i></span>
               <input
@@ -39,6 +39,7 @@
                 name="login[password]"
                 required=""
                 placeholder="Enter your passcode"
+                formControlName="password"
               />
               <div class="show-hide" (click)="showPassword()" *ngIf="!show">
                 <span class="show text-primary"></span>
@@ -52,13 +53,15 @@
               >
                 Password is required
               </div>
+              <div
+                *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].value.length < 8"
+                class="text text-danger mt-1"
+              >
+                Passcodes length must have more 8 caracters
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <div class="checkbox ms-1">
-              <input id="checkbox1" type="checkbox" />
-              <label for="checkbox1">Remember password</label>
-            </div>
+          <div class="form-group" style="margin-bottom: 20px;">
             <a
               class="link text-primary"
               href="/pages/forgot-password"
@@ -66,27 +69,23 @@
               >Forgot password?</a
             >
           </div>
+
+          <ngx-recaptcha2 #captchaElem
+            [siteKey]="siteKey"
+            formControlName="recaptcha">
+          </ngx-recaptcha2><br>
+
           <div class="form-group">
             <button
               class="btn btn-primary btn-block"
               [disabled]="!loginForm.valid"
               (click)="login()"
-              type="button"
+              type="submit"
             >
               Sign In
             </button>
           </div>
-          <!-- <div class="login-social-title">
-              <h5>Sign in with</h5>
-            </div>
-            <div class="form-group">
-              <ul class="login-social">
-               <li><a href="https://www.linkedin.com" target="_blank"><app-feather-icons [icon]="'linkedin'"></app-feather-icons></a></li>
-               <li><a href="https://twitter.com" target="_blank"><app-feather-icons [icon]="'twitter'"></app-feather-icons></a></li>
-               <li><a href="https://www.facebook.com" target="_blank"><app-feather-icons [icon]="'facebook'"></app-feather-icons></a></li>
-               <li><a href="https://www.instagram.com" target="_blank"><app-feather-icons [icon]="'instagram'"></app-feather-icons></a></li>
-              </ul>
-            </div> -->
+          
           <p>
             New on our platform ?<a class="ms-2 text-primary" href="/pages/register"
               >Create an account</a

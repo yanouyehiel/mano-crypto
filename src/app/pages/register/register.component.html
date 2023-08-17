@@ -1,4 +1,5 @@
 <div class="container-fluid p-0">
+  
   <div class="row m-0">
     <div class="col-12 p-0">
       <div class="login-card">
@@ -106,9 +107,15 @@
               >
             </div>
           </div>
+
+          <ngx-recaptcha2 #captchaElem
+            [siteKey]="siteKey"
+            formControlName="recaptcha">
+          </ngx-recaptcha2><br>
+
           <div class="form-group">
             <button
-              class="btn btn-primary"
+              class="btn btn-primary btn-block"
               type="submit"
               [disabled]="!registerForm.valid"
               (click)="register()"
@@ -116,20 +123,31 @@
               Register
             </button>
           </div>
-          <!-- <div class="form-group">
-              <ul class="login-social">
-                <li><a href="https://www.linkedin.com" target="_blank"><app-feather-icons [icon]="'linkedin'"></app-feather-icons></a></li>
-               <li><a href="https://twitter.com" target="_blank"><app-feather-icons [icon]="'twitter'"></app-feather-icons></a></li>
-               <li><a href="https://www.facebook.com" target="_blank"><app-feather-icons [icon]="'facebook'"></app-feather-icons></a></li>
-               <li><a href="https://www.instagram.com" target="_blank"><app-feather-icons [icon]="'instagram'"></app-feather-icons></a></li>
-              </ul>
-            </div> -->
+          
           <p>
             Already have an account?<a class="ms-2 text-primary" href="/pages/login"
               >Sign in instead</a
             >
           </p>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Component modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mail Confirmation</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Confirm your Account Using the sended Link in you Email Account</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeModal()" data-bs-dismiss="modal">Ok</button>
+        </div>
       </div>
     </div>
   </div>

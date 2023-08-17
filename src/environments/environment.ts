@@ -1,5 +1,5 @@
-const urlApi = "";
-const authUrl = ""
+const urlApi = "http://62.72.19.95:3000/api";
+const authUrl = "/auth"
 const tokenVerifyUrl = ""
 
 export const environment = {
@@ -14,5 +14,7 @@ export const environment = {
   writableKeys: {
     consumer_key: '',
     consumer_secret: ''
-  }
+  },
+  recaptchaSiteKey: '6LeQh7InAAAAAHTJs6MPQfoEZsTwQOiKotCDmGUQ',
+  recaptchaSecretKey: '6LeQh7InAAAAADZjFe80ilOhWRdEVQ_cVKrZcx5e'
 };

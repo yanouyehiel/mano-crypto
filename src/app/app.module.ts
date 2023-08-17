@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashbordUserComponent } from './pages/dashbord-user/dashbord-user.component';
 import { ValidationComponent } from './pages/validation/validation.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { NgxCaptchaModule } from 'ngx-captcha'
 
 @NgModule({
   declarations: [
@@ -17,13 +19,15 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     RegisterComponent,
     DashbordUserComponent,
     ValidationComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    NgxCaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
