@@ -1,4 +1,4 @@
-const urlApi = "http://62.72.19.95:3000/api";
+const urlApi = "http://62.72.19.95/api";
 const authUrl = "/auth"
 const tokenVerifyUrl = ""
 

@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       recaptcha: ['', Validators.required]
     })
   }
-
+  
   showPassword() {
     this.show = !this.show;
   }

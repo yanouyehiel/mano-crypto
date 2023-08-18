@@ -11,6 +11,7 @@ import { ValidationComponent } from './pages/validation/validation.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { NgxCaptchaModule } from 'ngx-captcha'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NgxCaptchaModule } from 'ngx-captcha'
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule, 
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

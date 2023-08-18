@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/User';
-import { Observable } from 'rxjs';
+import { ResponseUser, User } from 'src/app/models/User';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,12 +13,18 @@ import { environment } from 'src/environments/environment';
 export class RegisterComponent implements OnInit {
   public show: boolean = false;
   public registerForm!: FormGroup;
-  public errorMessage: any;
   public user!: User;
-  showDialog: boolean = false;
+  public showDialog: boolean = false;
   public siteKey: string = environment.recaptchaSiteKey
+  public returnedValue: ResponseUser = {
+    statusCode: 0,
+    message: '',
+    data: {
+      token: ''
+    }
+  }
 
-  constructor(private fb: FormBuilder, public router: Router) {}
+  constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -37,9 +41,8 @@ export class RegisterComponent implements OnInit {
     this.show = !this.show;
   }
 
-
-  openModal() {
-    const modalDiv = document.getElementById('myModal');
+  openModal(id: string) {
+    const modalDiv = document.getElementById(id);
     
     if (modalDiv != null) {
       modalDiv.style.display = 'block';
@@ -58,20 +61,32 @@ export class RegisterComponent implements OnInit {
 
 
   register(): void {
-    try {
-      if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
-        this.user = {
-          name: this.registerForm.controls['name'].value,
-          email: this.registerForm.controls['email'].value,
-          password: this.registerForm.controls['password'].value,
-          phoneNumber: this.registerForm.controls['phoneNumber'].value
-        }
-        //this.authService.register(this.user);
-        this.openModal()
-        console.log(this.user)
+    if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
+      this.user = {
+        name: this.registerForm.controls['name'].value,
+        email: this.registerForm.controls['email'].value,
+        password: this.registerForm.controls['password'].value,
+        phoneNumber: this.registerForm.controls['phoneNumber'].value
       }
+    }
+    console.log(this.user)
+    try {
+      this.authService.register(this.user).subscribe((response: ResponseUser) => {
+        console.log(response)
+
+        this.returnedValue = {
+          statusCode: response.statusCode,
+          message: response.message,
+          data: {
+            token: response.data?.token
+          }
+        }
+        console.log(this.returnedValue);      
+      });
+
+      this.openModal('myModal')
     } catch (error) {
-      
+      console.log(error)
     }
     
   }

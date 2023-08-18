@@ -5,3 +5,11 @@ export interface User {
     password: string;
     phoneNumber: string;
 }
+
+export interface ResponseUser {
+    statusCode: number;
+    message: string;
+    data?: {
+        token: any;
+    }
+}
