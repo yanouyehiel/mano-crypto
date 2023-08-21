@@ -1,6 +1,14 @@
 <div class="container-fluid p-0">
+  <!-- <div class="row">
+    <div class="col-12">
+      <img class="img-logo" src="../../../assets/images/logo.png" alt="logo">
+    </div>
+  </div> -->
   <div class="row">
     <div class="col-12">
+      <div class="logo-card">
+        <img class="img-logo" src="../../../assets/images/logo.png" alt="logo">
+      </div>
       <div class="login-card">
         <form class="theme-form login-form" [formGroup]="loginForm">
           <h4>Sign-In</h4>
@@ -68,7 +76,7 @@
               [routerLink]="'/pages/forgot-password'"
               >Forgot password?</a
             >
-          </div>
+          </div><br><br>
 
           <ngx-recaptcha2 #captchaElem
             [siteKey]="siteKey"

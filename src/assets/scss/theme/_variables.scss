@@ -4,13 +4,13 @@ $theme-body-font-color: #242934;
 $theme-body-sub-title-color: rgba($theme-body-font-color, 0.7);
 
 // Theme colors variables
-$primary-color: #2956e7;
-$secondary-color:#ba895d;
-$success-color: #1b4c43;
+$primary-color: #0F74F6;
+$secondary-color:#0295D4;
+$success-color: #43DF97;
 $warning-color: #e2c636;
 $danger-color: #d22d3d;
-$light-color : #f4f4f4;
-$light-gray  : #e6edef;
+$light-color : #FEFEFE;
+$light-gray  : #F4FCFB;
 $light-semi-gray   :#efefef;
 $dark-light :$theme-font-color;
 $dark-gray 	: #898989;
@@ -24,11 +24,11 @@ $semi-dark  :#59667a;
 $light-text: #999;
 $light-background: #f5f7fb;
 $light-font: #717171;
-$light-bg: #f6f6f6;
+$light-bg: #FEFEFE;
 $light-semi-font: $semi-dark;
 $light-chartist-grid-color: #f6f9fd;
 $off-white: #ffebce;
-$dark-primary: #448aff;
+$dark-primary: #307CDB;
 $pitch-color: #fe8a7d;
 $light-pitch: #fecf8b;
 $flower-pink: #fb6d9d;
@@ -38,14 +38,14 @@ $color-fiord: #455a64;
 $dark-blue: #00008B;
 $black : #000;
 $white:#fff;
-$yellow:#f4c705;
+$yellow:#E3E513;
 $btn-bhome-bg-c:#ff6060;
 $btn-search-bg-c:#ffd042;
 $btn-opacity-down-primary:#F7F0FF;
 // error page color end
 
 // gradient colors
-$gradient-primary: linear-gradient(#1693f8, #0d67e9);
+$gradient-primary: linear-gradient(#0295D4, #0F74F6);
 
 //social colors
 $fb: #50598e;
@@ -54,7 +54,7 @@ $google-plus: #c64e40;
 $linkedin: #0077B5;
 
 //error input color start
-$light-body-bg-color:#fafdff;
+$light-body-bg-color:#FEFEFE;
 
 //fonts
 $font-montserrat:'Montserrat', sans-serif;

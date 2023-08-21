@@ -12,6 +12,10 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { DialogComponent } from './components/dialog/dialog.component';
 import { NgxCaptchaModule } from 'ngx-captcha'
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
+import { FeatherIconsComponent } from './components/feather-icons/feather-icons.component';
+import { ModeComponent } from './components/mode/mode.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { HttpClientModule } from '@angular/common/http';
     DashbordUserComponent,
     ValidationComponent,
     ForgotPasswordComponent,
-    DialogComponent
+    DialogComponent,
+    HeaderComponent,
+    FeatherIconsComponent,
+    ModeComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

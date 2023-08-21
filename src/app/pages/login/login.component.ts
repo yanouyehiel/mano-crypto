@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
+import { ResponseUser } from 'src/app/models/User';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +16,20 @@ export class LoginComponent implements OnInit {
   public errorMessage: any;
   public siteKey: string = environment.recaptchaSiteKey
 
-  constructor(private fb: FormBuilder, public router: Router) {}
+  public userRegistred: any = localStorage.getItem('user-mansexch');
+  constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", Validators.required],
-      recaptcha: ['', Validators.required]
-    })
+    const objUSer = JSON.parse(this.userRegistred)
+    if (objUSer) {
+      this.router.navigate(['/pages/dashbord'])
+    } else {
+      this.loginForm = this.fb.group({
+        email: ["", [Validators.required, Validators.email]],
+        password: ["", Validators.required],
+        recaptcha: ['', Validators.required]
+      })
+    }
   }
   
   showPassword() {
@@ -31,12 +39,20 @@ export class LoginComponent implements OnInit {
   login() {
     try {
       const data = {
-        email: this.loginForm.controls['email'].value,
+        email: this.loginForm.controls['email'].value,  
         password: this.loginForm.controls['password'].value
       }
-      //this.authService.login(data)
-      console.log(data)
-      this.router.navigate(['/pages/dashbord'])
+      this.authService.login(data).subscribe((response: ResponseUser) => {
+        console.log(response)
+        const user = {
+          nom: '',
+          email: '',
+          token: response.data?.token
+        }
+        localStorage.setItem("user-mansexch", JSON.stringify(user));
+        this.router.navigate(['/pages/dashbord'])
+      })
+      
     } catch (error) {
       console.log(error)
     } 

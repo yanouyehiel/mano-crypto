@@ -23,18 +23,24 @@ export class RegisterComponent implements OnInit {
       token: ''
     }
   }
+  public userRegistred: any = localStorage.getItem('user-mansexch');
 
   constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      recaptcha: ['', Validators.required]
-    })
+    const objUSer = JSON.parse(this.userRegistred)
+    if (objUSer) {
+      this.router.navigate(['/pages/dashbord'])
+    } else {
+      this.registerForm = this.fb.group({
+        name: ['', Validators.required],
+        email: ['', Validators.email],
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+        phoneNumber: ['', Validators.required],
+        recaptcha: ['', Validators.required]
+      })
+    }
   }
 
   showPassword() {
