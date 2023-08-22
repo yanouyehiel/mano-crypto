@@ -39,6 +39,6 @@ export class AuthService {
   }
 
   logout(): void {
-    console.log('Logout !!!')
+    return localStorage.removeItem('user-mansexch')
   }
 }

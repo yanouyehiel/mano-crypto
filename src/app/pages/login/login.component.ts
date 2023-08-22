@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const objUSer = JSON.parse(this.userRegistred)
     if (objUSer) {
-      this.router.navigate(['/pages/dashbord'])
+      this.router.navigate(['/dashbord'])
     } else {
       this.loginForm = this.fb.group({
         email: ["", [Validators.required, Validators.email]],

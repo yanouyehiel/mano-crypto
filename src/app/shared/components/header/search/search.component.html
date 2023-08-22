@@ -1,0 +1,25 @@
+<div class="position-relative">
+    <ul>
+      <li>
+        <form class="form-inline search-form">
+          <div class="search-bg">
+            <i class="fa fa-search"></i>
+            <input class="form-control-plaintext" [class.open]="open" [(ngModel)]="text" [ngModelOptions]="{ standalone: true }" (keyup)="searchTerm(text)" type="text" autocomplete="off" placeholder="Search.." />
+          </div>
+        </form>
+        <span class="d-sm-none mobile-search search-bg" (click)="openMenu()"><i class="fa fa-search"></i></span>
+      </li>
+    </ul>
+    <div class="Typeahead-menu custom-scrollbar" [class.is-open]="searchResult" *ngIf="menuItems?.length" id="search-outer" [class.open]="open">
+      <div class="ProfileCard u-cf" *ngFor="let menuItem of menuItems | slice : 0 : 8">
+        <div class="ProfileCard-avatar">
+          <app-feather-icons [icon]="'menuItem.icon'"></app-feather-icons>
+        </div>
+        <div class="ProfileCard-details">
+          <div class="ProfileCard-realName">
+            <a [routerLink]="menuItem?.path" class="realname" (click)="removeFix()">{{ menuItem?.title }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>  
