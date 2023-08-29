@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { NavService } from 'src/app/services/nav.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit {
 
   collapseSidebar: boolean = true;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private navServices: NavService) {}
   open = false;
 
   ngOnInit(): void {
@@ -21,11 +22,15 @@ export class HeaderComponent implements OnInit {
     this.open = !this.open
   }
 
-  languageToggle() {}
+  languageToggle() {
+    this.navServices.language = !this.navServices.language;
+  }
 
-  sidebarToggle() {}
+  sidebarToggle() {
+    this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
+  }
   
-  logout() {
+   logout() {
     this.authService.logout();
     this.router.navigate(['/auth/login'])
   }

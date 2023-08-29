@@ -19,6 +19,9 @@ import { MaximizeComponent } from './components/header/maximize/maximize.compone
 import { SearchComponent } from './components/header/search/search.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserInfoComponent } from './components/sidebar/user-info/user-info.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -26,10 +29,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    ClientComponent,
     AdminComponent,
     ModeComponent,
-    FeatherIconsComponent
+    FeatherIconsComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [NavService, DecimalPipe],
   exports: [
     RouterModule,
-    ClientComponent,
     AdminComponent,
     NgbModule,
     TranslateModule

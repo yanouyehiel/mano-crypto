@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public errorMessage: any;
   public siteKey: string = environment.recaptchaSiteKey
 
-  public userRegistred: any = localStorage.getItem('user-mansexch');
+  public userRegistred: any = localStorage.getItem('token-mansexch');
   constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
@@ -44,13 +44,11 @@ export class LoginComponent implements OnInit {
       }
       this.authService.login(data).subscribe((response: ResponseUser) => {
         console.log(response)
-        const user = {
-          nom: '',
-          email: '',
+        const token = {
           token: response.data?.token
         }
-        localStorage.setItem("user-mansexch", JSON.stringify(user));
-        this.router.navigate(['/pages/dashbord'])
+        localStorage.setItem("token-mansexch", JSON.stringify(token));
+        this.router.navigate(['pages/dashboard'])
       })
       
     } catch (error) {

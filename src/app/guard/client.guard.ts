@@ -13,7 +13,7 @@ export class ClientGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    let user = JSON.parse(localStorage.getItem('user-mansexch') || '{}')
+    let user = JSON.parse(localStorage.getItem('token-mansexch') || '{}')
     if (!user || user === null) {
       this.router.navigate(['/auth/login'])
     } else if (user) {

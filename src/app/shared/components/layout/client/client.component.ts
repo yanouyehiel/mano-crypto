@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
@@ -9,7 +9,7 @@ import * as feather from 'feather-icons';
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss']
 })
-export class ClientComponent {
+export class ClientComponent implements OnInit {
 
   constructor(
     public navService: NavService,
@@ -23,6 +23,10 @@ export class ClientComponent {
     });
   }
 
+  ngOnInit(): void {
+    console.log('logged')
+  }
+  
   ngAfterViewInit() {
     feather.replace();
   }

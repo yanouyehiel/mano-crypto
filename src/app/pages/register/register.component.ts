@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     const modalDiv = document.getElementById('myModal');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
-      this.router.navigate(['/pages/login'])
+      this.router.navigate(['/auth/login'])
     }
     
   }

@@ -29,16 +29,11 @@ export class AuthService {
   }
 
   login(data: any) {
-    /*this.httpClient.post<User>(`${this.url}/login`, data, {observe: 'response'}).subscribe((res) => {
-      if (res && res.body) {
-        console.log(res.body)
-        localStorage.setItem('user-manseckh', JSON.stringify(res.body))
-      }
-    })*/
     return this.httpClient.post<ResponseUser>(`${this.url}/login`, data, this.config);
   }
 
   logout(): void {
-    return localStorage.removeItem('user-mansexch')
+    localStorage.removeItem('user-mansexch')
+    localStorage.removeItem('token-mansexch')
   }
 }

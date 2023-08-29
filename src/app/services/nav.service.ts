@@ -64,28 +64,66 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      headTitle1: 'Home',
-      headTitle2: 'Dashboard & Tools'
+      headTitle1: 'Home'
     },
     {
       title: 'Dashboard',
       icon: 'home',
-      type: 'sub',
-      badgeType: 'success',
-      badgeValue: '2',
+      type: 'link',
       active: true,
+      path: '/home'
+    },
+    {
+      title: 'Mon Profil',
+      icon: 'user',
+      type: 'link',
+      active: false,
+      path: '/profile'
+    },
+    {
+      headTitle1: 'Finance'
+    },
+    {
+      title: 'Transaction',
+      icon: 'dollar-sign',
+      type: 'sub',
+      active: false,
       children: [
         {
-          path: '/dashboard/profile', 
-          title: 'Profile', 
+          path: '/acheter-crypto',
+          title: 'Acheter Crypto',
           type: 'link'
         },
         {
-          path: '/dashboard/profile', 
-          title: 'Profile', 
+          path: '/retirer-crypto',
+          title: 'Retirer Crypto',
+          type: 'link'
+        },
+        {
+          path: '/vendre-crypto',
+          title: 'Vendre Crypto',
           type: 'link'
         }
       ]
+    },
+    {
+      headTitle1: 'Porte-feuille'
+    },
+    {
+      title: 'Vérifier mon solde',
+      icon: 'credit-card',
+      type: 'link',
+      badgeType: 'success',
+      active: false,
+      path: '/solde'
+    },
+    {
+      title: 'Retrait',
+      icon: 'chevrons-left',
+      type: 'link',
+      badgeType: 'success',
+      active: false,
+      path: '/retrait'
     }
   ]
 

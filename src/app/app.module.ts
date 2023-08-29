@@ -22,6 +22,8 @@ import { MaximizeComponent } from './shared/components/header/maximize/maximize.
 import { SearchComponent } from './shared/components/header/search/search.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { UserInfoComponent } from './shared/components/sidebar/user-info/user-info.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { UserInfoComponent } from './shared/components/sidebar/user-info/user-in
     MaximizeComponent,
     SearchComponent,
     UserInfoComponent,
-    SidebarComponent
+    SidebarComponent,
+    FooterComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

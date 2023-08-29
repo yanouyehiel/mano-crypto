@@ -14,10 +14,10 @@
         <app-sidebar></app-sidebar>
       </header>
       <div class="page-body" [@routeAnimations]="prepareRoute(outlet)">
-        <!-- <app-breadcrumb></app-breadcrumb> -->
+        <app-breadcrumb></app-breadcrumb>
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
-      <!-- <app-footer></app-footer> -->
+      <app-footer></app-footer>
     </div>
   </div>
 </div>
