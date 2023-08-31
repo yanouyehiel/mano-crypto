@@ -8,5 +8,13 @@ export const content: Routes = [
             breadcrumb: 'Dashboard'
         },
         loadChildren: () => import('../components/layout/client/client.component').then(m => m.ClientComponent)
+    },
+    {
+        path: 'add-crypto',
+        data: {
+            title: 'Acheter Crypto',
+            breadcrumb: 'Acheter Crypto'
+        },
+        loadChildren: () => import('../../components/add-crypto/add-crypto.component').then(m => m.AddCryptoComponent)
     }
 ]

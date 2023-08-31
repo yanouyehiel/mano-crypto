@@ -7,11 +7,13 @@ import { ValidationComponent } from './pages/validation/validation.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ClientGuard } from './guard/client.guard';
 import { content } from './shared/routes/routes';
+import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth/login',
+    redirectTo: 'dashboard/home',
     pathMatch: 'full'
   },
   {
@@ -22,8 +24,14 @@ const routes: Routes = [
     path: 'auth/register',
     component: RegisterComponent
   },
-  {
+  /*{
     path: '',
+    component: ClientComponent,
+    canActivate: [ClientGuard],
+    children: content
+  },*/
+  {
+    path: 'dashboard/home',
     component: ClientComponent,
     canActivate: [ClientGuard],
     children: content
@@ -37,8 +45,12 @@ const routes: Routes = [
     component: ForgotPasswordComponent
   },
   {
+    path: 'add-crypto',
+    component: AddCryptoComponent
+  },
+  {
     path: '**',
-    redirectTo: ''
+    component: PageNotFoundComponent
   }
 ];
 

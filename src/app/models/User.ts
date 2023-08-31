@@ -30,8 +30,8 @@ export interface ResponseProfile {
             id: string;
             name: string;
             email: string;
-            phone: string;
-            isVerify: boolean;
+            phoneNumber: string;
+            isVerified: boolean;
         }
     }
 }

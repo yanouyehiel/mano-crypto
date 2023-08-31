@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
 import * as feather from 'feather-icons';
@@ -10,11 +10,12 @@ import * as feather from 'feather-icons';
   styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit {
-
+  private userSaved = JSON.parse(localStorage.getItem('token-mansexch') || '{}')
   constructor(
     public navService: NavService,
     public layoutService: LayoutService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.queryParams.subscribe((params) => {
       this.layoutService.config.settings.layout = params['layout']
@@ -24,7 +25,9 @@ export class ClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('logged')
+    if (!this.userSaved) {
+      this.router.navigate(['/auth/login'])
+    }
   }
   
   ngAfterViewInit() {

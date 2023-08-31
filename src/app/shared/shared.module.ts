@@ -22,6 +22,7 @@ import { UserInfoComponent } from './components/sidebar/user-info/user-info.comp
 import { FooterComponent } from './components/footer/footer.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { AddCryptoComponent } from '../components/add-crypto/add-crypto.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);

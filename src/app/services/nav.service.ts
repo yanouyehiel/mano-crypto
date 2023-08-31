@@ -64,14 +64,14 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      headTitle1: 'Home'
+      headTitle1: 'Client'
     },
     {
       title: 'Dashboard',
       icon: 'home',
       type: 'link',
       active: true,
-      path: '/home'
+      path: 'dashboard/home'
     },
     {
       title: 'Mon Profil',
@@ -90,7 +90,7 @@ export class NavService {
       active: false,
       children: [
         {
-          path: '/acheter-crypto',
+          path: '/add-crypto',
           title: 'Acheter Crypto',
           type: 'link'
         },

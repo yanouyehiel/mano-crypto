@@ -24,6 +24,8 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { UserInfoComponent } from './shared/components/sidebar/user-info/user-info.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
+import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.c
     UserInfoComponent,
     SidebarComponent,
     FooterComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    AddCryptoComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
