@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-crypto',
@@ -7,9 +8,69 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddCryptoComponent implements OnInit {
 
-  constructor() {}
+  public earningData = [
+    {
+      id: 1,
+      classCompo: 'bg-primary',
+      icon: 'database',
+      title: 'Fcfa XAF',
+      count: '56850'
+    },
+    {
+      id: 2,
+      classCompo: 'bg-secondary',
+      icon: 'shopping-bag',
+      title: 'USD USA',
+      count: '56850'
+    }
+  ];
+
+  public items = [
+    {
+      name: 'Bitcoin',
+      abv: 'BTC',
+      value: 6
+    },
+    {
+      name: 'Etheurium',
+      abv: 'ETH',
+      value: 10
+    },
+    {
+      name: 'LitCoin',
+      abv: 'LTC',
+      value: 20
+    }
+  ]
+
+  public currentValues = [
+    {
+      type: 'BTC',
+      value: 12.63,
+      actuelValue: 39485000,
+      class: 'primary'
+    },
+    {
+      type: 'ETH',
+      value: 4.63,
+      actuelValue: 22251,
+      class: 'secondary'
+    },
+    {
+      type: 'LTC',
+      value: 54.6,
+      actuelValue: 39485,
+      class: 'primary'
+    }
+  ]
+
+  constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {
     console.log('add crypto')
+  }
+
+  VerticallyCenteredModal(verticallyContent:any){
+    const modalRef = this.modalService.open(verticallyContent);
   }
 }
