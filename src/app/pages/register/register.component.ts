@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
         email: ['', Validators.email],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
-        phoneNumber: ['', Validators.required],
+        //phoneNumber: ['', Validators.required],
         recaptcha: ['', Validators.required]
       })
     }

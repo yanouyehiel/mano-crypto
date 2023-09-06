@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const objUSer = JSON.parse(this.userRegistred)
     if (objUSer) {
-      this.router.navigate(['/dashbord'])
+      this.router.navigate(['/'])
     } else {
       this.loginForm = this.fb.group({
         email: ["", [Validators.required, Validators.email]],
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           token: response.data?.token
         }
         localStorage.setItem("token-mansexch", JSON.stringify(token));
-        this.router.navigate(['/dashboard/home'])
+        this.router.navigate(['/'])
       })
       
     } catch (error) {

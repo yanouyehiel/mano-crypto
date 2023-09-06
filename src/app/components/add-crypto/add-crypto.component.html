@@ -1,4 +1,3 @@
-<br>
 <div class="container-fluid general-widget">
     <div class="row">
         <div class="col-sm-8">
@@ -24,27 +23,27 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-header">
-                              <h5>Crypto Value</h5>
-                              <!-- <span>A <code>&lt;caption&gt;</code> functions like a heading for a table. It helps users with screen readers to find a table and understand what it’s about and decide if they want to read it.</span> -->
+                            <h5>Crypto Value</h5>
+                            <!-- <span>A <code>&lt;caption&gt;</code> functions like a heading for a table. It helps users with screen readers to find a table and understand what it’s about and decide if they want to read it.</span> -->
                             </div>
                             <div class="card-block row">
-                              <div class="col-sm-12 col-lg-12 col-xl-12">
+                            <div class="col-sm-12 col-lg-12 col-xl-12">
                                 <div class="table-responsive">
-                                  <table class="table">
+                                <table class="table">
                                     <!-- <thead>
-                                      <tr>
+                                    <tr>
                                         <th scope="col">Id</th>
                                         <th scope="col">Employee Name</th>
                                         <th scope="col">Email</th>
-                                      </tr>
+                                    </tr>
                                     </thead> -->
                                     <tbody>
-                                     <ng-container *ngFor="let item of items"> 
-                                       <tr>
-                                         <th scope="row">{{item.name}}</th>
-                                         <td>1 {{item.abv}}</td>
-                                         <td>{{item.value}} FCFA</td>
-                                         <td>
+                                    <ng-container *ngFor="let item of items"> 
+                                    <tr>
+                                        <th scope="row">{{item.name}}</th>
+                                        <td>1 {{item.abv}}</td>
+                                        <td>{{item.value}} FCFA</td>
+                                        <td>
                                             <button 
                                                 class="btn btn-primary-gradien" 
                                                 type="button" 
@@ -54,28 +53,28 @@
                                             >
                                                 Buy
                                             </button>
-                                         </td>
-                                       </tr>
-                                     </ng-container>
-                                     <ng-template #verticallyContent let-modal>
+                                        </td>
+                                    </tr>
+                                    </ng-container>
+                                    <ng-template #verticallyContent let-modal>
                                         <div class="modal-header">
-                                          <h5 class="modal-title">Buying Process</h5>
-                                          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>    
+                                        <h5 class="modal-title">Buying Process</h5>
+                                        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>    
                                         </div>
                                         <div class="modal-body">
-                                          <p class="text-center">How much are you needing ?</p>
-                                          <input type="text" class="form-control">
-                                          <label for="">BTC</label>
+                                        <p class="text-center">How much are you needing ?</p>
+                                        <input type="text" class="form-control">
+                                        <label for="">BTC</label>
                                         </div>
                                         <div class="modal-footer">
-                                          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Valider</button>
-                                          <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
+                                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Valider</button>
+                                        <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
                                         </div>
-                                     </ng-template>
+                                    </ng-template>
                                     </tbody>
-                                  </table>
+                                </table>
                                 </div>
-                              </div>
+                            </div>
                             </div>
                         </div>
                     </div>

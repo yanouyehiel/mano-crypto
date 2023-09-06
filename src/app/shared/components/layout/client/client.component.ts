@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';

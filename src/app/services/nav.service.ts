@@ -71,7 +71,7 @@ export class NavService {
       icon: 'home',
       type: 'link',
       active: true,
-      path: 'dashboard/home'
+      path: '/'
     },
     {
       title: 'Mon Profil',
@@ -90,17 +90,17 @@ export class NavService {
       active: false,
       children: [
         {
-          path: '/add-crypto',
+          path: '/client/add-crypto',
           title: 'Acheter Crypto',
           type: 'link'
         },
         {
-          path: '/retirer-crypto',
+          path: '/client/retirer-crypto',
           title: 'Retirer Crypto',
           type: 'link'
         },
         {
-          path: '/vendre-crypto',
+          path: '/client/vendre-crypto',
           title: 'Vendre Crypto',
           type: 'link'
         }

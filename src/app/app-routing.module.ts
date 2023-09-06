@@ -9,11 +9,12 @@ import { ClientGuard } from './guard/client.guard';
 import { content } from './shared/routes/routes';
 import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/home',
+    redirectTo: '',
     pathMatch: 'full'
   },
   {
@@ -21,20 +22,22 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'auth/confirm-login',
+    component: ConfirmLoginComponent
+  },
+  {
     path: 'auth/register',
     component: RegisterComponent
   },
-  /*{
+  {
     path: '',
     component: ClientComponent,
-    canActivate: [ClientGuard],
-    children: content
-  },*/
-  {
-    path: 'dashboard/home',
-    component: ClientComponent,
-    canActivate: [ClientGuard],
-    children: content
+    children: [
+      {
+        path: 'client/add-crypto',
+        component: AddCryptoComponent
+      },
+    ]
   },
   {
     path: 'auth/validation-compte',
@@ -44,10 +47,7 @@ const routes: Routes = [
     path: 'auth/forgot-password',
     component: ForgotPasswordComponent
   },
-  {
-    path: 'add-crypto',
-    component: AddCryptoComponent
-  },
+  
   {
     path: '**',
     component: PageNotFoundComponent

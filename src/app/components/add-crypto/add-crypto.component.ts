@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LayoutService } from 'src/app/services/layout.service';
+import { NavService } from 'src/app/services/nav.service';
 
 @Component({
   selector: 'app-add-crypto',
@@ -64,7 +66,10 @@ export class AddCryptoComponent implements OnInit {
     }
   ]
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    public navService: NavService,
+    public layoutService: LayoutService,) {}
 
   ngOnInit(): void {
     console.log('add crypto')
@@ -72,5 +77,13 @@ export class AddCryptoComponent implements OnInit {
 
   VerticallyCenteredModal(verticallyContent:any){
     const modalRef = this.modalService.open(verticallyContent);
+  }
+
+  get layoutClass() {
+    return (
+      this.layoutService.config.settings.sidebar_type +
+      ' ' +
+      this.layoutService.config.settings.layout.replace('layout', 'sidebar')
+    );
   }
 }

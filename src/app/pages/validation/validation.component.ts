@@ -18,7 +18,7 @@ export class ValidationComponent implements OnInit {
   }
 
   goToConnect() {
-    this.router.navigate(['/pages/login'])
+    this.router.navigate(['/auth/login'])
   }
   
 }

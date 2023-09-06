@@ -26,6 +26,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     FooterComponent,
     BreadcrumbComponent,
     AddCryptoComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ConfirmLoginComponent
   ],
   imports: [
     BrowserModule,
