@@ -18,7 +18,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'auth/login',
+    path: '',
     component: LoginComponent
   },
   {
@@ -30,11 +30,11 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: '',
+    path: 'client',
     component: ClientComponent,
     children: [
       {
-        path: 'client/add-crypto',
+        path: 'add-crypto',
         component: AddCryptoComponent
       },
     ]
