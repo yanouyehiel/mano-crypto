@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { ResponseUser, User } from 'src/app/models/User';
+import { ResponseEmail, ResponseUser, User } from 'src/app/models/User';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
         email: ['', Validators.email],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
-        //phoneNumber: ['', Validators.required],
+        phoneNumber: ['', Validators.required],
         recaptcha: ['', Validators.required]
       })
     }
@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     const modalDiv = document.getElementById('myModal');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
-      this.router.navigate(['/auth/login'])
+      this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     }
     
   }
@@ -78,7 +78,6 @@ export class RegisterComponent implements OnInit {
     console.log(this.user)
     try {
       this.authService.register(this.user).subscribe((response: ResponseUser) => {
-        console.log(response)
 
         this.returnedValue = {
           statusCode: response.statusCode,
@@ -89,6 +88,14 @@ export class RegisterComponent implements OnInit {
         }
         console.log(this.returnedValue);      
       });
+
+      const data = {
+        receiver_email: this.user.email
+      }
+      this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
+        console.log(response)
+        this.returnedValue.statusCode = response.statusCode
+      })
 
       this.openModal('myModal')
     } catch (error) {

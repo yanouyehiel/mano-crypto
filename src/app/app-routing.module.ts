@@ -22,7 +22,7 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'auth/confirm-login',
+    path: 'auth/confirm-login/:email',
     component: ConfirmLoginComponent
   },
   {

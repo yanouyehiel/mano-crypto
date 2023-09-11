@@ -35,3 +35,8 @@ export interface ResponseProfile {
         }
     }
 }
+
+export interface ResponseEmail {
+    statusCode: number;
+    message: string;
+}
