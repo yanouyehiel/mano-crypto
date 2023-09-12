@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResponseEmail, ResponseUser, User } from 'src/app/models/User';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-register',
@@ -63,6 +64,14 @@ export class RegisterComponent implements OnInit {
       this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     }
     
+  }
+
+  info() {
+    Swal.fire(
+      'Info',
+      '<p>Bonjour tout le monde</p>',
+      'info'
+    )
   }
 
 

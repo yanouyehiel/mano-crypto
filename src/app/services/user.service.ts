@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   
   private url = environment.backend_api_url + environment.user_url
+  
   private tokenRegistred: any = localStorage.getItem('token-mansexch')
   private data: any = JSON.parse(this.tokenRegistred)
   

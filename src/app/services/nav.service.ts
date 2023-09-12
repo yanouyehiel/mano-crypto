@@ -90,18 +90,23 @@ export class NavService {
       active: false,
       children: [
         {
+          path: '/client/recharge-compte',
+          title: 'Recharger compte',
+          type: 'link'
+        },
+        {
           path: '/client/add-crypto',
-          title: 'Acheter Crypto',
+          title: 'Acheter crypto',
           type: 'link'
         },
         {
           path: '/client/retirer-crypto',
-          title: 'Retirer Crypto',
+          title: 'Retirer crypto',
           type: 'link'
         },
         {
           path: '/client/vendre-crypto',
-          title: 'Vendre Crypto',
+          title: 'Vendre crypto',
           type: 'link'
         }
       ]

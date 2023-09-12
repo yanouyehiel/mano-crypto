@@ -30,7 +30,7 @@
   line-height: 40px;
   color: $white;
   text-align: center;
-  background: var(--theme-default);
+  background: $success-color;
   border-radius: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -62,7 +62,7 @@
   &.active,
   &.current {
     color: $white;
-    background-color: var(--theme-default);
+    background-color: $primary-color;
     p {
       color: $white;
     }
@@ -73,7 +73,7 @@
   }
   &.active .u-step-number,
   &.current .u-step-number {
-    color: var(--theme-default);
+    color: $primary-color;
     background-color: $white;
   }
   &.disabled {

@@ -27,6 +27,9 @@ import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.c
 import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { HomeComponent } from './components/home/home.component';
+import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +54,9 @@ import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.compo
     BreadcrumbComponent,
     AddCryptoComponent,
     PageNotFoundComponent,
-    ConfirmLoginComponent
+    ConfirmLoginComponent,
+    HomeComponent,
+    RechargeCompteComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,8 @@ import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.compo
     FormsModule,
     ReactiveFormsModule, 
     NgxCaptchaModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularSvgIconModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

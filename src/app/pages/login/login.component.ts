@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           token: response.data?.token
         }
         localStorage.setItem("token-mansexch", JSON.stringify(token));
-        this.router.navigate(['/client'])
+        this.router.navigate(['/client/home'])
       })
       
     } catch (error) {

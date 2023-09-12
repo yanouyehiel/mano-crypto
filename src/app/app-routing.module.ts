@@ -10,15 +10,17 @@ import { content } from './shared/routes/routes';
 import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.component';
+import { HomeComponent } from './components/home/home.component';
+import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'client/home',
     pathMatch: 'full'
   },
   {
-    path: '',
+    path: 'auth/login',
     component: LoginComponent
   },
   {
@@ -34,9 +36,17 @@ const routes: Routes = [
     component: ClientComponent,
     children: [
       {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
         path: 'add-crypto',
         component: AddCryptoComponent
       },
+      {
+        path: 'recharge-compte',
+        component: RechargeCompteComponent
+      }
     ]
   },
   {
