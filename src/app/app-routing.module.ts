@@ -16,7 +16,7 @@ import { RechargeCompteComponent } from './components/recharge-compte/recharge-c
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'client/home',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {

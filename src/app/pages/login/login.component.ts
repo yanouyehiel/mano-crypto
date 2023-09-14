@@ -15,13 +15,14 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   public errorMessage: any;
   public siteKey: string = environment.recaptchaSiteKey
+  public textBtn: string = 'SIGN IN'
 
-  public userRegistred: any = localStorage.getItem('token-mansexch');
+  public tokenRegistred: any = localStorage.getItem('token-mansexch');
   constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
-    const objUSer = JSON.parse(this.userRegistred)
-    if (objUSer) {
+    const objToken = JSON.parse(this.tokenRegistred)
+    if (objToken) {
       this.router.navigate(['/'])
     } else {
       this.loginForm = this.fb.group({
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     try {
+      this.textBtn = 'Loging...'
       const data = {
         email: this.loginForm.controls['email'].value,  
         password: this.loginForm.controls['password'].value

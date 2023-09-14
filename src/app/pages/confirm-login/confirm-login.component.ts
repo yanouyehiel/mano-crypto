@@ -16,7 +16,7 @@ export class ConfirmLoginComponent implements OnInit {
     otpCode: ''
   }
   public error: number = 0;
-  public email: string = '';
+  public textBtn: string = 'Confirmer';
 
   constructor(
     private fb: FormBuilder, 
@@ -36,6 +36,7 @@ export class ConfirmLoginComponent implements OnInit {
   }
 
   verifyCode() {
+    this.textBtn = 'Confirmation en cours...'
     this.dataUser.otpCode = this.verifyCodeForm.controls['codeValue'].value
     console.log(this.dataUser)
     this.authService.verifyUser(this.dataUser).subscribe((response: any) => {

@@ -71,7 +71,7 @@ export class NavService {
       icon: 'home',
       type: 'link',
       active: true,
-      path: '/'
+      path: '/client/home'
     },
     {
       title: 'Mon Profil',

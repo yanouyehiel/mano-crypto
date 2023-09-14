@@ -26,11 +26,11 @@
           <div class="form-group">
             <button
               class="btn btn-primary btn-block"
-              [disabled]="!verifyCodeForm.valid"
+              [disabled]="!verifyCodeForm.valid || textBtn === 'Confirmation en cours...'"
               type="submit"
               (click)="verifyCode()"
             >
-              Confirmer
+              {{ textBtn }}
             </button>
           </div>
           

@@ -10,7 +10,7 @@ import * as feather from 'feather-icons';
   styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit {
-  private userSaved = JSON.parse(localStorage.getItem('token-mansexch') || '{}')
+  private token = JSON.parse(localStorage.getItem('token-mansexch') || '{}')
   constructor(
     public navService: NavService,
     public layoutService: LayoutService,
@@ -25,7 +25,7 @@ export class ClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.userSaved) {
+    if (!this.token) {
       this.router.navigate(['/auth/login'])
     }
   }

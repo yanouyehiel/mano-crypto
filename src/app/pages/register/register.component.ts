@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     }
   }
   public userRegistred: any = localStorage.getItem('user-mansexch');
+  public textBtn: string = 'REGISTER'
 
   constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
@@ -76,6 +77,7 @@ export class RegisterComponent implements OnInit {
 
 
   register(): void {
+    this.textBtn = 'Loading...'
     if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
       this.user = {
         name: this.registerForm.controls['name'].value,
@@ -106,7 +108,9 @@ export class RegisterComponent implements OnInit {
         this.returnedValue.statusCode = response.statusCode
       })
 
-      this.openModal('myModal')
+      if (this.returnedValue.statusCode === 1000) {
+        this.openModal('myModal')
+      }
     } catch (error) {
       console.log(error)
     }

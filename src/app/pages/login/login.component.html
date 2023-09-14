@@ -81,11 +81,11 @@
           <div class="form-group">
             <button
               class="btn btn-primary btn-block"
-              [disabled]="!loginForm.valid"
+              [disabled]="!loginForm.valid || textBtn === 'Loging...'"
               (click)="login()"
               type="submit"
             >
-              Sign In
+              {{ textBtn }}
             </button>
           </div>
           

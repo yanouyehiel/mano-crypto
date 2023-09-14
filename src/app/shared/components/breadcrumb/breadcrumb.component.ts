@@ -32,7 +32,7 @@ export class BreadcrumbComponent implements OnInit {
       "parentBreadcrumb": parentWord,
       "childBreadcrumb": childWord
     }
-    console.log(parentWord, childWord)
+    
   }
 
   ngOnDestroy() {  }

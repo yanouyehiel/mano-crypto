@@ -120,10 +120,10 @@
             <button
               class="btn btn-primary btn-block"
               type="submit"
-              [disabled]="!registerForm.valid"
+              [disabled]="!registerForm.valid || textBtn === 'Loading...'"
               (click)="register()"
             >
-              Register
+              {{ textBtn }}
             </button>
           </div>
           
@@ -151,7 +151,6 @@
         </div>
         <div class="modal-body">
           <p *ngIf="returnedValue.statusCode === 1000">Success! Confirm your Account Using the sended Link in you Email Account</p>
-          <!-- <p *ngIf="returnedValue.statusCode !== 1000">Email not being sent. Please, retry !</p> -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" (click)="closeModal()" data-bs-dismiss="modal">Ok</button>
