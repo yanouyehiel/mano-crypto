@@ -81,12 +81,15 @@
           <div class="form-group">
             <button
               class="btn btn-primary btn-block"
-              [disabled]="!loginForm.valid || textBtn === 'Loging...'"
+              [disabled]="!loginForm.valid || textBtn === 'Login...'"
               (click)="login()"
               type="submit"
             >
               {{ textBtn }}
             </button>
+            <!-- <div class="loader-box">
+              <div class="loader-3"></div>
+            </div> -->
           </div>
           
           <p>

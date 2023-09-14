@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     try {
-      this.textBtn = 'Loging...'
+      this.textBtn = 'Login...'
       const data = {
         email: this.loginForm.controls['email'].value,  
         password: this.loginForm.controls['password'].value

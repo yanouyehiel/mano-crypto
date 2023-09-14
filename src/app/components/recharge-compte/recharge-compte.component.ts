@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RechargeCompteComponent implements OnInit {
   public current: string = 'current'
+  public step: number = 1 | 2 | 3;
 
   constructor() {}
 
