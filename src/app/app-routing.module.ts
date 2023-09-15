@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
+import { MyListingComponent } from './components/my-listing/my-listing.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'recharge-compte',
         component: RechargeCompteComponent
+      },
+      {
+        path: 'my-listing',
+        component: MyListingComponent
       }
     ]
   },

@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-lg-4">
           <div class="u-steps u-steps-vertical">
-            <div class="u-step current">
+            <div class="u-step" [ngClass]="classStep1">
                 <span class="u-step-number">1</span>
                 <div class="u-step-desc">
                     <span class="u-step-title">Payment Type</span>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             
-            <div class="u-step">
+            <div class="u-step" [ngClass]="classStep2">
                 <span class="u-step-number">2</span>
                 <div class="u-step-desc">
                     <span class="u-step-title">Payment Information</span>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="u-step">
+            <div class="u-step" [ngClass]="classStep3">
                 <span class="u-step-number">3</span>
                 <div class="u-step-desc">
                     <span class="u-step-title">Completed</span>
@@ -33,8 +33,8 @@
           </div>
         </div>
         <div class="col-lg-8">
-          <form class="mega-inline form theme-form">
-            <div class="row">
+          <form class="mega-inline form theme-form" [formGroup]="depositForm">
+            <div class="row" *ngIf="step === 1">
               <h4 class="title-method">Choose Method Type</h4>
               <div class="col-sm-6">
                 <div class="card">
@@ -67,29 +67,36 @@
                 </div>
               </div>
               <div class="col-sm-12">
-                <button class="btn btn-primary col-lg-3">Continue</button>
+                <button class="btn btn-primary col-lg-3" (click)="stepAttribute(1)">Continue</button>
               </div>
             </div>
-            <div class="row" style="display: none;">
+            <div class="row" *ngIf="step === 2">
               <h4 class="title-method">Montant</h4>
               <div class="col-sm-12">
                 <div class="row">
                   <div class="col">
                     <div class="mb-5">
                       <label class="form-label label-montant" for="exampleFormControlInput1">Entrer le montant</label>
-                      <input class="form-control input-montant" id="exampleFormControlInput1" type="email" placeholder="Montant">
+                      <input 
+                        class="form-control input-montant" 
+                        id="exampleFormControlInput1" 
+                        type="email" 
+                        placeholder="Montant"
+                        formControlName="amount"
+                        required=""
+                      >
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="row">
-                  <button class="btn btn-secondary col-lg-4">Back</button>
-                  <button class="btn btn-primary col-lg-4">Continue</button>
+                  <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(0)">Back</button>
+                  <button class="btn btn-primary col-lg-4" (click)="stepAttribute(2)">Continue</button>
                 </div>
               </div>
             </div>
-            <div class="row" style="display: none;">
+            <div class="row" *ngIf="step === 3">
               <h4 class="title-method">Résumé de la recharge</h4>
               <div class="col-sm-12">
                 <div class="row" style="margin-top: 20px;">
@@ -101,12 +108,12 @@
                 <div class="row" style="margin-top: 20px;">
                   <div class="col">
                     <h5>Montant</h5>
-                    <p style="font-size: 15px;">15000 XAF</p>
+                    <p style="font-size: 15px;">{{ depositForm.controls['amount'].value }}</p>
                   </div>
                 </div>
                 <div class="row" style="margin-top: 20px;">
-                  <button class="btn btn-secondary col-lg-4">Back</button>
-                  <button class="btn btn-primary col-lg-4">Valider</button>
+                  <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(1)">Back</button>
+                  <button class="btn btn-primary col-lg-4" (click)="addRecharge()">Valider</button>
                 </div>
               </div>
             </div>

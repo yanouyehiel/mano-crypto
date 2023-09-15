@@ -1,6 +1,7 @@
 const urlApi = "http://62.72.19.95/api";
 const authUrl = "/auth"
 const userUrl = "/user"
+const transactionUrl = "/wallet"
 const tokenVerifyUrl = ""
 
 export const environment = {
@@ -8,6 +9,7 @@ export const environment = {
   backend_api_url: urlApi,
   auth_url: authUrl,
   user_url: userUrl,
+  url_transaction: transactionUrl,
   token_verify_url: tokenVerifyUrl,
   readonlyKeys: {
     consumer_key: '',

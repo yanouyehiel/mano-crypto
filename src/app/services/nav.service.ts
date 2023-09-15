@@ -81,6 +81,13 @@ export class NavService {
       path: '/profile'
     },
     {
+      title: 'Mon Listing',
+      icon: 'user',
+      type: 'link',
+      active: false,
+      path: '/client/my-listing'
+    },
+    {
       headTitle1: 'Finance'
     },
     {

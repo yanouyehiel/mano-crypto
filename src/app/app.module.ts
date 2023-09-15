@@ -29,7 +29,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HomeComponent } from './components/home/home.component';
-import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component'
+import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
+import { MyListingComponent } from './components/my-listing/my-listing.component'
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { RechargeCompteComponent } from './components/recharge-compte/recharge-c
     PageNotFoundComponent,
     ConfirmLoginComponent,
     HomeComponent,
-    RechargeCompteComponent
+    RechargeCompteComponent,
+    MyListingComponent
   ],
   imports: [
     BrowserModule,

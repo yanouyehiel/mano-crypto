@@ -111,6 +111,7 @@ export class RegisterComponent implements OnInit {
       if (this.returnedValue.statusCode === 1000) {
         this.openModal('myModal')
       }
+      this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     } catch (error) {
       console.log(error)
     }
