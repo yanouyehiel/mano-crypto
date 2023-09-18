@@ -24,25 +24,23 @@ export class RegisterComponent implements OnInit {
       token: ''
     }
   }
-  public userRegistred: any = localStorage.getItem('user-mansexch');
   public textBtn: string = 'REGISTER'
 
   constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
-    const objUSer = JSON.parse(this.userRegistred)
-    if (objUSer) {
-      this.router.navigate(['/pages/dashbord'])
-    } else {
-      this.registerForm = this.fb.group({
-        name: ['', Validators.required],
-        email: ['', Validators.email],
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required],
-        phoneNumber: ['', Validators.required],
-        recaptcha: ['', Validators.required]
-      })
+    localStorage.removeItem('token-mansexch')
+    if (localStorage.getItem('user-mansexch')) {
+      localStorage.removeItem('user-mansexch')
     }
+    this.registerForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', Validators.email],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      recaptcha: ['', Validators.required]
+    })
   }
 
   showPassword() {
@@ -68,11 +66,12 @@ export class RegisterComponent implements OnInit {
   }
 
   info() {
-    Swal.fire(
+    /*Swal.fire(
       'Info',
       '<p>Bonjour tout le monde</p>',
       'info'
-    )
+    )*/
+    Swal.fire('Hello World')
   }
 
 

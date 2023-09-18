@@ -5,4 +5,6 @@ export interface Table {
     price: string;
     devise: string;
     status: string;
+    bgClass: string;
+    icon: string;
 }

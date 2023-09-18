@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ResponseDeposit } from 'src/app/models/Deposit';
-import { ProfileUser, ResponseProfile } from 'src/app/models/User';
-import { DepositService } from 'src/app/services/deposit.service';
+import { ResponseDeposit } from 'src/app/models/Transaction';
+import { TransactionService } from 'src/app/services/transaction.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-recharge-compte',
@@ -19,7 +19,7 @@ export class RechargeCompteComponent implements OnInit {
   private userParse: any = JSON.parse(this.userRegistred)
 
   constructor(
-    private depositService: DepositService,
+    private depositService: TransactionService,
     private fb: FormBuilder,
   ) {}
 
@@ -60,9 +60,14 @@ export class RechargeCompteComponent implements OnInit {
       console.log(data)
       this.depositService.addDeposit(data).subscribe((result: ResponseDeposit) => {
         console.log(result)
+        this.successRecharge()
       })
     } catch (error) {
       console.log(error)
     }
+  }
+
+  successRecharge(): void {
+    Swal.fire('Recharge de compte réussie !')
   }
 }

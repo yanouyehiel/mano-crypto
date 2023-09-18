@@ -92,7 +92,13 @@
               <div class="col-sm-12">
                 <div class="row">
                   <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(0)">Back</button>
-                  <button class="btn btn-primary col-lg-4" (click)="stepAttribute(2)">Continue</button>
+                  <button 
+                    class="btn btn-primary col-lg-4" 
+                    (click)="stepAttribute(2)"
+                    [disabled]="this.depositForm.controls['amount'].value ===''"
+                  >
+                    Continue
+                  </button>
                 </div>
               </div>
             </div>

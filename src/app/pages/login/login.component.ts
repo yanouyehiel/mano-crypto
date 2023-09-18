@@ -17,20 +17,18 @@ export class LoginComponent implements OnInit {
   public siteKey: string = environment.recaptchaSiteKey
   public textBtn: string = 'SIGN IN'
 
-  public tokenRegistred: any = localStorage.getItem('token-mansexch');
   constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
-    const objToken = JSON.parse(this.tokenRegistred)
-    if (objToken) {
-      this.router.navigate(['/'])
-    } else {
-      this.loginForm = this.fb.group({
-        email: ["", [Validators.required, Validators.email]],
-        password: ["", Validators.required],
-        recaptcha: ['', Validators.required]
-      })
+    localStorage.removeItem('token-mansexch')
+    if (localStorage.getItem('user-mansexch')) {
+      localStorage.removeItem('user-mansexch')
     }
+    this.loginForm = this.fb.group({
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", Validators.required],
+      recaptcha: ['', Validators.required]
+    })
   }
   
   showPassword() {
