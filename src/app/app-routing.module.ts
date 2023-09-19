@@ -13,6 +13,7 @@ import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.compo
 import { HomeComponent } from './components/home/home.component';
 import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
 import { MyListingComponent } from './components/my-listing/my-listing.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
       },
       {
         path: 'add-crypto',

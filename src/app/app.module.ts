@@ -30,7 +30,8 @@ import { ConfirmLoginComponent } from './pages/confirm-login/confirm-login.compo
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HomeComponent } from './components/home/home.component';
 import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
-import { MyListingComponent } from './components/my-listing/my-listing.component'
+import { MyListingComponent } from './components/my-listing/my-listing.component';
+import { ProfileComponent } from './components/profile/profile.component'
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MyListingComponent } from './components/my-listing/my-listing.component
     ConfirmLoginComponent,
     HomeComponent,
     RechargeCompteComponent,
-    MyListingComponent
+    MyListingComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

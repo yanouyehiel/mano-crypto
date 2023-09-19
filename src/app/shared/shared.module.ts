@@ -20,7 +20,6 @@ import { SearchComponent } from './components/header/search/search.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserInfoComponent } from './components/sidebar/user-info/user-info.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { LoaderComponent } from './components/loader/loader.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { AddCryptoComponent } from '../components/add-crypto/add-crypto.component';
 import { SortableDirective } from './directives/sortable.directive';
@@ -33,8 +32,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AdminComponent,
     ModeComponent,
-    FeatherIconsComponent,
-    LoaderComponent,
     SortableDirective
   ],
   imports: [

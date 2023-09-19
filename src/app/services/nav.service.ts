@@ -74,7 +74,7 @@ export class NavService {
       path: '/client/home'
     },
     {
-      title: 'Mon Profil',
+      title: 'Mon Profile',
       icon: 'user',
       type: 'link',
       active: false,
@@ -82,7 +82,7 @@ export class NavService {
     },
     {
       title: 'Mon Historique',
-      icon: 'user',
+      icon: 'clock',
       type: 'link',
       active: false,
       path: '/client/my-listing'
