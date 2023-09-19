@@ -78,10 +78,10 @@ export class NavService {
       icon: 'user',
       type: 'link',
       active: false,
-      path: '/profile'
+      path: '/client/profile'
     },
     {
-      title: 'Mon Listing',
+      title: 'Mon Historique',
       icon: 'user',
       type: 'link',
       active: false,

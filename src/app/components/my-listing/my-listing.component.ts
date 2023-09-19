@@ -11,6 +11,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class MyListingComponent implements OnInit {
   public historics: any[] = [];
+  public loader: boolean = true;
 
   constructor(private transacService: TransactionService) {}
 
@@ -20,10 +21,9 @@ export class MyListingComponent implements OnInit {
 
   getAllTransaction(): void {
     try {
+      this.loader = false;
       this.transacService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
-        //console.log(response)
         this.historics = response.data.transactions
-        //console.log(this.historics)
       })
     } catch (error) {
       console.log(error)

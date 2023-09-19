@@ -1,130 +1,185 @@
 <app-breadcrumb></app-breadcrumb>
-<div class="card">
-    <div class="card-header pb-0">
-      <h5>Payment</h5>
-    </div>
-    <div class="card-body megaoptions-border-space-sm">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="u-steps u-steps-vertical">
-            <div class="u-step" [ngClass]="classStep1">
-                <span class="u-step-number">1</span>
-                <div class="u-step-desc">
-                    <span class="u-step-title">Payment Type</span>
-                    <p>Different types of payment</p>
-                </div>
-            </div>
-            
-            <div class="u-step" [ngClass]="classStep2">
-                <span class="u-step-number">2</span>
-                <div class="u-step-desc">
-                    <span class="u-step-title">Payment Information</span>
-                    <p>Pay for the bill</p>
-                </div>
-            </div>
+<div class="container-fluid dashboard-default-sec">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+          <div class="card-header pb-0">
+            <h5>Payment</h5>
+          </div>
+          <div class="card-body megaoptions-border-space-sm">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="u-steps u-steps-vertical">
+                  <div class="u-step" [ngClass]="classStep1">
+                      <span class="u-step-number">1</span>
+                      <div class="u-step-desc">
+                          <span class="u-step-title">Payment Type</span>
+                          <p>Different types of payment</p>
+                      </div>
+                  </div>
+                  
+                  <div class="u-step" [ngClass]="classStep2">
+                      <span class="u-step-number">2</span>
+                      <div class="u-step-desc">
+                          <span class="u-step-title">Payment Information</span>
+                          <p>Pay for the bill</p>
+                      </div>
+                  </div>
 
-            <div class="u-step" [ngClass]="classStep3">
-                <span class="u-step-number">3</span>
-                <div class="u-step-desc">
-                    <span class="u-step-title">Completed</span>
-                    <p>Review and Submit</p>
+                  <div class="u-step" [ngClass]="classStep3">
+                      <span class="u-step-number">3</span>
+                      <div class="u-step-desc">
+                          <span class="u-step-title">Completed</span>
+                          <p>Review and Submit</p>
+                      </div>
+                  </div>
                 </div>
+              </div>
+              <div class="col-lg-8">
+                <form class="mega-inline form theme-form" [formGroup]="depositForm">
+                  <div class="row" *ngIf="step === 1">
+                    <h4 class="title-method">Choose Method Type</h4>
+                    <div class="col-sm-6">
+                      <div class="card">
+                        <div class="media p-20">
+                          <div class="radio radio-primary me-3">
+                            <input id="radio14" type="radio" name="radio1" value="option1">
+                            <label for="radio14"></label>
+                          </div>
+                          <div class="media-body">
+                              <img src="../../../assets/images/mobile_money.jpg" alt="logo_mtn">
+                              <p>Mobile Money</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="card">
+                        <div class="media p-20">
+                          <div class="radio radio-secondary me-3">
+                            <input id="radio13" type="radio" name="radio1" value="option1">
+                            <label for="radio13"></label>
+                          </div>
+                          <div class="media-body">
+                              <div class="media-body">
+                                  <img src="../../../assets/images/orange_money.png" alt="logo_mtn">
+                                  <p>Orange Money</p>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <button class="btn btn-primary col-lg-3" (click)="stepAttribute(1)">Continue</button>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="step === 2">
+                    <h4 class="title-method">Montant</h4>
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col">
+                          <div class="mb-5">
+                            <label class="form-label label-montant" for="exampleFormControlInput1">Entrer le montant</label>
+                            <input 
+                              class="form-control input-montant" 
+                              id="exampleFormControlInput1" 
+                              type="email" 
+                              placeholder="Montant"
+                              formControlName="amount"
+                              required=""
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(0)">Back</button>
+                        <button 
+                          class="btn btn-primary col-lg-4" 
+                          (click)="stepAttribute(2)"
+                          [disabled]="this.depositForm.controls['amount'].value ===''"
+                        >
+                          Continue
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="step === 3">
+                    <h4 class="title-method">Résumé de la recharge</h4>
+                    <div class="col-sm-12">
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col">
+                          <h5>Type de paiement</h5>
+                          <p style="font-size: 15px;">Orange Money</p>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col">
+                          <h5>Montant</h5>
+                          <p style="font-size: 15px;">{{ depositForm.controls['amount'].value }}</p>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
+                        <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(1)">Back</button>
+                        <button class="btn btn-primary col-lg-4" (click)="addRecharge()">Valider</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-8">
-          <form class="mega-inline form theme-form" [formGroup]="depositForm">
-            <div class="row" *ngIf="step === 1">
-              <h4 class="title-method">Choose Method Type</h4>
-              <div class="col-sm-6">
-                <div class="card">
-                  <div class="media p-20">
-                    <div class="radio radio-primary me-3">
-                      <input id="radio14" type="radio" name="radio1" value="option1">
-                      <label for="radio14"></label>
-                    </div>
-                    <div class="media-body">
-                        <img src="../../../assets/images/mobile_money.jpg" alt="logo_mtn">
-                        <p>Mobile Money</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="card">
-                  <div class="media p-20">
-                    <div class="radio radio-secondary me-3">
-                      <input id="radio13" type="radio" name="radio1" value="option1">
-                      <label for="radio13"></label>
-                    </div>
-                    <div class="media-body">
-                        <div class="media-body">
-                            <img src="../../../assets/images/orange_money.png" alt="logo_mtn">
-                            <p>Orange Money</p>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <button class="btn btn-primary col-lg-3" (click)="stepAttribute(1)">Continue</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-4 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <h5>Précédentes recharges de compte</h5>
+            <div class="col-md-12" *ngIf="loader">
+              <div class="loader-box">
+                <div class="loader-3"></div>
               </div>
             </div>
-            <div class="row" *ngIf="step === 2">
-              <h4 class="title-method">Montant</h4>
-              <div class="col-sm-12">
-                <div class="row">
-                  <div class="col">
-                    <div class="mb-5">
-                      <label class="form-label label-montant" for="exampleFormControlInput1">Entrer le montant</label>
-                      <input 
-                        class="form-control input-montant" 
-                        id="exampleFormControlInput1" 
-                        type="email" 
-                        placeholder="Montant"
-                        formControlName="amount"
-                        required=""
-                      >
+            <table class="table table-bordernone" *ngIf="!loader">
+              <thead>
+                <tr>
+                  <th>Désignation</th>
+                  <th>Date</th>
+                  <th>Montant</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let recent of recentOrders">
+                  <td class="font-success">
+                    <div class="media">
+                      <div class="font-primary">
+                        <app-feather-icons icon="arrow-up-right"></app-feather-icons>
+                      </div>
+                      <div class="media-body">
+                        {{ recent.type }}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <div class="row">
-                  <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(0)">Back</button>
-                  <button 
-                    class="btn btn-primary col-lg-4" 
-                    (click)="stepAttribute(2)"
-                    [disabled]="this.depositForm.controls['amount'].value ===''"
-                  >
-                    Continue
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="step === 3">
-              <h4 class="title-method">Résumé de la recharge</h4>
-              <div class="col-sm-12">
-                <div class="row" style="margin-top: 20px;">
-                  <div class="col">
-                    <h5>Type de paiement</h5>
-                    <p style="font-size: 15px;">Orange Money</p>
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 20px;">
-                  <div class="col">
-                    <h5>Montant</h5>
-                    <p style="font-size: 15px;">{{ depositForm.controls['amount'].value }}</p>
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 20px;">
-                  <button class="btn btn-secondary col-lg-4" (click)="stepAttribute(1)">Back</button>
-                  <button class="btn btn-primary col-lg-4" (click)="addRecharge()">Valider</button>
-                </div>
-              </div>
-            </div>
-          </form>
+                  </td>
+                  <td>
+                    <p>{{recent.date | date}}</p>
+                  </td>
+                  <td>
+                    <p>{{recent.taux}} XAF</p>
+                  </td>
+                  <td>
+                    <span class="badge badge-secondary counter digits">EFFECTUE</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
