@@ -31,7 +31,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HomeComponent } from './components/home/home.component';
 import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
 import { MyListingComponent } from './components/my-listing/my-listing.component';
-import { ProfileComponent } from './components/profile/profile.component'
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileFinanceComponent } from './components/home/profile-finance/profile-finance.component';
+import { VariationCryptoComponent } from './components/home/variation-crypto/variation-crypto.component'
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,9 @@ import { ProfileComponent } from './components/profile/profile.component'
     HomeComponent,
     RechargeCompteComponent,
     MyListingComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileFinanceComponent,
+    VariationCryptoComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ import { ProfileComponent } from './components/profile/profile.component'
     ReactiveFormsModule, 
     NgxCaptchaModule,
     HttpClientModule,
+    NgApexchartsModule,
     AngularSvgIconModule.forRoot()
   ],
   providers: [],

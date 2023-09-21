@@ -11,19 +11,19 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class MyListingComponent implements OnInit {
   public historics: any[] = [];
-  public loader: boolean;
+  public loader: boolean = true;
 
   constructor(private transacService: TransactionService) {}
 
   ngOnInit(): void {
-    this.loader = true;
     this.getAllTransaction()
   }
 
   getAllTransaction(): void {
     try {
-      this.loader = false;
+      this.loader = true;
       this.transacService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
+        this.loader = false;
         this.historics = response.data.transactions
       })
     } catch (error) {

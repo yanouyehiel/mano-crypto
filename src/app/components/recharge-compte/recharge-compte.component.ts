@@ -51,7 +51,6 @@ export class RechargeCompteComponent implements OnInit {
       this.classStep2 = ''
       this.classStep3 = 'current'
     }
-    console.log(this.step)
   }
 
   addRecharge(): void {

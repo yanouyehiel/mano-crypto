@@ -13,7 +13,8 @@ import { ResponseUser } from 'src/app/models/User';
 export class LoginComponent implements OnInit {
   public show: boolean = false;
   public loginForm!: FormGroup;
-  public errorMessage: any;
+  public error: boolean = false;
+  public errorMessage: string;
   public siteKey: string = environment.recaptchaSiteKey
   public textBtn: string = 'SIGN IN'
 
@@ -21,9 +22,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.removeItem('token-mansexch')
-    if (localStorage.getItem('user-mansexch')) {
-      localStorage.removeItem('user-mansexch')
-    }
+    localStorage.removeItem('user-mansexch')
+    localStorage.removeItem('_grecaptcha')
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
@@ -44,11 +44,17 @@ export class LoginComponent implements OnInit {
       }
       this.authService.login(data).subscribe((response: ResponseUser) => {
         console.log(response)
-        const token = {
-          token: response.data?.token
+        if (response.data) {
+          const token = {
+            token: response.data?.token
+          }
+          localStorage.setItem("token-mansexch", JSON.stringify(token));
+          this.router.navigate(['/client/home'])
+        } else {
+          this.error = true;
+          this.errorMessage = response.message;
         }
-        localStorage.setItem("token-mansexch", JSON.stringify(token));
-        this.router.navigate(['/client/home'])
+        
       })
       
     } catch (error) {

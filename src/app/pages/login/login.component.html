@@ -87,11 +87,9 @@
             >
               {{ textBtn }}
             </button>
-            <!-- <div class="loader-box">
-              <div class="loader-3"></div>
-            </div> -->
           </div>
           
+          <p *ngIf="error" class="text-danger" style="font-size: 15px;">{{ errorMessage }}</p>
           <p>
             New on our platform ?<a class="ms-2 text-primary" href="/auth/register"
               >Create an account</a

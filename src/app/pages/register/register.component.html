@@ -48,6 +48,12 @@
                 formControlName="phoneNumber"
               />
             </div>
+            <div
+              *ngIf="registerForm.controls['phoneNumber'].touched && registerForm.controls['phoneNumber'].invalid"
+              class="text text-danger mt-1"
+            >
+              Ne correspond pas à un numéro de téléphone
+            </div>
           </div>
           <div class="form-group">
             <label>Passcode</label>
