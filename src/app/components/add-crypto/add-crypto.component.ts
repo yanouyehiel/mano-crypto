@@ -50,21 +50,28 @@ export class AddCryptoComponent implements OnInit {
       type: 'BTC',
       value: 12.63,
       actuelValue: 39485000,
-      class: 'primary'
+      class: 'primary',
+      icon: 'bitcoin-btc-logo.svg'
     },
     {
       type: 'ETH',
       value: 4.63,
       actuelValue: 22251,
-      class: 'secondary'
+      class: 'secondary',
+      icon: 'ethereum-eth-logo.svg'
     },
     {
       type: 'LTC',
       value: 54.6,
       actuelValue: 39485,
-      class: 'primary'
+      class: 'primary',
+      icon: 'litecoin-ltc-logo.svg'
     }
   ]
+
+  public typeCrypto: string;
+  public recentOrders: any[] = [];
+  public loader: boolean = true;
 
   constructor(
     private modalService: NgbModal,
@@ -75,8 +82,9 @@ export class AddCryptoComponent implements OnInit {
     console.log('add crypto')
   }
 
-  VerticallyCenteredModal(verticallyContent:any){
+  VerticallyCenteredModal(verticallyContent:any, item: any){
     const modalRef = this.modalService.open(verticallyContent);
+    this.typeCrypto = item;
   }
 
   get layoutClass() {
@@ -86,4 +94,6 @@ export class AddCryptoComponent implements OnInit {
       this.layoutService.config.settings.layout.replace('layout', 'sidebar')
     );
   }
+
+  getAllBuyCrypto(): any {}
 }

@@ -3,6 +3,7 @@ import { DataCryptoService } from "src/app/services/data-crypto.service";
 
 let primary_color = '#0F74F6';
 let secondary_color = '#43DF97';
+let tertiary_color = '#cccccc';
 
 export type ChartOptions = {
     series?: ApexAxisChartSeries;
@@ -30,7 +31,7 @@ export let areaSpalineChart : ChartOptions | any = {
     chart: {
         height: 350,
         type: 'area',
-        toolbar:{
+        toolbar: {
             show: false
         }
     },
@@ -40,7 +41,7 @@ export let areaSpalineChart : ChartOptions | any = {
     stroke: {
         curve: 'smooth'
     },
-   series: [
+    series: [
         {
             name: 'BTC',
             data: [31, 40, 28, 51, 42, 109, 100]
@@ -48,6 +49,10 @@ export let areaSpalineChart : ChartOptions | any = {
         {
             name: 'LTC',
             data: [11, 32, 45, 32, 34, 52, 41]
+        },
+        {
+            name: 'ETH',
+            data: [50, 8, 32, 21, 17, 65, 97]
         }
     ],
  
@@ -68,6 +73,6 @@ export let areaSpalineChart : ChartOptions | any = {
             format: 'dd/MM/yy HH:mm'
         },
     },
-   colors:[ primary_color, secondary_color ]
+    colors:[ primary_color, secondary_color, tertiary_color ]
  }
  

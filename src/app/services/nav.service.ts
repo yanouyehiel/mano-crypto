@@ -98,22 +98,32 @@ export class NavService {
       children: [
         {
           path: '/client/recharge-compte',
-          title: 'Recharger compte',
+          title: 'Recharger le compte',
           type: 'link'
         },
         {
           path: '/client/add-crypto',
-          title: 'Acheter crypto',
+          title: 'Acheter de la crypto',
           type: 'link'
         },
         {
           path: '/client/retirer-crypto',
-          title: 'Retirer crypto',
+          title: 'Retirer de la crypto',
           type: 'link'
         },
         {
           path: '/client/vendre-crypto',
-          title: 'Vendre crypto',
+          title: 'Vendre de la crypto',
+          type: 'link'
+        },
+        {
+          path: '/client/taux-change',
+          title: 'Consulter le taux de change',
+          type: 'link'
+        },
+        {
+          path: '/client/convertir-crypto',
+          title: 'Convertir la crypto',
           type: 'link'
         }
       ]
@@ -130,7 +140,7 @@ export class NavService {
       path: '/solde'
     },
     {
-      title: 'Retrait',
+      title: 'Retirer des fonds',
       icon: 'chevrons-left',
       type: 'link',
       badgeType: 'success',

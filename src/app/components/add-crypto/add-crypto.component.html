@@ -19,8 +19,8 @@
                     </div>
                 </div>
             </div>
-            <div class="bootstrap-tables">
-                <div class="row">
+            <div class="row">
+                <div class="bootstrap-tables">
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-header">
@@ -31,45 +31,52 @@
                             <div class="col-sm-12 col-lg-12 col-xl-12">
                                 <div class="table-responsive">
                                 <table class="table">
-                                    <!-- <thead>
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Employee Name</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                    </thead> -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Monnaie virtuelle</th>
+                                            <th scope="col">Quantité</th>
+                                            <th scope="col">Monnaie locale</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                     <ng-container *ngFor="let item of items"> 
-                                    <tr>
-                                        <th scope="row">{{item.name}}</th>
-                                        <td>1 {{item.abv}}</td>
-                                        <td>{{item.value}} FCFA</td>
-                                        <td>
-                                            <button 
-                                                class="btn btn-primary-gradien" 
-                                                type="button" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#exampleModalCenter" 
-                                                (click)="VerticallyCenteredModal(verticallyContent)"
-                                            >
-                                                Buy
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">{{item.name}}</th>
+                                            <td>1 {{item.abv}}</td>
+                                            <td>{{item.value}} FCFA</td>
+                                            <td>
+                                                <button 
+                                                    class="btn btn-primary-gradien" 
+                                                    type="button" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#exampleModalCenter" 
+                                                    (click)="VerticallyCenteredModal(verticallyContent, item.abv)"
+                                                >
+                                                    Acheter
+                                                </button>
+                                            </td>
+                                        </tr>
                                     </ng-container>
                                     <ng-template #verticallyContent let-modal>
                                         <div class="modal-header">
-                                        <h5 class="modal-title">Buying Process</h5>
-                                        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>    
+                                            <h5 class="modal-title">Buying Process</h5>
+                                            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>    
                                         </div>
                                         <div class="modal-body">
-                                        <p class="text-center">How much are you needing ?</p>
-                                        <input type="text" class="form-control">
-                                        <label for="">BTC</label>
+                                            <form class="form theme-form">
+                                                <p class="text-center">How much {{ typeCrypto }} are you needing ?</p>
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label">{{ typeCrypto }}</label>
+                                                    <div class="col-sm-9">
+                                                      <input class="form-control" type="text">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-primary" type="button">Acheter</button>
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Valider</button>
-                                        <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
+                                            <button class="btn btn-secondary" type="button" aria-label="Close" (click)="modal.dismiss('Cross click')">Fermer</button>
                                         </div>
                                     </ng-template>
                                     </tbody>
@@ -81,6 +88,55 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xl-12 box-col-12 des-xl-100">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <h5>Précédents achats de crypto</h5>
+                        <div class="col-md-12" *ngIf="loader">
+                          <div class="loader-box">
+                            <div class="loader-3"></div>
+                          </div>
+                        </div>
+                        <table class="table table-bordernone" *ngIf="!loader">
+                          <thead>
+                            <tr>
+                              <th>Désignation</th>
+                              <th>Date</th>
+                              <th>Montant</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let recent of recentOrders">
+                              <td class="font-success">
+                                <div class="media">
+                                  <div class="font-primary">
+                                    <app-feather-icons icon="arrow-up-right"></app-feather-icons>
+                                  </div>
+                                  <div class="media-body">
+                                    {{ recent.type }}
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <p>{{recent.date | date}}</p>
+                              </td>
+                              <td>
+                                <p>{{recent.taux}} XAF</p>
+                              </td>
+                              <td>
+                                <span class="badge badge-success counter digits">EFFECTUE</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-4">
             <div class="card">
@@ -90,19 +146,19 @@
                 <div class="row">
                     <div class="container-fluid dashboard-default-sec">
                         <div class="row">
-                            <div class="col-xl-5 box-col-12 des-xl-100">
+                            <div class="col-xl-12 box-col-12 des-xl-100">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-6 box-col-3" *ngFor="let currentValue of currentValues">
                                         <div class="card income-card card-{{currentValue.class}}">                                 
                                             <div class="card-body text-center">                                  
                                                 <div class="round-box">
-                                                    <!-- <svg-icon src="assets/images/svg/dashboard/dashboard.svg" [svgStyle]="{ 'width.px':90 }"></svg-icon> -->
+                                                    <svg-icon src="assets/images/svg/{{currentValue.icon}}" [svgStyle]="{ 'width.px':90 }"></svg-icon>
                                                 </div>
                                                 <h5>{{ currentValue.value}} {{ currentValue.type }}</h5>
                                                 <p>Value <b>{{ currentValue.actuelValue }}</b> XAF</p>
                                                 <a class="btn-arrow arrow-{{currentValue.class}}" href="javascript:void(0)"><i class="toprightarrow-primary fa fa-arrow-up me-2"></i>95.54% </a>
                                                 <div class="parrten">
-                                                    <!-- <svg-icon src="assets/images/svg/dashboard/boll.svg" [svgStyle]="{ 'width.px':90 }"></svg-icon> -->
+                                                    <svg-icon src="assets/images/svg/{{currentValue.icon}}" [svgStyle]="{ 'width.px':90 }"></svg-icon>
                                                 </div>
                                             </div>
                                         </div>
