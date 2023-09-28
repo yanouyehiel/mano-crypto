@@ -61,11 +61,11 @@ export class AddCryptoComponent implements OnInit {
       icon: 'ethereum-eth-logo.svg'
     },
     {
-      type: 'LTC',
+      type: 'USD',
       value: 54.6,
       actuelValue: 39485,
       class: 'primary',
-      icon: 'litecoin-ltc-logo.svg'
+      icon: 'usd-svg.svg'
     }
   ]
 
