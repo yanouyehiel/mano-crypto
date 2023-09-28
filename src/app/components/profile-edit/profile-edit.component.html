@@ -1,0 +1,55 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h4 class="card-title mb-0">Edit Profile</h4>
+                <div class="card-options"><a class="card-options-collapse" href="javascript:void(0)" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:void(0)" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+            </div>
+          <div class="card-body">
+            <form class="form theme-form projectcreate">
+              <div class="row">
+                <div class="col">
+                  <div class="mb-3">
+                    <label>Noms et prénoms</label>
+                    <input class="form-control" type="text" value="{{ user.name }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="mb-3">
+                    <label>Phone number</label>
+                    <input class="form-control" type="text" value="{{ user.phone }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="mb-3">
+                    <label>Email</label>
+                    <input class="form-control" type="email" value="{{ user.email }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row" [style]="user.isVerify ? 'display: none;' : 'display: visible'">
+                <div class="col">
+                  <div class="mb-3">
+                    <app-upload-file (filesUploaded)="onFileChanged($event)"></app-upload-file>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-secondary me-3" (click)="updateProfile()">Mettre à jour</button>
+                </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

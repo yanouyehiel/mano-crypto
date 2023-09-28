@@ -1,0 +1,17 @@
+<label>Importer les fichiers</label>
+<div  class="dropzone dz-clickable" >
+   <ngx-dropzone (change)="onSelect($event)" [multiple]="true">
+      <ngx-dropzone-label>
+         <div>
+            <div class="dz-message needsclick ">
+                <i class="icon-cloud-up"></i>
+                <h6>Importer les fichiers manquants</h6>
+                <span class="dz-message needsclick">(Ajouter juste des fichiers qui ne sont pas encore uploadés)</span>
+            </div>
+         </div>
+      </ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+         <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+   </ngx-dropzone>
+</div>

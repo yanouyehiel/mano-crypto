@@ -14,6 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RechargeCompteComponent } from './components/recharge-compte/recharge-compte.component';
 import { MyListingComponent } from './components/my-listing/my-listing.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'profile-edit',
+        component: ProfileEditComponent
       },
       {
         path: 'add-crypto',

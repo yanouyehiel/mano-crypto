@@ -31,7 +31,8 @@ export interface ResponseProfile {
             name: string;
             email: string;
             phoneNumber: string;
-            isVerified: boolean;
+            isEmailVerified: boolean;
+            isPhoneNumberVerified: boolean;
         }
     }
 }

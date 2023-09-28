@@ -35,6 +35,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileFinanceComponent } from './components/home/profile-finance/profile-finance.component';
 import { VariationCryptoComponent } from './components/home/variation-crypto/variation-crypto.component'
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { UploadFileComponent } from './components/profile-edit/upload-file/upload-file.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MyListingComponent,
     ProfileComponent,
     ProfileFinanceComponent,
-    VariationCryptoComponent
+    VariationCryptoComponent,
+    ProfileEditComponent,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +80,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     NgxCaptchaModule,
     HttpClientModule,
     NgApexchartsModule,
+    NgxDropzoneModule,
     AngularSvgIconModule.forRoot()
   ],
   providers: [],

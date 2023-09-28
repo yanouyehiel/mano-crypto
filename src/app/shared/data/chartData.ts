@@ -47,7 +47,7 @@ export let areaSpalineChart : ChartOptions | any = {
             data: [31, 40, 28, 51, 42, 109, 100]
         }, 
         {
-            name: 'LTC',
+            name: 'USD',
             data: [11, 32, 45, 32, 34, 52, 41]
         },
         {
