@@ -137,7 +137,7 @@ export class NavService {
       type: 'link',
       badgeType: 'success',
       active: false,
-      path: '/solde'
+      path: '/client/solde'
     },
     {
       title: 'Retirer des fonds',
@@ -145,7 +145,7 @@ export class NavService {
       type: 'link',
       badgeType: 'success',
       active: false,
-      path: '/retrait'
+      path: '/client/retrait'
     }
   ]
 

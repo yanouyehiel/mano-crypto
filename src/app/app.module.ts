@@ -38,6 +38,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { UploadFileComponent } from './components/profile-edit/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
 
 @NgModule({
   declarations: [
@@ -70,13 +71,14 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ProfileFinanceComponent,
     VariationCryptoComponent,
     ProfileEditComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    RetirerFondsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     NgxCaptchaModule,
     HttpClientModule,
     NgApexchartsModule,

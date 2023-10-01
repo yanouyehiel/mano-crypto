@@ -15,6 +15,7 @@ import { RechargeCompteComponent } from './components/recharge-compte/recharge-c
 import { MyListingComponent } from './components/my-listing/my-listing.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
 
 const routes: Routes = [
   {
@@ -61,9 +62,14 @@ const routes: Routes = [
       {
         path: 'my-listing',
         component: MyListingComponent
-      }
+      },
+      {
+        path: 'retrait',
+        component: RetirerFondsComponent
+      },
     ]
   },
+
   {
     path: 'auth/validation-compte',
     component: ValidationComponent
@@ -72,7 +78,7 @@ const routes: Routes = [
     path: 'auth/forgot-password',
     component: ForgotPasswordComponent
   },
-  
+
   {
     path: '**',
     component: PageNotFoundComponent
