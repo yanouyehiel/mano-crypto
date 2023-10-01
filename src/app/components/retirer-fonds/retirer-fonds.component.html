@@ -13,7 +13,7 @@
                 <div class="u-step" [ngClass]="classStep1">
                   <span class="u-step-number">1</span>
                   <div class="u-step-desc">
-                    <span class="u-step-title">Information</span>
+                    <span class="u-step-title">Payment Type</span>
                     <p>Different types of payment</p>
                   </div>
                 </div>
@@ -21,7 +21,15 @@
                 <div class="u-step" [ngClass]="classStep2">
                   <span class="u-step-number">2</span>
                   <div class="u-step-desc">
-                    <span class="u-step-title">Confirm</span>
+                    <span class="u-step-title">Payment Information</span>
+                    <p>Provide request datas</p>
+                  </div>
+                </div>
+
+                <div class="u-step" [ngClass]="classStep3">
+                  <span class="u-step-number">3</span>
+                  <div class="u-step-desc">
+                    <span class="u-step-title">Completed</span>
                     <p>Review and Submit</p>
                   </div>
                 </div>
@@ -32,7 +40,90 @@
                 class="mega-inline form theme-form"
                 [formGroup]="depositForm"
               >
+
                 <div class="row" *ngIf="step === 1">
+                  <h4 class="title-method">Choose Method Type</h4>
+                  <div class="col-sm-6">
+                    <div class="card">
+                      <div class="media p-20">
+                        <div class="radio radio-primary me-3">
+                          <input
+                            id="radio14"
+                            type="radio"
+                            name="radio1"
+                            formControlName="paiementMethod"
+                            value="MOMO"
+                          />
+                          <label for="radio14"></label>
+                        </div>
+                        <div class="media-body">
+                          <img
+                            src="../../../assets/images/mobile_money.jpg"
+                            alt="logo_mtn"
+                            height="100px"
+                            width="150px"
+                          />
+                          <p>Mobile Money</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="card">
+                      <div class="media p-20">
+                        <div class="radio radio-secondary me-3">
+                          <input
+                            id="radio13"
+                            type="radio"
+                            formControlName="paiementMethod"
+                            name="radio1"
+                            value="OM"
+                          />
+                          <label for="radio13"></label>
+                        </div>
+                        <div class="media-body">
+                          <div class="media-body">
+                            <img
+                              src="../../../assets/images/orange_money.png"
+                              alt="logo_mtn"
+                              height="100px"
+                            width="150px"
+                            />
+                            <p>Orange Money</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <button
+                    [disabled]="depositForm.controls['paiementMethod'].invalid"
+                      class="btn btn-primary col-lg-3"
+                      (click)="stepAttribute(1)"
+                      style="margin-bottom: 40px"
+                    >
+                      Suivant
+                    </button>
+                  </div>
+                </div>
+                <div class="row" *ngIf="step === 2">
+                  <h4 class="title-method"></h4>
+                  <h4 class="title-method">Numero de Telephone</h4>
+                  <div class="mb-5">
+                    <label
+                      class="form-label label-phone"
+                      for="exampleFormControlInput1"
+                      >Entrer le numero de telephone</label
+                    >
+                    <input
+                      class="form-control input-phone"
+                      id="exampleFormControlInput1"
+                      type="number"
+                      placeholder="Numero de telephone"
+                      formControlName="phoneNumber"
+                      required
+                    />
+                  </div>
                   <h4 class="title-method">Montant</h4>
                   <div class="col-sm-12">
                     <div class="row">
@@ -54,80 +145,32 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <h4 class="title-method">Choose Method Type</h4>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="media p-20">
-                        <div class="radio radio-primary me-3">
-                          <input
-                            id="radio14"
-                            type="radio"
-                            name="radio1"
-                            value="option1"
-                          />
-                          <label for="radio14"></label>
-                        </div>
-                        <div class="media-body">
-                          <img
-                            src="../../../assets/images/mobile_money.jpg"
-                            alt="logo_mtn"
-                          />
-                          <p>Mobile Money</p>
-                        </div>
+                    <div
+                      class="row mt-4"
+                      style="margin-top: 20px; margin-bottom: 40px"
+                    >
+                      <div class="col-md-4">
+                        <button
+                          class="btn btn-secondary"
+                          (click)="stepAttribute(0)"
+                        >
+                          Precedent
+                        </button>
+                      </div>
+                      <div class="col-md-4">
+                        <button
+                        [disabled]="depositForm.controls['amount'].invalid||depositForm.controls['amount'].invalid"
+                          class="btn btn-primary"
+                          (click)="stepAttribute(2)"
+                        >
+                          Suivant
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="media p-20">
-                        <div class="radio radio-secondary me-3">
-                          <input
-                            id="radio13"
-                            type="radio"
-                            name="radio1"
-                            value="option1"
-                          />
-                          <label for="radio13"></label>
-                        </div>
-                        <div class="media-body">
-                          <div class="media-body">
-                            <img
-                              src="../../../assets/images/orange_money.png"
-                              alt="logo_mtn"
-                            />
-                            <p>Orange Money</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-5">
-                    <label
-                      class="form-label label-phone"
-                      for="exampleFormControlInput1"
-                      >Entrer le numero de telephone</label
-                    >
-                    <input
-                      class="form-control input-phone"
-                      id="exampleFormControlInput1"
-                      type="number"
-                      placeholder="Numero de telephone"
-                      formControlName="phoneNumber"
-                      required
-                    />
-                  </div>
-                  <div class="col-sm-12">
-                    <button
-                      class="btn btn-primary col-lg-3"
-                      (click)="stepAttribute(1)"
-                      style="margin-bottom: 40px"
-                    >
-                      Continue
-                    </button>
                   </div>
                 </div>
-                <div class="row" *ngIf="step === 2">
+
+                <div class="row" *ngIf="step === 3">
                   <h4 class="title-method">Résumé de la recharge</h4>
                   <div class="col-sm-12">
                     <div class="row" style="margin-top: 20px">
@@ -152,11 +195,15 @@
                         </p>
                       </div>
                     </div>
-                    <div class="row mt-4" style="margin-top: 40px;margin-bottom: 40px">
+
+                    <div
+                      class="row mt-4"
+                      style="margin-top: 40px; margin-bottom: 40px"
+                    >
                       <div class="col-md-4">
                         <button
                           class="btn btn-secondary"
-                          (click)="stepAttribute(0)"
+                          (click)="stepAttribute(1)"
                         >
                           Back
                         </button>
@@ -234,9 +281,6 @@
   </div>
 </div>
 
-<button class="btn btn-danger sweet-7" type="button" (click)="phoneNotActive()">
-  Danger
-</button>
 <ng-template #simpleContent let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Confirmer votre identité</h5>
@@ -272,7 +316,20 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" data-bs-dismiss="modal" (click)="modal.dismiss('click')">Fermer</button>
-    <button class="btn btn-secondary" type="button" (click)="ckeckConfirmation()">Confirmer</button>
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-bs-dismiss="modal"
+      (click)="modal.dismiss('click')"
+    >
+      Fermer
+    </button>
+    <button
+      class="btn btn-secondary"
+      type="button"
+      (click)="ckeckConfirmation()"
+    >
+      Confirmer
+    </button>
   </div>
 </ng-template>

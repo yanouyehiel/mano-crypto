@@ -34,6 +34,7 @@ export class RetirerFondsComponent implements OnInit {
   public classStep2: string;
   public classStep3: string;
   public step!: number;
+  public alertError:string = '';
   public depositForm: FormGroup;
   private userRegistred: any = localStorage.getItem('user-mansexch');
   private userParse: any = JSON.parse(this.userRegistred);
@@ -47,8 +48,9 @@ export class RetirerFondsComponent implements OnInit {
     this.depositForm = this.fb.group({
       amount: ['', Validators.required],
       phoneNumber: ['', Validators.required],
+      paiementMethod: ['', Validators.required],
     });
-    this.getAllDeposits();
+    this.getAllWithdrawals();
   }
 
   stepAttribute(step: number): void {
@@ -56,10 +58,17 @@ export class RetirerFondsComponent implements OnInit {
     if (this.step === 1) {
       this.classStep1 = 'current';
       this.classStep2 = '';
+      this.classStep3 = '';
     }
     if (this.step === 2) {
       this.classStep1 = '';
       this.classStep2 = 'current';
+      this.classStep3 = '';
+    }
+     if (this.step === 3) {
+      this.classStep1 = '';
+      this.classStep2 = '';
+      this.classStep3 = 'current';
     }
   }
 
@@ -74,9 +83,9 @@ export class RetirerFondsComponent implements OnInit {
       this.success()
     }
     this.modalService.dismissAll();
-
-
   }
+
+
 
   success(): void {
     Swal.fire('Retrait initié !');
@@ -90,13 +99,13 @@ export class RetirerFondsComponent implements OnInit {
   }
 
   //TODO - Will be updated
-  getAllDeposits(): void {
+  getAllWithdrawals(): void {
     this.depositService
       .getAllTransaction()
       .subscribe((response: ResponseTransactionList) => {
         this.loader = false;
         this.recentOrders = response.data.transactions.filter(
-          (deposit) => deposit.type === 'DEPOSIT'
+          (deposit) => deposit.type === 'WITHDRAWAL'
         );
         console.log(this.recentOrders);
       });
