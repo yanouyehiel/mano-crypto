@@ -125,6 +125,11 @@ export class NavService {
           path: '/client/convertir-crypto',
           title: 'Convertir la crypto',
           type: 'link'
+        },
+        {
+          path: '/client/retirer-fonds',
+          title: 'Retirer des fonds',
+          type: 'link'
         }
       ]
     },
