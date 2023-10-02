@@ -9,7 +9,6 @@
           <h4>Confirmation de votre adresse mail</h4>
           <h6>Veuillez entrer le code qui vous a été envoyé</h6>
           <div class="form-group">
-            <!-- <label>Email or Username</label> -->
             <div class="input-group">
               <span class="input-group-text">
                 <i class="icon-mobile text-primary"></i>
@@ -34,10 +33,10 @@
             </button>
           </div>
           
-          <p class="text-success" style="font-size: 20px;" *ngIf="error === 1000">Confirmation de compte réussie !</p>
+          <!-- <p class="text-success" style="font-size: 20px;" *ngIf="error === 1000">Confirmation de compte réussie !</p> -->
           <p class="text-danger" style="font-size: 20px;" *ngIf="error === 1004">Cet utilisateur n'existe pas</p>
           <p>
-            Vous pouvez vous connecter à présent
+            Retourner à la connexion
             <a class="ms-2 text-primary" href="/auth/login"
               >Se connecter</a
             >

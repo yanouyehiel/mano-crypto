@@ -45,7 +45,7 @@ export class ConfirmLoginComponent implements OnInit {
         this.error = response.statusCode
       } else if (response.statusCode === 1000) {
         this.error = response.statusCode
-        //this.router.navigate(['/auth/login'])
+        this.router.navigate(['/auth/confirmation-compte'])
       }
     })
   }

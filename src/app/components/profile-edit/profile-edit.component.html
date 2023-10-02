@@ -8,12 +8,16 @@
                 <div class="card-options"><a class="card-options-collapse" href="javascript:void(0)" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:void(0)" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
             </div>
           <div class="card-body">
-            <form class="form theme-form projectcreate">
+            <form class="form theme-form projectcreate" (ngSubmit)="updateProfile()">
               <div class="row">
                 <div class="col">
                   <div class="mb-3">
                     <label>Noms et prénoms</label>
-                    <input class="form-control" type="text" value="{{ user.name }}">
+                    <input 
+                      class="form-control" 
+                      type="text" 
+                      [value]="user.name"
+                    >
                   </div>
                 </div>
               </div>
@@ -21,7 +25,11 @@
                 <div class="col">
                   <div class="mb-3">
                     <label>Phone number</label>
-                    <input class="form-control" type="text" value="{{ user.phone }}">
+                    <input 
+                      class="form-control" 
+                      type="text" 
+                      [value]="user.phone"
+                    >
                   </div>
                 </div>
               </div>
@@ -29,21 +37,30 @@
                 <div class="col">
                   <div class="mb-3">
                     <label>Email</label>
-                    <input class="form-control" type="email" value="{{ user.email }}">
+                    <input 
+                      class="form-control" 
+                      type="email" 
+                      [value]="user.email"
+                    >
                   </div>
                 </div>
               </div>
               <div class="row" [style]="user.isVerify ? 'display: none;' : 'display: visible'">
                 <div class="col">
                   <div class="mb-3">
-                    <app-upload-file (filesUploaded)="onFileChanged($event)"></app-upload-file>
+                    <app-upload-file 
+                      (filesUploaded)="onFileChanged($event)"
+                    ></app-upload-file>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <div class="text-end">
-                    <button type="submit" class="btn btn-secondary me-3" (click)="updateProfile()">Mettre à jour</button>
+                    <button 
+                      type="submit" 
+                      class="btn btn-secondary me-3" 
+                    >Mettre à jour</button>
                 </div>
                 </div>
               </div>
