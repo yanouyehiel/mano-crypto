@@ -14,3 +14,4 @@ export class ProfileComponent {
     this.router.navigate(['/client/profile-edit'])
   }
 }
+
