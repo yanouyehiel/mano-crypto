@@ -64,7 +64,7 @@ const routes: Routes = [
         component: MyListingComponent
       },
       {
-        path: 'retrait',
+        path: 'retrait-fonds',
         component: RetirerFondsComponent
       },
     ]

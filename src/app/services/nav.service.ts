@@ -127,7 +127,7 @@ export class NavService {
           type: 'link'
         },
         {
-          path: '/client/retirer-fonds',
+          path: '/client/retrait-fonds',
           title: 'Retirer des fonds',
           type: 'link'
         }

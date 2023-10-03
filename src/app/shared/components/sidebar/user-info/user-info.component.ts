@@ -24,7 +24,7 @@ export class UserInfoComponent implements OnInit {
         name: result.data?.user.name,
         email: result.data?.user.email,
         phone: result.data?.user.phoneNumber,
-        isVerify: result.data?.user.isPhoneNumberVerified
+        isPhoneVerified: result.data?.user.isPhoneNumberVerified
       }
       localStorage.setItem('user-mansexch', JSON.stringify(result.data))
     })

@@ -38,7 +38,7 @@ export class ProfileEditComponent implements OnInit {
         name: profile.data?.user.name,
         email: profile.data?.user.email,
         phone: profile.data?.user.phoneNumber,
-        isVerify: profile.data?.user.isPhoneNumberVerified
+        isPhoneVerified: profile.data?.user.isPhoneNumberVerified
       }
     })
   }

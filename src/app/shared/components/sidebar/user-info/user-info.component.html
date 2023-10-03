@@ -14,12 +14,18 @@
         <span><span class="counter">Téléphone</span></span>
         <p>{{ user.phone }}</p>
       </li>
-      <!-- <li><span>2 year</span>
-        <p>Experince</p>
-      </li> -->
-      <li><span><span class="counter">Status compte</span></span>
-        <p *ngIf="user.isVerify">Validé</p>
-        <p *ngIf="!user.isVerify">Pas validé</p>
-      </li>
+      <ng-container *ngIf="user.isPhoneVerified">
+        <li>
+          <span><span class="counter">Status compte</span></span>
+          <p>Validé</p>
+        </li>
+      </ng-container>
+      
+      <ng-container *ngIf="!user.isPhoneVerified">
+        <li [routerLink]="'/client/profile-edit'" class="not-validated">
+          <span><span class="counter">Status compte</span></span>
+          <p>Pas validé</p>
+        </li>
+      </ng-container>
     </ul>
 </div>

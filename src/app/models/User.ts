@@ -11,7 +11,8 @@ export interface ProfileUser {
     name: string | undefined;
     email: string | undefined;
     phone: string | undefined;
-    isVerify: boolean | undefined;
+    isPhoneVerified?: boolean | undefined;
+    isEmailVerified?: boolean | undefined;
 }
 
 export interface ResponseUser {
