@@ -40,17 +40,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <ng-container *ngFor="let item of items"> 
+                                    <ng-container *ngFor="let item of items">
                                         <tr>
                                             <th scope="row">{{item.name}}</th>
                                             <td>1 {{item.abv}}</td>
                                             <td>{{item.value}} FCFA</td>
                                             <td>
-                                                <button 
-                                                    class="btn btn-primary-gradien" 
-                                                    type="button" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#exampleModalCenter" 
+                                                <button
+                                                    class="btn btn-primary-gradien"
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModalCenter"
                                                     (click)="VerticallyCenteredModal(verticallyContent, item.abv)"
                                                 >
                                                     Acheter
@@ -61,7 +61,7 @@
                                     <ng-template #verticallyContent let-modal>
                                         <div class="modal-header">
                                             <h5 class="modal-title">Buying Process</h5>
-                                            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>    
+                                            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
                                         </div>
                                         <div class="modal-body">
                                             <form class="form theme-form">
@@ -149,8 +149,8 @@
                             <div class="col-xl-12 box-col-12 des-xl-100">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-6 box-col-3" *ngFor="let currentValue of currentValues">
-                                        <div class="card income-card card-{{currentValue.class}}">                                 
-                                            <div class="card-body text-center">                                  
+                                        <div class="card income-card card-{{currentValue.class}}">
+                                            <div class="card-body text-center">
                                                 <div class="round-box">
                                                     <svg-icon src="assets/images/svg/{{currentValue.icon}}" [svgStyle]="{ 'width.px':90 }"></svg-icon>
                                                 </div>

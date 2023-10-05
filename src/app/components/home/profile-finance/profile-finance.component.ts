@@ -9,17 +9,17 @@ const Swal = require('sweetalert2')
 export class ProfileFinanceComponent implements OnInit {
   private alertWelcomeTime: number = 0;
   constructor() {
-    
+
   }
 
   ngOnInit(): void {
     this.alertWelcomeTime = 1;
-    if (this.alertWelcomeTime === 1) {
+    if (this.alertWelcomeTime !== 1) {
       this.dialog()
     }
   }
 
-  
+
   dialog(){
     Swal.fire({
       position: 'top-end',
