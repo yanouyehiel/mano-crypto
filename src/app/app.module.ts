@@ -39,6 +39,7 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
 import { UploadFileComponent } from './components/profile-edit/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
+import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.
     ProfileEditComponent,
     UploadFileComponent,
     RetirerFondsComponent,
+    EnterEmailComponent,
   ],
   imports: [
     BrowserModule,
