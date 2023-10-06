@@ -26,17 +26,17 @@
           </div>
         </div>
       </div>
-      <form [formGroup]="convertForm"></form>
+      <form [formGroup]="convertForm">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-12">
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-2"></div>
+                <div class="col-2"></div>
 
-                <div class="col-sm-4" style="font-weight: 600">To XAF</div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-4">
+                <div class="col-4" style="font-weight: 600">To XAF</div>
+                <div class="col-2"></div>
+                <div class="col-4">
                   Balance:
                   <span style="font-weight: 600; font-size: larger">
                     0.5 {{convertForm.controls['crypto'].value}}</span
@@ -46,9 +46,9 @@
             </div>
 
             <div class="row pb-5">
-              <div class="col-sm-2"></div>
+              <div class="col-2"></div>
 
-              <div class="col-sm-3">
+              <div class="col-3">
                 <div>
                   <input
                     class="form-control text-black-50 m-2"
@@ -61,8 +61,8 @@
                 </div>
               </div>
 
-              <div class="col-sm-3"></div>
-              <div class="col-sm-4">
+              <div class="col-3"></div>
+              <div class="col-4">
                 <div class="card-body dropdown-basic">
                   <div class="dropdown">
                     <div class="btn-group mb-0">
@@ -82,10 +82,11 @@
               </div>
             </div>
             <div class="row pb-5 pt-2">
-              <div class="col-sm-5"></div>
+              <div class="col-5"></div>
 
               <div class="col-4">
-                <button class="btn btn-outline-primary" [disabled]="convertForm.controls['crypto'].invalid||convertForm.controls['amount'].invalid">
+                <button  (click)="success()" [disabled]="convertForm.controls['crypto'].invalid||convertForm.controls['amount'].invalid" class="btn btn-outline-primary"
+                >
                   <i class="icofont icofont-ui-rotation"></i> Convertir
                 </button>
               </div>
@@ -93,6 +94,7 @@
           </div>
         </div>
       </div>
+    </form>
     </div>
     <div class="col-sm-3">
       <div class="container-fluid dashboard-default-sec">

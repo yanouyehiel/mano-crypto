@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-convertir-crypto-devise',
@@ -10,42 +11,39 @@ export class ConvertirCryptoDeviseComponent  implements OnInit{
 
   constructor(private formBuilder:FormBuilder){}
 
-  convertForm:FormGroup
-
-
-  ngOnInit(): void {
-    this.convertForm = this.formBuilder.group({
-      amount: ['', Validators.required],
-      crypto: ['', Validators.required],
-    });
-  }
-
-
-  get layoutClass() {
-    return
-      // this.layoutService.config.settings.sidebar_type +
-      // ' ' +
-      // this.layoutService.config.settings.layout.replace('layout', 'sidebar')
-
-  }
-
-  getAllBuyCrypto(): any {}
+  convertForm:FormGroup = this.formBuilder.group({
+    amount: ['', Validators.required],
+    crypto: ['BTC', Validators.required],
+  });
   public earningData = [
     {
       id: 1,
       classCompo: 'bg-primary',
       icon: 'database',
       title: 'Fcfa XAF',
-      count: '56850'
+      count: '9000'
     },
     {
       id: 2,
-      classCompo: 'bg-secondary',
+      classCompo: 'bg-success',
       icon: 'shopping-bag',
-      title: 'USD USA',
-      count: '56850'
+      title: 'USDT USA',
+      count: '40'
     }
   ];
+
+  ngOnInit(): void {
+
+  }
+
+
+  getAllBuyCrypto(){
+    console.table(this.convertForm);
+  }
+
+  success(){
+    Swal.fire('Success', "Vous avez converti vos fonds ?", 'success');
+  }
 
 
 
