@@ -70,7 +70,6 @@ const routes: Routes = [
       },
     ]
   },
-
   {
     path: 'auth/validation-compte',
     component: ValidationComponent
@@ -80,7 +79,7 @@ const routes: Routes = [
     component: EnterEmailComponent
   },
   {
-    path: 'auth/forgot-password',
+    path: 'auth/forgot-password/:user/:code',
     component: ForgotPasswordComponent
   },
 
