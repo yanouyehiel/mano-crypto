@@ -16,7 +16,10 @@ import { MyListingComponent } from './components/my-listing/my-listing.component
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
+
+import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-devise/convertir-crypto-devise.component';
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
+
 
 const routes: Routes = [
   {
@@ -67,6 +70,10 @@ const routes: Routes = [
       {
         path: 'retrait-fonds',
         component: RetirerFondsComponent
+      },
+      {
+        path: 'convertir-crypto',
+        component: ConvertirCryptoDeviseComponent
       },
     ]
   },

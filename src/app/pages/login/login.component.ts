@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       recaptcha: ['', Validators.required]
     })
   }
-  
+
   showPassword() {
     this.show = !this.show;
   }
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     try {
       this.textBtn = 'Login...'
       const data = {
-        email: this.loginForm.controls['email'].value,  
+        email: this.loginForm.controls['email'].value,
         password: this.loginForm.controls['password'].value
       }
       this.authService.login(data).subscribe((response: ResponseUser) => {
@@ -54,11 +54,11 @@ export class LoginComponent implements OnInit {
           this.error = true;
           this.errorMessage = response.message;
         }
-        
+
       })
-      
+
     } catch (error) {
       console.log(error)
-    } 
+    }
   }
 }

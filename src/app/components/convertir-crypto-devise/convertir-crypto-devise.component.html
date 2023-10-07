@@ -1,0 +1,136 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container-fluid general-widget">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="row">
+        <div
+          class="col-sm-6 col-xl-6 col-lg-6"
+          *ngFor="let data of earningData"
+        >
+          <div class="card o-hidden border-0">
+            <div class="{{ data.classCompo }} b-r-4 card-body">
+              <div class="media static-top-widget">
+                <div class="align-self-center text-center">
+                  <app-feather-icons [icon]="data.icon"></app-feather-icons>
+                </div>
+                <div class="media-body">
+                  <span class="m-0">{{ data.title }}</span>
+                  <h4 class="mb-0 counter">{{ data.count }}</h4>
+                  <app-feather-icons
+                    [icon]="data.icon"
+                    class="icon-bg"
+                  ></app-feather-icons>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="convertForm">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-2"></div>
+
+                  <div class="col-4" style="font-weight: 600">To XAF</div>
+                  <div class="col-2"></div>
+                  <div class="col-4">
+                    Balance:
+                    <span style="font-weight: 600; font-size: larger">
+                      0.5 {{ convertForm.controls["crypto"].value }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pb-5">
+                <div class="col-2"></div>
+
+                <div class="col-3">
+                  <div>
+                    <input
+                      class="form-control text-black-50 m-2"
+                      style="font-size: 30px; font-weight: 500; border: 1px solid;"
+                      type="number"
+                      formControlName="amount"
+                      placeholder="0.00"
+                    />
+                    <span class="text-danger m-2">≃ 7000 XAF</span>
+                  </div>
+                </div>
+
+                <div class="col-3"></div>
+                <div class="col-4">
+                  <div class="card-body dropdown-basic">
+                    <div class="dropdown">
+                      <div class="btn-group mb-0">
+                        <select
+                          class="dropbtn btn-secondary btn-round"
+                          type="button"
+                          formControlName="crypto"
+                        >
+                          <option value="BTC" selected>BTC</option>
+                          <option value="ETH">ETH</option>
+                          <option value="ONE">ONE</option>
+                          <option value="PEPE">PEPE</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pb-5 pt-2">
+                <div class="col-5"></div>
+
+                <div class="col-4">
+                  <button
+                    (click)="success()"
+                    [disabled]="
+                      convertForm.controls['crypto'].invalid ||
+                      convertForm.controls['amount'].invalid
+                    "
+                    class="btn btn-outline-primary"
+                  >
+                    <i class="icofont icofont-ui-rotation"></i> Convertir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-3">
+      <div class="container-fluid dashboard-default-sec">
+        <!-- <div class="col-xl-3 col-sm-3 box-col-6 des-xl-25 rate-sec"> -->
+        <div class="card income-card card-secondary">
+          <div class="card-body text-center">
+            <div class="round-box">
+              <svg-icon
+                src="assets/images/svg/usd-svg.svg"
+                [svgStyle]="{ 'width.px': 90 }"
+              ></svg-icon>
+            </div>
+            <h5>2</h5>
+            <p class="devise">USD</p>
+            <a class="btn-arrow arrow-secondary" href="javascript:void(0)">
+              <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>
+              90.54%
+            </a>
+            <div class="parrten">
+              <svg-icon
+                src="assets/images/svg/usd-svg.svg"
+                [svgStyle]="{ 'width.px': 60 }"
+              ></svg-icon>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-outline-primary">Convertir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
