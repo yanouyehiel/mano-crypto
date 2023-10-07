@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClientGuard {
-  
+
   constructor(public router: Router) {}
 
   canActivate(
