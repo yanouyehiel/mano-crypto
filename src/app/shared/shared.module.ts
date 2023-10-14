@@ -23,6 +23,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { AddCryptoComponent } from '../components/add-crypto/add-crypto.component';
 import { SortableDirective } from './directives/sortable.directive';
+import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,7 +33,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AdminComponent,
     ModeComponent,
-    SortableDirective
+    SortableDirective,
+    ConfirmPasswordComponent
   ],
   imports: [
     CommonModule,

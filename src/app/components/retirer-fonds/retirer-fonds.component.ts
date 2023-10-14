@@ -12,6 +12,7 @@ import {
   ResponseTransactionList,
 } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { ConfirmPasswordComponent } from 'src/app/shared/components/confirm-password/confirm-password.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,9 +28,6 @@ export class RetirerFondsComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  confirmIdentityModal(content:any) {
-   this.modalService.open(content);
-  }
   public classStep1: string;
   public classStep2: string;
   public classStep3: string;
@@ -51,6 +49,10 @@ export class RetirerFondsComponent implements OnInit {
       paiementMethod: ['', Validators.required],
     });
     this.getAllWithdrawals();
+  }
+
+  confirmIdentityModal(){
+    this.modalService.open(ConfirmPasswordComponent)
   }
 
   stepAttribute(step: number): void {
