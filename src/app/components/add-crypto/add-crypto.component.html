@@ -39,9 +39,9 @@
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    <ng-container *ngFor="let item of items">
-                                        <tr>
+                                    <!-- <tbody> -->
+                                    <!-- <ng-container *ngFor="let item of items"> -->
+                                        <tr *ngFor="let item of items">
                                             <th scope="row">{{item.name}}</th>
                                             <td>1 {{item.abv}}</td>
                                             <td>{{item.value}} FCFA</td>
@@ -57,7 +57,7 @@
                                                 </button>
                                             </td>
                                         </tr>
-                                    </ng-container>
+                                    <!-- </ng-container> -->
                                     <ng-template #verticallyContent let-modal>
                                         <div class="modal-header">
                                             <h5 class="modal-title">Buying Process</h5>
@@ -79,7 +79,7 @@
                                             <button class="btn btn-secondary" type="button" aria-label="Close" (click)="modal.dismiss('Cross click')">Fermer</button>
                                         </div>
                                     </ng-template>
-                                    </tbody>
+                                    <!-- </tbody> -->
                                 </table>
                                 </div>
                             </div>

@@ -43,6 +43,7 @@ import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.
 import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-devise/convertir-crypto-devise.component';
 
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
+import { SellCryptoComponent } from './components/sell-crypto/sell-crypto.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
     ConvertirCryptoDeviseComponent,
 
     EnterEmailComponent,
+      SellCryptoComponent,
 
   ],
   imports: [
