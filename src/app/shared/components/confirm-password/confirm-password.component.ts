@@ -21,7 +21,7 @@ export class ConfirmPasswordComponent {
     }else{
       // this.success()
     }
-    this.activatedModal.close(true);
+    this.activatedModal.dismiss(true);
   }
   closeModal(){
     this.activatedModal.dismiss(false)
