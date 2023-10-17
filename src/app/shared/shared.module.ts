@@ -24,6 +24,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { AddCryptoComponent } from '../components/add-crypto/add-crypto.component';
 import { SortableDirective } from './directives/sortable.directive';
 import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
+import { SelectCryptoModalComponent } from './components/select-crypto-modal/select-crypto-modal.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -35,6 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ModeComponent,
     SortableDirective,
     ConfirmPasswordComponent
+    SelectCryptoModalComponent
   ],
   imports: [
     CommonModule,

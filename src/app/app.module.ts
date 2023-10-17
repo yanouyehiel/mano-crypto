@@ -44,6 +44,7 @@ import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-de
 
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
+import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { SendCryptoComponent } from './components/send-crypto/send-crypto.compon
     EnterEmailComponent,
       SendCryptoComponent,
 
+      TauxDeChangeComponent,
   ],
   imports: [
     BrowserModule,
