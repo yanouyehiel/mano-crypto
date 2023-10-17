@@ -1,10 +1,10 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
-    <div class="col-sm-9">
+    <div class="col-lg-8 col-12">
       <div class="row">
         <div
-          class="col-sm-6 col-xl-6 col-lg-6"
+          class="col-md-6 col-12"
           *ngFor="let data of earningData"
         >
           <div class="card o-hidden border-0">
@@ -26,83 +26,99 @@
           </div>
         </div>
       </div>
-      <form [formGroup]="convertForm">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
+      <form class="mega-inline">
+        <div class="row gy-2">
+          <div class="col-sm-12 mb-0">
+            <div class="card shadow-lg">
+              <div class="card-header">
+                <p>
+                  From
+                  <span class="float-end fw-bold">
+                    0.9 {{crypto1.symbol}}
+                  </span>
+                </p>
+                
+              </div>
               <div class="card-body">
-                <div class="row">
-                  <div class="col-2"></div>
-
-                  <div class="col-4" style="font-weight: 600">To XAF</div>
-                  <div class="col-2"></div>
-                  <div class="col-4">
-                    Balance:
-                    <span style="font-weight: 600; font-size: larger">
-                      0.5 {{ convertForm.controls["crypto"].value }}</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="row pb-5">
-                <div class="col-2"></div>
-
-                <div class="col-3">
-                  <div>
+                
+                  <div class="float-start">
                     <input
-                      class="form-control text-black-50 m-2"
-                      style="font-size: 30px; font-weight: 500; border: 1px solid;"
-                      type="number"
-                      formControlName="amount"
-                      placeholder="0.00"
-                    />
-                    <span class="text-danger m-2">≃ 7000 XAF</span>
+                    class="form-control m-2"
+                    style="font-size: 30px; font-weight: 500; border: 1px solid;"
+                    type="number"
+                    formControlName="amount"
+                    placeholder="0.00"
+                  />
+                  <span class="text-danger m-2">≃ 7000 XAF</span>
+                  
                   </div>
-                </div>
-
-                <div class="col-3"></div>
-                <div class="col-4">
-                  <div class="card-body dropdown-basic">
-                    <div class="dropdown">
-                      <div class="btn-group mb-0">
-                        <select
-                          class="dropbtn btn-secondary btn-round"
-                          type="button"
-                          formControlName="crypto"
-                        >
-                          <option value="BTC" selected>BTC</option>
-                          <option value="ETH">ETH</option>
-                          <option value="ONE">ONE</option>
-                          <option value="PEPE">PEPE</option>
-                        </select>
+                  <div class="float-end">
+                    <button class="btn btn-outline-info" (click)="selectCrypto1(crypto1)">
+                      <div class="media static-top-widget">
+                        <div class="align-self-center text-center">
+                          <img [src]="crypto1.icon">
+                        </div>
+                        <div class="media-body">
+                         <h6>{{crypto1.symbol}}</h6>
+                         <span>{{crypto1.name}}</span>
+                        </div>
                       </div>
-                    </div>
+                    </button>
                   </div>
-                </div>
-              </div>
-              <div class="row pb-5 pt-2">
-                <div class="col-5"></div>
-
-                <div class="col-4">
-                  <button
-                    (click)="success()"
-                    [disabled]="
-                      convertForm.controls['crypto'].invalid ||
-                      convertForm.controls['amount'].invalid
-                    "
-                    class="btn btn-outline-primary"
-                  >
-                    <i class="icofont icofont-ui-rotation"></i> Convertir
-                  </button>
-                </div>
               </div>
             </div>
           </div>
+          <div class="col-2 offset-6 card-img-overlay">
+            <a class="link-opacity-10-hover">
+              <i class="icon-exchange-vertical" (click)="reverse()" style="font-size: 30px;"></i>
+            </a>
+  </div>
+          <div class="col-sm-12">
+            <div class="card shadow-lg">
+              <div class="card-header">
+                <p>
+                  To
+                  <span class="float-end fw-bold">
+                    0 {{crypto2.symbol}}
+                  </span>
+                </p>
+                
+              </div>
+              <div class="card-body">
+                  <div class="float-start">
+                    <p
+                    class="form-control m-2"
+                    style="font-size: 30px; font-weight: 500; border: 1px solid;"
+                    >0.00</p>
+                  
+                  <span class="text-danger m-2">≃ 7000 XAF</span>
+                  
+                  </div>
+                  <div class="float-end">
+                    <button class="btn btn-outline-info" (click)="selectCrypto2(crypto2)">
+                      <div class="media static-top-widget">
+                        <div class="align-self-center text-center">
+                          <img [src]="crypto2.icon">
+                        </div>
+                        <div class="media-body">
+                         <h6>{{crypto2.symbol}}</h6>
+                         <span>{{crypto2.name}}</span>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-3 offset-5 mb-5">
+            <button type="submit" class="btn btn-dark" (click)="success()">
+            Convertir
+          </button></div>
         </div>
       </form>
+      
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4 m-2 m-md-0">
       <div class="container-fluid dashboard-default-sec">
         <!-- <div class="col-xl-3 col-sm-3 box-col-6 des-xl-25 rate-sec"> -->
         <div class="card income-card card-secondary">
@@ -126,7 +142,7 @@
               ></svg-icon>
             </div>
             <div class="card-footer">
-              <button class="btn btn-outline-primary">Convertir</button>
+              <button class="btn btn-outline-primary" (click)="selectCrypto1({})">Convertir</button>
             </div>
           </div>
         </div>
