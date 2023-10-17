@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <div>
+    <input
+      class="form-control m-2"
+      style="font-size: 16px;border: 0.2px solid"
+      type="text"
+      placeholder="Search a crypto-currency"
+    />
+  </div>
+  <!-- <h5 class="modal-title" id="exampleModalLabel">Select a crypto-currency</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="closeIcon()"
+  ></button> -->
+ 
+</div>
+<div class="modal-body">
+  <div class="list-group">
+    <a
+      class="list-group-item-action mb-2 p-2"
+      (click)="setSelected(listItems[1])"
+    >
+      <div class="u-step-number">
+        <img src="{{ listItems[1].icon }}" />
+      </div>
+      <div class="u-step-desc">
+        <h5 class="u-step-title">{{ listItems[1].symbol }}</h5>
+        <p>{{ listItems[1].name }}</p>
+      </div>
+    </a>
+  </div>
+</div>

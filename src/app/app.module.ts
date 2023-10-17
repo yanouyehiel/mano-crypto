@@ -46,6 +46,7 @@ import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,8 +84,8 @@ import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-chang
     ConvertirCryptoDeviseComponent,
 
     EnterEmailComponent,
-      TauxDeChangeComponent,
 
+      TauxDeChangeComponent,
   ],
   imports: [
     BrowserModule,

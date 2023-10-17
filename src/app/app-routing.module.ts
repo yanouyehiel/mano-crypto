@@ -22,6 +22,7 @@ import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 
 
+
 const routes: Routes = [
   {
     path: '',
@@ -76,6 +77,7 @@ const routes: Routes = [
         path: 'convertir-crypto',
         component: ConvertirCryptoDeviseComponent
       },
+
       {
         path: 'taux-change',
         component: TauxDeChangeComponent
