@@ -23,6 +23,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { AddCryptoComponent } from '../components/add-crypto/add-crypto.component';
 import { SortableDirective } from './directives/sortable.directive';
+import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
 import { SelectCryptoModalComponent } from './components/select-crypto-modal/select-crypto-modal.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -34,6 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminComponent,
     ModeComponent,
     SortableDirective,
+    ConfirmPasswordComponent
     SelectCryptoModalComponent
   ],
   imports: [
