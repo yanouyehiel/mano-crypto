@@ -22,6 +22,7 @@ public crypto2 = {
     name: "AAVE",
     icon: "../../../../assets/currencies/aave.svg",
   }
+
   public earningData = [
     {
       id: 1,
@@ -38,6 +39,7 @@ public crypto2 = {
       count: '40'
     }
   ];
+
 
   cryptoList =  [
     {
@@ -56,11 +58,11 @@ public crypto2 = {
       icon: '../../../../assets/currencies/aave.svg',
     },
   ];
+
   ngOnInit(): void {
 
   }
 
- 
 
   success(){
     Swal.fire('Success', "Vous avez converti vos fonds ?", 'success');
@@ -86,4 +88,5 @@ public crypto2 = {
      this.crypto2 = res
    })
    }
+
 }

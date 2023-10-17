@@ -19,6 +19,8 @@ import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.
 
 import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-devise/convertir-crypto-devise.component';
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
+import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
+
 
 
 const routes: Routes = [
@@ -75,9 +77,13 @@ const routes: Routes = [
         path: 'convertir-crypto',
         component: ConvertirCryptoDeviseComponent
       },
+
+      {
+        path: 'taux-change',
+        component: TauxDeChangeComponent
+      }
     ]
   },
-
   {
     path: 'auth/validation-compte',
     component: ValidationComponent
@@ -87,7 +93,7 @@ const routes: Routes = [
     component: EnterEmailComponent
   },
   {
-    path: 'auth/forgot-password',
+    path: 'auth/forgot-password/:user/:code',
     component: ForgotPasswordComponent
   },
 

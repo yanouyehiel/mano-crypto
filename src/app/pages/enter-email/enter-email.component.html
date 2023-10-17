@@ -28,12 +28,12 @@
               </div>
               <div class="form-group">
                 <button 
-                    class="btn btn-primary btn-block envoyer" 
-                    type="submit"
-                    (click)="formSubmit(content)"
-                    [disabled]="!emailForm.valid"
+                  class="btn btn-primary btn-block envoyer" 
+                  type="submit"
+                  (click)="formSubmit(content)"
+                  [disabled]="!emailForm.valid || textBtn === 'Traitement...' || textBtn === 'Success'"
                 >
-                    Envoyer
+                  {{ textBtn }}
                 </button>
               </div>
               <p>Vous vous souvenez de vos identifiants ?<a class="ms-2 text-primary" href="/auth/login">Se connecter</a></p>
@@ -45,20 +45,21 @@
 </div>
 
 <ng-template #content let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-    </div>
-    <div class="modal-body">
-      <p>Un mail de confirmation vous a été envoyé pour réénitialiser pour mot de passe</p>
-    </div>
-    <div class="modal-footer">
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-dismiss="modal"
-        (click)="modal.dismiss('click')"
-      >
-        Fermer
-      </button>
-    </div>
-  </ng-template>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="response === 1000">Veuillez cliquer sur le lien qui vous a été envoyé par mail pour réénitialiser pour mot de passe</p>
+    <p class="text-danger" *ngIf="response === 1005">Cet utilisateur n'existe pas</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-bs-dismiss="modal"
+      (click)="modal.dismiss('click')"
+    >
+      Fermer
+    </button>
+  </div>
+</ng-template>
