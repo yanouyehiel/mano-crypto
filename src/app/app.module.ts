@@ -45,6 +45,7 @@ import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-de
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
+import { SellCryptoComponent } from './components/sell-crypto/sell-crypto.component';
 
 import { ToastService, AngularToastifyModule } from 'angular-toastify';
 
@@ -85,6 +86,7 @@ import { ToastService, AngularToastifyModule } from 'angular-toastify';
     EnterEmailComponent,
     SendCryptoComponent,
     TauxDeChangeComponent,
+    SellCryptoComponent,
   ],
   imports: [
     BrowserModule,
