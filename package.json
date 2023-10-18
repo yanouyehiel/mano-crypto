@@ -41,6 +41,7 @@
     "angular-archwizard": "^7.0.0",
     "angular-calendar": "^0.31.0",
     "angular-svg-icon": "^16.0.0",
+    "angular-toastify": "^1.0.6",
     "angularx-flatpickr": "^7.3.0",
     "bootstrap": "^5.3.0",
     "date-fns": "^2.30.0",

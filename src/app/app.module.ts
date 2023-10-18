@@ -46,6 +46,7 @@ import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 
+import { ToastService, AngularToastifyModule } from 'angular-toastify';
 
 @NgModule({
   declarations: [
@@ -80,13 +81,10 @@ import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-chang
     ProfileEditComponent,
     UploadFileComponent,
     RetirerFondsComponent,
-
     ConvertirCryptoDeviseComponent,
-
     EnterEmailComponent,
-      SendCryptoComponent,
-
-      TauxDeChangeComponent,
+    SendCryptoComponent,
+    TauxDeChangeComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,9 +95,10 @@ import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-chang
     HttpClientModule,
     NgApexchartsModule,
     NgxDropzoneModule,
+    AngularToastifyModule,
     AngularSvgIconModule.forRoot()
   ],
-  providers: [],
+  providers: [ToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
