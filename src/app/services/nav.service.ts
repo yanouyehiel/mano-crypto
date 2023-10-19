@@ -91,66 +91,60 @@ export class NavService {
       headTitle1: 'Finance'
     },
     {
-      title: 'Transaction',
-      icon: 'dollar-sign',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/client/recharge-compte',
-          title: 'Recharger le compte',
-          type: 'link'
-        },
-        {
-          path: '/client/add-crypto',
-          title: 'Acheter de la crypto',
-          type: 'link'
-        },
-        {
-          path: '/client/retirer-crypto',
-          title: 'Retirer de la crypto',
-          type: 'link'
-        },
-        {
-          path: '/client/vendre-crypto',
-          title: 'Vendre de la crypto',
-          type: 'link'
-        },
-        {
-          path: '/client/taux-change',
-          title: 'Consulter le taux de change',
-          type: 'link'
-        },
-        {
-          path: '/client/convertir-crypto',
-          title: 'Convertir la crypto',
-          type: 'link'
-        },
-        {
-          path: '/client/retrait-fonds',
-          title: 'Retirer des fonds',
-          type: 'link'
-        }
-      ]
-    },
-    {
-      headTitle1: 'Porte-feuille'
-    },
-    {
-      title: 'Vérifier mon solde',
-      icon: 'credit-card',
+      path: '/client/recharge-compte',
+      title: 'Recharger le compte',
       type: 'link',
+      icon: 'shopping-cart',
       badgeType: 'success',
       active: false,
-      path: '/client/solde'
     },
     {
-      title: 'Retirer des fonds',
+      path: '/client/add-crypto',
+      title: 'Acheter de la crypto',
+      type: 'link',
+      icon: 'trending-up',
+      badgeType: 'success',
+      active: false
+    },
+    {
+      path: '/client/retirer-crypto',
+      title: 'Retirer de la crypto',
+      type: 'link',
       icon: 'chevrons-left',
-      type: 'link',
       badgeType: 'success',
-      active: false,
-      path: '/client/retrait'
+      active: false
+    },
+    {
+      path: '/client/vendre-crypto',
+      title: 'Vendre de la crypto',
+      type: 'link',
+      icon: 'trending-down',
+      badgeType: 'success',
+      active: false
+    },
+    {
+      path: '/client/taux-change',
+      title: 'Consulter le taux de change',
+      type: 'link',
+      icon: 'dollar-sign',
+      badgeType: 'success',
+      active: false
+    },
+    {
+      path: '/client/convertir-crypto',
+      title: 'Convertir la crypto',
+      type: 'link',
+      icon: 'repeat',
+      badgeType: 'success',
+      active: false
+    },
+    {
+      path: '/client/retrait-fonds',
+      title: 'Retirer des fonds',
+      type: 'link',
+      icon: 'credit-card',
+      badgeType: 'success',
+      active: false
     }
   ]
 

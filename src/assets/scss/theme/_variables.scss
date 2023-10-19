@@ -268,8 +268,8 @@ $sidebar-arrow-color: $theme-body-font-color;
 $sidebar-open-icon: "\f107";
 $sidebar-close-icon:"\f105";
 $sidebar-icon-font-family: $font-awesome;
-$sidebar-height: calc(100vh - 355px);
-// $sidebar-height: calc(100vh - 115px);
+//$sidebar-height: calc(100vh - 355px);
+$sidebar-height: calc(100vh - 210px);
 
 //Header settings
 $main-header-position: fixed;

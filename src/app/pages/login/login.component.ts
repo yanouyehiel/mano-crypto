@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResponseUser } from 'src/app/models/User';
+import { ToastService } from 'angular-toastify'
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,12 @@ export class LoginComponent implements OnInit {
   public siteKey: string = environment.recaptchaSiteKey
   public textBtn: string = 'SIGN IN'
 
-  constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder, 
+    public router: Router, 
+    public authService: AuthService,
+    public toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     localStorage.removeItem('token-mansexch')
@@ -53,6 +59,8 @@ export class LoginComponent implements OnInit {
         } else {
           this.error = true;
           this.errorMessage = response.message;
+          this.toastService.info('Identifiants incorrect.')
+          this.textBtn = 'SIGN IN'
         }
 
       })
