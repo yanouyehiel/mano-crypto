@@ -46,8 +46,6 @@ import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 
-import { ToastService, AngularToastifyModule } from 'angular-toastify'; 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,10 +93,9 @@ import { ToastService, AngularToastifyModule } from 'angular-toastify';
     HttpClientModule,
     NgApexchartsModule,
     NgxDropzoneModule,
-    AngularToastifyModule,
     AngularSvgIconModule.forRoot()
   ],
-  providers: [ToastService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
