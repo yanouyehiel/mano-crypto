@@ -46,6 +46,7 @@ import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 import { ToastrService } from 'ngx-toastr'; 
+import { CryptoBalanceComponent } from './shared/components/crypto-balance/crypto-balance.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { ToastrService } from 'ngx-toastr';
     EnterEmailComponent,
     SendCryptoComponent,
     TauxDeChangeComponent,
+    CryptoBalanceComponent
   ],
   imports: [
     BrowserModule,

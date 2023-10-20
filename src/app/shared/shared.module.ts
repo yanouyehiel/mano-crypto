@@ -13,7 +13,6 @@ import { HttpClient } from '@angular/common/http';
 import { SortableDirective } from './directives/sortable.directive';
 import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
 import { SelectCryptoModalComponent } from './components/select-crypto-modal/select-crypto-modal.component';
-import { CryptoBalanceComponent } from './components/crypto-balance/crypto-balance.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -26,7 +25,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     SortableDirective,
     ConfirmPasswordComponent,
     SelectCryptoModalComponent,
-    CryptoBalanceComponent
   ],
   imports: [
     CommonModule,
