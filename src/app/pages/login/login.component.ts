@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResponseUser } from 'src/app/models/User';
-import { ToastService } from 'angular-toastify'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder, 
     public router: Router, 
     public authService: AuthService,
-    public toastService: ToastService
+    public toastService: ToastrService
   ) {}
 
   ngOnInit(): void {
