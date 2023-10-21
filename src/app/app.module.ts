@@ -83,6 +83,7 @@ import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-chang
     EnterEmailComponent,
     SendCryptoComponent,
     TauxDeChangeComponent,
+    CryptoBalanceComponent
   ],
   imports: [
     BrowserModule,

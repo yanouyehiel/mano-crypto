@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ToastService } from 'angular-toastify';
+import { ToastrService } from 'ngx-toastr';
 import { ResponseUser } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 
@@ -24,7 +24,7 @@ export class ForgotPasswordComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastrService
   ) { }
 
   ngOnInit(): void {

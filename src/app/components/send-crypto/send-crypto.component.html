@@ -1,8 +1,7 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
-    <div class="col-md-8 col-12">
-      <div class="col-12 mb-4">
+      <div class="col-md-8 col-12 mb-4">
         <div class="card">
           <h5 class="card-header">Make a new crypto transfert</h5>
           <div class="card-body">
@@ -51,7 +50,14 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="col-xl-4 box-col-12 des-xl-100">
+        <div class="card">
+          <h5 class="card-header">Current balance</h5>
+          <div class="card-body p-0">
+            <app-crypto-balance></app-crypto-balance>
+          </div>
+        </div>
+       </div>
         <div class="col-xl-12 box-col-12 des-xl-100">
           <div class="card">
             <div class="card-body">
@@ -103,61 +109,4 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="card">
-        <div
-          class="card-header pb-0 d-flex justify-content-between align-items-center"
-        >
-          <h5 class="text-uppercase">Your Crypto Current Balance</h5>
-        </div>
-        <div class="row">
-          <div class="container-fluid dashboard-default-sec">
-            <div class="row">
-              <div class="col-xl-12 box-col-12 des-xl-100">
-                <div class="row">
-                  <div
-                    class="col-xl-12 col-md-12 col-sm-6 box-col-3"
-                    *ngFor="let currentValue of currentValues"
-                  >
-                    <div class="card income-card card-{{ currentValue.class }}">
-                      <div class="card-body text-center">
-                        <div class="round-box">
-                          <svg-icon
-                            src="assets/images/svg/{{ currentValue.icon }}"
-                            [svgStyle]="{ 'width.px': 90 }"
-                          ></svg-icon>
-                        </div>
-                        <h5>
-                          {{ currentValue.value }} {{ currentValue.type }}
-                        </h5>
-                        <p>
-                          Value <b>{{ currentValue.actuelValue }}</b> XAF
-                        </p>
-                        <a
-                          class="btn-arrow arrow-{{ currentValue.class }}"
-                          href="javascript:void(0)"
-                          ><i
-                            class="toprightarrow-primary fa fa-arrow-up me-2"
-                          ></i
-                          >95.54%
-                        </a>
-                        <div class="parrten">
-                          <svg-icon
-                            src="assets/images/svg/{{ currentValue.icon }}"
-                            [svgStyle]="{ 'width.px': 90 }"
-                          ></svg-icon>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
