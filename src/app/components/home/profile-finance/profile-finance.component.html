@@ -11,11 +11,11 @@
             <h5>{{ data.wallet.solde }}</h5>
             <p class="devise">{{ data.wallet.type }}</p>
             <a class="btn-arrow arrow-primary" href="javascript:void(0)">
-                <i [class]="data.details?.monthly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-primary fa fa-arrow-down me-2'"></i>
+                <i [class]="data.details?.monthly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-danger fa fa-arrow-down me-2'"></i>
                 {{ truncateNumber(data.details?.monthly_percentage) }} %
             </a>
             <a class="btn-arrow arrow-secondary" href="javascript:void(0)">
-              <i [class]="data.details?.weekly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-primary fa fa-arrow-down me-2'"></i>
+              <i [class]="data.details?.weekly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-danger fa fa-arrow-down me-2'"></i>
               {{ truncateNumber(data.details?.weekly_percentage) }} %
             </a>
             <!-- <div class="parrten">
