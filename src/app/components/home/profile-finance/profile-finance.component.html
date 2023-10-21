@@ -1,79 +1,38 @@
 <div class="row">
-  <div class="col-xl-8">
+  <div class="col-xl-9">
     <div class="row">
-      <div class="col-sm-3 box-col-4 des-xl-25 rate-sec">
+      <div class="col-sm-4 box-col-4 des-xl-25 rate-sec" *ngFor="let data of walletData">
         <div class="card income-card card-primary">                                 
           <div class="card-body text-center">                                  
             <div class="round-box">
-              <svg-icon src="assets/images/svg/bitcoin-btc-logo.svg" [svgStyle]="{ 'width.px':90 }"></svg-icon>
+              <!-- <svg-icon [src]="data.detail?.image_url" [svgStyle]="{ 'width.px':90 }"></svg-icon> -->
+              <img [src]="data.image_url" alt="icon" width="60px" height="60px">
             </div>
-            <h5>0,25</h5>
-            <p class="devise">BTC</p>
-            <!-- <a class="btn-arrow arrow-primary" href="javascript:void(0)">
-                <i class="toprightarrow-primary fa fa-arrow-up me-2"></i>
-                95.54% 
-            </a> -->
-            <div class="parrten">
+            <h5>{{ data.wallet.solde }}</h5>
+            <p class="devise">{{ data.wallet.type }}</p>
+            <a class="btn-arrow arrow-primary" href="javascript:void(0)">
+                <i [class]="data.details?.monthly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-primary fa fa-arrow-down me-2'"></i>
+                {{ truncateNumber(data.details?.monthly_percentage) }} %
+            </a>
+            <a class="btn-arrow arrow-secondary" href="javascript:void(0)">
+              <i [class]="data.details?.weekly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-primary fa fa-arrow-down me-2'"></i>
+              {{ truncateNumber(data.details?.weekly_percentage) }} %
+            </a>
+            <!-- <div class="parrten">
               <svg-icon src="assets/images/svg/bitcoin-btc-logo.svg" [svgStyle]="{ 'width.px': 40 }"></svg-icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 box-col-4 des-xl-25 rate-sec">
-        <div class="card income-card card-secondary">                                    
-          <div class="card-body text-center">
-            <div class="round-box">
-              <svg-icon src="assets/images/svg/usd-svg.svg" [svgStyle]="{ 'width.px':90 }"></svg-icon>
-            </div>
-            <h5>2</h5>
-            <p class="devise">USD</p>
-            <!-- <a class="btn-arrow arrow-secondary" href="javascript:void(0)">
-                <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>
-                90.54% 
-            </a> -->
-            <div class="parrten">
-              <svg-icon src="assets/images/svg/usd-svg.svg" [svgStyle]="{ 'width.px': 40 }"></svg-icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 box-col-4 des-xl-25 rate-sec">
-        <div class="card income-card card-primary">                                 
-          <div class="card-body text-center">                                  
-            <div class="round-box">
-              <svg-icon src="assets/images/svg/ethereum-eth-logo.svg" [svgStyle]="{ 'width.px':90 }"></svg-icon>
-            </div>
-            <h5>8</h5>
-            <p class="devise">ETH</p>
-            <!-- <a class="btn-arrow arrow-primary" href="javascript:void(0)">
-                <i class="toprightarrow-primary fa fa-arrow-up me-2"></i>
-                95.54% 
-            </a> -->
-            <div class="parrten">
-              <svg-icon src="assets/images/svg/ethereum-eth-logo.svg" [svgStyle]="{ 'width.px': 40 }"></svg-icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 box-col-4 des-xl-25 rate-sec">
-        <div class="card income-card card-secondary">                                    
-          <div class="card-body text-center">
-            <div class="round-box">
-              <svg-icon src="assets/images/svg/xaf.svg" [svgStyle]="{ 'width.px':90 }"></svg-icon>
-            </div>
-            <h5>203 000</h5>
-            <p class="devise">XAF</p>
-            <!-- <a class="btn-arrow arrow-secondary" href="javascript:void(0)">
-                <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>
-                90.54% 
-            </a> -->
-            <div class="parrten">
-              <svg-icon src="assets/images/svg/xaf.svg" [svgStyle]="{ 'width.px': 60 }"></svg-icon>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-xl-4"></div>
+  <!-- <div class="col-xl-3">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card income-card card-primary">                                 
+          <div class="card-body text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div> -->
 </div>

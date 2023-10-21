@@ -28,3 +28,9 @@ export interface ResponseTransactionList {
         ]
     }
 }
+
+export interface ResponseParent {
+    statusCode: number;
+    message: string;
+    data?: {}
+}
