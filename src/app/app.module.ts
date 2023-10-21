@@ -45,6 +45,9 @@ import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-de
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
+import { CryptoBalanceComponent } from './shared/components/crypto-balance/crypto-balance.component';
+import { CustomDateFormatPipe } from './shared/pipes/custom-date-format.pipe';
+import { HistoryTableComponent } from './shared/components/history-table/history-table.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +86,9 @@ import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-chang
     EnterEmailComponent,
     SendCryptoComponent,
     TauxDeChangeComponent,
-    CryptoBalanceComponent
+    CryptoBalanceComponent,
+    CustomDateFormatPipe,
+    HistoryTableComponent
   ],
   imports: [
     BrowserModule,

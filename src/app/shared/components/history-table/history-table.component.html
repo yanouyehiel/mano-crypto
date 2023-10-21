@@ -1,0 +1,29 @@
+<table class="table table-bordernone" *ngIf="recentOrders">
+   <thead>
+    <tr>
+      <th>Désignation</th>
+      <th>Operateur</th>
+      <th>Date</th>
+      <th>Montant</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let recent of recentOrders">
+    <td class="font-success">
+      <app-feather-icons icon="arrow-up-right"></app-feather-icons>
+      {{ recent.type }}
+    </td>
+    <td>
+      {{recent.provider}}
+    </td>
+    <td>
+      {{ recent.updateDate | customDateFormat }}
+    </td>
+    <td>{{ recent.amount }} XAF</td>
+    <td>
+      <span class="badge badge-secondary bg-secondary counter digits"
+        >EFFECTUE</span
+      >
+    </td>
+  </tr>
+</table>

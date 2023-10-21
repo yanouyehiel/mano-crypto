@@ -29,12 +29,22 @@ export class RechargeCompteComponent implements OnInit {
     this.step = 1;
     this.classStep1 = 'current';
     this.depositForm = this.fb.group({
-      amount: ['', Validators.required]
-    })
+      amount: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      paiementMethod: ['', Validators.required],
+    });
     this.getAllDeposits()
   }
 
+
+  verifyPhoneNumber():boolean{
+return true;
+  }
+
+
   stepAttribute(step: number): void {
+    
+    console.log(this.depositForm.value)
     this.step = step + 1;
     if (this.step === 1) {
       this.classStep1 = 'current'
@@ -79,7 +89,7 @@ export class RechargeCompteComponent implements OnInit {
     this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
       this.loader = false;
       this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === 'DEPOSIT')
-      console.log(this.recentOrders)
+      console.log(response)
     })
   }
 }
