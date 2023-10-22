@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseDeposit, ResponseTransactionList } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { AwaitTransactionValidationComponent } from 'src/app/shared/components/await-transaction-validation/await-transaction-validation.component';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -23,6 +25,7 @@ export class RechargeCompteComponent implements OnInit {
   constructor(
     private depositService: TransactionService,
     private fb: FormBuilder,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +46,7 @@ return true;
 
 
   stepAttribute(step: number): void {
-    
+
     console.log(this.depositForm.value)
     this.step = step + 1;
     if (this.step === 1) {
@@ -70,10 +73,11 @@ return true;
       phoneNumber: this.userParse.user.phoneNumber
     }
     try {
-      console.log(data)
       this.depositService.addDeposit(data).subscribe((result: ResponseDeposit) => {
+        this.modalService.open(AwaitTransactionValidationComponent).dismissed.subscribe(()=>{
+          this.successRecharge()
+        })
         console.log(result)
-        this.successRecharge()
         this.getAllDeposits()
       })
     } catch (error) {

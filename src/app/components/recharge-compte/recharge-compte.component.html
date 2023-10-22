@@ -111,7 +111,7 @@
                   <h5 class="title-method">Numero de Telephone</h5>
                   <div class="mb-5">
                     <input *ngIf="depositForm.controls['paiementMethod'].value != 'OM'"
-                      class="form-control input-phone"
+                      class="form-control input"
                       id="exampleFormControlInput1"
                       type="number"
                       placeholder="Entrer le Numero de telephone"
@@ -120,7 +120,7 @@
                       required
                     />
                     <input *ngIf="depositForm.controls['paiementMethod'].value == 'OM'"
-                      class="form-control input-phone"
+                      class="form-control input"
                       id="exampleFormControlInput1"
                       type="number"
                       placeholder="Entrer le Numero de telephone"
@@ -133,7 +133,7 @@
                   <div class="col-sm-12">
                     <div class="mb-5">
                       <input
-                        class="form-control input-montant"
+                        class="form-control input"
                         id="exampleFormControlInput1"
                         type="number"
                         placeholder="Entrer le Montant"

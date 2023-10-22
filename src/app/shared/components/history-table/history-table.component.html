@@ -21,8 +21,8 @@
     </td>
     <td>{{ recent.amount }} XAF</td>
     <td>
-      <span class="badge badge-secondary bg-secondary counter digits"
-        >EFFECTUE</span
+      <span class="badge badge-secondary counter digits"
+       [ngClass]="recent.status=='PENDING'?' bg-warning':' bg-success'" >{{recent.status=='PENDING'?'EN ATTENTE':'EFFECTUE'}}</span
       >
     </td>
   </tr>
