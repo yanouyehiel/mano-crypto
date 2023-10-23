@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponseParent } from 'src/app/models/Transaction';
+import { DataCryptoService } from 'src/app/services/data-crypto.service';
 const Swal = require('sweetalert2')
 
 @Component({
@@ -8,7 +10,9 @@ const Swal = require('sweetalert2')
 })
 export class ProfileFinanceComponent implements OnInit {
   private alertWelcomeTime: number = 0;
-  constructor() {
+  public walletData: any;
+
+  constructor(private cryptoService: DataCryptoService) {
 
   }
 
@@ -17,6 +21,7 @@ export class ProfileFinanceComponent implements OnInit {
     if (this.alertWelcomeTime !== 1) {
       this.dialog()
     }
+    this.getWalletDetails()
   }
 
 
@@ -28,5 +33,17 @@ export class ProfileFinanceComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     })
+  }
+
+  getWalletDetails() {
+    this.cryptoService.getWalletDetails().subscribe((response: any) => {
+      console.log(response)
+      this.walletData = response.data.details
+    })
+  }
+
+  truncateNumber(num: number, numDigits: number = 4): number {
+    const factor = Math.pow(10, numDigits);
+    return Math.trunc(num * factor) / factor;
   }
 }
