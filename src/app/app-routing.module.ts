@@ -97,7 +97,7 @@ const routes: Routes = [
     component: EnterEmailComponent
   },
   {
-    path: 'auth/forgot-password/:user/:code',
+    path: 'auth/forgot-password',
     component: ForgotPasswordComponent
   },
 

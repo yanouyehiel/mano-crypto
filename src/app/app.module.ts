@@ -48,6 +48,7 @@ import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-chang
 import { CryptoBalanceComponent } from './shared/components/crypto-balance/crypto-balance.component';
 import { CustomDateFormatPipe } from './shared/pipes/custom-date-format.pipe';
 import { HistoryTableComponent } from './shared/components/history-table/history-table.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { HistoryTableComponent } from './shared/components/history-table/history
     HttpClientModule,
     NgApexchartsModule,
     NgxDropzoneModule,
+    ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot()
   ],
   providers: [],

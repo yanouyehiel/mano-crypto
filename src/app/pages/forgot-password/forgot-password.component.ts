@@ -28,24 +28,16 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    /*this.route.queryParams.subscribe(params => {
-      const user = params['user'];
-      const code = params['code'];
-      console.log('User:', user);
-      console.log('Code:', code);
-      this.data.otpSecret = code
-      this.data.otpCode = user
-    })*/
-    const user = this.route.snapshot.params['user']
-    const code = this.route.snapshot.params['code']
-    console.log('User:', user);
-    console.log('Code:', code);
+    const user = this.route.snapshot.queryParamMap.get('user');
+    const code = this.route.snapshot.queryParamMap.get('code');
+    
     this.data.otpSecret = code
     this.data.otpCode = user
+    
     this.passwordForm = this.fb.group({
       password: ['', [Validators.minLength(8), Validators.required]]
-    })
-    this.changePassword()
+    }) 
+    console.log(this.data)
   }
 
   addInfoToast() {

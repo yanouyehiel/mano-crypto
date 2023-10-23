@@ -25,6 +25,7 @@ export class MyListingComponent implements OnInit {
       this.transacService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
         this.loader = false;
         this.historics = response.data.transactions
+        console.log(response)
       })
     } catch (error) {
       console.log(error)

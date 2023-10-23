@@ -40,8 +40,8 @@ export class RechargeCompteComponent implements OnInit {
   }
 
 
-  verifyPhoneNumber():boolean{
-return true;
+  verifyPhoneNumber(): boolean {
+    return true;
   }
 
 

@@ -34,9 +34,9 @@
                       {{data.type}}
                     </div>
                   </td>
-                  <td>{{data.date | date}}</td>
-                  <td>{{data.taux }} XAF</td>
-                  <td>BTC</td>
+                  <td>{{data.creationDate | date}}</td>
+                  <td>{{data.amount }} XAF</td>
+                  <td *ngIf="data.type == 'DEPOSIT'">XAF</td>
                 </tr>
               </ng-container>
             </tbody>
