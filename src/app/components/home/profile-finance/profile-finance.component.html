@@ -8,8 +8,10 @@
               <!-- <svg-icon [src]="data.detail?.image_url" [svgStyle]="{ 'width.px':90 }"></svg-icon> -->
               <img [src]="data.image_url" alt="icon" width="60px" height="60px">
             </div>
-            <h5>{{ data.wallet.solde }}</h5>
-            <p class="devise">{{ data.wallet.type }}</p>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <h5 style="margin-right: 10px;">{{ data.wallet.solde }}</h5>
+              <p style="margin-top: -9px;" class="devise">{{ data.wallet.type }}</p>
+            </div>
             <a class="btn-arrow arrow-primary" href="javascript:void(0)">
                 <i [class]="data.details?.monthly_percentage >= 0 ? 'toprightarrow-primary fa fa-arrow-up me-2' : 'toprightarrow-danger fa fa-arrow-down me-2'"></i>
                 {{ truncateNumber(data.details?.monthly_percentage) }} %
