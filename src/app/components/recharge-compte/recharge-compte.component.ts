@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseDeposit, ResponseTransactionList } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { AwaitTransactionValidationComponent } from 'src/app/shared/components/await-transaction-validation/await-transaction-validation.component';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -23,18 +25,29 @@ export class RechargeCompteComponent implements OnInit {
   constructor(
     private depositService: TransactionService,
     private fb: FormBuilder,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.step = 1;
     this.classStep1 = 'current';
     this.depositForm = this.fb.group({
-      amount: ['', Validators.required]
-    })
+      amount: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      paiementMethod: ['', Validators.required],
+    });
     this.getAllDeposits()
   }
 
+
+  verifyPhoneNumber():boolean{
+return true;
+  }
+
+
   stepAttribute(step: number): void {
+
+    console.log(this.depositForm.value)
     this.step = step + 1;
     if (this.step === 1) {
       this.classStep1 = 'current'
@@ -60,10 +73,11 @@ export class RechargeCompteComponent implements OnInit {
       phoneNumber: this.userParse.user.phoneNumber
     }
     try {
-      console.log(data)
       this.depositService.addDeposit(data).subscribe((result: ResponseDeposit) => {
+        this.modalService.open(AwaitTransactionValidationComponent).dismissed.subscribe(()=>{
+          this.successRecharge()
+        })
         console.log(result)
-        this.successRecharge()
         this.getAllDeposits()
       })
     } catch (error) {
@@ -79,7 +93,7 @@ export class RechargeCompteComponent implements OnInit {
     this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
       this.loader = false;
       this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === 'DEPOSIT')
-      console.log(this.recentOrders)
+      console.log(response)
     })
   }
 }
