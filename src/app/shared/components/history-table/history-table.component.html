@@ -22,7 +22,7 @@
     <td>{{ recent.amount }} XAF</td>
     <td>
       <span class="badge badge-secondary counter digits"
-       [ngClass]="recent.status=='PENDING'?' bg-warning':' bg-success'" >{{recent.status=='PENDING'?'EN ATTENTE':'EFFECTUE'}}</span
+       [ngClass]="recent.status=='PENDING'?' bg-warning':recent.status=='SUCCESS'?' bg-success':' bg-danger'" >{{recent.status=='PENDING'?'EN ATTENTE':recent.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</span
       >
     </td>
   </tr>
