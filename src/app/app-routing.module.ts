@@ -21,6 +21,8 @@ import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-de
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
+import { AdminComponent } from './shared/components/layout/admin/admin.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 
 
 const routes: Routes = [
@@ -87,6 +89,16 @@ const routes: Routes = [
         component: TauxDeChangeComponent
       }
     ]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      {
+        path: 'home',
+        component: HomeAdminComponent
+      }
+    ] 
   },
   {
     path: 'auth/validation-compte',

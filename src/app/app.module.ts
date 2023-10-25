@@ -50,6 +50,8 @@ import { CryptoBalanceComponent } from './shared/components/crypto-balance/crypt
 import { CustomDateFormatPipe } from './shared/pipes/custom-date-format.pipe';
 import { HistoryTableComponent } from './shared/components/history-table/history-table.component';
 import { ToastrModule } from 'ngx-toastr';
+import { SidebarAdminComponent } from './shared/components/sidebar-admin/sidebar-admin.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import { ToastrModule } from 'ngx-toastr';
     SearchComponent,
     UserInfoComponent,
     SidebarComponent,
+    SidebarAdminComponent,
     FooterComponent,
     BreadcrumbComponent,
     AddCryptoComponent,
@@ -90,7 +93,8 @@ import { ToastrModule } from 'ngx-toastr';
     TauxDeChangeComponent,
     CryptoBalanceComponent,
     CustomDateFormatPipe,
-    HistoryTableComponent
+    HistoryTableComponent,
+    HomeAdminComponent
   ],
   imports: [
     BrowserModule,

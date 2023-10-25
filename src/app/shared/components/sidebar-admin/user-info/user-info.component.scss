@@ -1,0 +1,14 @@
+ul > li.not-validated:last-child {
+    cursor: pointer;
+}
+
+ul > li.not-validated:last-child:hover {
+    color: #0F74F6;
+}
+
+img {
+    width: 20px;
+    height: 50px;
+    margin-right: 10px;
+    margin: 15px;
+}

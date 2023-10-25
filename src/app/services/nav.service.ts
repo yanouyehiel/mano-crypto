@@ -148,5 +148,29 @@ export class NavService {
     }
   ]
 
+  MENUITEMSADMIN: Menu[] = [
+    {
+      headTitle1: 'Les Comptes'
+    },
+    {
+      title: 'Dashboard',
+      icon: 'home',
+      type: 'link',
+      active: true,
+      path: '/admin/home'
+    },
+    {
+      headTitle1: 'Les Transactions'
+    },
+    {
+      title: 'Opérations',
+      icon: 'dollar-sign',
+      type: 'link',
+      active: false,
+      path: '/admin/operations'
+    }
+  ]
+
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+  itemsAdmin = new BehaviorSubject<Menu[]>(this.MENUITEMSADMIN);
 }

@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem('token-mansexch')
     localStorage.removeItem('user-mansexch')
     localStorage.removeItem('_grecaptcha')
+    localStorage.removeItem('tokenReset-mansexch')
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],

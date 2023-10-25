@@ -26,8 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SortableDirective,
     ConfirmPasswordComponent,
     SelectCryptoModalComponent,
-    AwaitTransactionValidationComponent,
-    SidebarAdminComponent,
+    AwaitTransactionValidationComponent
   ],
   imports: [
     CommonModule,
