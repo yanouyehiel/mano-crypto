@@ -20,7 +20,7 @@ export interface ResponseUser {
     message: string;
     data?: {
         token: any;
-    }
+    };
 }
 
 export interface ResponseProfile {

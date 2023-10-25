@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResponseUser } from 'src/app/models/User';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     public router: Router, 
-    public authService: AuthService
+    public authService: AuthService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,10 @@ export class LoginComponent implements OnInit {
     this.show = !this.show;
   }
 
+  showToast(message: string) {
+    this.toast.error(message)
+  }
+
   login() {
     try {
       this.textBtn = 'Login...'
@@ -48,19 +55,22 @@ export class LoginComponent implements OnInit {
       }
       this.authService.login(data).subscribe((response: ResponseUser) => {
         console.log(response)
-        if (response.data) {
+        if (response.statusCode == 1000) {
           const token = {
             token: response.data?.token
           }
           localStorage.setItem("token-mansexch", JSON.stringify(token));
           this.router.navigate(['/client/home'])
-        } else {
+        } else if (response.statusCode == 1001) {
           this.error = true;
-          this.errorMessage = response.message;
-          //this.toastService.info('Identifiants incorrect.')
+          this.errorMessage = 'Erreur sur le serveur, veuillez réessayer svp !';
           this.textBtn = 'SIGN IN'
         }
-
+      }, (error) => {
+        this.error = true;
+        this.errorMessage = error.error.message;
+        this.showToast(error.error.message)
+        this.textBtn = 'SIGN IN'
       })
 
     } catch (error) {

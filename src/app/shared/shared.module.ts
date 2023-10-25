@@ -14,6 +14,7 @@ import { SortableDirective } from './directives/sortable.directive';
 import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
 import { SelectCryptoModalComponent } from './components/select-crypto-modal/select-crypto-modal.component';
 import { AwaitTransactionValidationComponent } from './components/await-transaction-validation/await-transaction-validation.component';
+import { SidebarAdminComponent } from './components/sidebar-admin/sidebar-admin.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -21,12 +22,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AdminComponent,
     ModeComponent,
     SortableDirective,
     ConfirmPasswordComponent,
     SelectCryptoModalComponent,
     AwaitTransactionValidationComponent,
+    SidebarAdminComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +40,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [NavService, DecimalPipe],
   exports: [
     RouterModule,
-    AdminComponent,
     NgbModule,
     TranslateModule,
   ]
