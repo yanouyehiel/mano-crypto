@@ -22,7 +22,7 @@
                 <th scope="col">Devise</th>
               </tr>
             </thead>
-            <tbody>
+            
               <ng-container *ngFor="let data of historics">
                 <tr>
                   <th scope="row">{{data._id}}</th>
@@ -39,7 +39,7 @@
                   <td *ngIf="data.type == 'DEPOSIT'">XAF</td>
                 </tr>
               </ng-container>
-            </tbody>
+            
           </table>
         </div>
       </div>

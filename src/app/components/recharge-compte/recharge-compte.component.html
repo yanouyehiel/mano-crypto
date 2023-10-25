@@ -234,7 +234,7 @@
                 <div class="loader-3"></div>
               </div>
             </div>
-            <app-history-table
+            <app-history-table *ngIf="!loader"
               [recentOrders]="recentOrders"
             ></app-history-table>
           </div>
