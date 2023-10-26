@@ -10,6 +10,22 @@ export interface ResponseDeposit {
     }
 }
 
+export interface ResponseCryptoFee{
+
+    statusCode: number,
+    message: string,
+    data?: {
+      details: {
+        currency_from: string,
+        currency_to: string,
+        services_fee: number,
+        sub_total: number,
+        total: number
+      }
+    }
+
+}
+
 export interface ResponseTransactionList {
     statusCode: number;
     message: string;

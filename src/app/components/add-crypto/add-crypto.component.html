@@ -2,23 +2,7 @@
 <div class="container-fluid general-widget">
     <div class="row">
         <div class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-6 col-xl-6 col-lg-6" *ngFor="let data of earningData">
-                    <div class="card o-hidden border-0">
-                        <div class="{{data.classCompo}} b-r-4 card-body">
-                            <div class="media static-top-widget">
-                                <div class="align-self-center text-center">
-                                    <app-feather-icons [icon]="data.icon"></app-feather-icons>
-                                </div>
-                                <div class="media-body"><span class="m-0">{{ data.title }}</span>
-                                    <h4 class="mb-0 counter">{{ data.count }}</h4>
-                                    <app-feather-icons [icon]="data.icon" class="icon-bg"></app-feather-icons>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <app-currency-balance></app-currency-balance>
             <div class="row">
                 <div class="bootstrap-tables">
                     <div class="col-sm-12">
@@ -50,7 +34,7 @@
                                                     type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalCenter"
-                                                    (click)="VerticallyCenteredModal(verticallyContent, item.abv)"
+                                                    (click)="initBuyingProess(item.abv)"
                                                 >
                                                     Acheter
                                                 </button>
@@ -59,23 +43,30 @@
                                     </ng-container>
                                     <ng-template #verticallyContent let-modal>
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Buying Process</h5>
+                                            <h5 class="modal-title">Buying {{ typeCrypto }} Process</h5>
                                             <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
                                         </div>
                                         <div class="modal-body">
                                             <form class="form theme-form">
-                                                <p class="text-center">How much {{ typeCrypto }} are you needing ?</p>
+                                                <p class="text-center">How much do you want to spent ?</p>
                                                 <div class="mb-3 row">
                                                     <label class="col-sm-3 col-form-label">{{ typeCrypto }}</label>
                                                     <div class="col-sm-9">
-                                                      <input class="form-control" type="text">
+                                                      <input class="form-control" type="number" #input>
+                                                      <div>
+                                                        <div class="color-box">
+
+                                                          </div>
+                                                      </div>
+                                                      <!-- <p>Cout Total: <span *ngIf="(responseFee$|async)" class="text-success">{{(responseFee$|async)!.data!.details.total|number:'1.0-0'}} XAF</span><i  *ngIf="!(responseFee$|async)" class="fa fa-spin fa-spinner"></i></p> -->
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-primary" type="button">Acheter</button>
+
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" aria-label="Close" (click)="modal.dismiss('Cross click')">Fermer</button>
+                                            <button class="btn btn-danger" type="button" aria-label="Close" (click)="modal.dismiss('Cross click')">Fermer</button>
+                                            <button class="btn btn-primary" type="submit">Acheter</button>
                                         </div>
                                     </ng-template>
                                 </table>

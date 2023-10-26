@@ -3,31 +3,7 @@
   <div class="row">
 
     <div class="col-lg-8 col-12">
-      <div class="row">
-        <div
-          class="col-md-6 col-12"
-
-          *ngFor="let data of earningData"
-        >
-          <div class="card o-hidden border-0">
-            <div class="{{ data.classCompo }} b-r-4 card-body">
-              <div class="media static-top-widget">
-                <div class="align-self-center text-center">
-                  <app-feather-icons [icon]="data.icon"></app-feather-icons>
-                </div>
-                <div class="media-body">
-                  <span class="m-0">{{ data.title }}</span>
-                  <h4 class="mb-0 counter">{{ data.count }}</h4>
-                  <app-feather-icons
-                    [icon]="data.icon"
-                    class="icon-bg"
-                  ></app-feather-icons>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-currency-balance></app-currency-balance>
       <form class="mega-inline">
         <div class="row gy-2">
           <div class="col-sm-12 mb-0">

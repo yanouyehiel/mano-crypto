@@ -52,6 +52,7 @@ import { HistoryTableComponent } from './shared/components/history-table/history
 import { ToastrModule } from 'ngx-toastr';
 import { SidebarAdminComponent } from './shared/components/sidebar-admin/sidebar-admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { CurrencyBalanceComponent } from './shared/components/currency-balance/currency-balance.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
     CryptoBalanceComponent,
     CustomDateFormatPipe,
     HistoryTableComponent,
-    HomeAdminComponent
+    HomeAdminComponent,
+    CurrencyBalanceComponent
   ],
   imports: [
     BrowserModule,
