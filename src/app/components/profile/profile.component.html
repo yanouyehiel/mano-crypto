@@ -8,20 +8,19 @@
                     style="background-color: #f2f2f2"
                 >
                     <div class="profile-img-wrrap">
-                        <img
+                        <!-- <img
                         class="img-fluid bg-img-cover"
-                        src="assets/images/user-profile/bg-profile.jpg"
+                        src="assets/images/dashboard/1.png"
                         alt=""
-                        />
+                        /> -->
                     </div>
                     <div class="userpro-box">
                         <div class="img-wrraper">
                         <div class="avatar">
-                            <img class="img-fluid" alt="" src="assets/images/user/7.jpg" />
+                            <img class="img-fluid" alt="" src="assets/images/dashboard/1.png" />
                         </div>
                         <a class="icon-wrapper" routerLink="../profile-edit"
-                            ><i class="icofont icofont-pencil-alt-5"></i
-                        ></a>
+                            ><i class="fa fa-edit"></i></a>
                         </div>
                         <div class="user-designation">
                         <div class="title">
@@ -40,7 +39,7 @@
                                   <span class="text-success txt-bold">Validé</span>
                                 </li>
                               </ng-container>
-                              
+
                               <ng-container *ngIf="!user.isPhoneVerified">
                                 <li [routerLink]="'/client/profile-edit'" class="not-validated">
                                     <div class="follow-num counter">Status Compte</div>
@@ -52,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
             <div class="col-sm-6">
                 <div class="default-according style-1 faq-accordion job-accordion">
                     <div class="row">
@@ -118,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
 </div>
