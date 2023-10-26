@@ -1,123 +1,155 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid">
-    <div class="user-profile email-wrap bookmark-wrap">
-        <div class="row">
-            <div class="col-sm-6">
-                <div
-                    class="card profile-header"
-                    style="background-color: #f2f2f2"
-                >
-                    <div class="profile-img-wrrap">
-                        <!-- <img
+  <div class="user-profile email-wrap bookmark-wrap">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card profile-header" style="background-color: #f2f2f2">
+          <div class="profile-img-wrrap">
+            <!-- <img
                         class="img-fluid bg-img-cover"
                         src="assets/images/dashboard/1.png"
                         alt=""
                         /> -->
-                    </div>
-                    <div class="userpro-box">
-                        <div class="img-wrraper">
-                        <div class="avatar">
-                            <img class="img-fluid" alt="" src="assets/images/dashboard/1.png" />
-                        </div>
-                        <a class="icon-wrapper" routerLink="../profile-edit"
-                            ><i class="fa fa-edit"></i></a>
-                        </div>
-                        <div class="user-designation">
-                        <div class="title">
-                            <h4>{{ user.name }}</h4>
-                            <h6>{{ user.email }}</h6>
-                        </div>
-                        <div class="follow">
-                            <ul class="follow-list">
-                            <li>
-                                <div class="follow-num counter">Téléphone</div>
-                                <span>{{ user.phone }}</span>
-                            </li>
-                            <ng-container *ngIf="user.isPhoneVerified">
-                                <li>
-                                  <div class="follow-num counter">Status Compte</div>
-                                  <span class="text-success txt-bold">Validé</span>
-                                </li>
-                              </ng-container>
+          </div>
+          <div class="userpro-box">
+            <div class="img-wrraper">
+              <div class="avatar">
+                <img
+                  class="img-fluid"
+                  alt=""
+                  src="assets/images/dashboard/1.png"
+                />
+              </div>
+              <a class="icon-wrapper" routerLink="../profile-edit"
+                ><i class="fa fa-edit"></i
+              ></a>
+            </div>
+            <div class="user-designation">
+              <div class="title">
+                <h4>{{ user.name }}</h4>
+                <h6>{{ user.email }}</h6>
+              </div>
+              <div class="follow">
+                <ul class="follow-list">
+                  <li>
+                    <div class="follow-num counter">Téléphone</div>
+                    <span>{{ user.phone }}</span>
+                  </li>
+                  <ng-container *ngIf="user.isPhoneVerified">
+                    <li>
+                      <div class="follow-num counter">Status Compte</div>
+                      <span class="text-success txt-bold">Validé</span>
+                    </li>
+                  </ng-container>
 
-                              <ng-container *ngIf="!user.isPhoneVerified">
-                                <li [routerLink]="'/client/profile-edit'" class="not-validated">
-                                    <div class="follow-num counter">Status Compte</div>
-                                    <span [class]="!user.isPhoneVerified ? 'text-danger txt-bold' : ''">Pas validé</span>
-                                </li>
-                              </ng-container>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+                  <ng-container *ngIf="!user.isPhoneVerified">
+                    <li
+                      [routerLink]="'/client/profile-edit'"
+                      class="not-validated"
+                    >
+                      <div class="follow-num counter">Status Compte</div>
+                      <span
+                        [class]="
+                          !user.isPhoneVerified ? 'text-danger txt-bold' : ''
+                        "
+                        >Pas validé</span
+                      >
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
             </div>
-            <div class="col-sm-6">
-                <div class="default-according style-1 faq-accordion job-accordion">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="card">
-                                <div class="card-header">
-                                  <h5 class="p-0">
-                                    A Propos
-                                  </h5>
-                                </div>
-                                <div class="collapse show">
-                                  <div class="card-body post-about">
-                                    <ul>
-                                        <li>
-                                          <div class="icon">
-                                              <app-feather-icons [icon]="'user'"></app-feather-icons>
-                                          </div>
-                                          <div>
-                                            <h5>Noms</h5>
-                                            <p>{{ user.name }}</p>
-                                          </div>
-                                        </li>
-                                        <li>
-                                            <div class="icon">
-                                                <app-feather-icons [icon]="'mail'"></app-feather-icons>
-                                            </div>
-                                            <div>
-                                            <h5>Email</h5>
-                                            <p [class]="!user.isEmailVerified ? 'text-danger txt-bold' : 'text-success'">{{ user.email }}</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="icon">
-                                                <app-feather-icons [icon]="'phone'"></app-feather-icons>
-                                            </div>
-                                            <div>
-                                            <h5>Telephone</h5>
-                                            <p [class]="!user.isPhoneVerified ? 'text-danger txt-bold' : 'text-success'">{{ user.phone }}</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="icon">
-                                                <app-feather-icons [icon]="'clock'"></app-feather-icons>
-                                            </div>
-                                            <div>
-                                            <h5>Date d'inscription</h5>
-                                            <p>29 Septembre 2023</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="icon">
-                                                <app-feather-icons [icon]="'eye'"></app-feather-icons>
-                                            </div>
-                                            <div>
-                                            <h5>Derniere connexion</h5>
-                                            <p>03 Octobre 2023</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="default-according style-1 faq-accordion job-accordion">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="p-0">A Propos</h5>
+                </div>
+                <div class="collapse show">
+                  <div class="card-body post-about">
+                    <ul>
+                      <li>
+                        <div class="icon">
+                          <app-feather-icons
+                            [icon]="'user'"
+                          ></app-feather-icons>
+                        </div>
+                        <div>
+                          <h5>Noms</h5>
+                          <p>{{ user.name }}</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="icon">
+                          <app-feather-icons
+                            [icon]="'mail'"
+                          ></app-feather-icons>
+                        </div>
+                        <div>
+                          <h5>Email</h5>
+                          <p
+                            [class]="
+                              !user.isEmailVerified
+                                ? 'text-danger txt-bold'
+                                : 'text-success'
+                            "
+                          >
+                            {{ user.email }}
+                          </p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="icon">
+                          <app-feather-icons
+                            [icon]="'phone'"
+                          ></app-feather-icons>
+                        </div>
+                        <div>
+                          <h5>Telephone</h5>
+                          <p
+                            [class]="
+                              !user.isPhoneVerified
+                                ? 'text-danger txt-bold'
+                                : 'text-success'
+                            "
+                          >
+                            {{ user.phone }}
+                          </p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="icon">
+                          <app-feather-icons
+                            [icon]="'clock'"
+                          ></app-feather-icons>
+                        </div>
+                        <div>
+                          <h5>Date d'inscription</h5>
+                          <p>29 Septembre 2023</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="icon">
+                          <app-feather-icons [icon]="'eye'"></app-feather-icons>
+                        </div>
+                        <div>
+                          <h5>Derniere connexion</h5>
+                          <p>03 Octobre 2023</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
