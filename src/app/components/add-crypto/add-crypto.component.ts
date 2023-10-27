@@ -78,12 +78,11 @@ export class AddCryptoComponent implements OnInit {
     },
   ];
 
-
   public typeCrypto: string;
   public recentOrders: any[] = [];
   public loader: boolean = true;
   public responseFee: ResponseCryptoFee;
-  cryptoAmount : number;
+  cryptoAmount: number;
 
   constructor(
     private modalService: NgbModal,
@@ -92,9 +91,7 @@ export class AddCryptoComponent implements OnInit {
     private cryptoService: CryptoTransactionService
   ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   VerticallyCenteredModal(verticallyContent: any, item: any) {
     const modalRef = this.modalService.open(verticallyContent);
@@ -109,50 +106,63 @@ export class AddCryptoComponent implements OnInit {
     );
   }
 
-  getFee(crypto:string, value:number) {
-    this.cryptoService.getCryptoFees({
-      crypto_currency: this.typeCrypto,
-      amount: value,
-    }).subscribe((response)=>{
-      this.responseFee = response
-    })
-
+  getFee(crypto: string, value: number) {
+    this.cryptoService
+      .getCryptoFees({
+        crypto_currency: this.typeCrypto,
+        amount: value,
+      })
+      .subscribe((response) => {
+        this.responseFee = response;
+      });
   }
 
-
-
-
-  async initBuyingProess(crypto:string) {
+  async initBuyingProess(crypto: string) {
     const { value: result } = await Swal.fire({
       title: `Combien de<b class="text-success"> ${crypto} </b>voulez vous ?`,
-      input: 'number',
-      inputPlaceholder:`Ex: 0.02`,
-      inputAttributes: {
-        autocapitalize: 'off',
-      },
+      input: 'text',
+      inputAutoFocus:true,
+      inputPlaceholder: `Ex: 0.02`,
       showCancelButton: true,
       confirmButtonText: 'Acheter',
       cancelButtonText: 'Fermer',
+      inputValidator: (value) => {
+        // Ajoutez une validation personnalisée ici si nécessaire
+        if (isNaN(parseFloat(value))) {
+          return 'Veuillez entrer un nombre valide.';
+        }
+        return null
+      },
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        this.cryptoAmount = parseFloat(value)
-        this.typeCrypto = crypto
+        console.log(value)
+        this.cryptoAmount = parseFloat(value);
+        this.typeCrypto = crypto;
         try {
-          const response = await this.cryptoService.getCryptoFees({
-            crypto_currency: this.typeCrypto ,
-            amount: this.cryptoAmount,
-          }).toPromise();
+          const response = await this.cryptoService
+            .getCryptoFees({
+              crypto_currency: this.typeCrypto,
+              amount: this.cryptoAmount,
+            })
+            .toPromise();
           if (response) {
             return response;
           } else {
             throw new Error('User not found');
-
+          }
+        } catch (error:any) {
+          if (error.error) {
+            Swal.showValidationMessage(`${error.error.message}`);
+          } else {
+            Swal.showValidationMessage(
+              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
+            );
           }
 
-        } catch (error) {
-          console.log(error)
-          Swal.showValidationMessage(`Request failed: ${error}`);
-          return null
+          return null;
         }
       },
       allowOutsideClick: () => !Swal.isLoading(),
@@ -163,41 +173,47 @@ export class AddCryptoComponent implements OnInit {
     }
   }
 
-  askConfirmTransaction(value:any){
+  askConfirmTransaction(value: any) {
     Swal.fire({
-      title:`Le cout total de la transaction vont s'elevé a ${parseInt(value.data!.details.total).toLocaleString('fr-FR')} XAF`,
+      title: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${parseInt(
+        value.data!.details.total
+      ).toLocaleString('fr-FR')} XAF</b>`,
       showDenyButton: true,
       confirmButtonText: 'Payer',
       denyButtonText: `Annuler`,
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
         try {
-          const response = await this.cryptoService.buyCrypto({
-            crypto_currency: this.typeCrypto,
-            amount: this.cryptoAmount,
-          }).toPromise();
+          const response = await this.cryptoService
+            .buyCrypto({
+              crypto_currency: this.typeCrypto,
+              amount: this.cryptoAmount,
+            })
+            .toPromise();
           if (response) {
             return response;
           } else {
             throw new Error("Can't buy");
-
+          }
+        } catch (error: any) {
+          if (error.error) {
+            Swal.showValidationMessage(`${error.error.message}`);
+          } else {
+            Swal.showValidationMessage(
+              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
+            );
           }
 
-        } catch (error:any) {
-          console.log(error)
-          Swal.showValidationMessage(`${error.error.message}`);
-          return null
+          return null;
         }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-      if (result.isConfirmed) {
-        Swal.fire(`Achat effectué avec success`, '', 'success',)
+      if (result.isConfirmed && result.value.statusCode==1000) {
+        Swal.fire(`Achat effectué avec success`, '', 'success');
       } else if (result.isDenied) {
-        Swal.fire('Achat annulée', '', 'error')
+        Swal.fire('Achat annulée', '', 'error');
       }
-    })
+    });
   }
-
 }
-
