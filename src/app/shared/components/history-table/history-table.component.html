@@ -16,15 +16,15 @@
   <tr *ngFor="let recent of recentOrders">
     <td class="font-success">
       <app-feather-icons icon="arrow-up-right"></app-feather-icons>
-      {{ recent.type }}
+      {{ recent.type=='BUY_CRYPTO'?'ACHAT DE '+recent.final_amount+' '+recent.final_currency:recent.type=='DEPOSIT'?'RECHARGE':recent.type}}
     </td>
     <td>
       {{recent.provider}}
     </td>
     <td>
-      {{ recent.updateDate | customDateFormat }}
+      {{ recent.creationDate | customDateFormat }}
     </td>
-    <td>{{ recent.amount }} XAF</td>
+    <td>{{ recent.amount | number:'1.0-0' }} XAF</td>
     <td>
       <span class="badge badge-secondary counter digits"
        [ngClass]="recent.status=='PENDING'?' bg-warning':recent.status=='SUCCESS'?' bg-success':' bg-danger'" >{{recent.status=='PENDING'?'EN ATTENTE':recent.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</span
