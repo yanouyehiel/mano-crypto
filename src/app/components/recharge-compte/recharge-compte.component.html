@@ -229,13 +229,8 @@
         <div class="card-body">
           <div class="table-responsive">
             <h5>Précédentes recharges de compte</h5>
-            <div class="col-md-12" *ngIf="loader">
-              <div class="loader-box">
-                <div class="loader-3"></div>
-              </div>
-            </div>
-            <app-history-table *ngIf="!loader"
-              [recentOrders]="recentOrders"
+            <app-history-table
+              type="DEPOSIT"
             ></app-history-table>
           </div>
         </div>

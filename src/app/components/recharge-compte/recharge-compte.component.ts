@@ -19,8 +19,7 @@ export class RechargeCompteComponent implements OnInit {
   public depositForm: FormGroup;
   private userRegistred: any = localStorage.getItem('user-mansexch')
   private userParse: any = JSON.parse(this.userRegistred)
-  public recentOrders: any[] = [];
-  public loader: boolean = true;
+
 
   constructor(
     private depositService: TransactionService,
@@ -36,7 +35,7 @@ export class RechargeCompteComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       paiementMethod: ['', Validators.required],
     });
-    this.getAllDeposits()
+
   }
 
 
@@ -67,7 +66,6 @@ export class RechargeCompteComponent implements OnInit {
   }
 
   addRecharge(): void {
-    this.loader = true;
     const data = {
       amount: parseInt(this.depositForm.controls['amount'].value),
       phoneNumber: this.userParse.user.phoneNumber
@@ -78,7 +76,6 @@ export class RechargeCompteComponent implements OnInit {
           this.successRecharge()
         })
         console.log(result)
-        this.getAllDeposits()
       })
     } catch (error) {
       console.log(error)
@@ -89,11 +86,5 @@ export class RechargeCompteComponent implements OnInit {
     Swal.fire('Recharge de compte réussie !')
   }
 
-  getAllDeposits(): void {
-    this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
-      this.loader = false;
-      this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === 'DEPOSIT')
-      console.log(response)
-    })
-  }
+
 }

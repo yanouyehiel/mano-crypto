@@ -90,45 +90,10 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="table-responsive">
-                        <h5>Précédents achats de crypto</h5>
-                        <div class="col-md-12" *ngIf="loader">
-                          <div class="loader-box">
-                            <div class="loader-3"></div>
-                          </div>
-                        </div>
-                        <table class="table table-bordernone" *ngIf="!loader">
-                          <thead>
-                            <tr>
-                              <th>Désignation</th>
-                              <th>Date</th>
-                              <th>Montant</th>
-                              <th>Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let recent of recentOrders">
-                              <td class="font-success">
-                                <div class="media">
-                                  <div class="font-primary">
-                                    <app-feather-icons icon="arrow-up-right"></app-feather-icons>
-                                  </div>
-                                  <div class="media-body">
-                                    {{ recent.type }}
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p>{{recent.date | date}}</p>
-                              </td>
-                              <td>
-                                <p>{{recent.taux}} XAF</p>
-                              </td>
-                              <td>
-                                <span class="badge badge-success counter digits">EFFECTUE</span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                        <h5>Précédentes recharges de compte</h5>
+                        <app-history-table
+                          type="BUY_CRYPTO"
+                        ></app-history-table>
                       </div>
                     </div>
                   </div>
