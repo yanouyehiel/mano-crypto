@@ -31,7 +31,6 @@ export class CryptoTransactionService {
 
   buyCrypto(data: any): Observable<ResponseCryptoFee> {
     return this.http
-      .post<ResponseCryptoFee>(`${this.cryptoUrl}/init-buy`, data, this.config)
-      .pipe();
+      .post<ResponseCryptoFee>(`${this.cryptoUrl}/init-buy`, data, this.config);
   }
 }
