@@ -2,23 +2,7 @@
 <div class="container-fluid general-widget">
     <div class="row">
         <div class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-6 col-xl-6 col-lg-6" *ngFor="let data of earningData">
-                    <div class="card o-hidden border-0">
-                        <div class="{{data.classCompo}} b-r-4 card-body">
-                            <div class="media static-top-widget">
-                                <div class="align-self-center text-center">
-                                    <app-feather-icons [icon]="data.icon"></app-feather-icons>
-                                </div>
-                                <div class="media-body"><span class="m-0">{{ data.title }}</span>
-                                    <h4 class="mb-0 counter">{{ data.count }}</h4>
-                                    <app-feather-icons [icon]="data.icon" class="icon-bg"></app-feather-icons>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <app-currency-balance></app-currency-balance>
             <div class="row">
                 <div class="bootstrap-tables">
                     <div class="col-sm-12">
@@ -33,51 +17,30 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Monnaie virtuelle</th>
+                                            <th scope="col">Crypto-monnaie</th>
                                             <th scope="col">Quantité</th>
-                                            <th scope="col">Monnaie locale</th>
+                                            <th scope="col">Valeur (USD)</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <ng-container *ngFor="let item of items">
                                         <tr>
-                                            <th scope="row">{{item.name}}</th>
+                                            <th scope="row"><img [src]="item.icon" width="45" [alt]="item.abv" class="image-thumbail">{{item.name}}</th>
                                             <td>1 {{item.abv}}</td>
-                                            <td>{{item.value}} FCFA</td>
+                                            <td>{{item.value}} USD</td>
                                             <td>
                                                 <button
                                                     class="btn btn-primary-gradien"
                                                     type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalCenter"
-                                                    (click)="VerticallyCenteredModal(verticallyContent, item.abv)"
+                                                    (click)="initBuyingProcess(item.abv)"
                                                 >
                                                     Acheter
                                                 </button>
                                             </td>
                                         </tr>
                                     </ng-container>
-                                    <ng-template #verticallyContent let-modal>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Buying Process</h5>
-                                            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form class="form theme-form">
-                                                <p class="text-center">How much {{ typeCrypto }} are you needing ?</p>
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label">{{ typeCrypto }}</label>
-                                                    <div class="col-sm-9">
-                                                      <input class="form-control" type="text">
-                                                    </div>
-                                                </div>
-                                                <button class="btn btn-primary" type="button">Acheter</button>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" aria-label="Close" (click)="modal.dismiss('Cross click')">Fermer</button>
-                                        </div>
-                                    </ng-template>
                                 </table>
                                 </div>
                             </div>
@@ -99,45 +62,10 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="table-responsive">
-                        <h5>Précédents achats de crypto</h5>
-                        <div class="col-md-12" *ngIf="loader">
-                          <div class="loader-box">
-                            <div class="loader-3"></div>
-                          </div>
-                        </div>
-                        <table class="table table-bordernone" *ngIf="!loader">
-                          <thead>
-                            <tr>
-                              <th>Désignation</th>
-                              <th>Date</th>
-                              <th>Montant</th>
-                              <th>Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let recent of recentOrders">
-                              <td class="font-success">
-                                <div class="media">
-                                  <div class="font-primary">
-                                    <app-feather-icons icon="arrow-up-right"></app-feather-icons>
-                                  </div>
-                                  <div class="media-body">
-                                    {{ recent.type }}
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p>{{recent.date | date}}</p>
-                              </td>
-                              <td>
-                                <p>{{recent.taux}} XAF</p>
-                              </td>
-                              <td>
-                                <span class="badge badge-success counter digits">EFFECTUE</span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                        <h5>Précédentes recharges de compte</h5>
+                        <app-history-table
+                          type="BUY_CRYPTO"
+                        ></app-history-table>
                       </div>
                     </div>
                   </div>
