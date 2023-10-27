@@ -40,18 +40,17 @@ export class AddCryptoComponent implements OnInit {
     {
       name: 'Bitcoin',
       abv: 'BTC',
-      value: 6,
+      value: 31000,
+      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1.png',
+
     },
     {
       name: 'Etheurium',
       abv: 'ETH',
-      value: 10,
+      value: 1900,
+      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png',
     },
-    {
-      name: 'LitCoin',
-      abv: 'LTC',
-      value: 20,
-    },
+
   ];
 
   public currentValues = [
@@ -60,14 +59,14 @@ export class AddCryptoComponent implements OnInit {
       value: 12.63,
       actuelValue: 39485000,
       class: 'primary',
-      icon: 'bitcoin-btc-logo.svg',
+      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1.png',
     },
     {
       type: 'ETH',
       value: 4.63,
       actuelValue: 22251,
       class: 'secondary',
-      icon: 'ethereum-eth-logo.svg',
+      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png',
     },
     {
       type: 'USD',
@@ -117,7 +116,7 @@ export class AddCryptoComponent implements OnInit {
       });
   }
 
-  async initBuyingProess(crypto: string) {
+  async initBuyingProcess(crypto: string) {
     const { value: result } = await Swal.fire({
       title: `Combien de<b class="text-success"> ${crypto} </b>voulez vous ?`,
       input: 'text',
