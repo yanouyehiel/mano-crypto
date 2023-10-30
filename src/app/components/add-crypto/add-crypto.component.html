@@ -1,7 +1,7 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-xl-8 col-12">
           <app-currency-balance></app-currency-balance>
             <div class="row">
                 <div class="bootstrap-tables">
@@ -17,17 +17,15 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Crypto-monnaie</th>
-                                            <th scope="col">Quantité</th>
-                                            <th scope="col">Valeur (USD)</th>
+                                            <th scope="col">Symbole</th>
+                                            <th scope="col">Nom</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <ng-container *ngFor="let item of items">
                                         <tr>
-                                            <th scope="row"><img [src]="item.icon" width="45" [alt]="item.abv" class="image-thumbail">{{item.name}}</th>
-                                            <td>1 {{item.abv}}</td>
-                                            <td>{{item.value}} USD</td>
+                                            <th scope="row"><img [src]="item.icon" width="45" [alt]="item.abv" class="image-thumbail">{{item.abv}}</th>
+                                            <td> {{item.name}}</td>
                                             <td>
                                                 <button
                                                     class="btn btn-primary-gradien"

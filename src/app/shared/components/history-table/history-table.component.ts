@@ -12,20 +12,26 @@ export class HistoryTableComponent implements OnInit{
 
   loader:boolean = true
   recentOrders:any[]
+  errorDisplay:string
 
   constructor(
     private depositService: TransactionService,
     ){}
 
 ngOnInit(): void {
-this.getAllDeposits()
+this.getTransactions()
 }
-getAllDeposits(): void {
-  this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
-    this.loader = false;
-    this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === this.type)
-    console.log(response)
-  })
+getTransactions(): void {
+  try {
+    this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
+      this.loader = false;
+      this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === this.type)
+      console.log(response)
+    })
+  } catch (error) {
+    this.errorDisplay = "Impossible de charger les donnees";
+    this.loader = false
+  }
 }
 
 }
