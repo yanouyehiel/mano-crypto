@@ -2,6 +2,11 @@
   <div class="loader-box">
     <div class="loader-3"></div>
   </div>
+  <div class="alert alert-light" *ngIf="errorDisplay">
+    <span class="text-danger"
+      ><strong>Erreur</strong> errorDisplay !
+    </span>
+  </div>
 </div>
 <table class="table table-bordernone" *ngIf="recentOrders">
    <thead>

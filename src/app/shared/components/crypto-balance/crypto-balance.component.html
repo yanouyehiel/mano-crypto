@@ -3,65 +3,30 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="row px-3">
-      <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec">
-        <div class="card income-card card-primary">
-          <div class="card-body text-center">
-            <div class="round-box mb-3">
-              <img src="https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png" alt="" width="60" class="image-thumbnail">
-            </div>
-            <h5>0</h5>
-            <p>24h variation</p><a class="btn-arrow arrow-primary text-success" href="javascript:void(0)"><i class="toprightarrow-primary fa fa-arrow-up me-2"></i>95.54% </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec">
-        <div class="card income-card card-primary">
-          <div class="card-body text-center">
-            <div class="round-box mb-3">
-              <img src="https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1.png" alt="" width="60" class="image-thumbnail">
-            </div>
-            <h5>0</h5>
-            <p>24h variation</p><a class="btn-arrow arrow-primary text-danger" href="javascript:void(0)"><i class="toprightarrow-primary fa fa-arrow-down me-2"></i>-5.54% </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <div class="carousel-item">
-      <div class="row px-3">
-        <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec">
+        <!-- <ng-template *ngIf="response && response.statusCode==1000"> -->
+        <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec"  *ngFor="let detail of wallet">
           <div class="card income-card card-primary">
             <div class="card-body text-center">
-              <div class="round-box">
-                <svg-icon src="assets/images/svg/dashboard/dashboard.svg" [svgStyle]="{ 'width.px':40 }"></svg-icon>
+              <div class="round-box mb-3">
+                <img [src]="detail.image_url" alt="" width="60" class="image-thumbnail">
               </div>
-              <h5>8,50,49</h5>
-              <p>24h variation</p><a class="btn-arrow arrow-primary text-success" href="javascript:void(0)"><i class="toprightarrow-primary fa fa-arrow-up me-2"></i>95.54% </a>
+              <h5>{{detail.wallet.solde}}</h5>
+              <p>Les derniers Jours</p><a class="btn-arrow arrow-primary text-success" ><i class="toprightarrow-primary fa fa-arrow-up me-2"></i>{{detail.details.weekly_percentage | number:'1.2-2'}} %</a>
             </div>
           </div>
         </div>
-        <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec">
-          <div class="card income-card card-primary">
-            <div class="card-body text-center">
-              <div class="round-box">
-                <svg-icon src="assets/images/svg/dashboard/dashboard.svg" [svgStyle]="{ 'width.px':40 }"></svg-icon>
-              </div>
-              <h5>8,50,49</h5>
-              <p>24h variation</p><a class="btn-arrow arrow-primary text-danger" href="javascript:void(0)"><i class="toprightarrow-primary fa fa-arrow-down me-2"></i>-5.54% </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- </ng-template> -->
+    </div>
     </div>
   </div>
-  <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+  <!-- <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
     <span class="carousel-control-prev-icon  bg-info" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
   <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
     <span class="carousel-control-next-icon bg-info" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
-  </button>
+  </button> -->
 </div>
 <!-- <div class="row">
   <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec">
