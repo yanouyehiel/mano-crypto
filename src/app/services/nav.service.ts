@@ -115,14 +115,6 @@ export class NavService {
       active: false
     },
     {
-      path: '/client/vendre-crypto',
-      title: 'Vendre de la crypto',
-      type: 'link',
-      icon: 'trending-down',
-      badgeType: 'success',
-      active: false
-    },
-    {
       path: '/client/taux-change',
       title: 'Consulter le taux de change',
       type: 'link',
@@ -147,6 +139,15 @@ export class NavService {
       active: false
     }
   ]
+
+  /*{
+      path: '/client/vendre-crypto',
+      title: 'Vendre de la crypto',
+      type: 'link',
+      icon: 'trending-down',
+      badgeType: 'success',
+      active: false
+    },*/
 
   MENUITEMSADMIN: Menu[] = [
     {
