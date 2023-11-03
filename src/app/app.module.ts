@@ -53,6 +53,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SidebarAdminComponent } from './shared/components/sidebar-admin/sidebar-admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { CurrencyBalanceComponent } from './shared/components/currency-balance/currency-balance.component';
+import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { CurrencyBalanceComponent } from './shared/components/currency-balance/c
     CustomDateFormatPipe,
     HistoryTableComponent,
     HomeAdminComponent,
-    CurrencyBalanceComponent
+    CurrencyBalanceComponent,
+    RechargeCryptoComponent
   ],
   imports: [
     BrowserModule,

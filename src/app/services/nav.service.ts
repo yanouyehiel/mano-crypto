@@ -99,6 +99,14 @@ export class NavService {
       active: false,
     },
     {
+      path: '/client/recharge-crypto',
+      title: 'Recharger une crypto',
+      type: 'link',
+      icon: 'maximize',
+      badgeType: 'success',
+      active: false,
+    },
+    {
       path: '/client/add-crypto',
       title: 'Acheter de la crypto',
       type: 'link',
