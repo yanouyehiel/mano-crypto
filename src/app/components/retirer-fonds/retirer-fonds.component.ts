@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { catchError, of } from 'rxjs';
 import {
   ResponseDeposit,
   ResponseTransactionList,
@@ -35,9 +36,10 @@ export class RetirerFondsComponent implements OnInit {
   public alertError:string = '';
   public depositForm: FormGroup;
   private userRegistred: any = localStorage.getItem('user-mansexch');
-  private userParse: any = JSON.parse(this.userRegistred);
+  public userParse: any = JSON.parse(this.userRegistred);
   public recentOrders: any[] = [];
   public loader: boolean = true;
+  public response: ResponseDeposit;
 
 
   ngOnInit(): void {
@@ -51,7 +53,8 @@ export class RetirerFondsComponent implements OnInit {
   }
 
   confirmIdentityModal(){
-    this.modalService.open(ConfirmPasswordComponent)
+    this.retrait()
+    // this.modalService.open(ConfirmPasswordComponent)
   }
 
   stepAttribute(step: number): void {
@@ -65,11 +68,6 @@ export class RetirerFondsComponent implements OnInit {
       this.classStep1 = '';
       this.classStep2 = 'current';
       this.classStep3 = '';
-    }
-     if (this.step === 3) {
-      this.classStep1 = '';
-      this.classStep2 = '';
-      this.classStep3 = 'current';
     }
   }
 
@@ -91,14 +89,19 @@ export class RetirerFondsComponent implements OnInit {
       amount: parseInt(this.depositForm.controls['amount'].value),
       phoneNumber: this.userParse.user.phoneNumber
     }
-    try {
-      this.depositService.withdraw(data).subscribe((result: ResponseDeposit) => {
-        
-        console.log(result)
+    console.log(data)
+    this.depositService.withdraw(data).pipe(
+      catchError((error: any) => {
+        return of(error.error); // Retournez une valeur observable pour poursuivre le flux
       })
-    } catch (error) {
-      console.log(error)
-    }
+    ).subscribe((result) => {
+      this.response = result;
+      if (result.statusCode!==1000) {
+        Swal.fire('Erreur', result.message, 'error');
+      }else{
+        Swal.fire('Terminé', 'Retrait effectué avec succès', 'success');
+      }
+    });
   }
 
 
