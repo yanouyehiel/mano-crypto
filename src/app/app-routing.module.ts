@@ -23,6 +23,7 @@ import { SendCryptoComponent } from './components/send-crypto/send-crypto.compon
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 import { AdminComponent } from './shared/components/layout/admin/admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,10 @@ const routes: Routes = [
       {
         path: 'add-crypto',
         component: AddCryptoComponent
+      },
+      {
+        path: 'recharge-crypto',
+        component: RechargeCryptoComponent
       },
       {
         path: 'recharge-compte',
