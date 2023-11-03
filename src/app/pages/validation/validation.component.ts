@@ -11,8 +11,8 @@ export class ValidationComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+
   showPassword() {
     this.show = !this.show;
   }

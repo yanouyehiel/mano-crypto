@@ -30,9 +30,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.removeItem('token-mansexch')
-    if (localStorage.getItem('user-mansexch')) {
-      localStorage.removeItem('user-mansexch')
-    }
+    localStorage.removeItem('user-mansexch')
+    localStorage.removeItem('_grecaptcha')
+    localStorage.removeItem('tokenReset-mansexch')
+    
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.email],

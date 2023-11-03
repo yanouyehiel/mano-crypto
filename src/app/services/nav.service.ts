@@ -169,6 +169,16 @@ export class NavService {
       type: 'link',
       active: false,
       path: '/admin/operations'
+    },
+    {
+      headTitle1: 'La Comptabilité'
+    },
+    {
+      title: 'Comptabilité',
+      icon: 'finance',
+      type: 'link',
+      active: true,
+      path: '/admin/comptabilite'
     }
   ]
 
