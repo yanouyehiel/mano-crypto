@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { catchError, of } from 'rxjs';
 import { ResponseDeposit, ResponseTransactionList } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { AwaitTransactionValidationComponent } from 'src/app/shared/components/await-transaction-validation/await-transaction-validation.component';
@@ -19,6 +20,7 @@ export class RechargeCompteComponent implements OnInit {
   public depositForm: FormGroup;
   private userRegistred: any = localStorage.getItem('user-mansexch')
   private userParse: any = JSON.parse(this.userRegistred)
+  public response?:ResponseDeposit
 
 
   constructor(
@@ -70,20 +72,25 @@ export class RechargeCompteComponent implements OnInit {
       amount: parseInt(this.depositForm.controls['amount'].value),
       phoneNumber: this.userParse.user.phoneNumber
     }
-    try {
-      this.depositService.addDeposit(data).subscribe((result: ResponseDeposit) => {
-        this.modalService.open(AwaitTransactionValidationComponent).dismissed.subscribe(()=>{
-          this.successRecharge()
+ 
+      this.depositService.addDeposit(data).pipe(
+        catchError((error: any) => {
+          return of(error.error); // Retournez une valeur observable pour poursuivre le flux
         })
-        console.log(result)
-      })
-    } catch (error) {
-      console.log(error)
-    }
+      ).subscribe((result) => {
+        this.response = result;
+        if (result.statusCode!==1000) {
+          Swal.fire('Erreur', result.message, 'error');
+        }else{
+          this.modalService.open(AwaitTransactionValidationComponent).dismissed.subscribe(()=>{
+            this.successRecharge()
+          })
+        }
+      });
   }
 
   successRecharge(): void {
-    Swal.fire('Recharge de compte réussie !')
+    Swal.fire('Terminé', 'Recharge effectué avec succès', 'success');
   }
 
 
