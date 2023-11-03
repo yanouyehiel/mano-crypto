@@ -21,7 +21,7 @@
   <tr *ngFor="let recent of recentOrders">
     <td class="font-success">
       <app-feather-icons icon="arrow-up-right"></app-feather-icons>
-      {{ recent.type=='BUY_CRYPTO'?'ACHAT DE '+recent.final_amount+' '+recent.final_currency:recent.type=='DEPOSIT'?'RECHARGE':recent.type}}
+      {{ recent.type=='BUY_CRYPTO'?'ACHAT DE '+recent.final_amount+' '+recent.final_currency:recent.type=='DEPOSIT'?'RECHARGE':recent.type=='RECHARGE_CRYPTO'?'RECHARGE DE '+recent.final_amount+' '+recent.final_currency:recent.type}}
     </td>
     <td>
       {{recent.provider}}

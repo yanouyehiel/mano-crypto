@@ -25,7 +25,7 @@ getTransactions(): void {
   try {
     this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
       this.loader = false;
-      this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === this.type)
+      this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === this.type).reverse().slice(0, 9)
       console.log(response)
     })
   } catch (error) {

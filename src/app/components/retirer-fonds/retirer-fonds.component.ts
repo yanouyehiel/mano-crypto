@@ -48,7 +48,6 @@ export class RetirerFondsComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       paiementMethod: ['', Validators.required],
     });
-    this.getAllWithdrawals();
   }
 
   confirmIdentityModal(){
@@ -85,6 +84,21 @@ export class RetirerFondsComponent implements OnInit {
       this.success()
     }
     this.modalService.dismissAll();
+  }
+
+  retrait(): void {
+    const data = {
+      amount: parseInt(this.depositForm.controls['amount'].value),
+      phoneNumber: this.userParse.user.phoneNumber
+    }
+    try {
+      this.depositService.withdraw(data).subscribe((result: ResponseDeposit) => {
+        
+        console.log(result)
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 

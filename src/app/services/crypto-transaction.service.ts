@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ResponseCryptoFee } from '../models/Transaction';
+import { ResponseCryptoFee, ResponseParent } from '../models/Transaction';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,16 +21,26 @@ export class CryptoTransactionService {
   constructor(private http: HttpClient) {}
 
   getCryptoFees(data: any): Observable<ResponseCryptoFee> {
-    return this.http
-      .post<ResponseCryptoFee>(
-        `${this.cryptoUrl}/get-buy-crypto-fees`,
-        data,
-        this.config
-      );
+    return this.http.post<ResponseCryptoFee>(
+      `${this.cryptoUrl}/get-buy-crypto-fees`,
+      data,
+      this.config
+    );
+  }
+  
+  buyCrypto(data: any): Observable<ResponseCryptoFee> {
+    return this.http.post<ResponseCryptoFee>(
+      `${this.cryptoUrl}/init-buy`,
+      data,
+      this.config
+    );
   }
 
-  buyCrypto(data: any): Observable<ResponseCryptoFee> {
-    return this.http
-      .post<ResponseCryptoFee>(`${this.cryptoUrl}/init-buy`, data, this.config);
+  importCrypto(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseParent>(
+      `${this.cryptoUrl}/create-invoice`,
+      { ...data, withdraw_fees: 0.001, accept_variations: true },
+      this.config
+    );
   }
 }

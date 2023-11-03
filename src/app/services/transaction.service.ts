@@ -42,6 +42,13 @@ export class TransactionService {
       this.config
     );
   }
+  withdraw(data: any): Observable<ResponseDeposit> {
+    return this.http.post<ResponseDeposit>(
+      `${this.urlDeposit}/withdraw`,
+      data,
+      this.config
+    );
+  }
 
   getAllTransaction(): Observable<ResponseTransactionList> {
     try {

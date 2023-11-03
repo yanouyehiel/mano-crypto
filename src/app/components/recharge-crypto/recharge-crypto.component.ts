@@ -14,11 +14,11 @@ import { NavService } from 'src/app/services/nav.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-crypto',
-  templateUrl: './add-crypto.component.html',
-  styleUrls: ['./add-crypto.component.scss'],
+  selector: 'app-recharge-crypto',
+  templateUrl: './recharge-crypto.component.html',
+  styleUrls: ['./recharge-crypto.component.scss']
 })
-export class AddCryptoComponent implements OnInit {
+export class RechargeCryptoComponent implements OnInit {
   public earningData = [
     {
       id: 1,
@@ -82,6 +82,7 @@ export class AddCryptoComponent implements OnInit {
   public loader: boolean = true;
   public responseFee: ResponseCryptoFee;
   cryptoAmount: number;
+  public url = "https://nowpayments.io/payment/?iid=4844525512&paymentId=5102569096";
 
   constructor(
     private modalService: NgbModal,
@@ -118,8 +119,8 @@ export class AddCryptoComponent implements OnInit {
 
   async initBuyingProcess(crypto: string) {
     const { value: result } = await Swal.fire({
-      titleText:`Achat de ${crypto}`,
-      html: `Combien de ${crypto} voulez vous acheter?`,
+      titleText:`Recharge de ${crypto}`,
+      html: `Combien de ${crypto} voulez vous recharger?`,
       input: 'text',
       inputAutoFocus:true,
       inputPlaceholder: `Ex: 0.02`,
@@ -143,17 +144,20 @@ export class AddCryptoComponent implements OnInit {
         this.typeCrypto = crypto;
         try {
           const response = await this.cryptoService
-            .getCryptoFees({
+            .importCrypto({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             })
             .toPromise();
+            console.log(response)
           if (response) {
             return response;
           } else {
+           
             throw new Error('User not found');
           }
         } catch (error:any) {
+          console.log(error)
           if (error.error) {
             Swal.showValidationMessage(`${error.error.message}`);
           } else {
@@ -169,52 +173,17 @@ export class AddCryptoComponent implements OnInit {
     });
 
     if (result) {
-      this.askConfirmTransaction(result);
+      if (result.statusCode==1000) {
+        
+        Swal.fire('Success',`Veuillez suivre la procedure <a href='${result.data.invoice_url}' style="color:green;" target='_blank'>en cliquant ici</a>`, 'info');
+      } else {
+        Swal.fire('Achat annulée', '', 'error');
+      }
+      
+      window.open(result.data.invoice_url, '_blank')
+      
     }
   }
 
-  askConfirmTransaction(value: any) {
-    Swal.fire({
-      titleText:`Recharge de ${this.typeCrypto}`,
-      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${parseInt(
-        value.data!.details.total
-      ).toLocaleString('fr-FR')} XAF</b>`,
-      showDenyButton: true,
-      confirmButtonText: 'Payer',
-      denyButtonText: `Annuler`,
-      showLoaderOnConfirm: true,
-      preConfirm: async (value) => {
-        try {
-          const response = await this.cryptoService
-            .buyCrypto({
-              crypto_currency: this.typeCrypto,
-              amount: this.cryptoAmount,
-            })
-            .toPromise();
-          if (response) {
-            return response;
-          } else {
-            throw new Error("Can't buy");
-          }
-        } catch (error: any) {
-          if (error.error) {
-            Swal.showValidationMessage(`${error.error.message}`);
-          } else {
-            Swal.showValidationMessage(
-              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
-            );
-          }
 
-          return null;
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    }).then((result: any) => {
-      if (result.isConfirmed && result.value.statusCode==1000) {
-        Swal.fire('Success',`Achat effectué avec success`,  'success');
-      } else if (result.isDenied) {
-        Swal.fire('Achat annulée', '', 'error');
-      }
-    });
-  }
 }
