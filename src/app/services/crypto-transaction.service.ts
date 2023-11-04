@@ -22,18 +22,18 @@ export class CryptoTransactionService {
 
   getCryptoFees(data: any): Observable<ResponseCryptoFee> {
     return this.http.post<ResponseCryptoFee>(
-      `${this.cryptoUrl}/get-buy-crypto-fees`,
+      `${this.cryptoUrl}/get-crypto-fees`,
       data,
       this.config
     );
   }
-  
+
 
   buyCrypto(data: any): Observable<ResponseCryptoFee> {
     return this.http
       .post<ResponseCryptoFee>(
-        `${this.cryptoUrl}/init-buy`, 
-        data, 
+        `${this.cryptoUrl}/init-buy`,
+        data,
         this.config
       );
     }

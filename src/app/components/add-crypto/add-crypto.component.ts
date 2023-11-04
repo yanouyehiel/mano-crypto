@@ -3,8 +3,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Observable,
   Subject,
+  catchError,
   debounceTime,
   distinctUntilChanged,
+  of,
   switchMap,
 } from 'rxjs';
 import { ResponseCryptoFee } from 'src/app/models/Transaction';
@@ -146,7 +148,9 @@ export class AddCryptoComponent implements OnInit {
             .getCryptoFees({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
-            })
+            }).pipe(
+              catchError((error)=>of(error.error))
+            )
             .toPromise();
           if (response) {
             return response;
@@ -167,8 +171,11 @@ export class AddCryptoComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
+    console.log(result)
 
-    if (result) {
+    if (result.statusCode!=1000) {
+      Swal.fire('Achat annulée', result.message, 'error');
+    }else{
       this.askConfirmTransaction(result);
     }
   }
@@ -177,7 +184,7 @@ export class AddCryptoComponent implements OnInit {
     Swal.fire({
       titleText:`Recharge de ${this.typeCrypto}`,
       html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${parseInt(
-        value.data!.details.total
+        value.data!.buyFees.total
       ).toLocaleString('fr-FR')} XAF</b>`,
       showDenyButton: true,
       confirmButtonText: 'Payer',
@@ -189,7 +196,9 @@ export class AddCryptoComponent implements OnInit {
             .buyCrypto({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
-            })
+            }).pipe(
+              catchError((error)=>of(error.error))
+            )
             .toPromise();
           if (response) {
             return response;
@@ -197,21 +206,23 @@ export class AddCryptoComponent implements OnInit {
             throw new Error("Can't buy");
           }
         } catch (error: any) {
-          if (error.error) {
-            Swal.showValidationMessage(`${error.error.message}`);
-          } else {
+
             Swal.showValidationMessage(
               `Impossible de traiter votre requete, Veuillez reessayer plus tard`
             );
-          }
-
           return null;
         }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-      if (result.isConfirmed && result.value.statusCode==1000) {
-        Swal.fire('Success',`Achat effectué avec success`,  'success');
+      console.log(result)
+      if (result.isConfirmed) {
+        if(result.value.statusCode!=1000){
+          Swal.fire('Achat annulée', result.value.message, 'error');
+        }else{
+          Swal.fire('Success',`Achat effectué avec success`,  'success');
+        }
+
       } else if (result.isDenied) {
         Swal.fire('Achat annulée', '', 'error');
       }

@@ -3,8 +3,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Observable,
   Subject,
+  catchError,
   debounceTime,
   distinctUntilChanged,
+  of,
   switchMap,
 } from 'rxjs';
 import { ResponseCryptoFee } from 'src/app/models/Transaction';
@@ -16,7 +18,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-recharge-crypto',
   templateUrl: './recharge-crypto.component.html',
-  styleUrls: ['./recharge-crypto.component.scss']
+  styleUrls: ['./recharge-crypto.component.scss'],
 })
 export class RechargeCryptoComponent implements OnInit {
   public earningData = [
@@ -42,7 +44,6 @@ export class RechargeCryptoComponent implements OnInit {
       abv: 'BTC',
       value: 31000,
       icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1.png',
-
     },
     {
       name: 'Etheurium',
@@ -50,7 +51,6 @@ export class RechargeCryptoComponent implements OnInit {
       value: 1900,
       icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png',
     },
-
   ];
 
   public currentValues = [
@@ -82,7 +82,8 @@ export class RechargeCryptoComponent implements OnInit {
   public loader: boolean = true;
   public responseFee: ResponseCryptoFee;
   cryptoAmount: number;
-  public url = "https://nowpayments.io/payment/?iid=4844525512&paymentId=5102569096";
+  public url =
+    'https://nowpayments.io/payment/?iid=4844525512&paymentId=5102569096';
 
   constructor(
     private modalService: NgbModal,
@@ -119,10 +120,10 @@ export class RechargeCryptoComponent implements OnInit {
 
   async initBuyingProcess(crypto: string) {
     const { value: result } = await Swal.fire({
-      titleText:`Recharge de ${crypto}`,
+      titleText: `Recharge de ${crypto}`,
       html: `Combien de ${crypto} voulez vous recharger?`,
       input: 'text',
-      inputAutoFocus:true,
+      inputAutoFocus: true,
       inputPlaceholder: `Ex: 0.02`,
       showCancelButton: true,
       confirmButtonText: 'Acheter',
@@ -132,14 +133,14 @@ export class RechargeCryptoComponent implements OnInit {
         if (isNaN(parseFloat(value))) {
           return 'Veuillez entrer un nombre valide.';
         }
-        return null
+        return null;
       },
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
       },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        console.log(value)
+        console.log(value);
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
@@ -148,23 +149,20 @@ export class RechargeCryptoComponent implements OnInit {
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             })
+            .pipe(catchError((error) => of(error.error)))
             .toPromise();
-            console.log(response)
+          console.log(response);
           if (response) {
             return response;
           } else {
-           
             throw new Error('User not found');
           }
-        } catch (error:any) {
-          console.log(error)
-          if (error.error) {
-            Swal.showValidationMessage(`${error.error.message}`);
-          } else {
-            Swal.showValidationMessage(
-              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
-            );
-          }
+        } catch (error: any) {
+          console.log(error);
+
+          Swal.showValidationMessage(
+            `Impossible de traiter votre requete, Veuillez reessayer plus tard`
+          );
 
           return null;
         }
@@ -173,17 +171,16 @@ export class RechargeCryptoComponent implements OnInit {
     });
 
     if (result) {
-      if (result.statusCode==1000) {
-        
-        Swal.fire('Success',`Veuillez suivre la procedure <a href='${result.data.invoice_url}' style="color:green;" target='_blank'>en cliquant ici</a>`, 'info');
+      if (result.statusCode == 1000) {
+        Swal.fire(
+          'Success',
+          `Veuillez suivre la procedure <a href='${result.data.invoice_url}' style="color:green;" target='_blank'>en cliquant ici</a>`,
+          'info'
+        );
+        window.open(result.data.invoice_url, '_blank');
       } else {
-        Swal.fire('Achat annulée', '', 'error');
+        Swal.fire('Operation annulée', result.message, 'error');
       }
-      
-      window.open(result.data.invoice_url, '_blank')
-      
     }
   }
-
-
 }

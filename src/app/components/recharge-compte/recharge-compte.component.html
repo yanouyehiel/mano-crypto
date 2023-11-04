@@ -110,7 +110,10 @@
                 <div class="row" *ngIf="step === 2">
                   <h5 class="title-method">Numero de Telephone</h5>
                   <div class="mb-5">
-                    <input *ngIf="depositForm.controls['paiementMethod'].value != 'OM'"
+                    <input
+                      *ngIf="
+                        depositForm.controls['paiementMethod'].value != 'OM'
+                      "
                       class="form-control input"
                       id="exampleFormControlInput1"
                       type="number"
@@ -119,7 +122,10 @@
                       pattern="6(5[0-4]|7[0-9]|8[0-4])\d{6}"
                       required
                     />
-                    <input *ngIf="depositForm.controls['paiementMethod'].value == 'OM'"
+                    <input
+                      *ngIf="
+                        depositForm.controls['paiementMethod'].value == 'OM'
+                      "
                       class="form-control input"
                       id="exampleFormControlInput1"
                       type="number"
@@ -176,7 +182,13 @@
                     <div class="row" style="margin-top: 20px">
                       <div class="col">
                         <h5>Type de paiement</h5>
-                        <p style="font-size: 15px">Orange Money</p>
+                        <p style="font-size: 15px">
+                          {{
+                            depositForm.controls["paiementMethod"].value == "OM"
+                              ? "Orange Money"
+                              : "MTN Mobile Money"
+                          }}
+                        </p>
                       </div>
                     </div>
                     <div class="row" style="margin-top: 20px">
@@ -226,12 +238,10 @@
   <div class="row">
     <div class="col-xl-12 box-col-12 des-xl-100">
       <div class="card">
+        <div class="card-header"><h5>Précédentes recharges de compte</h5></div>
         <div class="card-body">
           <div class="table-responsive">
-            <h5>Précédentes recharges de compte</h5>
-            <app-history-table
-              type="DEPOSIT"
-            ></app-history-table>
+            <app-history-table type="DEPOSIT"></app-history-table>
           </div>
         </div>
       </div>

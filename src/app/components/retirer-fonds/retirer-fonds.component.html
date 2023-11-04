@@ -33,7 +33,7 @@
                 class="mega-inline form theme-form"
                 [formGroup]="depositForm"
               >
-                
+
                 <div class="row" *ngIf="step === 1">
                   <h5 class="title-method">Numero de Telephone</h5>
                   <p style="font-size: 15px">
@@ -57,7 +57,7 @@
                       style="margin-top: 20px; margin-bottom: 40px"
                     >
                       <div class="col-md-4">
-                        
+
                       </div>
                       <div class="col-md-4">
                         <button
@@ -130,9 +130,11 @@
   <div class="row">
     <div class="col-xl-12 box-col-12 des-xl-100">
       <div class="card">
+        <div class="card-header">
+          <h5>Précédentes retrais</h5>
+        </div>
         <div class="card-body">
           <div class="table-responsive">
-            <h5>Précédentes retrais</h5>
             <app-history-table
               type="WITHDRAWAL"
             ></app-history-table>

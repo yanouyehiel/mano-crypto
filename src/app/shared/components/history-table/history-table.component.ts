@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { catchError, of } from 'rxjs';
 import { ResponseTransactionList } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
 
@@ -22,16 +23,23 @@ ngOnInit(): void {
 this.getTransactions()
 }
 getTransactions(): void {
-  try {
-    this.depositService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
-      this.loader = false;
+
+    this.depositService.getAllTransaction().pipe(
+      catchError((error)=>{
+        return of(error.error)
+      })
+    ).subscribe((response: ResponseTransactionList) => {
+
+    if(response.statusCode!=1000){
+      this.errorDisplay = "Impossible de charger les donnees, "+response.message;
+    }
+    else{
       this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === this.type).reverse().slice(0, 9)
-      console.log(response)
+    }
+      this.loader = false;
+
     })
-  } catch (error) {
-    this.errorDisplay = "Impossible de charger les donnees";
-    this.loader = false
-  }
+
 }
 
 }

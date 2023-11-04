@@ -1,214 +1,165 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
-      <div class="col-md-8 col-12 mb-4">
-        <div class="card">
-          <h5 class="card-header">Consulter le taux de change d'une Crypto</h5>
-          <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-md-6 col-12 d-flex">
-                <div class="bookmark" style="margin-right: 8px">
-                  <ul>
-                    <li>
-                      <a
-                        data-container="body"
-                        data-bs-toggle="popover"
-                        data-placement="top"
-                        title=""
-                        data-original-title="Tables"
-                        ><i data-feather="loader"></i
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
-                <input type="text" class="form-control" placeholder="Crypto" />
-              </div>
+    <div class="col-md-8 col-12 mb-4">
+      <div class="card">
 
-              <div class="col-md-2 col-4 d-flex">
-                <button
-                  class="btn btn-dark"
-                  type="submit"
-                  (click)="findCrypto()"
-                >
-                  Find
-                </button>
+        <div class="card-header"><h5>Consulter le taux de change d'une Crypto</h5></div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-6 col-12 d-flex">
+              <div class="bookmark" style="margin-right: 8px">
+                <ul>
+                  <li>
+                    <a
+                      data-container="body"
+                      data-bs-toggle="popover"
+                      data-placement="top"
+                      title=""
+                      data-original-title="Tables"
+                      ><i data-feather="loader"></i
+                    ></a>
+                  </li>
+                </ul>
               </div>
+              <input type="text" class="form-control" placeholder="Crypto" />
             </div>
-            <div class="alert alert-light">
+
+            <div class="col-md-2 col-4 d-flex">
+              <button class="btn btn-dark" type="submit" (click)="findCrypto()">
+                Find
+              </button>
+            </div>
+          </div>
+          <!-- <div class="alert alert-light">
               <span class="text-danger"
                 ><strong>Title!</strong> None crypto-currency found !
               </span>
+            </div> -->
+
+          <div class="row">
+            <div class="col-2">
+              <label for="Symbol" class="form-label">Nom</label>
+              <div class="text-body">{{ crypto.name }}</div>
             </div>
-
-            <div class="row">
-              <div class="col-2">
-                <label for="Symbol" class="form-label">Nom</label>
-                <div class="text-body">{{ crypto.name }}</div>
-              </div>
-              <div class="col-2">
-                <label for="Symbol" class="form-label">Symbol</label>
-                <div class="text-body">{{ crypto.symbol }}</div>
-              </div>
-              <div class="col-2">
-                <label for="Symbol" class="form-label">En USDT</label>
-                <div class="text-body">{{ crypto.value }}</div>
-              </div>
-              <div class="col-2">
-                <label for="Symbol" class="form-label">En XAF</label>
-                <div class="text-body">{{ crypto.value * 550 }}</div>
-              </div>
-              <div class="col-2">
-                <label for="Symbol" class="form-label">sur 24H</label>
-                <div
-                  [ngClass]="
-                    crypto.daily > 0 ? ' text-success' : ' text-danger'
-                  "
-                >
+            <div class="col-2">
+              <label for="Symbol" class="form-label">Symbol</label>
+              <div class="text-body">{{ crypto.symbol }}</div>
+            </div>
+            <div class="col-2">
+              <label for="Symbol" class="form-label">En USDT</label>
+              <div class="text-body">{{ crypto.value }}</div>
+            </div>
+            <div class="col-2">
+              <label for="Symbol" class="form-label">En XAF</label>
+              <div class="text-body">{{ crypto.value * 550 }}</div>
+            </div>
+            <div class="col-2">
+              <label for="Symbol" class="form-label">sur 24H</label>
+              <div
+                [ngClass]="crypto.daily > 0 ? ' text-success' : ' text-danger'"
+              >
                 <a class="btn-arrow arrow-success"
-                ><i class="toprightarrow-primary fa fa-arrow-{{crypto.daily>0?'up':'down'}} me-2"></i
-                >{{ crypto.daily }}%
-              </a>
-                </div>
+                  ><i
+                    class="toprightarrow-primary fa fa-arrow-{{
+                      crypto.daily > 0 ? 'up' : 'down'
+                    }} me-2"
+                  ></i
+                  >{{ crypto.daily }}%
+                </a>
               </div>
-              <div class="col-2">
-                <label for="Symbol" class="form-label">Sur 7 jours</label>
-                <div
-                  [ngClass]="
-                    crypto.weekly > 0 ? ' text-success' : ' text-danger'
-                  "
-                >
-                  <a class="btn-arrow arrow-success"
-                    ><i class="toprightarrow-primary fa fa-arrow-{{crypto.weekly>0?'up':'down'}} me-2"></i
-                    >{{ crypto.weekly }}%
-                  </a>
-                </div>
+            </div>
+            <div class="col-2">
+              <label for="Symbol" class="form-label">Sur 7 jours</label>
+              <div
+                [ngClass]="crypto.weekly > 0 ? ' text-success' : ' text-danger'"
+              >
+                <a class="btn-arrow arrow-success"
+                  ><i
+                    class="toprightarrow-primary fa fa-arrow-{{
+                      crypto.weekly > 0 ? 'up' : 'down'
+                    }} me-2"
+                  ></i
+                  >{{ crypto.weekly }}%
+                </a>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-4 box-col-12 des-xl-100">
-        <div class="card">
-          <h5 class="card-header">Current balance</h5>
-          <div class="card-body p-0">
-            <app-crypto-balance></app-crypto-balance>
-          </div>
+    </div>
+    <div class="col-xl-4 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Current balance</h5>
         </div>
-       </div>
-        <div class="col-xl-12 box-col-12 des-xl-100">
-          <div class="card">
-            <div class="card-body">
-              <div class="table-responsive">
-                <h5>Cryptomonnaies les plus populaires</h5>
-                <div class="col-md-12" *ngIf="!loader">
-                  <div class="loader-box">
-                    <div class="loader-3"></div>
-                  </div>
-                </div>
-                <table class="table table-bordernone" *ngIf="loader">
-                  <thead>
-                    <tr>
-                      <th>Code</th>
-                      <th>Nom</th>
-                      <th>Taux en XAF</th>
-                      <th>Taux en USDT</th>
-                      <th>Sur 24H</th>
-                      <th>Sur 7 Jours</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let recent of recentOrders">
-                      <td class="font-success">
-                        <div class="media">
-                          <div class="font-primary">
-                            <app-feather-icons
-                              icon="arrow-up-right"
-                            ></app-feather-icons>
-                          </div>
-                          <div class="media-body">
-                            {{ recent.type }}
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p>{{ recent.date | date }}</p>
-                      </td>
-                      <td>
-                        <p>{{ recent.date | date }}</p>
-                      </td>
-                      <td>
-                        <p>{{ recent.date | date }}</p>
-                      </td>
-                      <td>
-                        <p>{{ recent.taux }} XAF</p>
-                      </td>
-                      <td>
-                        <span class="badge badge-secondary counter digits"
-                          >EFFECTUE</span
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+
+        <div class="card-body p-0">
+          <app-crypto-balance></app-crypto-balance>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Cryptomonnaies les plus populaires</h5>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="col-md-12" *ngIf="!loader">
+              <div class="loader-box">
+                <div class="loader-3"></div>
               </div>
             </div>
+            <table class="table table-bordernone" *ngIf="loader">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Nom</th>
+                  <th>Taux en XAF</th>
+                  <th>Taux en USDT</th>
+                  <th>Sur 24H</th>
+                  <th>Sur 7 Jours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let recent of recentOrders">
+                  <td class="font-success">
+                    <div class="media">
+                      <div class="font-primary">
+                        <app-feather-icons
+                          icon="arrow-up-right"
+                        ></app-feather-icons>
+                      </div>
+                      <div class="media-body">
+                        {{ recent.type }}
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p>{{ recent.date | date }}</p>
+                  </td>
+                  <td>
+                    <p>{{ recent.date | date }}</p>
+                  </td>
+                  <td>
+                    <p>{{ recent.date | date }}</p>
+                  </td>
+                  <td>
+                    <p>{{ recent.taux }} XAF</p>
+                  </td>
+                  <td>
+                    <span class="badge badge-secondary counter digits"
+                      >EFFECTUE</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<!-- <div class="col-sm-4">
-  <div class="card">
-    <div
-      class="card-header pb-0 d-flex justify-content-between align-items-center"
-    >
-      <h5 class="text-uppercase">Your Crypto Current Balance</h5>
-    </div>
-    <div class="row">
-      <div class="container-fluid dashboard-default-sec">
-        <div class="row">
-          <div class="col-xl-12 box-col-12 des-xl-100">
-            <div class="row">
-              <div
-                class="col-xl-12 col-md-12 col-sm-6 box-col-3"
-                *ngFor="let currentValue of currentValues"
-              >
-                <div class="card income-card card-{{ currentValue.class }}">
-                  <div class="card-body text-center">
-                    <div class="round-box">
-                      <svg-icon
-                        src="assets/images/svg/{{ currentValue.icon }}"
-                        [svgStyle]="{ 'width.px': 90 }"
-                      ></svg-icon>
-                    </div>
-                    <h5>
-                      {{ currentValue.value }} {{ currentValue.type }}
-                    </h5>
-                    <p>
-                      Value <b>{{ currentValue.actuelValue }}</b> XAF
-                    </p>
-                    <a
-                      class="btn-arrow arrow-{{ currentValue.class }}"
-                      href="javascript:void(0)"
-                      ><i
-                        class="toprightarrow-primary fa fa-arrow-up me-2"
-                      ></i
-                      >95.54%
-                    </a>
-                    <div class="parrten">
-                      <svg-icon
-                        src="assets/images/svg/{{ currentValue.icon }}"
-                        [svgStyle]="{ 'width.px': 90 }"
-                      ></svg-icon>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
