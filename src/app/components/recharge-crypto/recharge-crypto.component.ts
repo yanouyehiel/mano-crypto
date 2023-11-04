@@ -9,7 +9,7 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { ResponseCryptoFee } from 'src/app/models/Transaction';
+import { ResponseCryptoFee, ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
@@ -80,7 +80,6 @@ export class RechargeCryptoComponent implements OnInit {
   public typeCrypto: string;
   public recentOrders: any[] = [];
   public loader: boolean = true;
-  public responseFee: ResponseCryptoFee;
   cryptoAmount: number;
   public url =
     'https://nowpayments.io/payment/?iid=4844525512&paymentId=5102569096';
@@ -105,17 +104,6 @@ export class RechargeCryptoComponent implements OnInit {
       ' ' +
       this.layoutService.config.settings.layout.replace('layout', 'sidebar')
     );
-  }
-
-  getFee(crypto: string, value: number) {
-    this.cryptoService
-      .getCryptoFees({
-        crypto_currency: this.typeCrypto,
-        amount: value,
-      })
-      .subscribe((response) => {
-        this.responseFee = response;
-      });
   }
 
   async initBuyingProcess(crypto: string) {

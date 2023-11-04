@@ -20,13 +20,33 @@ export class CryptoTransactionService {
 
   constructor(private http: HttpClient) {}
 
-  getCryptoFees(data: any): Observable<ResponseCryptoFee> {
+  getCryptoFees(data: any): Observable<ResponseParent> {
     return this.http.post<ResponseCryptoFee>(
       `${this.cryptoUrl}/get-crypto-fees`,
       data,
       this.config
     );
   }
+
+  convertToFiat(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseCryptoFee>(
+      `${this.cryptoUrl}/convert-crypto-to-fiats`,
+      data,
+      this.config
+    );
+  }
+
+  convertToCrypto(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseCryptoFee>(
+      `${this.cryptoUrl}/convert-fiat-to-cryptos`,
+      data,
+      this.config
+    );
+  }
+
+
+
+
 
 
   buyCrypto(data: any): Observable<ResponseCryptoFee> {

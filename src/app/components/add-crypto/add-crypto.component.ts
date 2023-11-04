@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  Observable,
-  Subject,
   catchError,
-  debounceTime,
-  distinctUntilChanged,
   of,
-  switchMap,
 } from 'rxjs';
-import { ResponseCryptoFee } from 'src/app/models/Transaction';
+import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
@@ -82,8 +77,9 @@ export class AddCryptoComponent implements OnInit {
   public typeCrypto: string;
   public recentOrders: any[] = [];
   public loader: boolean = true;
-  public responseFee: ResponseCryptoFee;
+  public responseFee: ResponseParent;
   cryptoAmount: number;
+  xafAmount:number;
 
   constructor(
     private modalService: NgbModal,
@@ -144,7 +140,7 @@ export class AddCryptoComponent implements OnInit {
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
-          const response = await this.cryptoService
+          const responseFees = await this.cryptoService
             .getCryptoFees({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
@@ -152,8 +148,28 @@ export class AddCryptoComponent implements OnInit {
               catchError((error)=>of(error.error))
             )
             .toPromise();
-          if (response) {
-            return response;
+            const responseAmountToXAF = await this.cryptoService
+            .convertToFiat({
+              crypto_currency: this.typeCrypto,
+              amount: this.cryptoAmount,
+            }).pipe(
+              catchError((error)=>of(error.error))
+            )
+            .toPromise();
+          if (responseFees.statusCode==1000 && responseAmountToXAF.statusCode==1000) {
+            const responseFeeToXAF = await this.cryptoService
+            .convertToFiat({
+              crypto_currency: this.typeCrypto,
+              amount:parseFloat(responseFees.data.buyFees.fee),
+            }).pipe(
+              catchError((error)=>of(error.error))
+            )
+            .toPromise();
+            if(responseFeeToXAF.statusCode!=1000){
+              throw new Error(responseFeeToXAF);
+            }
+            this.xafAmount = parseInt(responseAmountToXAF.data.xaf_amount) + parseInt(responseFeeToXAF.data.xaf_amount)
+            return responseFeeToXAF;
           } else {
             throw new Error('User not found');
           }
@@ -183,9 +199,8 @@ export class AddCryptoComponent implements OnInit {
   askConfirmTransaction(value: any) {
     Swal.fire({
       titleText:`Recharge de ${this.typeCrypto}`,
-      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${parseInt(
-        value.data!.buyFees.total
-      ).toLocaleString('fr-FR')} XAF</b>`,
+      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${
+        this.xafAmount.toLocaleString('fr-FR')} XAF</b>`,
       showDenyButton: true,
       confirmButtonText: 'Payer',
       denyButtonText: `Annuler`,
