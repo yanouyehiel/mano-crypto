@@ -69,6 +69,11 @@ export class RetirerFondsComponent implements OnInit {
       this.classStep2 = 'current';
       this.classStep3 = '';
     }
+    if (this.step === 3) {
+      this.classStep1 = '';
+      this.classStep2 = '';
+      this.classStep3 = 'current';
+    }
   }
 
   ckeckConfirmation(){
