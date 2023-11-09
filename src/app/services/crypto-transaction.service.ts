@@ -44,11 +44,6 @@ export class CryptoTransactionService {
     );
   }
 
-
-
-
-
-
   buyCrypto(data: any): Observable<ResponseCryptoFee> {
     return this.http
       .post<ResponseCryptoFee>(

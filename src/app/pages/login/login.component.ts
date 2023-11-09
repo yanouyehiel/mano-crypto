@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
             token: response.data?.token
           }
           localStorage.setItem("token-mansexch", JSON.stringify(token));
-          this.router.navigate(['/client/home'])
+          this.router.navigate(['/admin/home'])
         } else if (response.statusCode == 1001) {
           this.error = true;
           this.errorMessage = 'Erreur sur le serveur, veuillez réessayer svp !';
