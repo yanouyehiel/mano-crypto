@@ -18,11 +18,11 @@
       <th>Status</th>
     </tr>
   </thead>
-  <div class="alert alert-warning my-3" *ngIf="recentOrders.length==0">
+  <!-- <div class="alert alert-warning my-3" *ngIf="recentOrders.length==0">
     <span class="text-light"
       > Aucune donnée n'est disponible !
     </span>
-  </div>
+  </div> -->
   <tr *ngFor="let recent of recentOrders">
     <td class="font-success">
       <app-feather-icons icon="arrow-up-right"></app-feather-icons>
