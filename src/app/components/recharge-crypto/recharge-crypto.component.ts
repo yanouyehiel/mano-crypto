@@ -137,9 +137,14 @@ export class RechargeCryptoComponent implements OnInit {
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             })
-            .pipe(catchError((error) => of(error.error)))
+            .pipe(catchError((error) => {
+              if (error.status === 0 || error.statusText === 'Unknown Error') {
+                Swal.showValidationMessage(
+                  `Erreur de connexion Internet. Veuillez vérifier votre connexion.`
+                );
+              }
+             return of(error.error)}))
             .toPromise();
-          console.log(response);
           if (response) {
             return response;
           } else {
@@ -152,13 +157,14 @@ export class RechargeCryptoComponent implements OnInit {
             `Impossible de traiter votre requete, Veuillez reessayer plus tard`
           );
 
-          return null;
+          // return null;
         }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
 
     if (result) {
+      console.log(result)
       if (result.statusCode == 1000) {
         Swal.fire(
           'Success',
@@ -167,7 +173,7 @@ export class RechargeCryptoComponent implements OnInit {
         );
         window.open(result.data.invoice_url, '_blank');
       } else {
-        Swal.fire('Operation annulée', result.message, 'error');
+        Swal.fire('Operation annulée', result.message.error, 'error');
       }
     }
   }

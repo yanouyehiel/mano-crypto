@@ -97,12 +97,13 @@ export class RetirerFondsComponent implements OnInit {
     console.log(data)
     this.depositService.withdraw(data).pipe(
       catchError((error: any) => {
+
         return of(error.error); // Retournez une valeur observable pour poursuivre le flux
       })
     ).subscribe((result) => {
       this.response = result;
       if (result.statusCode!==1000) {
-        Swal.fire('Erreur', result.message, 'error');
+        Swal.fire('Erreur', result.message||`Erreur de connexion Internet. Veuillez vérifier votre connexion.`, 'error');
       }else{
         Swal.fire('Terminé', 'Retrait effectué avec succès', 'success');
       }

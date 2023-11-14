@@ -212,7 +212,14 @@ export class AddCryptoComponent implements OnInit {
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             }).pipe(
-              catchError((error)=>of(error.error))
+              catchError((error)=>{
+                if (error.status === 0 || error.statusText === 'Unknown Error') {
+                  Swal.showValidationMessage(
+                    `Erreur de connexion Internet. Veuillez vérifier votre connexion.`
+                  );
+                }
+
+                return of(error.error)})
             )
             .toPromise();
           if (response) {

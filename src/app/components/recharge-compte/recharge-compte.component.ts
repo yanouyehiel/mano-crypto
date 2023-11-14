@@ -106,13 +106,20 @@ export class RechargeCompteComponent implements OnInit {
 
     const { value: result } = await Swal.fire({
       titleText: `Recharge de compte`,
-      
+
       html: `Vous voulez effectuer une recharge de ${data.amount}\nVeuillez saisir <b>${this.depositForm.value['paiementMethod']=="OM"?'<span style="color:orange;">#150*50#</span>':'<span style="color:yellow;">*126#</span>'}</b> pour valider la transaction.`,
       showLoaderOnConfirm: true,
       didRender: async () => {
         try {
           const response = await this.depositService.addDeposit(data)
-            .pipe(catchError((error) => of(error.error)))
+            .pipe(catchError((error) => {
+              if (error.status === 0 || error.statusText === 'Unknown Error') {
+                // Swal.fire(
+                //   'Erreur',`Erreur de connexion Internet. Veuillez vérifier votre connexion.`, 'error'
+                // );
+              }
+
+              return of(error.error)}))
             .toPromise();
 
           if (response) {
@@ -133,7 +140,7 @@ export class RechargeCompteComponent implements OnInit {
     if (result && result.statusCode == 1000) {
       this.successRecharge();
     } else {
-      Swal.fire('Opération annulée', result?.message || 'Une erreur s\'est produite', 'error');
+      Swal.fire('Opération annulée', result?.message || `Erreur de connexion Internet. Veuillez vérifier votre connexion.`, 'error');
     }
   }
 
