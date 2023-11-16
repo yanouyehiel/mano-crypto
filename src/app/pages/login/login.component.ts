@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   public error: boolean = false;
   public errorMessage: string;
   public siteKey: string = environment.recaptchaSiteKey
-  public textBtn: string = 'SIGN IN'
+  public textBtn: string = 'SE CONNECTER'
 
   constructor(
     private fb: FormBuilder, 
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     try {
-      this.textBtn = 'Login...'
+      this.textBtn = 'Connexion...'
       const data = {
         email: this.loginForm.controls['email'].value,
         password: this.loginForm.controls['password'].value
@@ -61,17 +61,17 @@ export class LoginComponent implements OnInit {
             token: response.data?.token
           }
           localStorage.setItem("token-mansexch", JSON.stringify(token));
-          this.router.navigate(['/admin/home'])
+          this.router.navigate(['/client/home'])
         } else if (response.statusCode == 1001) {
           this.error = true;
           this.errorMessage = 'Erreur sur le serveur, veuillez réessayer svp !';
-          this.textBtn = 'SIGN IN'
+          this.textBtn = 'SE CONNECTER'
         }
       }, (error) => {
         this.error = true;
         this.errorMessage = error.error.message;
         this.showToast(error.error.message)
-        this.textBtn = 'SIGN IN'
+        this.textBtn = 'SE CONNECTER'
       })
 
     } catch (error) {

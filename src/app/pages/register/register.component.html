@@ -6,17 +6,17 @@
       </div>
       <div class="login-card">
         <form class="theme-form login-form" [formGroup]="registerForm">
-          <h4>Register</h4>
-          <h6>Create New Account Mansexch</h6>
+          <h4>Inscription</h4>
+          <h6>Créer un nouveau compte Mansexch</h6>
           <div class="form-group">
-            <label>Name</label>
+            <label>Nom</label>
             <div class="input-group">
               <span class="input-group-text"><i class="icon-user text-primary"></i></span>
               <input
                 class="form-control"
                 type="text"
                 required=""
-                placeholder="Enter your name"
+                placeholder="Entrer votre nom"
                 formControlName="name"
               />
             </div>
@@ -29,23 +29,55 @@
                 class="form-control"
                 type="email"
                 required=""
-                placeholder="Enter your email address or username"
+                placeholder="Entrer votre adresse mail"
                 formControlName="email"
               />
             </div>
           </div>
           <div class="form-group">
-            <label>Phone Number</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="icon-mobile text-primary"></i></span>
-              <input
-                class="form-control"
-                type="tel"
-                required=""
-                name="phoneNumber"
-                placeholder="Enter your phone number"
-                formControlName="phoneNumber"
-              />
+            <label>Numéro de téléphone</label>
+            <div class="row">
+              <div class="col-md-6">
+                <ngx-select 
+                  [items]="countries" 
+                  optionValueField="hex" 
+                  optionTextField="name" 
+                  [(ngModel)]="selectedCountry"
+                  (valueChange)="onCountryChange($event)"
+                  formControlName="codePays"
+                >
+
+                  <ng-template ngx-select-option-selected let-option let-text="text">
+                      <span class="color-box"></span>
+                      <span [innerHtml]="text"></span>
+                      ({{option.data.hex}})
+                  </ng-template>
+              
+                  <ng-template ngx-select-option let-option let-text="text">
+                      <span class="color-box"></span>
+                      <span [innerHtml]="text"></span>
+                      ({{option.data.hex}})
+                  </ng-template>
+              
+                  <ng-template ngx-select-option-not-found>
+                      Nothing found
+                  </ng-template>
+                
+                </ngx-select>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="icon-mobile text-primary"></i></span>
+                  <input
+                    class="form-control"
+                    type="tel"
+                    required=""
+                    name="phoneNumber"
+                    placeholder="Entrer votre numéro de téléphone"
+                    formControlName="phoneNumber"
+                  />
+                </div>
+              </div>
             </div>
             <div
               *ngIf="registerForm.controls['phoneNumber'].touched && registerForm.controls['phoneNumber'].invalid"
@@ -55,7 +87,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Passcode</label>
+            <label>Mot de passe</label>
             <div class="input-group">
               <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
               <input
@@ -63,7 +95,7 @@
                 name="password"
                 [type]="show ? 'text' : 'password'"
                 required=""
-                placeholder="Enter your passcode"
+                placeholder="Entrer votre mot de passe"
                 formControlName="password"
               />
               <div class="show-hide" (click)="showPassword()" *ngIf="!show">
@@ -75,7 +107,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Confirm Passcode</label>
+            <label>Confirmer le mot de passe</label>
             <div class="input-group">
               <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
               <input
@@ -83,7 +115,7 @@
                 name="confirmPassword"
                 [type]="show ? 'text' : 'password'"
                 required=""
-                placeholder="Enter your passcode"
+                placeholder="Entrer le même mot de passe"
                 formControlName="confirmPassword"
               />
               <div class="show-hide" (click)="showPassword()" *ngIf="!show">
@@ -97,20 +129,20 @@
               *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value != registerForm.controls['confirmPassword'].value)"
               class="text text-danger mt-1"
             >
-              Passcodes did not match
+              Les mots de passe ne correspondent pas
             </div>
             <div
               *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value.length < 8 || registerForm.controls['confirmPassword'].value.length < 8)"
               class="text text-danger mt-1"
             >
-            Passcodes length must have more 8 caracters
+            Les mots de passe doivent avoir au moins 8 caractères
             </div>
           </div>
           <div class="form-group">
             <div class="checkbox">
               <input id="checkbox1" type="checkbox" required />
               <label class="text-muted" for="checkbox1"
-                >I agree to Dashlite <span class="text-primary">Privacy Policy</span> &
+                >J'accepte les conditions d'utilisation <span class="text-primary">Privacy Policy</span> &
                 <span class="text-primary">Terms</span></label
               >
             </div>
@@ -125,7 +157,7 @@
             <button
               class="btn btn-primary btn-block"
               type="submit"
-              [disabled]="!registerForm.valid || textBtn === 'Loading...'"
+              [disabled]="!registerForm.valid || textBtn === 'Chargement...'"
               (click)="register()"
             >
               {{ textBtn }}
@@ -133,8 +165,8 @@
           </div>
           
           <p>
-            Already have an account?<a class="ms-2 text-primary" href="/auth/login"
-              >Sign in instead</a
+            Vous avez déjà un compte ?<a class="ms-2 text-primary" href="/auth/login"
+              >Se connecter</a
             >
           </p><br>
 
@@ -151,11 +183,11 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Mail Confirmation</h5>
+          <h5 class="modal-title">Confirmation du mail</h5>
           <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p *ngIf="returnedValue.statusCode === 1000">Success! Confirm your Account Using the sended Link in you Email Account</p>
+          <p *ngIf="returnedValue.statusCode === 1000">Success! Confirmez votre compte en entrant le code qui vous a été envoyé par mail</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" (click)="closeModal()" data-bs-dismiss="modal">Ok</button>

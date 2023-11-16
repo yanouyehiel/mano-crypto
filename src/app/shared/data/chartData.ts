@@ -1,5 +1,4 @@
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexLegend, ApexPlotOptions, ApexStroke, ApexTooltip, ApexXAxis, ApexYAxis, ApexResponsive, ApexNonAxisChartSeries, ApexTitleSubtitle, ApexTheme, ApexMarkers, ApexAnnotations, ApexGrid, ApexForecastDataPoints, ApexNoData, ApexStates } from "ng-apexcharts";
-import { DataCryptoService } from "src/app/services/data-crypto.service";
 
 let primary_color = '#0F74F6';
 let secondary_color = '#43DF97';

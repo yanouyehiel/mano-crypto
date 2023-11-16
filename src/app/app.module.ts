@@ -54,6 +54,12 @@ import { SidebarAdminComponent } from './shared/components/sidebar-admin/sidebar
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { CurrencyBalanceComponent } from './shared/components/currency-balance/currency-balance.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
+import { NgxSelectModule, INgxSelectOptions } from 'ngx-select-ex';
+
+const CustomSelectOptions: INgxSelectOptions = {
+  optionValueField: 'id',
+  optionTextField: 'name'
+};
 
 @NgModule({
   declarations: [
@@ -110,6 +116,7 @@ import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-c
     NgApexchartsModule,
     NgxDropzoneModule,
     BrowserAnimationsModule,
+    NgxSelectModule.forRoot(CustomSelectOptions),
     ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot()
   ],
