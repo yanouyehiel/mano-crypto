@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResponseEmail, ResponseUser, User } from 'src/app/models/User';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2'
+import { Country } from 'src/app/models/Country';
+import { countries } from 'src/app/models/Country';
 
 @Component({
   selector: 'app-register',
@@ -24,9 +26,18 @@ export class RegisterComponent implements OnInit {
       token: ''
     }
   }
-  public textBtn: string = 'REGISTER'
+  public textBtn: string = "S'INSCRIRE"
+  public countries: Country[] = countries;
+  //public selectedCountry = new FormControl();
+  public selectedCountry: string;
 
-  constructor(private fb: FormBuilder, public router: Router, public authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder, 
+    public router: Router, 
+    public authService: AuthService
+  ) {
+    //this.selectedCountry.valueChanges.subscribe(value => console.log(value));
+  }
 
   ngOnInit(): void {
     localStorage.removeItem('token-mansexch')
@@ -39,9 +50,15 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.email],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
+      codePays: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       recaptcha: ['', Validators.required]
     })
+  }
+
+  onCountryChange(selectedValue: any) {
+    this.selectedCountry = selectedValue.dial_code;
+    console.log(this.selectedCountry)
   }
 
   showPassword() {
@@ -77,17 +94,18 @@ export class RegisterComponent implements OnInit {
 
 
   register(): void {
-    this.textBtn = 'Loading...'
+    this.textBtn = 'Chargement...'
     if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
       this.user = {
         name: this.registerForm.controls['name'].value,
         email: this.registerForm.controls['email'].value,
         password: this.registerForm.controls['password'].value,
+        countryCode: this.registerForm.controls['codePays'].value,
         phoneNumber: this.registerForm.controls['phoneNumber'].value
       }
     }
     console.log(this.user)
-    try {
+    /*try {
       this.authService.register(this.user).subscribe((response: ResponseUser) => {
 
         this.returnedValue = {
@@ -114,7 +132,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     } catch (error) {
       console.log(error)
-    }
+    }*/
     
   }
 }
