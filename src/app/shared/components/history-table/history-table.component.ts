@@ -23,7 +23,7 @@ ngOnInit(): void {
 this.getTransactions()
 }
 getTransactions(): void {
-    this.depositService.getAllTransaction().pipe(
+    this.depositService.getAllTransaction({transactionType:this.type}).pipe(
       catchError((error)=>{
         return of(error.error)
       })
@@ -33,7 +33,7 @@ getTransactions(): void {
       this.errorDisplay = "Impossible de charger les donnees, "+response.message?response.message:" Problème de réseau ";
     }
     else{
-      this.recentOrders = response.data.transactions.filter((deposit) => deposit.type === this.type).reverse().slice(0, 9)
+      this.recentOrders = response.data.transactions.reverse().slice(0, 9)
     }
       this.loader = false;
 

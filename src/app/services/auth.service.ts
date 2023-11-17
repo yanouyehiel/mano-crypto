@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ResponseEmail, ResponseUser, User } from '../models/User';
 import { Observable } from 'rxjs';
+import { ResponseParent } from '../models/Transaction';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
-  register(user: User): Observable<ResponseUser> {    
+  register(user: User): Observable<ResponseUser> {
     return this.httpClient.post<ResponseUser>(`${this.url}/register`, user, this.config);
   }
 
@@ -48,6 +49,10 @@ export class AuthService {
 
   verifyUser(data: any): Observable<ResponseEmail> {
     return this.httpClient.post<ResponseEmail>(`${this.url}/verify-user`, data, this.configAuthorized);
+  }
+
+  sendOtp():Observable<ResponseParent>{
+    return this.httpClient.post<ResponseParent>(`${this.url}/send-email-code`,{}, this.configAuthorized);
   }
 
   logout(): void {

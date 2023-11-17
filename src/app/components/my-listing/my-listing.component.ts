@@ -22,7 +22,7 @@ export class MyListingComponent implements OnInit {
   getAllTransaction(): void {
     try {
       this.loader = true;
-      this.transacService.getAllTransaction().subscribe((response: ResponseTransactionList) => {
+      this.transacService.getAllTransaction({transactionType:"ALL"}).subscribe((response: ResponseTransactionList) => {
         this.loader = false;
         this.historics = response.data.transactions
         console.log(response)

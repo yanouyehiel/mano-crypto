@@ -50,10 +50,10 @@ export class TransactionService {
     );
   }
 
-  getAllTransaction(): Observable<ResponseTransactionList> {
+  getAllTransaction(data:any): Observable<ResponseTransactionList> {
     try {
-      return this.http.get<ResponseTransactionList>(
-        `${this.urlTransactionList}/all`,
+      return this.http.post<ResponseTransactionList>(
+        `${this.urlTransactionList}/all`,data,
         this.config
       );
     } catch (error) {
