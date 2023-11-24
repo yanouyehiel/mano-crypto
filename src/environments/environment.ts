@@ -25,4 +25,6 @@ export const environment = {
   },
   recaptchaSiteKey: '6LeQh7InAAAAAHTJs6MPQfoEZsTwQOiKotCDmGUQ',
   recaptchaSecretKey: '6LeQh7InAAAAADZjFe80ilOhWRdEVQ_cVKrZcx5e'
+  /*recaptchaSiteKey: '6LfW5xopAAAAAPSY-1LeLXf2M9VcMu0fwOqG5Kkx',
+  recaptchaSecretKey: '6LfW5xopAAAAAGAYWDn3-plnn07wt9VMDNNL7Bx8'*/
 };

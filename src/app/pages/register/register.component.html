@@ -38,32 +38,28 @@
             <label>Numéro de téléphone</label>
             <div class="row">
               <div class="col-md-6">
-                <ngx-select
-                  [items]="countries"
-                  optionValueField="hex"
-                  optionTextField="name"
-                  [(ngModel)]="selectedCountry"
-                  (valueChange)="onCountryChange($event)"
-                  formControlName="codePays"
-                >
-
-                  <ng-template ngx-select-option-selected let-option let-text="text">
-                      <span class="color-box"></span>
-                      <span [innerHtml]="text"></span>
-                      ({{option.data.hex}})
-                  </ng-template>
-
-                  <ng-template ngx-select-option let-option let-text="text">
-                      <span class="color-box"></span>
-                      <span [innerHtml]="text"></span>
-                      ({{option.data.hex}})
-                  </ng-template>
-
-                  <ng-template ngx-select-option-not-found>
-                      Nothing found
-                  </ng-template>
-
-                </ngx-select>
+                <div class="form-control" style="width: 200px !important; height: 40px !important;">
+                  <ng-select
+                    [items]="countries"
+                    [(ngModel)]="selectedCountry"
+                    placeholder="Sélectionnez un pays"
+                    formControlName="countryCode"
+                  >
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                    >
+                      <div style="margin-bottom: 5px; background-color: #f2f2f2;">
+                        <img
+                          [src]="getFlagCountry(item.code)"
+                          class="flag-img"
+                          style="width: 30px; height: 30px;"
+                        />
+                        <span style="font-size: 15px; margin-left: 10px;">{{ item.name }}</span>
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="input-group">
@@ -195,5 +191,4 @@
       </div>
     </div>
   </div>
-
 </div>

@@ -28,8 +28,7 @@ export class RegisterComponent implements OnInit {
   }
   public textBtn: string = "S'INSCRIRE"
   public countries: Country[] = countries;
-  //public selectedCountry = new FormControl();
-  public selectedCountry: string;
+  public selectedCountry: any;
 
   constructor(
     private fb: FormBuilder, 
@@ -81,6 +80,12 @@ export class RegisterComponent implements OnInit {
       this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     }
     
+  }
+
+  getFlagCountry(code: string): string {
+    code = code.toLowerCase()
+    const url: string = `https://assets.iqonic.design/old-themeforest-images/prokit/images/flags/${code}.png`
+    return url
   }
 
   info() {
