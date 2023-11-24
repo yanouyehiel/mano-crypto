@@ -11,7 +11,7 @@
           <div class="form-group">
             <label>Nom</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="icon-user text-primary"></i></span>
+              <span class="input-group-text"><i class="fa fa-user text-primary"></i></span>
               <input
                 class="form-control"
                 type="text"
@@ -24,7 +24,7 @@
           <div class="form-group">
             <label>Email</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="icon-email text-primary"></i></span>
+              <span class="input-group-text"><i class="fa fa-envelope-o text-primary"></i></span>
               <input
                 class="form-control"
                 type="email"
@@ -38,10 +38,10 @@
             <label>Numéro de téléphone</label>
             <div class="row">
               <div class="col-md-6">
-                <ngx-select 
-                  [items]="countries" 
-                  optionValueField="hex" 
-                  optionTextField="name" 
+                <ngx-select
+                  [items]="countries"
+                  optionValueField="hex"
+                  optionTextField="name"
                   [(ngModel)]="selectedCountry"
                   (valueChange)="onCountryChange($event)"
                   formControlName="codePays"
@@ -52,22 +52,22 @@
                       <span [innerHtml]="text"></span>
                       ({{option.data.hex}})
                   </ng-template>
-              
+
                   <ng-template ngx-select-option let-option let-text="text">
                       <span class="color-box"></span>
                       <span [innerHtml]="text"></span>
                       ({{option.data.hex}})
                   </ng-template>
-              
+
                   <ng-template ngx-select-option-not-found>
                       Nothing found
                   </ng-template>
-                
+
                 </ngx-select>
               </div>
               <div class="col-md-6">
                 <div class="input-group">
-                  <span class="input-group-text"><i class="icon-mobile text-primary"></i></span>
+                  <span class="input-group-text"><i class="fa fa-mobile text-primary"></i></span>
                   <input
                     class="form-control"
                     type="tel"
@@ -89,7 +89,7 @@
           <div class="form-group">
             <label>Mot de passe</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
+              <span class="input-group-text"><i class="fa fa-lock  text-primary"></i></span>
               <input
                 class="form-control"
                 name="password"
@@ -109,7 +109,7 @@
           <div class="form-group">
             <label>Confirmer le mot de passe</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
+              <span class="input-group-text"><i class="fa fa-lock  text-primary"></i></span>
               <input
                 class="form-control"
                 name="confirmPassword"
@@ -163,7 +163,7 @@
               {{ textBtn }}
             </button>
           </div>
-          
+
           <p>
             Vous avez déjà un compte ?<a class="ms-2 text-primary" href="/auth/login"
               >Se connecter</a
@@ -195,5 +195,5 @@
       </div>
     </div>
   </div>
-        
+
 </div>

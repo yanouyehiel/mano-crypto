@@ -11,7 +11,7 @@
           <div class="form-group">
             <label>Email</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="icon-email text-primary"></i></span>
+              <span class="input-group-text"><i class="fa fa-envelope-o text-primary"></i></span>
               <input
                 class="form-control"
                 type="email"
@@ -35,7 +35,7 @@
           <div class="form-group">
             <label>Mot de passe</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="icon-lock text-primary"></i></span>
+              <span class="input-group-text"><i class="fa fa-lock  text-primary"></i></span>
               <input
                 class="form-control"
                 [type]="show ? 'text' : 'password'"
@@ -88,7 +88,7 @@
               {{ textBtn }}
             </button>
           </div>
-          
+
           <p *ngIf="error" class="text-danger" style="font-size: 15px;">{{ errorMessage }}</p>
           <p>
             Nouveau sur la plateforme ?<a class="ms-2 text-primary" href="/auth/register"

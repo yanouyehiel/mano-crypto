@@ -145,9 +145,23 @@ export class AddCryptoComponent implements OnInit {
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             }).pipe(
-              catchError((error)=>of(error.error))
+              catchError((error)=>{
+                if (
+                  error.status === 0 ||
+                  error.statusText === 'Unknown Error'
+                ) {
+                  Swal.fire(
+                    'Erreur',
+                    `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
+                    'error'
+                  );
+                }
+
+                return of(error.error);
+              })
             )
             .toPromise();
+            console.log(responseFees)
             const responseAmountToXAF = await this.cryptoService
             .convertToFiat({
               crypto_currency: this.typeCrypto,
@@ -156,6 +170,7 @@ export class AddCryptoComponent implements OnInit {
               catchError((error)=>of(error.error))
             )
             .toPromise();
+            console.log(responseAmountToXAF)
           if (responseFees.statusCode==1000 && responseAmountToXAF.statusCode==1000) {
             const responseFeeToXAF = await this.cryptoService
             .convertToFiat({
