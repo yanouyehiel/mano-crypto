@@ -1,0 +1,65 @@
+<div class="container-fluid p-0">
+    <div class="row m-0">
+      <div class="col-12 p-0">
+        <div class="logo-card">
+          <img class="img-logo" src="../../../assets/images/logo.png" alt="logo">
+        </div>
+        <div class="login-card">
+          <div class="login-main">
+            <form class="theme-form login-form" [formGroup]="emailForm">
+              <h4>Vérification de votre email</h4>
+              <div class="form-group">
+                <label class="col-form-label">Entrer votre email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-envelope-o text-primary"></i></span>
+                    <input
+                        class="form-control"
+                        formControlName="email"
+                        type="email"
+                        placeholder="Email"
+                    />
+                    <div
+                        *ngIf="emailForm.controls['email'].touched && emailForm.controls['email'].errors?.['required']"
+                        class="text text-danger mt-1"
+                    >
+                        Email requis
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button
+                  class="btn btn-primary btn-block envoyer"
+                  type="submit"
+                  (click)="formSubmit(content)"
+                  [disabled]="!emailForm.valid || textBtn === 'Traitement...' || textBtn === 'Success'"
+                >
+                  {{ textBtn }}
+                </button>
+              </div>
+              <p>Vous vous souvenez de vos identifiants ?<a class="ms-2 text-primary" href="/auth/login">Se connecter</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="response === 1000">Veuillez cliquer sur le lien qui vous a été envoyé par mail pour réénitialiser pour mot de passe</p>
+    <p class="text-danger" *ngIf="response === 1005">Cet utilisateur n'existe pas</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-bs-dismiss="modal"
+      (click)="modal.dismiss('click')"
+    >
+      Fermer
+    </button>
+  </div>
+</ng-template>

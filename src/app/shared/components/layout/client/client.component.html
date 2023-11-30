@@ -1,0 +1,23 @@
+<div
+  [ngClass]="layoutService.config.settings.layout_type"
+  [class]="layoutService.config.settings.layout_version"
+>
+  <div class="page-wrapper" [ngClass]="layoutClass" id="pageWrapper">
+    <div
+      class="page-main-header"
+      [class.close_icon]="navService.collapseSidebar"
+    >
+      <app-header></app-header> 
+    </div>
+    <div class="page-body-wrapper horizontal-menu sidebar-icon">
+      <header class="main-nav" [class.close_icon]="navService.collapseSidebar">
+        <app-sidebar></app-sidebar>
+      </header>
+      <div class="page-body" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+      </div>
+      <app-footer></app-footer>
+    </div>
+  </div>
+</div>
+<!-- <app-costomizer></app-costomizer> -->

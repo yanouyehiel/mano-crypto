@@ -1,0 +1,102 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      <div class="logo-card">
+        <img class="img-logo" src="../../../assets/images/logo.png" alt="logo">
+      </div>
+      <div class="login-card">
+        <form class="theme-form login-form" [formGroup]="loginForm">
+          <h4>Se Connecter</h4>
+          <h6>Accedez à votre interface en entrant votre email et votre mot de passe</h6>
+          <div class="form-group">
+            <label>Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-envelope-o text-primary"></i></span>
+              <input
+                class="form-control"
+                type="email"
+                placeholder="Entrer votre email"
+                formControlName="email"
+              />
+              <div
+                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']"
+                class="text text-danger mt-1"
+              >
+                Email requis
+              </div>
+              <div
+                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']"
+                class="text text-danger mt-1"
+              >
+                Email invalide
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-lock  text-primary"></i></span>
+              <input
+                class="form-control"
+                [type]="show ? 'text' : 'password'"
+                name="login[password]"
+                required=""
+                placeholder="Entrer votre mot de passe"
+                formControlName="password"
+              />
+              <div class="show-hide" (click)="showPassword()" *ngIf="!show">
+                <span class="show text-primary"></span>
+              </div>
+              <div class="show-hide" (click)="showPassword()" *ngIf="show">
+                <span class="Hide text-primary"></span>
+              </div>
+              <div
+                *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
+                class="text text-danger mt-1"
+              >
+                Mot de passe requis
+              </div>
+              <div
+                *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].value.length < 8"
+                class="text text-danger mt-1"
+              >
+                Les mots de passe doivent avoir au moins 8 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 20px;">
+            <a
+              class="link text-primary"
+              href="/auth/enter-email"
+              [routerLink]="'/auth/enter-email'"
+              >Mot de passe oublié ?</a
+            >
+          </div><br><br>
+
+          <ngx-recaptcha2 #captchaElem
+            [siteKey]="siteKey"
+            formControlName="recaptcha">
+          </ngx-recaptcha2><br>
+
+          <div class="form-group">
+            <button
+              class="btn btn-primary btn-block"
+              [disabled]="!loginForm.valid || textBtn === 'Connexion...'"
+              (click)="login()"
+              type="submit"
+            >
+              {{ textBtn }}
+            </button>
+          </div>
+
+          <p *ngIf="error" class="text-danger" style="font-size: 15px;">{{ errorMessage }}</p>
+          <p>
+            Nouveau sur la plateforme ?<a class="ms-2 text-primary" href="/auth/register"
+              >Créer un compte</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

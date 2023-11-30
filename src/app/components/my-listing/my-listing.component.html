@@ -1,0 +1,48 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>L'historique de tes transactions</h5>
+        </div>
+        <div class="table-responsive">
+          <div class="col-md-12" *ngIf="loader">
+            <div class="loader-box">
+              <div class="loader-3"></div>
+            </div>
+          </div>
+          <table class="table table-hover table-border-horizontal" *ngIf="!loader">
+            <thead>
+              <tr>
+                <th scope="col">Numéro</th>
+                <th scope="col">Transaction Type</th>
+                <th scope="col">Date</th>
+                <th scope="col">Price</th>
+                <th scope="col">Devise</th>
+              </tr>
+            </thead>
+            
+              <ng-container *ngFor="let data of historics">
+                <tr>
+                  <th scope="row">{{data._id}}</th>
+                  <td class="{{data.type === 'DEPOSIT' ? 'font-success' : 'font-danger'}}"> 
+                    <div class="media align-items-center hover-icon">
+                      <div class="{{data.type === 'DEPOSIT' ? 'bg-light-primary font-primary' : 'bg-light-danger font-danger'}} me-2">
+                        <app-feather-icons icon="{{ data.type === 'DEPOSIT' ? 'arrow-up-right' : 'arrow-up-down'}}"></app-feather-icons>
+                      </div>
+                      {{data.type}}
+                    </div>
+                  </td>
+                  <td>{{data.creationDate | date}}</td>
+                  <td>{{data.amount }} XAF</td>
+                  <td *ngIf="data.type == 'DEPOSIT'">XAF</td>
+                </tr>
+              </ng-container>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

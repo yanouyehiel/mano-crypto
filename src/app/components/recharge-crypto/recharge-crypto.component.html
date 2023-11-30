@@ -1,0 +1,81 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container-fluid general-widget">
+  <div class="row">
+    <div class="col-xl-8 col-12">
+      <app-currency-balance></app-currency-balance>
+      <div class="row">
+        <div class="bootstrap-tables">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Crypto Value</h5>
+                <!-- <span>A <code>&lt;caption&gt;</code> functions like a heading for a table. It helps users with screen readers to find a table and understand what it’s about and decide if they want to read it.</span> -->
+              </div>
+              <div class="card-block row">
+                <div class="col-sm-12 col-lg-12 col-xl-12">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Symbole</th>
+                          <th scope="col">Nom</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <ng-container *ngFor="let item of items">
+                        <tr>
+                          <th scope="row">
+                            <img
+                              [src]="item.icon"
+                              width="45"
+                              [alt]="item.abv"
+                              class="image-thumbail"
+                            />{{ item.abv }}
+                          </th>
+                          <td>{{ item.name }}</td>
+                          <td>
+                            <button
+                              class="btn btn-primary-gradien"
+                              type="button"
+                              data-bs-toggle="modal"
+                              data-bs-target="#exampleModalCenter"
+                              (click)="initBuyingProcess(item.abv)"
+                            >
+                              Recharger
+                            </button>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Current balance</h5>
+        </div>
+        <div class="card-body p-0">
+          <app-crypto-balance></app-crypto-balance>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Précédentes recharges de crypto</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <app-history-table type="RECHARGE_CRYPTO"></app-history-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-xl-9">
+    <div class="row">
+      <div class="col-sm-4 box-col-4 des-xl-25 rate-sec" *ngFor="let data of walletData">
+        <div class="card income-card card-primary">
+          <div class="card-body text-center">
+            <div class="round-box">
+              <!-- <svg-icon [src]="data.detail?.image_url" [svgStyle]="{ 'width.px':90 }"></svg-icon> -->
+              <img [src]="data.image_url?data.image_url:'../../../../assets/images/XAF.png'" alt="icon" width="60px" height="60px">
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <h5 style="margin-right: 10px;">{{ data.wallet.solde }}</h5>
+              <p style="margin-top: -9px;" class="devise">{{ data.wallet.type }}</p>
+            </div>
+
+            <a *ngIf="data.details?.weekly_percentage" class="btn-arrow arrow-secondary" [ngClass]="data.details?.weekly_percentage > 0 ? ' text-success' : ' text-danger'">
+              <i
+            class="toprightarrow-primary fa fa-arrow-{{
+              data.details?.weekly_percentage > 0 ? 'up' : 'down'
+            }} me-2"
+          ></i
+          >
+              {{ truncateNumber(data.details?.weekly_percentage) }} %
+            </a>
+            <a *ngIf="data.details?.monthly_percentage" class="btn-arrow arrow-primary" [ngClass]="data.details?.monthly_percentage > 0 ? ' text-success' : ' text-danger'">
+              <i
+              class="toprightarrow-primary fa fa-arrow-{{
+                data.details?.monthly_percentage > 0 ? 'up' : 'down'
+              }} me-2"
+            ></i
+            >
+                {{ truncateNumber(data.details?.monthly_percentage) }} %
+            </a>
+            <!-- <div class="parrten">
+              <svg-icon src="assets/images/svg/bitcoin-btc-logo.svg" [svgStyle]="{ 'width.px': 40 }"></svg-icon>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="col-xl-3">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card income-card card-primary">
+          <div class="card-body text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

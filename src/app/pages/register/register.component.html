@@ -1,0 +1,196 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      <div class="logo-card">
+        <img class="img-logo" src="../../../assets/images/logo.png" alt="logo">
+      </div>
+      <div class="login-card">
+        <form class="theme-form login-form" [formGroup]="registerForm">
+          <h4>Inscription</h4>
+          <h6>Créer un nouveau compte Mansexch</h6>
+          <div class="form-group">
+            <label>Nom</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-user text-primary"></i></span>
+              <input
+                class="form-control"
+                type="text"
+                required=""
+                placeholder="Entrer votre nom"
+                formControlName="name"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-envelope-o text-primary"></i></span>
+              <input
+                class="form-control"
+                type="email"
+                required=""
+                placeholder="Entrer votre adresse mail"
+                formControlName="email"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Numéro de téléphone</label>
+            <div class="row">
+              <!-- <div class="col-md-6">
+                <div class="form-control" style="width: 200px !important; height: 40px !important;">
+                  <ng-select
+                    [items]="countries"
+                    [(ngModel)]="selectedCountry"
+                    placeholder="Sélectionnez un pays"
+                    formControlName="codePays"
+                  >
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                    >
+                      <ng-option [value]="item.dial_code">
+                        <div style="margin-bottom: 5px; background-color: #f2f2f2;">
+                          <img
+                            [src]="getFlagCountry(item.code)"
+                            class="flag-img"
+                            style="width: 30px; height: 30px;"
+                          />
+                          <span style="font-size: 15px; margin-left: 10px;">{{ item.name }}</span>
+                        </div>
+                      </ng-option>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div> -->
+              <div class="col-md-12">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-mobile text-primary"></i></span>
+                  <input
+                    class="form-control"
+                    type="tel"
+                    required=""
+                    name="phoneNumber"
+                    placeholder="Entrer votre numéro de téléphone"
+                    formControlName="phoneNumber"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              *ngIf="registerForm.controls['phoneNumber'].touched && registerForm.controls['phoneNumber'].invalid"
+              class="text text-danger mt-1"
+            >
+              Ne correspond pas à un numéro de téléphone
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-lock  text-primary"></i></span>
+              <input
+                class="form-control"
+                name="password"
+                [type]="show ? 'text' : 'password'"
+                required=""
+                placeholder="Entrer votre mot de passe"
+                formControlName="password"
+              />
+              <div class="show-hide" (click)="showPassword()" *ngIf="!show">
+                <span class="show text-primary"></span>
+              </div>
+              <div class="show-hide" (click)="showPassword()" *ngIf="show">
+                <span class="Hide text-primary"></span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Confirmer le mot de passe</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-lock  text-primary"></i></span>
+              <input
+                class="form-control"
+                name="confirmPassword"
+                [type]="show ? 'text' : 'password'"
+                required=""
+                placeholder="Entrer le même mot de passe"
+                formControlName="confirmPassword"
+              />
+              <div class="show-hide" (click)="showPassword()" *ngIf="!show">
+                <span class="show text-primary"></span>
+              </div>
+              <div class="show-hide" (click)="showPassword()" *ngIf="show">
+                <span class="Hide text-primary"></span>
+              </div>
+            </div>
+            <div
+              *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value != registerForm.controls['confirmPassword'].value)"
+              class="text text-danger mt-1"
+            >
+              Les mots de passe ne correspondent pas
+            </div>
+            <div
+              *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value.length < 8 || registerForm.controls['confirmPassword'].value.length < 8)"
+              class="text text-danger mt-1"
+            >
+            Les mots de passe doivent avoir au moins 8 caractères
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <input id="checkbox1" type="checkbox" required />
+              <label class="text-muted" for="checkbox1"
+                >J'accepte les conditions d'utilisation <span class="text-primary">Privacy Policy</span> &
+                <span class="text-primary">Terms</span></label
+              >
+            </div>
+          </div>
+
+          <ngx-recaptcha2 #captchaElem
+            [siteKey]="siteKey"
+            formControlName="recaptcha">
+          </ngx-recaptcha2><br>
+
+          <div class="form-group">
+            <button
+              class="btn btn-primary btn-block"
+              type="submit"
+              [disabled]="!registerForm.valid || textBtn === 'Chargement...'"
+              (click)="register()"
+            >
+              {{ textBtn }}
+            </button>
+          </div>
+
+          <p>
+            Vous avez déjà un compte ?<a class="ms-2 text-primary" href="/auth/login"
+              >Se connecter</a
+            >
+          </p><br>
+
+          <p style="color: green; font-size: 15px;" *ngIf="returnedValue.statusCode === 1000">Inscription réussie !</p>
+          <p style="color: red; font-size: 15px;" *ngIf="returnedValue.statusCode === 1001">Erreur inconnue, veuillez réessayer !</p>
+          <p style="color: red; font-size: 15px;" *ngIf="returnedValue.statusCode === 1004">Cet utilisateur existe déjà</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Component modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation du mail</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p *ngIf="returnedValue.statusCode === 1000">Success! Confirmez votre compte en entrant le code qui vous a été envoyé par mail</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeModal()" data-bs-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

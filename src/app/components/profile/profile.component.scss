@@ -1,0 +1,12 @@
+ul > li.not-validated:last-child {
+    cursor: pointer;
+}
+
+ul > li.not-validated:last-child:hover {
+    color: #0F74F6;
+}
+
+.txt-bold {
+    font-weight: bold;
+    font-size: 15px;
+}

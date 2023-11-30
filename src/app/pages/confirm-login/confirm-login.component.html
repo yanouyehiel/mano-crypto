@@ -1,0 +1,54 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      <div class="logo-card">
+        <img class="img-logo" src="../../../assets/images/logo.png" alt="logo">
+      </div>
+      <div class="login-card">
+        <form class="theme-form login-form" [formGroup]="verifyCodeForm">
+          <h4>Confirmation de votre adresse mail</h4>
+          <h6>Veuillez entrer le code qui vous a été envoyé</h6>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fa fa-mobile text-primary"></i>
+              </span>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Entrer le code"
+                formControlName="codeValue"
+              />
+            </div>
+            <div
+              *ngIf="verifyCodeForm.controls['codeValue'].value.length < 6"
+              class="text text-danger mt-1"
+            >
+            Le code entré doit avoir 6 chiffres
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button
+              class="btn btn-primary btn-block"
+              [disabled]="!verifyCodeForm.valid || textBtn === 'Confirmation en cours...'"
+              type="submit"
+              (click)="verifyCode()"
+            >
+              {{ textBtn }}
+            </button>
+          </div>
+
+          <!-- <p class="text-success" style="font-size: 20px;" *ngIf="error === 1000">Confirmation de compte réussie !</p> -->
+          <p class="text-danger" style="font-size: 20px;" *ngIf="error === 1004">Cet utilisateur n'existe pas</p>
+          <p>
+            Retourner à la connexion
+            <a class="ms-2 text-primary" href="/auth/login"
+              >Se connecter</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

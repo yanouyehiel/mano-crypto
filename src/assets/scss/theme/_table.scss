@@ -1,0 +1,395 @@
+/**=====================
+     Table  CSS Start
+==========================**/
+.table-bordered {
+  td,
+  th {
+    border-color: $light-gray !important;
+  }
+}
+.pills-component {
+  width: 20%;
+}
+.product-page-width {
+  width: 80%;
+}
+.bootstrap-tables{
+  .table-responsive{
+    .table{
+      th, td{
+        vertical-align: middle;
+      }
+    }
+  }
+}
+.table {
+  margin-bottom: $table-b-margin;
+  th,
+  td {
+    padding: $table-padding;
+  }
+  th {
+    color: $table-heading-color;
+  }
+  td {
+    color: $table-row-color;
+  }
+  [class*="bg-"] {
+    color: $white;
+  }
+  .bg-light {
+    color: $theme-body-font-color;
+  }
+  tfoot {
+    font-weight: $table-footer-font-weight;
+  }
+  thead {
+    &.bg-primary {
+      tr {
+        th {
+          color: $white;
+        }
+      }
+    }
+    &.table-primary {
+      background-color: rgba($primary-color, 0.1);
+      --bs-table-bg: rgba($primary-color, 0.1);
+      color: var(--theme-default);
+      tr {
+        th {
+          color: var(--theme-default);
+        }
+      }
+    }
+  }
+}
+.table-inverse {
+  th,
+  td {
+    color: $white;
+  }
+}
+.table[class*="bg-"] {
+  th,
+  td {
+    color: $white;
+  }
+}
+.table-hover {
+  .hover-icon{
+    div{
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      app-feather-icons{
+        height: 18px;
+        svg{
+          height: 18px;
+          width: 18px;
+        }
+      }
+    }
+  }
+  tbody {
+    tr:hover {
+      background-color: rgba($primary-color, 0.1);
+      --bs-table-accent-bg: unset;
+      th,
+      td {
+        color: var(--theme-default);
+      }
+    }
+  }
+}
+.table-inverse {
+  color: $white;
+  background-color: $table-inverse-bg-color;
+  th,
+  td {
+    border-color: $white;
+  }
+  &.table-bordered {
+    border: 0;
+  }
+}
+.table-dashed {
+  border-left: 2px dashed #dee2e6;
+  border-right: 2px dashed #dee2e6;
+  tr {
+    border-style: dashed !important;
+    border-width: 2px;
+    border-right: 0;
+    border-left: 0;
+  }
+}
+.table-styling {
+  &.table-striped {
+    tbody {
+      tr {
+        &:hover {
+          &:nth-of-type(odd) {
+            color: $white;
+          }
+        }
+        &:nth-of-type(odd) {
+          background-color: rgba(245, 247, 250, 0.5);
+        }
+      }
+    }
+  }
+  &.table-primary {
+    &.table-striped {
+      tbody {
+        tr {
+          &:nth-child(even) {
+            --bs-table-hover-bg: #fdfeff;
+          }
+        }
+      }
+    }
+    thead {
+      th {
+        background-color: $primary-color;
+      }
+    }
+    tbody {
+      background-color: rgba($light, 0.8) !important;
+      td,
+      th,
+      tr {
+        background-color: rgba($primary-color, 0.5);
+        --bs-table-accent-bg: unset;
+        color: $white;
+      }
+    }
+  }
+}
+.data-table{
+  table{
+    border: 1px solid $light-gray;
+    thead{
+      tr{
+        th{
+          &::before{
+            content: "\21BE";
+            float: right;
+            color: $gray-60;
+            width: 4px;
+          }
+          &::after{
+            content: "\21C3";
+            float: right;
+            color: $gray-60;
+            width: 4px;
+          }
+          &:last-child{
+            text-align: center;
+          }
+        }
+      }
+    }
+    tbody{
+      tr{
+        td{
+          span{
+            i{
+              font-size: 16px;
+              + i{
+                border-left: 1px solid $gray-60;
+              }
+            }
+          }
+          vertical-align: middle;
+          &:last-child{
+            text-align: center;
+          }
+          img{
+            border-radius: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+.table-inverse {
+  color: $white;
+  background-color: $table-inverse-bg-color;
+  th,
+  td {
+    border-color: $white;
+    color: $white;
+  }
+  &.table-bordered {
+    border: 0;
+  }
+}
+.table-dark {
+  th {
+    color: $white;
+  }
+}
+.thead-dark {
+  tr {
+    th {
+      color: $white;
+      background-color: #343a40;
+      border-color: #454d55;
+    }
+  }
+}
+.thead-light{
+  tr{
+    th{
+      color: #495057;
+      background-color: #e9ecef;
+      border-color: #dee2e6;
+    }
+  }
+}
+.table {
+  &.table-primary {
+    th,
+    td {
+      color: $white;
+    }
+    &.table-hover {
+      tr {
+        &:hover {
+          td {
+            color: $theme-body-font-color;
+          }
+        }
+      }
+    }
+  }
+}
+//Sizing class
+.table-xl {
+  td,
+  th {
+    padding: $table-xl-padding;
+    font-size: $table-xl-font;
+  }
+}
+.table-lg {
+  td,
+  th {
+    padding: $table-lg-padding;
+    font-size: $table-lg-font;
+  }
+}
+.table-de {
+  td,
+  th {
+    padding: $table-de-padding;
+  }
+}
+.table-sm {
+  th,
+  td {
+    padding: $table-sm-padding;
+    font-size: $table-sm-font;
+  }
+}
+.table-xs {
+  th,
+  td {
+    padding: $table-xs-padding;
+    font-size: $table-xs-font;
+  }
+}
+//Table Border
+.table-border-horizontal {
+  tr,
+  th,
+  td {
+    border-top: 1px solid $horizontal-border-color;
+    padding: $horizontal-padding;
+  }
+}
+.table-border-vertical {
+  tr,
+  th,
+  td {
+    border-top: 0;
+    border-right: 1px solid $horizontal-border-color;
+  }
+  tr {
+    td {
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
+.table-bordernone {
+  td {
+    border: 0;
+  }
+  .bd-t-none {
+    border-top: none;
+  }
+  .u-s-tb {
+    padding: 11px;
+  }
+}
+.table-inverse {
+  color: $white;
+  background-color: $table-inverse-bg-color;
+  th,
+  td {
+    border-color: $white;
+  }
+  &.table-bordered {
+    border: 0;
+  }
+}
+.table-striped {
+  tbody {
+    tr {
+      &:nth-of-type(odd) {
+        background-color: rgba(245, 247, 250, 0.5);
+      }
+    }
+  }
+}
+.table-bordered {
+  td,
+  th {
+    border-color: $light;
+  }
+}
+.table {
+  > :not(:last-child) {
+    > :last-child {
+      > * {
+        border-color: $light-gray;
+      }
+    }
+  }
+}
+
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+  border-color: $light-gray;
+}
+.table-success {
+  background-color: rgba($success-color, 0.1);
+  --bs-table-bg: rgba($success-color, 0.1);
+  color: $success-color;
+  tr {
+    th {
+      color: $success-color;
+    }
+  }
+}
+/**=====================
+    Table CSS Ends
+==========================**/

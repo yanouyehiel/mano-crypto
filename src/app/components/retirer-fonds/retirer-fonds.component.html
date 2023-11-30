@@ -1,0 +1,255 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container-fluid dashboard-default-sec">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Payment</h5>
+        </div>
+        <div class="card-body megaoptions-border-space-sm">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="u-steps u-steps-vertical">
+                <div class="u-step" [ngClass]="classStep1">
+                  <span class="u-step-number">1</span>
+                  <div class="u-step-desc">
+                    <span class="u-step-title">Payment Type</span>
+                    <p>Different types of payment</p>
+                  </div>
+                </div>
+
+                <div class="u-step" [ngClass]="classStep2">
+                  <span class="u-step-number">2</span>
+                  <div class="u-step-desc">
+                    <span class="u-step-title">Payment Information</span>
+                    <p>Pay for the bill</p>
+                  </div>
+                </div>
+
+                <div class="u-step" [ngClass]="classStep3">
+                  <span class="u-step-number">3</span>
+                  <div class="u-step-desc">
+                    <span class="u-step-title">Completed</span>
+                    <p>Review and Submit</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <form
+                class="mega-inline form theme-form"
+                [formGroup]="depositForm"
+              >
+                <div class="row" *ngIf="step === 1">
+                  <h4 class="title-method">Choose Method Type</h4>
+                  <div class="col-sm-6">
+                    <div class="card">
+                      <div class="media p-20">
+                        <div class="radio radio-primary me-3">
+                          <input
+                            id="radio14"
+                            type="radio"
+                            name="radio1"
+                            formControlName="paiementMethod"
+                            value="MOMO"
+                          />
+                          <label for="radio14"></label>
+                        </div>
+                        <div class="media-body">
+                          <img
+                            src="../../../assets/images/mtn.png"
+                          />
+                          <p>Mobile Money</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="card">
+                      <div class="media p-20">
+                        <div class="radio radio-secondary me-3">
+                          <input
+                            id="radio13"
+                            type="radio"
+                            formControlName="paiementMethod"
+                            name="radio1"
+                            value="OM"
+                          />
+                          <label for="radio13"></label>
+                        </div>
+                        <div class="media-body">
+                          <div class="media-body">
+                            <img
+                              src="../../../assets/images/om.png"
+                              alt="logo_mtn"
+                              height="100px"
+                              width="150px"
+                            />
+                            <p>Orange Money</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <button
+                      [disabled]="
+                        depositForm.controls['paiementMethod'].invalid
+                      "
+                      class="btn btn-primary col-lg-3"
+                      (click)="stepAttribute(1)"
+                      style="margin-bottom: 40px"
+                    >
+                      Suivant
+                    </button>
+                  </div>
+                </div>
+                <div class="row" *ngIf="step === 2">
+                  <h5 class="title-method">Numero de Telephone</h5>
+                  <div class="mb-5">
+                    <input
+                      *ngIf="
+                        depositForm.controls['paiementMethod'].value != 'OM'
+                      "
+                      class="form-control input"
+                      id="exampleFormControlInput1"
+                      type="number"
+                      placeholder="Entrer le Numero de telephone"
+                      formControlName="phoneNumber"
+                      pattern="6(5[0-4]|7[0-9]|8[0-4])\d{6}"
+                      required
+                    />
+                    <input
+                      *ngIf="
+                        depositForm.controls['paiementMethod'].value == 'OM'
+                      "
+                      class="form-control input"
+                      id="exampleFormControlInput1"
+                      type="number"
+                      placeholder="Entrer le Numero de telephone"
+                      formControlName="phoneNumber"
+                      pattern="6(5[5-9]|9[0-9])\d{6}"
+                      required
+                    />
+                  </div>
+                  <h5 class="title-method">Montant</h5>
+                  <div class="col-sm-12">
+                    <div class="mb-5">
+                      <input
+                        class="form-control input"
+                        id="exampleFormControlInput1"
+                        type="number"
+                        placeholder="Entrer le Montant"
+                        pattern="^[1-9]\d*$"
+                        formControlName="amount"
+                        required
+                      />
+                    </div>
+                    <div
+                      class="row mt-4"
+                      style="margin-top: 20px; margin-bottom: 40px"
+                    >
+                      <div class="col-md-4">
+                        <button
+                          class="btn btn-secondary"
+                          (click)="stepAttribute(0)"
+                        >
+                          Precedent
+                        </button>
+                      </div>
+                      <div class="col-md-4">
+                        <button
+                          [disabled]="
+                            depositForm.controls['phoneNumber'].invalid ||
+                            depositForm.controls['amount'].invalid
+                          "
+                          class="btn btn-primary"
+                          (click)="stepAttribute(2)"
+                        >
+                          Suivant
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="step === 3">
+                  <h4 class="title-method">Résumé du retrait</h4>
+                  <div class="col-sm-12">
+                    <div class="row" style="margin-top: 20px">
+                      <div class="col">
+                        <h5>Type de paiement</h5>
+                        <p style="font-size: 15px">
+                          {{
+                            depositForm.controls["paiementMethod"].value == "OM"
+                              ? "Orange Money"
+                              : "MTN Mobile Money"
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                      <div class="col">
+                        <h5>Phone Number</h5>
+                        <p style="font-size: 15px">
+                          {{ depositForm.controls["phoneNumber"].value }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                      <div class="col">
+                        <h5>Montant</h5>
+                        <p style="font-size: 15px">
+                          {{ depositForm.controls["amount"].value }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
+                      class="row mt-4"
+                      style="margin-top: 40px; margin-bottom: 40px"
+                    >
+                      <div class="col-md-4">
+                        <button
+                          class="btn btn-secondary"
+                          (click)="stepAttribute(1)"
+                        >
+                          Back
+                        </button>
+                      </div>
+                      <div class="col-md-4">
+                        <button class="btn btn-primary" (click)="initTransaction()">
+                          Valider
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-xl-12 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Précédentes retrais</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <app-history-table
+              type="WITHDRAWAL"
+            ></app-history-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
