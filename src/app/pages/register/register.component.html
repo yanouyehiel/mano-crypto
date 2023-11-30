@@ -37,31 +37,33 @@
           <div class="form-group">
             <label>Numéro de téléphone</label>
             <div class="row">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <div class="form-control" style="width: 200px !important; height: 40px !important;">
                   <ng-select
                     [items]="countries"
                     [(ngModel)]="selectedCountry"
                     placeholder="Sélectionnez un pays"
-                    formControlName="countryCode"
+                    formControlName="codePays"
                   >
                     <ng-template
                       ng-option-tmp
                       let-item="item"
                     >
-                      <div style="margin-bottom: 5px; background-color: #f2f2f2;">
-                        <img
-                          [src]="getFlagCountry(item.code)"
-                          class="flag-img"
-                          style="width: 30px; height: 30px;"
-                        />
-                        <span style="font-size: 15px; margin-left: 10px;">{{ item.name }}</span>
-                      </div>
+                      <ng-option [value]="item.dial_code">
+                        <div style="margin-bottom: 5px; background-color: #f2f2f2;">
+                          <img
+                            [src]="getFlagCountry(item.code)"
+                            class="flag-img"
+                            style="width: 30px; height: 30px;"
+                          />
+                          <span style="font-size: 15px; margin-left: 10px;">{{ item.name }}</span>
+                        </div>
+                      </ng-option>
                     </ng-template>
                   </ng-select>
                 </div>
-              </div>
-              <div class="col-md-6">
+              </div> -->
+              <div class="col-md-12">
                 <div class="input-group">
                   <span class="input-group-text"><i class="fa fa-mobile text-primary"></i></span>
                   <input

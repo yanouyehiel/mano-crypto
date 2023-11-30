@@ -20,6 +20,12 @@
                 formControlName="codeValue"
               />
             </div>
+            <div
+              *ngIf="verifyCodeForm.controls['codeValue'].value.length < 6"
+              class="text text-danger mt-1"
+            >
+            Le code entré doit avoir 6 chiffres
+            </div>
           </div>
 
           <div class="form-group">

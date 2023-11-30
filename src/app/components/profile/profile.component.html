@@ -22,7 +22,15 @@
             <div class="user-designation">
               <div class="title">
                 <h4>{{ user.name }}</h4>
-                <h6>{{ user.email }}</h6>
+                <h6 [class]="
+                  !user.isEmailVerified
+                    ? 'text-danger txt-bold'
+                    : 'text-success'
+                ">
+                  {{ user.email }}
+                  <span *ngIf="user.isEmailVerified" class="badge badge-success">Validé</span>
+                  <span *ngIf="!user.isEmailVerified" class="badge badge-danger">Pas Validé</span>
+                </h6>
               </div>
               <div class="follow">
                 <ul class="follow-list">
@@ -30,27 +38,23 @@
                     <div class="follow-num counter">Téléphone</div>
                     <span>{{ user.phone }}</span>
                   </li>
-                  <ng-container *ngIf="user.isPhoneVerified">
+                  <ng-container *ngIf="user.isPhoneVerified && user.isEmailVerified else pasValide">
                     <li>
                       <div class="follow-num counter">Status Compte</div>
                       <span class="text-success txt-bold">Validé</span>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="!user.isPhoneVerified">
+                  <ng-template #pasValide>
                     <li
                       [routerLink]="'/client/profile-edit'"
                       class="not-validated"
                     >
                       <div class="follow-num counter">Status Compte</div>
-                      <span
-                        [class]="
-                          !user.isPhoneVerified ? 'text-danger txt-bold' : ''
-                        "
-                        >Pas validé</span
+                      <span class="text-danger txt-bold">Pas validé</span
                       >
                     </li>
-                  </ng-container>
+                  </ng-template>
                 </ul>
               </div>
             </div>
@@ -95,6 +99,8 @@
                             "
                           >
                             {{ user.email }}
+                            <span *ngIf="user.isEmailVerified" class="badge badge-success">Validé</span>
+                            <span *ngIf="!user.isEmailVerified" class="badge badge-danger">Pas Validé</span>
                           </p>
                         </div>
                       </li>
@@ -114,6 +120,8 @@
                             "
                           >
                             {{ user.phone }}
+                            <span *ngIf="user.isPhoneVerified" class="badge badge-success">Validé</span>
+                            <span *ngIf="!user.isPhoneVerified" class="badge badge-danger">Pas Validé</span>
                           </p>
                         </div>
                       </li>

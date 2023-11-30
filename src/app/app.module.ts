@@ -55,6 +55,9 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
 import { CurrencyBalanceComponent } from './shared/components/currency-balance/currency-balance.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
+import { CompatabiliteAdminComponent } from './components/compatabilite-admin/compatabilite-admin.component';
+import { UsersAdminComponent } from './components/users-admin/users-admin.component';
 
 
 @NgModule({
@@ -100,7 +103,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     HistoryTableComponent,
     HomeAdminComponent,
     CurrencyBalanceComponent,
-    RechargeCryptoComponent
+    RechargeCryptoComponent,
+    OperationsListAdminComponent,
+    CompatabiliteAdminComponent,
+    UsersAdminComponent
   ],
   imports: [
     BrowserModule,

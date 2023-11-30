@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.email],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      codePays: ['', Validators.required],
+      //codePays: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       recaptcha: ['', Validators.required]
     })
@@ -105,12 +105,12 @@ export class RegisterComponent implements OnInit {
         name: this.registerForm.controls['name'].value,
         email: this.registerForm.controls['email'].value,
         password: this.registerForm.controls['password'].value,
-        countryCode: this.registerForm.controls['codePays'].value,
+        countryCode: '+237',
         phoneNumber: this.registerForm.controls['phoneNumber'].value
       }
     }
     console.log(this.user)
-    /*try {
+    try {
       this.authService.register(this.user).subscribe((response: ResponseUser) => {
 
         this.returnedValue = {
@@ -137,7 +137,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     } catch (error) {
       console.log(error)
-    }*/
+    }
     
   }
 }

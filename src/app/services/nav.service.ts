@@ -159,7 +159,7 @@ export class NavService {
 
   MENUITEMSADMIN: Menu[] = [
     {
-      headTitle1: 'Les Comptes'
+      headTitle1: 'Administration'
     },
     {
       title: 'Dashboard',
@@ -169,21 +169,22 @@ export class NavService {
       path: '/admin/home'
     },
     {
-      headTitle1: 'Les Transactions'
+      title: 'Comptes',
+      icon: 'user',
+      type: 'link',
+      active: false,
+      path: '/admin/users'
     },
     {
       title: 'Opérations',
-      icon: 'dollar-sign',
+      icon: 'repeat',
       type: 'link',
       active: false,
       path: '/admin/operations'
     },
     {
-      headTitle1: 'La Comptabilité'
-    },
-    {
       title: 'Comptabilité',
-      icon: 'finance',
+      icon: 'dollar-sign',
       type: 'link',
       active: true,
       path: '/admin/comptabilite'
