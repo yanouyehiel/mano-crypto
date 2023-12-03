@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   public user!: User;
   public showDialog: boolean = false;
   public siteKey: string = environment.recaptchaSiteKey
-  public returnedValue: ResponseUser = {
+  public returnedValue: any = {
     statusCode: 0,
     message: '',
     data: {

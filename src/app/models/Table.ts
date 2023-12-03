@@ -8,3 +8,16 @@ export interface Table {
     bgClass: string;
     icon: string;
 }
+
+export interface TableUser {
+    id: string;
+    name: string;
+    email: string;
+    countryCode: string;
+    phoneNumber: string;
+    isEmailVerified: boolean;
+    isPhoneNumberVerified: boolean;
+    soldeXAF: string;
+    soldeBTC: string;
+    soldeETH: string;
+}

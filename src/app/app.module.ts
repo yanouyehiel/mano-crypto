@@ -58,6 +58,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
 import { CompatabiliteAdminComponent } from './components/compatabilite-admin/compatabilite-admin.component';
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
+import { SortableDirective } from './directives/sortable.directive';
+import { NgbHighlight, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -106,7 +108,8 @@ import { UsersAdminComponent } from './components/users-admin/users-admin.compon
     RechargeCryptoComponent,
     OperationsListAdminComponent,
     CompatabiliteAdminComponent,
-    UsersAdminComponent
+    UsersAdminComponent,
+    SortableDirective
   ],
   imports: [
     BrowserModule,
@@ -119,6 +122,8 @@ import { UsersAdminComponent } from './components/users-admin/users-admin.compon
     NgxDropzoneModule,
     BrowserAnimationsModule,
     NgSelectModule,
+    NgbHighlight,
+    NgbPagination,
     ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot()
   ],

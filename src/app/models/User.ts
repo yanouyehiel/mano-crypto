@@ -21,6 +21,7 @@ export interface ResponseUser {
     message: string;
     data?: {
         token: any;
+        user: any;
     };
 }
 
