@@ -109,7 +109,7 @@ const routes: Routes = [
         component: UsersAdminComponent
       },
       {
-        path: 'operations',
+        path: 'users/:id',
         component: OperationsListAdminComponent
       },
       {

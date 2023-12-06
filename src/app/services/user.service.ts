@@ -50,4 +50,8 @@ export class UserService {
   getUsersByCountryCode(): Observable<any> {
     return this.http.get<any>(`${this.urlAdmin}/users`, this.config)
   }
+
+  getUsersTransactions(): Observable<any> {
+    return this.http.get<any>(`${this.urlAdmin}/transactions`, this.config)
+  }
 }
