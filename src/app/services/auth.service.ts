@@ -51,12 +51,11 @@ export class AuthService {
     return this.httpClient.post<ResponseEmail>(`${this.url}/verify-user`, data, this.configAuthorized);
   }
 
-  sendOtp():Observable<ResponseParent>{
+  sendOtp(): Observable<ResponseParent>{
     return this.httpClient.post<ResponseParent>(`${this.url}/send-email-code`,{}, this.configAuthorized);
   }
 
-  logout(): void {
-    localStorage.removeItem('user-mansexch')
-    localStorage.removeItem('token-mansexch')
+  logout(): Observable<ResponseUser> {
+    return this.httpClient.get<ResponseUser>(`${this.url}/logout`, this.configAuthorized)
   }
 }

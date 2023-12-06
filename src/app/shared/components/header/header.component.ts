@@ -31,7 +31,11 @@ export class HeaderComponent implements OnInit {
   }
   
    logout() {
-    this.authService.logout();
-    this.router.navigate(['/auth/login'])
+    this.authService.logout().subscribe((res: any) => {
+      console.log(res)
+      localStorage.removeItem('user-mansexch')
+      localStorage.removeItem('token-mansexch')
+      this.router.navigate(['/auth/login'])
+    });
   }
 }
