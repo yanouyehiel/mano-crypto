@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class OperationsListAdminComponent implements OnInit {
   private id: string = ""
+  public name: string = ""
   public transactions: any[] = []
   public table: any[] = []
 
@@ -22,7 +23,7 @@ export class OperationsListAdminComponent implements OnInit {
     this.userService.getUsersTransactions().subscribe((res: any) => {
       this.table = res.data
 
-      this.transactions = this.table.filter(transaction => transaction._id === this.id);
+      this.transactions = this.table.filter(transaction => transaction.userId === this.id);
     })
   }
 }

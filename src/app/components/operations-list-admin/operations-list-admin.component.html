@@ -3,7 +3,8 @@
     <div class="row">
         <div class="card">
             <div class="card-header">
-              <h5>Hoverable rows with Horizontal Border</h5><span>Hoverable row use a class <code>table-hover</code> and for Horizontal border use a class <code>.table-border-horizontal</code> , Solid border Use a class <code>.border-solid</code> <code>.table</code> class.</span>
+              <h5>Liste des transactions de l'user {{ name }}</h5>
+              
             </div>
             <div class="table-responsive">
               <table class="table table-hover table-border-horizontal">
@@ -19,24 +20,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                 <ng-container *ngFor="let data of table">
-                   <tr>
-                     <th scope="row">{{data.merchantReference}}</th>
-                     <td [ngClass]="{'font-success' : data.status === 'SUCCESS', 'font-primary' : data.status === 'PENDING', 'font-danger' : data.status === 'FAILED'}"> 
-                       <div class="media align-items-center hover-icon">
-                         <div class="{{data.bgClass}} me-2">
-                           <app-feather-icons icon="{{data.status === 'PENDING' ? 'alert-triangle' : (data.status === 'SUCCESS' ? 'check' : 'info')}}"></app-feather-icons>
-                         </div>
-                         {{data.status}}
-                       </div>
-                     </td>
-                     <td>{{data.type}}</td>
-                     <td>{{data.creationDate | date}}</td>
-                     <td>{{data.amount | currency}}</td>
-                     <td>{{data.final_currency}}</td>
-                     <td>{{data.final_amount}}</td>
-                   </tr>
-                 </ng-container>
+                    <ng-container *ngFor="let data of transactions">
+                        <tr>
+                            <th scope="row">{{data.merchantReference}}</th>
+                            <td [ngClass]="{'font-success' : data.status === 'SUCCESS', 'font-primary' : data.status === 'PENDING', 'font-danger' : data.status === 'FAILED'}"> 
+                            <div class="media align-items-center hover-icon">
+                                <div class="{{data.bgClass}} me-2">
+                                <app-feather-icons icon="{{data.status === 'PENDING' ? 'alert-triangle' : (data.status === 'SUCCESS' ? 'check' : 'info')}}"></app-feather-icons>
+                                </div>
+                                {{data.status}}
+                            </div>
+                            </td>
+                            <td>{{data.type}}</td>
+                            <td>{{data.creationDate | customDateFormat}}</td>
+                            <td>{{data.amount | currency}}</td>
+                            <td>{{data.final_currency}}</td>
+                            <td>{{data.final_amount}}</td>
+                        </tr>
+                    </ng-container>
+                    <div class="no-data" *ngIf="transactions.length < 0">
+                        Aucune donnée
+                    </div>
                 </tbody>
               </table>
             </div>

@@ -26,7 +26,7 @@ export class UsersAdminComponent {
     return this.num++
   }
 
-  redirectInfoUser(id: string) {
+  redirectInfoUser(id: string, name: string) {
     this.router.navigate([`admin/users/${id}`])
   }
   

@@ -84,7 +84,7 @@
               </div> -->
               <div class="card">
                 <div class="card-header">
-                  <h5>Hoverable rows with Horizontal Border</h5><span>Hoverable row use a class <code>table-hover</code> and for Horizontal border use a class <code>.table-border-horizontal</code> , Solid border Use a class <code>.border-solid</code> <code>.table</code> class.</span>
+                  <h5>Liste de tous les utilisateurs</h5>
                 </div>
                 <div class="table-responsive">
                   <table class="table table-hover table-border-horizontal">
@@ -102,7 +102,7 @@
                     </thead>
                     <tbody>
                      <ng-container *ngFor="let data of table">
-                       <tr (click)="redirectInfoUser(data._id)">
+                       <tr (click)="redirectInfoUser(data._id, data.name)">
                          <th scope="row">{{increment()}}</th>
                          <td>{{data.name}}</td>
                          <td>{{data.email}}</td>
