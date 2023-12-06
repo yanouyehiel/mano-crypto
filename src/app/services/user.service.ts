@@ -47,7 +47,7 @@ export class UserService {
     return this.http.put<ResponseUser>(`${this.urlUser}/reset-password`, data, this.headReset)
   }
 
-  getUsersByCountryCode(countryCode: string): Observable<any> {
-    return this.http.get<any>(`${this.urlAdmin}/users?countryCode=${countryCode}`, this.config)
+  getUsersByCountryCode(): Observable<any> {
+    return this.http.get<any>(`${this.urlAdmin}/users`, this.config)
   }
 }

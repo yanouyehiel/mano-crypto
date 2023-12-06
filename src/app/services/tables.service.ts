@@ -6,9 +6,8 @@ import {SortColumn, SortDirection} from '../directives/sortable.directive';
 import { UserService } from './user.service';
 
 interface SearchResult {
-  basicTable: TableUser[];
+  basicTable: any[];
   total: number;
-  
 }
 
 interface State {
@@ -21,7 +20,7 @@ interface State {
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(basicTable: TableUser[], column: SortColumn, direction: string): TableUser[] {
+function sort(basicTable: any[], column: SortColumn, direction: string): any[] {
   if (direction === '' || column === '') {
     return basicTable;
   } else {
@@ -32,18 +31,20 @@ function sort(basicTable: TableUser[], column: SortColumn, direction: string): T
   }
 }
 
-function matches(table: TableUser, term: string, pipe: PipeTransform) {
+function matches(table: any, term: string, pipe: PipeTransform) {
   return table.name.toLowerCase().includes(term.toLowerCase())
-  || pipe.transform(table.id).includes(term)
+  || pipe.transform(table._id).includes(term)
 
 }
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class TablesService {
     private _loading$ = new BehaviorSubject<boolean>(true);
     private _search$ = new Subject<void>();
-    private _tables$ = new BehaviorSubject<TableUser[]>([]);
+    private _tables$ = new BehaviorSubject<any[]>([]);
     private _total$ = new BehaviorSubject<number>(0);
 
     public TABLEDATA: any[] = [];
@@ -57,6 +58,11 @@ export class TablesService {
     };
 
   constructor(private pipe: DecimalPipe, private userService: UserService) {
+    this.userService.getUsersByCountryCode().subscribe((res: any) => {
+      this.TABLEDATA = res.data
+      this._tables$ = res.data
+      console.log(this.TABLEDATA)
+    })
     this._search$
       .pipe(
         tap(() => this._loading$.next(true)),
@@ -70,10 +76,7 @@ export class TablesService {
         this._total$.next(result.total);
       });
     this._search$.next();
-    this.userService.getUsersByCountryCode('+237').subscribe((res: any) => {
-      this.TABLEDATA = res.data
-    })
-    console.log(this.TABLEDATA)
+    console
    }
 
   get basicTable$() { return this._tables$.asObservable(); }
