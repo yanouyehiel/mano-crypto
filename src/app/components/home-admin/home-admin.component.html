@@ -1,8 +1,51 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid dashboard-default-sec">
     <div class="row">
+        <div class="col-xl-6 col-50 box-col-6 des-xl-50">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-top d-sm-flex align-items-center">
+                  <h5>Statistiques Users</h5>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="chart-dashbord">
+                  <apx-chart [chart]="growthChart.chart" [plotOptions]="growthChart.plotOptions" [colors]="growthChart.colors"
+                    [dataLabels]="growthChart.dataLabels" [labels]="growthChart.labels" [stroke]="growthChart.stroke"
+                    [legend]="growthChart.legend" [series]="growthChart.series" [responsive]="growthChart.responsive">
+                  </apx-chart>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-50 box-col-6 des-xl-50">
+          <div class="card">
+            <div class="card-header pb-0">
+              <h5>Portefeuille & Transactions</h5>
+            </div>
+            <div class="card-body">
+              <div id="basic-bar">
+               <apx-chart 
+                 [chart]="barChart.chart"
+                 [plotOptions]="barChart.plotOptions"
+                 [dataLabels]="barChart.dataLabels"
+                 [series]="barChart.series"
+                 [xaxis]="barChart.xaxis"
+                 [colors]="barChart.colors">
+                 </apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <app-breadcrumb></app-breadcrumb>
+<div class="container-fluid dashboard-default-sec">
+    <div class="row">
       <div class="col-12">
         <app-file-manager></app-file-manager>
       </div>
     </div>
-</div>
+</div> -->
