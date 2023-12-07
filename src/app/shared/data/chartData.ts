@@ -151,4 +151,29 @@ export let growthChart: ChartOptions | any = {
       }
     }]
 };
+
+export let barChart: ChartOptions | any = {
+  chart: {
+     height: 350,
+     type: 'bar',
+     toolbar:{
+       show: false
+     }
+ },
+ plotOptions: {
+     bar: {
+         horizontal: true,
+     }
+ },
+ dataLabels: {
+     enabled: false
+ },
+ series: [{
+     data: []
+ }],
+ xaxis: {
+     categories: ['Solde XAF', 'Solde BTC', 'Solde ETH', 'Montant Dépot', 'Montant Retrait', 'Total Crypto Recharge', 'Total Crypto Retrait'],
+ },
+ colors:[ primary_color ]
+}
  

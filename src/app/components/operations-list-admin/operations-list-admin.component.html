@@ -33,16 +33,17 @@
                             </td>
                             <td>{{data.type}}</td>
                             <td>{{data.creationDate | customDateFormat}}</td>
-                            <td>{{data.amount | currency}}</td>
+                            <td>{{data.amount }} XAF</td>
                             <td>{{data.final_currency}}</td>
                             <td>{{data.final_amount}}</td>
                         </tr>
                     </ng-container>
-                    <div class="no-data" *ngIf="transactions.length < 0">
-                        Aucune donnée
-                    </div>
                 </tbody>
               </table>
+              
+              <div class="no-data" *ngIf="transactions.length < 0">
+                Aucune donnée
+              </div>
             </div>
          </div>
     </div>
