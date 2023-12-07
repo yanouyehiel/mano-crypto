@@ -9,8 +9,9 @@
     </div>
     <div class="card-body file-manager">
 
-      
-      <h5>Folders</h5>
+        <h5>Données général</h5>
+        <app-stats-data></app-stats-data>
+      <h5>Utilisateurs</h5>
       <ul class="folder">
        <ng-container *ngFor="let folder of FoldersData">
          <li class="folder-box">
@@ -23,11 +24,44 @@
               <p class="f-20">{{folder.fileSize}}</p>
             </div>
           </div>
-           
+
          </li>
        </ng-container>
       </ul>
-      <h5 class="mt-4">Files</h5>
+      <h5>Utilisateurs</h5>
+      <ul class="folder">
+       <ng-container *ngFor="let folder of FoldersData">
+         <li class="folder-box">
+          <div class="d-flex align-items-center files-list">
+            <div class="flex-shrink-0 file-left">
+              <i class="fa fa-{{folder.icon}} f-44 txt-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="mb-1">{{folder.folderName}}</h6>
+              <p class="f-20">{{folder.fileSize}}</p>
+            </div>
+          </div>
+
+         </li>
+       </ng-container>
+      </ul> <h5>Utilisateurs</h5>
+      <ul class="folder">
+       <ng-container *ngFor="let folder of FoldersData">
+         <li class="folder-box">
+          <div class="d-flex align-items-center files-list">
+            <div class="flex-shrink-0 file-left">
+              <i class="fa fa-{{folder.icon}} f-44 txt-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="mb-1">{{folder.folderName}}</h6>
+              <p class="f-20">{{folder.fileSize}}</p>
+            </div>
+          </div>
+
+         </li>
+       </ng-container>
+      </ul>
+      <h5 class="mt-4">Cryptos</h5>
       <ul class="files-content">
        <ng-container *ngFor="let file of FilesData">
          <li>
@@ -43,6 +77,7 @@
          </li>
        </ng-container>
       </ul>
+
     </div>
   </div>
 </div>
