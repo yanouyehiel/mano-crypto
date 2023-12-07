@@ -1,0 +1,60 @@
+<div class="file-content">
+  <div class="card">
+    <div class="card-header">
+      <div class="media">
+        <div class="media-body text-end">
+          <div class="btn btn-outline-primary ms-2"><app-feather-icons [icon]="'filter'">   </app-feather-icons>Apply filter  </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body file-manager">
+
+      <!-- <h5 class="mt-4">General datas</h5>
+      <app-stats-data></app-stats-data> -->
+      <!-- <h5>Quick Access</h5>
+      <ul class="quick-file d-flex">
+       <ng-container *ngFor="let file of Quickdata">
+         <li>
+           <div class="quick-box">
+             <i class="fa {{file.icon}} font-{{file.iconColor}}" aria-hidden="true"></i>
+           </div>
+           <h6>{{file.folderName}}</h6>
+         </li>
+       </ng-container>
+      </ul> -->
+      <h5>Folders</h5>
+      <ul class="folder">
+       <ng-container *ngFor="let folder of FoldersData">
+         <li class="folder-box">
+          <div class="d-flex align-items-center files-list">
+            <div class="flex-shrink-0 file-left">
+              <i class="fa fa-{{folder.icon}} f-44 txt-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="mb-1">{{folder.folderName}}</h6>
+              <p class="f-20">{{folder.fileSize}}</p>
+            </div>
+          </div>
+           
+         </li>
+       </ng-container>
+      </ul>
+      <h5 class="mt-4">Files</h5>
+      <ul class="files-content">
+       <ng-container *ngFor="let file of FilesData">
+         <li>
+           <div class="d-flex align-items-center files-list">
+             <div class="flex-shrink-0 file-left">
+               <i class="fa {{file.icon}} font-{{file.iconColor}} f-22" aria-hidden="true"></i>
+             </div>
+             <div class="flex-grow-1 ms-3">
+               <h6 class="mb-1">{{file.fileName}}</h6>
+               <p class="f-20">{{file.lastOpen}}</p>
+             </div>
+           </div>
+         </li>
+       </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -58,6 +58,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
 import { CompatabiliteAdminComponent } from './components/compatabilite-admin/compatabilite-admin.component';
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
+import { StatsDataComponent } from './components/compatabilite-admin/stats-data/stats-data.component';
+import { FileManagerComponent } from './components/compatabilite-admin/file-manager/file-manager.component';
+import { FileItemsComponent } from './components/compatabilite-admin/file-manager/file-items/file-items.component';
 
 
 @NgModule({
@@ -106,7 +109,10 @@ import { UsersAdminComponent } from './components/users-admin/users-admin.compon
     RechargeCryptoComponent,
     OperationsListAdminComponent,
     CompatabiliteAdminComponent,
-    UsersAdminComponent
+    UsersAdminComponent,
+    StatsDataComponent,
+    FileManagerComponent,
+    FileItemsComponent
   ],
   imports: [
     BrowserModule,
