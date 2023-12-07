@@ -1,9 +1,169 @@
-
 <div class="container-fluid">
-   <div class="row">
+  <div class="row">
+    <div class="col-md-12 box-col-9">
+      <div class="file-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="media">
+              <div class="media-body text-end">
+                <div class="btn btn-outline-primary ms-2">
+                  <app-feather-icons [icon]="'filter'"> </app-feather-icons
+                  >Filter
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body file-manager">
+            <h5>Données général</h5>
+            <app-stats-data></app-stats-data>
+            <h5>Details de soldes</h5>
+            <ul class="folder">
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-primary"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde Crypto</h6>
+                    <p class="f-20">15000 USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-money f-44 txt-primary"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde XAF</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-warning"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde BTC</h6>
+                    <p class="f-20">15 BTC</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#1E3050" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
 
-     <div class="col-md-12 box-col-9">
-      <app-file-items></app-file-items>
-     </div>
-   </div>
- </div>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde ETH</h6>
+                    <p class="f-20">15 BTC</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <h5 class="mt-5">Soldes de transactions</h5>
+            <ul class="folder">
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges crypto</h6>
+                    <p class="f-20">15000 USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits crypto</h6>
+                    <p class="f-20">15000 USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-money f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges XAF</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-money f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits XAF</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <h5 class="mt-5">Details de transactions crypto</h5>
+            <ul class="folder">
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges BTC</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits BTC</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#299E05" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges ETH</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#E5250F" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits ETH</h6>
+                    <p class="f-20">15000 FCFA</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

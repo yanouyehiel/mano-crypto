@@ -60,7 +60,6 @@ import { CompatabiliteAdminComponent } from './components/compatabilite-admin/co
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
 import { StatsDataComponent } from './components/compatabilite-admin/stats-data/stats-data.component';
 import { FileManagerComponent } from './components/compatabilite-admin/file-manager/file-manager.component';
-import { FileItemsComponent } from './components/compatabilite-admin/file-manager/file-items/file-items.component';
 
 
 @NgModule({
@@ -111,9 +110,8 @@ import { FileItemsComponent } from './components/compatabilite-admin/file-manage
     CompatabiliteAdminComponent,
     UsersAdminComponent,
     StatsDataComponent,
-    FileManagerComponent,
-    FileItemsComponent
-  ],
+    FileManagerComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
