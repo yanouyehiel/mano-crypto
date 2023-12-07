@@ -6,10 +6,16 @@
           <div class="card-header">
             <div class="media">
               <div class="media-body text-end">
-                <div class="btn btn-outline-primary ms-2">
-                  <app-feather-icons [icon]="'filter'"> </app-feather-icons
-                  >Filter
-                </div>
+                <div class="dropdown-basic">
+                    <div class="btn-group">
+                      <button class="btn btn-primary" type="button">Tous</button>
+                      <div class="dropdown separated-btn">
+                        <button class="btn btn-primary" type="button"><i class="fa fa-angle-down"></i></button>
+                        <div class="dropdown-content text-center"><a href="javascript:void(0)">Tous</a><a href="javascript:void(0)">Cameroun</a><a href="javascript:void(0)">Gabon</a><a href="javascript:void(0)">Congo</a></div>
+                      </div>
+                    </div>
+                 </div>
+                
               </div>
             </div>
           </div>
