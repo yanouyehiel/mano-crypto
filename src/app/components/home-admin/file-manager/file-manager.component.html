@@ -4,6 +4,7 @@
       <div class="file-content">
         <div class="card">
           <div class="card-header">
+            <h4 class="card-title">Statistiques</h4>
             <div class="media">
               <div class="media-body text-end">
                 <div class="dropdown-basic">
@@ -21,7 +22,68 @@
           </div>
           <div class="card-body file-manager">
             <h5>Données général</h5>
-            <app-stats-data></app-stats-data>
+            <div class="row">
+              <div class="col-sm-6 col-xl-3 col-lg-6">
+                  <div class="card o-hidden border-0">
+                      <div class="bg-dark b-r-4 card-body">
+                          <div class="media static-top-widget">
+                              <div class="align-self-center text-center">
+                                  <app-feather-icons icon="users"></app-feather-icons>
+                              </div>
+                              <div class="media-body"><span class="m-0">Utilisateurs</span>
+                                  <h4 class="mb-0 counter"> {{users.total_users.toLocaleString('fr-FR')}} </h4>
+                                  <app-feather-icons icon="users" class="icon-bg"></app-feather-icons>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-xl-3 col-lg-6">
+                <div class="card o-hidden border-0">
+                    <div class="bg-primary b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            <div class="align-self-center text-center">
+                                <app-feather-icons icon="user-check"></app-feather-icons>
+                            </div>
+                            <div class="media-body"><span class="m-0">Utilisateurs connectées</span>
+                                <h4 class="mb-0 counter"> {{users.connected_users.toLocaleString('fr-FR')}} </h4>
+                                <app-feather-icons icon="user-check" class="icon-bg"></app-feather-icons>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3 col-lg-6">
+              <div class="card o-hidden border-0">
+                  <div class="bg-info b-r-4 card-body">
+                      <div class="media static-top-widget">
+                          <div class="align-self-center text-center">
+                              <app-feather-icons icon="user-x"></app-feather-icons>
+                          </div>
+                          <div class="media-body"><span class="m-0">Utilisateurs Non-connectées</span>
+                              <h4 class="mb-0 counter">{{users.unconnected_users.toLocaleString('fr-FR')}} </h4>
+                              <app-feather-icons icon="user-x" class="icon-bg"></app-feather-icons>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-6 col-xl-3 col-lg-6">
+            <div class="card o-hidden border-0">
+                <div class="bg-secondary b-r-4 card-body">
+                    <div class="media static-top-widget">
+                        <div class="align-self-center text-center">
+                            <app-feather-icons icon="credit-card"></app-feather-icons>
+                        </div>
+                        <div class="media-body"><span class="m-0">Chiffre d'affaires</span>
+                            <h4 class="mb-0 counter"> --- </h4>
+                            <app-feather-icons icon="credit-card" class="icon-bg"></app-feather-icons>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          </div>
             <h5>Details de soldes</h5>
             <ul class="folder">
               <li class="folder-box">
@@ -31,7 +93,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde Crypto</h6>
-                    <p class="f-20">15000 USD</p>
+                    <p class="f-20">--- USD</p>
                   </div>
                 </div>
               </li>
@@ -42,7 +104,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde XAF</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">{{wallets.XAF_balance.toLocaleString('fr-FR')}} FCFA</p>
                   </div>
                 </div>
               </li>
@@ -53,7 +115,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde BTC</h6>
-                    <p class="f-20">15 BTC</p>
+                    <p class="f-20">{{wallets.BTC_balance.toLocaleString('fr-FR')}} BTC</p>
                   </div>
                 </div>
               </li>
@@ -65,7 +127,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde ETH</h6>
-                    <p class="f-20">15 BTC</p>
+                    <p class="f-20">{{wallets.ETH_balance.toLocaleString('fr-FR')}} BTC</p>
                   </div>
                 </div>
               </li>
@@ -79,7 +141,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges crypto</h6>
-                    <p class="f-20">15000 USD</p>
+                    <p class="f-20">{{transactions.crypto_recharge_transactions_amount.toLocaleString('fr-FR')}} USD</p>
                   </div>
                 </div>
               </li>
@@ -90,7 +152,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits crypto</h6>
-                    <p class="f-20">15000 USD</p>
+                    <p class="f-20">{{transactions.crypto_withdraw_transactions_amount.toLocaleString('fr-FR')}} USD</p>
                   </div>
                 </div>
               </li>
@@ -101,7 +163,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges XAF</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">{{transactions.deposit_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
                   </div>
                 </div>
               </li>
@@ -112,7 +174,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits XAF</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">{{transactions.withdraw_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
                   </div>
                 </div>
               </li>
@@ -126,7 +188,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges BTC</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">--- BTC</p>
                   </div>
                 </div>
               </li>
@@ -138,7 +200,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits BTC</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">--- BTC</p>
                   </div>
                 </div>
               </li>
@@ -150,7 +212,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges ETH</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">--- ETH</p>
                   </div>
                 </div>
               </li>
@@ -162,7 +224,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits ETH</h6>
-                    <p class="f-20">15000 FCFA</p>
+                    <p class="f-20">--- ETH</p>
                   </div>
                 </div>
               </li>

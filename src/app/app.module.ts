@@ -40,9 +40,7 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
 import { UploadFileComponent } from './components/profile-edit/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
-
 import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-devise/convertir-crypto-devise.component';
-
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
 import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
@@ -56,10 +54,8 @@ import { CurrencyBalanceComponent } from './shared/components/currency-balance/c
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
-import { CompatabiliteAdminComponent } from './components/compatabilite-admin/compatabilite-admin.component';
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
-import { StatsDataComponent } from './components/compatabilite-admin/stats-data/stats-data.component';
-import { FileManagerComponent } from './components/compatabilite-admin/file-manager/file-manager.component';
+import { FileManagerComponent } from './components/home-admin/file-manager/file-manager.component';
 
 
 @NgModule({
@@ -107,9 +103,7 @@ import { FileManagerComponent } from './components/compatabilite-admin/file-mana
     CurrencyBalanceComponent,
     RechargeCryptoComponent,
     OperationsListAdminComponent,
-    CompatabiliteAdminComponent,
     UsersAdminComponent,
-    StatsDataComponent,
     FileManagerComponent
    ],
   imports: [

@@ -1,6 +1,9 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid dashboard-default-sec">
     <div class="row">
+        <div class="col-12">
+          <app-file-manager [datas]="{users:datas.users, transactions:datas.transactions, wallets:datas.wallets}"></app-file-manager>
+        </div>
         <div class="col-xl-6 col-50 box-col-6 des-xl-50">
             <div class="card">
               <div class="card-header">

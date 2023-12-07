@@ -1,6 +1,7 @@
 const urlApi = "http://62.72.19.95:3000/api";
 const authUrl = "/auth"
 const userUrl = "/user"
+const adminUrl = "/admin"
 const cryptoUrl = "/crypto"
 const depositUrl = "/wallet"
 const historicListUrl = '/transaction'
@@ -11,6 +12,7 @@ export const environment = {
   backend_api_url: urlApi,
   auth_url: authUrl,
   user_url: userUrl,
+  admin_url: adminUrl,
   cryptoUrl: cryptoUrl,
   url_deposit: depositUrl,
   url_transaction_list: historicListUrl,

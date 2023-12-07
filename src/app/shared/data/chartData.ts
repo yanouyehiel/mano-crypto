@@ -73,5 +73,107 @@ export let areaSpalineChart : ChartOptions | any = {
         },
     },
     colors:[ primary_color, secondary_color, tertiary_color ]
- }
+}
+
+export let growthChart: ChartOptions | any = {
+    series: [],
+    chart: {
+      height: 380,
+      type: 'radialBar',
+    },
+    plotOptions: {
+      radialBar: {
+        offsetY: 0,
+        startAngle: 0,
+        endAngle: 270,
+        hollow: {
+          margin: 5,
+          size: '30%',
+          background: 'transparent',
+          image: undefined,
+        },
+        dataLabels: {
+          name: {
+            show: false,
+          },
+          value: {
+            show: false,
+          }
+        }
+      }
+    },
+    colors: [primary_color, secondary_color, tertiary_color],
+    labels: ['Total Users', 'Users Connectés', 'Users Déconnectés'],
+    legend: {
+      show: true,
+      floating: true,
+      fontSize: '14px',
+      position: 'left',
+      fontFamily: 'Roboto',
+      offsetX: 30,
+      offsetY: 20,
+      labels: {
+        useSeriesColors: true,
+      },
+      markers: {
+        size: 0,
+        show: false,
+      },
+      formatter: function (seriesName: any, opts: any) {
+        return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+      },
+      itemMargin: {
+        vertical: 5,
+        horizontal: 2
+      }
+    },
+    stroke: {
+      lineCap: 'round'
+    },
+    responsive: [{
+      breakpoint: 1500,
+      options: {
+        legend: {
+          offsetX: 0,
+        }
+      }
+    },
+    {
+      breakpoint: 480,
+      options: {
+        chart: {
+          height: 340,
+        },
+        legend: {
+          show: true,
+          fontSize: '10px',
+        }
+      }
+    }]
+};
+
+export let barChart: ChartOptions | any = {
+  chart: {
+     height: 350,
+     type: 'bar',
+     toolbar:{
+       show: false
+     }
+ },
+ plotOptions: {
+     bar: {
+         horizontal: true,
+     }
+ },
+ dataLabels: {
+     enabled: false
+ },
+ series: [{
+     data: []
+ }],
+ xaxis: {
+     categories: ['Solde XAF', 'Solde BTC', 'Solde ETH', 'Montant Dépot', 'Montant Retrait', 'Total Crypto Recharge', 'Total Crypto Retrait'],
+ },
+ colors:[ primary_color ]
+}
  

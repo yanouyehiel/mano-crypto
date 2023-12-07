@@ -11,6 +11,7 @@ export class HomeAdminComponent implements OnInit {
   public growthChart = chartData.growthChart;
   private users: any
   private solde: any
+  public datas:any
   private transaction: any
   public barChart = chartData.barChart
 
@@ -18,11 +19,11 @@ export class HomeAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsersStatistics().subscribe((res: any) => {
+      this.datas = res.data
       this.users = res.data.users
       this.growthChart.series = [this.users.total_users, this.users.connected_users, this.users.unconnected_users]
       this.solde = res.data.wallets
       this.transaction = res.data.transactions
-      console.log(this.transaction)
       this.barChart.series[0].data = [
         this.solde.XAF_balance, 
         this.solde.BTC_balance, 
