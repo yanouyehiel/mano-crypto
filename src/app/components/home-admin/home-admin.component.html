@@ -2,7 +2,7 @@
 <div class="container-fluid dashboard-default-sec">
     <div class="row">
         <div class="col-12">
-          <app-file-manager [datas]="{users:datas.users, transactions:datas.transactions, wallets:datas.wallets}"></app-file-manager>
+          <app-stats (filterEvent)="fetchStatistics($event)" [datas]="{users:datas.users, transactions:datas.transactions, wallets:datas.wallets}"></app-stats>
         </div>
         <div class="col-xl-6 col-50 box-col-6 des-xl-50">
             <div class="card">
@@ -28,7 +28,7 @@
             </div>
             <div class="card-body">
               <div id="basic-bar">
-               <apx-chart 
+               <apx-chart
                  [chart]="barChart.chart"
                  [plotOptions]="barChart.plotOptions"
                  [dataLabels]="barChart.dataLabels"

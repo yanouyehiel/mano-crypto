@@ -55,7 +55,7 @@ import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-c
 import { NgSelectModule } from '@ng-select/ng-select';
 import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
-import { FileManagerComponent } from './components/home-admin/file-manager/file-manager.component';
+import { FileManagerComponent } from './components/home-admin/stats/stats.component';
 
 
 @NgModule({

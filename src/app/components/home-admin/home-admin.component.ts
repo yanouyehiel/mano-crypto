@@ -18,15 +18,20 @@ export class HomeAdminComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.getUsersStatistics().subscribe((res: any) => {
+    this.fetchStatistics('all')
+  }
+  fetchStatistics(country:string){
+    console.log(country)
+    this.userService.getUsersStatistics(country).subscribe((res: any) => {
       this.datas = res.data
+      console.log(this.datas)
       this.users = res.data.users
       this.growthChart.series = [this.users.total_users, this.users.connected_users, this.users.unconnected_users]
       this.solde = res.data.wallets
       this.transaction = res.data.transactions
       this.barChart.series[0].data = [
-        this.solde.XAF_balance, 
-        this.solde.BTC_balance, 
+        this.solde.XAF_balance,
+        this.solde.BTC_balance,
         this.solde.ETH_balance,
         this.transaction.deposit_transactions_amount,
         this.transaction.withdraw_transactions_amount,
@@ -35,4 +40,5 @@ export class HomeAdminComponent implements OnInit {
       ]
     })
   }
-}
+  }
+
