@@ -181,13 +181,6 @@ export class NavService {
       type: 'link',
       active: false,
       path: '/admin/operations'
-    },
-    {
-      title: 'Comptabilité',
-      icon: 'dollar-sign',
-      type: 'link',
-      active: true,
-      path: '/admin/comptabilite'
     }
   ]
 
