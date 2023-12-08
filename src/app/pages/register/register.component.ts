@@ -26,9 +26,10 @@ export class RegisterComponent implements OnInit {
       token: ''
     }
   }
-  public textBtn: string = "S'INSCRIRE"
+  public textBtn: string
   public countries: Country[] = countries;
-  public selectedCountry: any;
+  public selectedCountry?: Country;
+  public selectDiv:HTMLElement | null
 
   constructor(
     private fb: FormBuilder, 
@@ -37,13 +38,23 @@ export class RegisterComponent implements OnInit {
   ) {
     //this.selectedCountry.valueChanges.subscribe(value => console.log(value));
   }
+  handle(selectedCountry:any){
+    this.selectedCountry = selectedCountry;
+    // console.log(this.selectDiv?.firstChild?.firstChild?.lastChild?.firstChild!)
+
+  }
 
   ngOnInit(): void {
+    this.selectDiv  = document.getElementById("countrySelector");
     localStorage.removeItem('token-mansexch')
     localStorage.removeItem('user-mansexch')
     localStorage.removeItem('_grecaptcha')
     localStorage.removeItem('tokenReset-mansexch')
-    
+    this.textBtn = "S'INSCRIRE"
+    this.selectedCountry = countries.find((e)=>e.dial_code == "+237")
+    // selectDiv!.innerText = this.selectedCountry!.name
+    // this.selectDiv?.firstChild?.firstChild?.lastChild?.firstChild?.nodeValue?.replace('',this.selectedCountry!.name)
+    // console.log(this.selectDiv)
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.email],
@@ -55,10 +66,11 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  onCountryChange(selectedValue: any) {
-    this.selectedCountry = selectedValue.dial_code;
+  onCountryChange(selectedValue: Country) {
+    this.selectedCountry = selectedValue;
     console.log(this.selectedCountry)
   }
+  
 
   showPassword() {
     this.show = !this.show;
@@ -105,7 +117,8 @@ export class RegisterComponent implements OnInit {
         name: this.registerForm.controls['name'].value,
         email: this.registerForm.controls['email'].value,
         password: this.registerForm.controls['password'].value,
-        countryCode: '+237',
+        countryCode: this.selectedCountry!.dial_code,
+        country: this.selectedCountry!.name,
         phoneNumber: this.registerForm.controls['phoneNumber'].value
       }
     }
