@@ -1,0 +1,237 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 box-col-9">
+      <div class="file-content">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Statistiques</h4>
+            <div class="media">
+              <div class="media-body text-end">
+                <div class="dropdown-basic">
+                    <div class="btn-group">
+                      <button class="btn btn-primary" type="button">{{selectedCountry.toUpperCase()}}</button>
+                      <div class="dropdown separated-btn">
+                        <button class="btn btn-primary" type="button"><i class="fa fa-angle-down"></i></button>
+                        <div class="dropdown-content text-center"><a *ngFor="let country of countries" (click)="applyFilter(country)">{{country}}</a></div>
+                      </div>
+                    </div>
+                 </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="card-body file-manager">
+            <h5>Données général</h5>
+            <div class="row">
+              <div class="col-sm-6 col-xl-3 col-lg-6">
+                  <div class="card o-hidden border-0">
+                      <div class="bg-dark b-r-4 card-body">
+                          <div class="media static-top-widget">
+                              <div class="align-self-center text-center">
+                                  <app-feather-icons icon="users"></app-feather-icons>
+                              </div>
+                              <div class="media-body"><span class="m-0">Utilisateurs</span>
+                                  <h4 class="mb-0 counter"> {{datas.users.total_users.toLocaleString('fr-FR')}} </h4>
+                                  <app-feather-icons icon="users" class="icon-bg"></app-feather-icons>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-xl-3 col-lg-6">
+                <div class="card o-hidden border-0">
+                    <div class="bg-primary b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            <div class="align-self-center text-center">
+                                <app-feather-icons icon="user-check"></app-feather-icons>
+                            </div>
+                            <div class="media-body"><span class="m-0">Utilisateurs connectées</span>
+                                <h4 class="mb-0 counter"> {{datas.users.connected_users.toLocaleString('fr-FR')}} </h4>
+                                <app-feather-icons icon="user-check" class="icon-bg"></app-feather-icons>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3 col-lg-6">
+              <div class="card o-hidden border-0">
+                  <div class="bg-info b-r-4 card-body">
+                      <div class="media static-top-widget">
+                          <div class="align-self-center text-center">
+                              <app-feather-icons icon="user-x"></app-feather-icons>
+                          </div>
+                          <div class="media-body"><span class="m-0">Utilisateurs Non-connectées</span>
+                              <h4 class="mb-0 counter">{{datas.users.unconnected_users.toLocaleString('fr-FR')}} </h4>
+                              <app-feather-icons icon="user-x" class="icon-bg"></app-feather-icons>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-6 col-xl-3 col-lg-6">
+            <div class="card o-hidden border-0">
+                <div class="bg-secondary b-r-4 card-body">
+                    <div class="media static-top-widget">
+                        <div class="align-self-center text-center">
+                            <app-feather-icons icon="credit-card"></app-feather-icons>
+                        </div>
+                        <div class="media-body"><span class="m-0">Chiffre d'affaires</span>
+                            <h4 class="mb-0 counter"> --- </h4>
+                            <app-feather-icons icon="credit-card" class="icon-bg"></app-feather-icons>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          </div>
+            <h5>Details de soldes</h5>
+            <ul class="folder">
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-primary"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde Crypto</h6>
+                    <p class="f-20">--- USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-money f-44 txt-primary"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde XAF</h6>
+                    <p class="f-20">{{datas.wallets.XAF_balance.toLocaleString('fr-FR')}} FCFA</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-warning"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde BTC</h6>
+                    <p class="f-20">{{datas.wallets.BTC_balance.toLocaleString('fr-FR')}} BTC</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#1E3050" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde ETH</h6>
+                    <p class="f-20">{{datas.wallets.ETH_balance.toLocaleString('fr-FR')}} BTC</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <h5 class="mt-5">Soldes de transactions</h5>
+            <ul class="folder">
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges crypto</h6>
+                    <p class="f-20">{{datas.transactions.crypto_recharge_transactions_amount.toLocaleString('fr-FR')}} USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits crypto</h6>
+                    <p class="f-20">{{datas.transactions.crypto_withdraw_transactions_amount.toLocaleString('fr-FR')}} USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-money f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges XAF</h6>
+                    <p class="f-20">{{datas.transactions.deposit_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-money f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits XAF</h6>
+                    <p class="f-20">{{datas.transactions.withdraw_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <h5 class="mt-5">Details de transactions crypto</h5>
+            <ul class="folder">
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges BTC</h6>
+                    <p class="f-20">--- BTC</p>
+                  </div>
+                </div>
+              </li>
+
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits BTC</h6>
+                    <p class="f-20">--- BTC</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#299E05" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges ETH</h6>
+                    <p class="f-20">--- ETH</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#E5250F" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits ETH</h6>
+                    <p class="f-20">--- ETH</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,6 @@ import { AdminComponent } from './shared/components/layout/admin/admin.component
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
-import { CompatabiliteAdminComponent } from './components/compatabilite-admin/compatabilite-admin.component';
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
 
 
@@ -111,10 +110,6 @@ const routes: Routes = [
       {
         path: 'operations',
         component: OperationsListAdminComponent
-      },
-      {
-        path: 'comptabilite',
-        component: CompatabiliteAdminComponent
       }
     ] 
   },
