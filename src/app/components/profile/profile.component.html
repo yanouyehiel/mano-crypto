@@ -22,7 +22,7 @@
             <div class="user-designation">
               <div class="title">
                 <h4>{{ user.name }}</h4>
-                <h6 [class]="
+                <h6 class="email" [class]="
                   !user.isEmailVerified
                     ? 'text-danger txt-bold'
                     : 'text-success'
@@ -67,7 +67,7 @@
             <div class="col-xl-12">
               <div class="card">
                 <div class="card-header">
-                  <h5 class="p-0">A Propos</h5>
+                  <h5 class="p-0">Détails</h5>
                 </div>
                 <div class="collapse show">
                   <div class="card-body post-about">

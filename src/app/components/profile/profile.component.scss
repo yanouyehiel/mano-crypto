@@ -10,3 +10,7 @@ ul > li.not-validated:last-child:hover {
     font-weight: bold;
     font-size: 15px;
 }
+
+h6.email, p {
+    text-transform: lowercase !important;
+}

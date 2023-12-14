@@ -4,18 +4,19 @@ import { environment } from 'src/environments/environment';
 import { ResponseProfile, ResponseUser } from '../models/User';
 import { Observable } from 'rxjs';
 import { TableUser } from '../models/Table';
+// import { TableUser } from '../models/Table';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  
+
   private urlUser = environment.backend_api_url + environment.user_url
   private urlAdmin = environment.backend_api_url + environment.admin_url
   private tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}'
   private data: any = JSON.parse(this.tokenRegistred)
   private tokenReset: any = JSON.parse(localStorage.getItem('tokenReset-mansexch') || '{}')
-  
+
   private config = {
     headers: new HttpHeaders(
       {
@@ -55,7 +56,7 @@ export class UserService {
     return this.http.get<any>(`${this.urlAdmin}/transactions`, this.config)
   }
 
-  getUsersStatistics(): Observable<any> {
-    return this.http.get<any>(`${this.urlAdmin}/statistics`, this.config)
+  getUsersStatistics(country:string): Observable<any> {
+    return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase()!='all')?'?countryCode='+country:''}`, this.config)
   }
 }
