@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { ResponseUser } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,7 +18,8 @@ export class EnterEmailComponent implements OnInit {
   constructor(
     private modal: NgbModal,
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +30,10 @@ export class EnterEmailComponent implements OnInit {
 
   openModal(content: any) {
     this.modal.open(content)
+  }
+
+  showToast(message: string) {
+    this.toast.error(message)
   }
 
   formSubmit(content: any): void {
@@ -42,6 +48,9 @@ export class EnterEmailComponent implements OnInit {
       this.response = res.statusCode
       this.textBtn = 'Success'
       this.openModal(content)
+    }, (error) => {
+      this.textBtn = 'Envoyer'
+      this.showToast(error.error.message)
     })
   }
 }

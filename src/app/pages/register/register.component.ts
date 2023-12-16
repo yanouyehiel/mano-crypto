@@ -7,6 +7,8 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2'
 import { Country } from 'src/app/models/Country';
 import { countries } from 'src/app/models/Country';
+import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -30,11 +32,14 @@ export class RegisterComponent implements OnInit {
   public countries: Country[] = countries;
   public selectedCountry?: Country;
   public selectDiv:HTMLElement | null
+  public isClicked: boolean = false
+  public passwordIsCorrect: boolean = false
 
   constructor(
     private fb: FormBuilder, 
     public router: Router, 
-    public authService: AuthService
+    public authService: AuthService,
+    private toast: ToastrService
   ) {
     //this.selectedCountry.valueChanges.subscribe(value => console.log(value));
   }
@@ -100,18 +105,27 @@ export class RegisterComponent implements OnInit {
     return url
   }
 
-  info() {
-    /*Swal.fire(
-      'Info',
-      '<p>Bonjour tout le monde</p>',
-      'info'
-    )*/
-    Swal.fire('Hello World')
+  showToast(message: string) {
+    this.toast.error(message)
   }
+
+  verifierMotDePasse(motDePasse: string): boolean {
+    const aDesChiffres = /\d/.test(motDePasse);
+    const aDesLettresMajuscules = /[A-Z]/.test(motDePasse);
+    const aDesCaracteresSpeciaux = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(motDePasse);
+  
+    const toutesLesContraintesSontVerifiees = 
+      aDesChiffres &&
+      aDesLettresMajuscules &&
+      aDesCaracteresSpeciaux;
+    
+    return toutesLesContraintesSontVerifiees;
+  }  
 
 
   register(): void {
-    this.textBtn = 'Chargement...'
+    this.isClicked = true
+    this.passwordIsCorrect = this.verifierMotDePasse(this.registerForm.controls['password'].value)
     if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
       this.user = {
         name: this.registerForm.controls['name'].value,
@@ -121,37 +135,50 @@ export class RegisterComponent implements OnInit {
         country: this.selectedCountry!.name,
         phoneNumber: this.registerForm.controls['phoneNumber'].value
       }
-    }
-    console.log(this.user)
-    try {
-      this.authService.register(this.user).subscribe((response: ResponseUser) => {
+      
+      //console.log(this.user)
+      this.textBtn = 'Chargement...'
+      try {
+        this.authService.register(this.user).subscribe((response: ResponseUser) => {
 
-        this.returnedValue = {
-          statusCode: response.statusCode,
-          message: response.message,
-          data: {
-            token: response.data?.token
+          this.returnedValue = {
+            statusCode: response.statusCode,
+            message: response.message,
+            data: {
+              token: response.data?.token
+            }
           }
+          //console.log(this.returnedValue); 
+
+          if (this.returnedValue.statusCode == 1000) {
+            this.router.navigate([`/auth/confirm-login/${this.user.email}`])
+          }     
+        }, (error) => {
+          //console.log(error)
+          this.showToast(error.error.message)
+          this.textBtn = "S'INSCRIRE"
+          this.returnedValue = {
+            statusCode: error.error.statusCode,
+            message: error.error.message
+          }
+          //console.log(this.returnedValue)
+        });
+
+        /*const data = {
+          receiver_email: this.user.email
         }
-        console.log(this.returnedValue);    
-        //localStorage.setItem("token-mansexch", JSON.stringify(response.data?.token));  
-      });
+        this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
+          console.log(response)
+          this.returnedValue.statusCode = response.statusCode
+        })
 
-      const data = {
-        receiver_email: this.user.email
+        if (this.returnedValue.statusCode === 1000) {
+          this.openModal('myModal')
+        }*/
+      } catch (error) {
+        console.log(error)
       }
-      /*this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
-        console.log(response)
-        this.returnedValue.statusCode = response.statusCode
-      })
-
-      if (this.returnedValue.statusCode === 1000) {
-        this.openModal('myModal')
-      }*/
-      this.router.navigate([`/auth/confirm-login/${this.user.email}`])
-    } catch (error) {
-      console.log(error)
-    }
+    } 
     
   }
 }
