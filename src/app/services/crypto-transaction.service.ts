@@ -60,4 +60,12 @@ export class CryptoTransactionService {
         this.config
       );
     }
+
+    outvoice(data: any): Observable<ResponseParent> {
+      return this.http.post<ResponseParent>(
+        `${this.cryptoUrl}/create-payout`,
+        { ...data, withdraw_fees: 0.001, accept_variations: true },
+        this.config
+      );
+    }
 }

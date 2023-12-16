@@ -15,15 +15,14 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
 
-import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-devise/convertir-crypto-devise.component';
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
-import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 import { AdminComponent } from './shared/components/layout/admin/admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
 
 
 const routes: Routes = [
@@ -81,18 +80,9 @@ const routes: Routes = [
         component: RetirerFondsComponent
       },
       {
-        path: 'convertir-crypto',
-        component: ConvertirCryptoDeviseComponent
-      },
-      {
         path: 'retirer-crypto',
         component: SendCryptoComponent
       },
-
-      {
-        path: 'taux-change',
-        component: TauxDeChangeComponent
-      }
     ]
   },
   {
@@ -110,8 +100,12 @@ const routes: Routes = [
       {
         path: 'users/:id',
         component: OperationsListAdminComponent
+      },
+      {
+        path:'operations',
+        component: ContactsComponent,
       }
-    ] 
+    ]
   },
   {
     path: 'auth/validation-compte',

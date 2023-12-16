@@ -40,10 +40,8 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
 import { UploadFileComponent } from './components/profile-edit/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
-import { ConvertirCryptoDeviseComponent } from './components/convertir-crypto-devise/convertir-crypto-devise.component';
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
-import { TauxDeChangeComponent } from './components/taux-de-change/taux-de-change.component';
 import { CryptoBalanceComponent } from './shared/components/crypto-balance/crypto-balance.component';
 import { CustomDateFormatPipe } from './shared/pipes/custom-date-format.pipe';
 import { HistoryTableComponent } from './shared/components/history-table/history-table.component';
@@ -57,6 +55,13 @@ import { OperationsListAdminComponent } from './components/operations-list-admin
 import { UsersAdminComponent } from './components/users-admin/users-admin.component';
 import { SortableDirective } from './directives/sortable.directive';
 import { FileManagerComponent } from './components/home-admin/stats/stats.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
+import { AddressContentComponent } from './components/contacts/personal/edit-from/address-content/address-content.component';
+import { GeneralComponent } from './components/contacts/personal/edit-from/general/general.component';
+import { PersonalContentComponent } from './components/contacts/personal/edit-from/personal-content/personal-content.component';
+import { PersonalComponent } from './components/contacts/personal/personal.component';
+import { ContactsFilterComponent } from './components/contacts/contacts-filter/contacts-filter.component';
+import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
 
 
 @NgModule({
@@ -93,12 +98,11 @@ import { FileManagerComponent } from './components/home-admin/stats/stats.compon
     ProfileEditComponent,
     UploadFileComponent,
     RetirerFondsComponent,
-    ConvertirCryptoDeviseComponent,
     EnterEmailComponent,
     SendCryptoComponent,
-    TauxDeChangeComponent,
     CryptoBalanceComponent,
     CustomDateFormatPipe,
+    CapitalizePipe,
     HistoryTableComponent,
     HomeAdminComponent,
     CurrencyBalanceComponent,
@@ -107,7 +111,13 @@ import { FileManagerComponent } from './components/home-admin/stats/stats.compon
     UsersAdminComponent,
     SortableDirective,
     UsersAdminComponent,
-    FileManagerComponent
+    FileManagerComponent,
+    ContactsComponent,
+    ContactsFilterComponent,
+    PersonalComponent,
+    AddressContentComponent,
+    PersonalContentComponent,
+    GeneralComponent,
    ],
 
   imports: [

@@ -22,6 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfirmPasswordComponent,
     SelectCryptoModalComponent,
     AwaitTransactionValidationComponent,
+  
   ],
   imports: [
     CommonModule,

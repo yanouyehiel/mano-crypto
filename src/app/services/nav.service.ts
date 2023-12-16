@@ -122,22 +122,22 @@ export class NavService {
       badgeType: 'success',
       active: false
     },
-    {
-      path: '/client/taux-change',
-      title: 'Consulter le taux de change',
-      type: 'link',
-      icon: 'dollar-sign',
-      badgeType: 'success',
-      active: false
-    },
-    {
-      path: '/client/convertir-crypto',
-      title: 'Convertir la crypto',
-      type: 'link',
-      icon: 'repeat',
-      badgeType: 'success',
-      active: false
-    },
+    // {
+    //   path: '/client/taux-change',
+    //   title: 'Consulter le taux de change',
+    //   type: 'link',
+    //   icon: 'dollar-sign',
+    //   badgeType: 'success',
+    //   active: false
+    // },
+    // {
+    //   path: '/client/convertir-crypto',
+    //   title: 'Convertir la crypto',
+    //   type: 'link',
+    //   icon: 'repeat',
+    //   badgeType: 'success',
+    //   active: false
+    // },
     {
       path: '/client/retrait-fonds',
       title: 'Retirer des fonds',

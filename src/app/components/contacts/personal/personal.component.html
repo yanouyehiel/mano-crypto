@@ -1,0 +1,112 @@
+<div class="card mb-0">
+  <div class="card-header d-flex">
+    <h5>Comptes</h5><span class="f-14 pull-right mt-0">{{users.length}} Utilisateurs</span>
+  </div>
+  <div class="card-body p-0">
+    <div class="row list-persons" id="addcon">
+      <div class="col-xl-4 xl-50 col-md-5 box-col-6">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <ng-container *ngFor="let userItem of users">
+            <a (click)="setUserDisplay(userItem)" [ngClass]="user==userItem?'bg-secondary-subtle':''" class="contact-tab-0 nav-link" role="tab">
+              <div class="media">
+                <!-- <img class="img-50 img-fluid m-r-20 rounded-circle update_img_1" src="assets/images/dashboard/1.png" alt=""> -->
+                <div class="media-body">
+                  <h6> <span class="first_name_1">{{userItem.name | capitalize}} </span></h6>
+                  <p class="email_add_1">{{userItem.email}}</p>
+                </div>
+              </div>
+            </a>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-xl-8 xl-50 col-md-7 box-col-6">
+        <div class="tab-content" id="v-pills-tabContent" [ngStyle]="{ 'display': editContact ? 'none' : ''}">
+          <div class="tab-pane contact-tab-0 tab-content-child fade show active" id="v-pills-user" role="tabpanel"
+            aria-labelledby="v-pills-user-tab">
+            <div class="profile-mail">
+              <div class="media align-items-center"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_0"
+                  src="assets/images/dashboard/1.png" alt="">
+                <input class="updateimg" type="file" name="img" onchange="readURL(this,0)">
+                <div class="media-body mt-0">
+                  <h5><span class="first_name_0">{{user.name}} </span></h5>
+                  <p class="email_add_0">{{user.email}}</p>
+                  <ul>
+                    <li><a (click)="editContact = true">Modifier</a></li>
+                    <li (click)="deleteContact()"><a>Bloquer</a></li>
+                    <li (click)="openHistory()"><a>Voir l'historique</a></li>
+                    <!-- <li (click)="openPrint()"><a>Print</a></li> -->
+                  </ul>
+                </div>
+              </div>
+              <div class="email-general">
+                <h6 class="mb-3">General</h6>
+                <ul>
+                  <li>Nom <span class="font-primary first_name_0">{{user.name | capitalize}}</span></li>
+                  <li>Email <span class="font-primary">{{user.email}}</span></li>
+                  <li>Role <span class="font-primary">{{user.role}}</span></li>
+                  <li>Pays<span class="font-primary">{{user.countryCode}} </span></li>
+                  <li>Numéro de téléphone<span class="font-primary mobile_num_0">{{user.phoneNumber}}</span></li>
+                  <li>Status du compte<span class="font-primary city_0">{{user.account_status}}</span></li>
+                  <li>Activité<span class="font-primary personality_0">{{user.isOnline}}<i class="icofont icofont-star me-3"></i></span></li>
+                  <li>Crée le<span class="font-primary birth_day_0"> {{user.createdAt | customDateFormat}}</span></li>
+                </ul>
+                
+
+              </div>
+              <div class="email-general">
+                <h6 class="mb-3">Soldes</h6>
+                {{user.wallets.lenght}}
+                <ul>
+                  <ng-container *ngFor="let wallet of user.wallets">
+                    <ng-container [ngSwitch]="wallet.type">
+                      <li *ngSwitchCase="'BTC'">Bitcoin <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} BTC</span></li>
+                      <li *ngSwitchCase="'ETH'">Ethereum <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} ETH</span></li>
+                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} FCFA</span></li>
+                    </ng-container>
+                  </ng-container>
+                </ul>
+              </div>
+              <div class="email-general">
+                <h6 class="mb-3">Documents KYC</h6>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-editform" [ngStyle]="{ 'display': !editContact ? 'none' : ''}">
+          <form>
+            <div class="row g-2">
+              <app-general></app-general>
+            </div>
+            <div class="row g-2 more-data">
+              <app-personal-content></app-personal-content>
+              <div class="mb-3 col-md-12">
+                <app-address-content></app-address-content>
+              </div>
+            </div>
+            <button class="btn btn-dark-gradien update-contact" type="button">Save</button>
+            <button class="btn btn-primary ms-2" type="button" data-bs-dismiss="modal"
+              (click)="editContact = false">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="right-history" [class.show]="open">
+  <div class="modal-header p-20">
+    <h6 class="modal-title w-100">Historique de l'utilisateur<span class="pull-right"><a (click)="openHistory()"
+          class="closehistory"><i class="fa fa-times"></i></a></span></h6>
+  </div>
+  <div class="history-details">
+    <div class="text-center" *ngIf="transactions.length==0"><i class="icofont icofont-ui-edit"></i>
+      <p>{{alertMsg}}</p>
+    </div>
+    <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3" [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
+      <div class="media-body mt-0">
+        <h6 class="mt-0">{{item.status}}</h6>
+        <p class="mb-0">{{item.type}}</p><span class="f-12">{{item.creationDate|customDateFormat}}</span>
+      </div>
+    </div>
+  </div>
+</div>
