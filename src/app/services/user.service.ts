@@ -52,8 +52,8 @@ export class UserService {
     return this.http.get<any>(`${this.urlAdmin}/users`, this.config)
   }
 
-  getUsersTransactions(): Observable<any> {
-    return this.http.get<any>(`${this.urlAdmin}/transactions`, this.config)
+  getUsersTransactions(id?:string): Observable<any> {
+    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}`:`${this.urlAdmin}/transactions`, this.config)
   }
 
   getUsersStatistics(country:string): Observable<any> {

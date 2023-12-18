@@ -30,6 +30,7 @@ export class NavService {
   public search: boolean = false;
 
   constructor(private router: Router) {
+    this.setItems()
     this.setScreenWidth(window.innerWidth);
     fromEvent(window, 'resize')
       .pipe(debounceTime(1000), takeUntil(this.unsubscriber))
@@ -48,8 +49,6 @@ export class NavService {
       // Detect Route change sidebar close
       this.router.events.subscribe((event) => {
         this.collapseSidebar = true;
-        // this.megaMenu = false;
-        // this.levelMenu = false;
       });
     }
   }
@@ -61,129 +60,128 @@ export class NavService {
   private setScreenWidth(width: number): void {
     this.screenWidth.next(width);
   }
+  private isNotAdmin() {
+    try {
+      let userLocal = JSON.parse(localStorage.getItem('user-mansexch')!).user
+      console.log(userLocal.role+" His is the user role")
+      switch (userLocal.role) {
+        case 'customer':
+          return true;
+        case 'admin':
+          return false;
+        default:
+          return true;
 
-  MENUITEMS: Menu[] = [
-    {
-      headTitle1: 'Client'
-    },
-    {
-      title: 'Dashboard',
-      icon: 'home',
-      type: 'link',
-      active: true,
-      path: '/client/home'
-    },
-    {
-      title: 'Mon Profile',
-      icon: 'user',
-      type: 'link',
-      active: false,
-      path: '/client/profile'
-    },
-    {
-      title: 'Mon Historique',
-      icon: 'clock',
-      type: 'link',
-      active: false,
-      path: '/client/my-listing'
-    },
-    {
-      headTitle1: 'Finance'
-    },
-    {
-      path: '/client/recharge-compte',
-      title: 'Recharger le compte',
-      type: 'link',
-      icon: 'shopping-cart',
-      badgeType: 'success',
-      active: false,
-    },
-    {
-      path: '/client/recharge-crypto',
-      title: 'Recharger une crypto',
-      type: 'link',
-      icon: 'maximize',
-      badgeType: 'success',
-      active: false,
-    },
-    {
-      path: '/client/add-crypto',
-      title: 'Acheter de la crypto',
-      type: 'link',
-      icon: 'trending-up',
-      badgeType: 'success',
-      active: false
-    },
-    {
-      path: '/client/retirer-crypto',
-      title: 'Retirer de la crypto',
-      type: 'link',
-      icon: 'chevrons-left',
-      badgeType: 'success',
-      active: false
-    },
-    {
-      path: '/client/taux-change',
-      title: 'Consulter le taux de change',
-      type: 'link',
-      icon: 'dollar-sign',
-      badgeType: 'success',
-      active: false
-    },
-    {
-      path: '/client/convertir-crypto',
-      title: 'Convertir la crypto',
-      type: 'link',
-      icon: 'repeat',
-      badgeType: 'success',
-      active: false
-    },
-    {
-      path: '/client/retrait-fonds',
-      title: 'Retirer des fonds',
-      type: 'link',
-      icon: 'credit-card',
-      badgeType: 'success',
-      active: false
+      }
+    } catch (error) {
+      return true;
     }
-  ]
 
-  /*{
-      path: '/client/vendre-crypto',
-      title: 'Vendre de la crypto',
-      type: 'link',
-      icon: 'trending-down',
-      badgeType: 'success',
-      active: false
-    },*/
 
-  MENUITEMSADMIN: Menu[] = [
-    {
-      headTitle1: 'Administration'
-    },
-    {
-      title: 'Dashboard',
-      icon: 'home',
-      type: 'link',
-      active: true,
-      path: '/admin/home'
-    },
-    {
-      title: 'Comptes',
-      icon: 'user',
-      type: 'link',
-      active: false,
-      path: '/admin/users'
-    },
-    {
-      title: 'Opérations',
-      icon: 'repeat',
-      type: 'link',
-      active: false,
-      path: '/admin/operations'
-    }
-  ]
+  }
 
-  items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
-  itemsAdmin = new BehaviorSubject<Menu[]>(this.MENUITEMSADMIN);
+  MENUITEMS: Menu[] = []
+
+  getMenuItems() {
+    let isNoAdmin = this.isNotAdmin()
+    this.MENUITEMS = [
+
+      {
+        headTitle1: 'Administration',
+        isHidden: isNoAdmin
+      },
+      {
+        title: 'Dashboard',
+        icon: 'monitor',
+        type: 'link',
+        active: true,
+        isHidden: isNoAdmin,
+        path: '/admin/home'
+      },
+      {
+        title: 'Comptes',
+        icon: 'users',
+        type: 'link',
+        active: false,
+        isHidden: isNoAdmin,
+        path: '/admin/users'
+      },
+      {
+        headTitle1: 'Client'
+      },
+      {
+        title: 'Accueil',
+        icon: 'home',
+        type: 'link',
+        active: true,
+        path: '/client/home'
+      },
+      {
+        title: 'Mon Profile',
+        icon: 'user',
+        type: 'link',
+        active: false,
+        path: '/client/profile'
+      },
+      {
+        title: 'Mon Historique',
+        icon: 'clock',
+        type: 'link',
+        active: false,
+        path: '/client/my-listing'
+      },
+      {
+        headTitle1: 'Finance'
+      },
+      {
+        path: '/client/recharge-compte',
+        title: 'Recharger le compte',
+        type: 'link',
+        icon: 'shopping-cart',
+        badgeType: 'success',
+        active: false,
+      },
+      {
+        path: '/client/recharge-crypto',
+        title: 'Recharger une crypto',
+        type: 'link',
+        icon: 'maximize',
+        badgeType: 'success',
+        active: false,
+      },
+      {
+        path: '/client/add-crypto',
+        title: 'Acheter de la crypto',
+        type: 'link',
+        icon: 'trending-up',
+        badgeType: 'success',
+        active: false
+      },
+      {
+        path: '/client/retirer-crypto',
+        title: 'Retirer de la crypto',
+        type: 'link',
+        icon: 'chevrons-left',
+        badgeType: 'success',
+        active: false
+      },
+      {
+        path: '/client/retrait-fonds',
+        title: 'Retirer des fonds',
+        type: 'link',
+        icon: 'credit-card',
+        badgeType: 'success',
+        active: false
+      }
+    ]
+  }
+
+  public items: BehaviorSubject<Menu[]>
+  setItems() {
+    this.getMenuItems()
+    this.items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+    return true
+  }
+
+  // itemsAdmin = new BehaviorSubject<Menu[]>(this.MENUITEMSADMIN);
 }

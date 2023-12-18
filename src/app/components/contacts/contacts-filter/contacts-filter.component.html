@@ -1,0 +1,39 @@
+<div class="email-sidebar"><a class="btn btn-primary email-aside-toggle" (click)="openMenu()" >contact filter </a>
+   <div class="email-left-aside custom-scrollbar" [class.open]="open">
+     <div class="card">
+      <div class="card-header"><h5 class="card-title">Filtre de comptes</h5></div>
+       <div class="card-body">
+         <div class="email-app-sidebar left-bookmark">
+           <!-- <div class="media">
+             <div class="media-size-email"><img class="me-3 rounded-circle" src="assets/images/user/user.png" alt=""></div>
+             <div class="media-body"><a href="users/users-profile">
+                 <h6 class="f-w-700">MARK JENCO</h6></a>
+               <p>Markjecno@gmail.com</p>
+             </div>
+           </div> -->
+           <ul class="nav main-menu contact-options" role="tablist">
+             <!-- <li class="nav-item">
+              <button class="badge-light btn-block btn-mail w-100" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="me-2" data-feather="users"  (click)="openNewContact()"> </i> New Contacts</button>
+             </li>
+             <li class="nav-item"><span class="main-title"> Views</span></li>
+             <li><a id="pills-personal-tab"><span class="title"> Personal</span></a></li>
+             <li>
+               <button class="btn btn-category" type="button" ><span class="title"> + Add Category</span></button>
+             </li> -->
+             <li><a class="bg-primary-subtle" (click)="selectFilter($event)"><span class="title"> Tous</span></a></li>
+             <li><a (click)="selectFilter($event)"><span class="title">Comptes valides</span></a></li>
+             <li><a (click)="selectFilter($event)"><span class="title">Comptes à valider</span></a></li>
+             <li><a (click)="selectFilter($event)"><span class="title">Administrateurs</span></a></li>
+             <li>
+              <a (click)="selectFilter($event)" class="btn-category" type="button" ><span class="title">- Gestionnaires</span></a>
+            </li> 
+            <li>
+              <a (click)="selectFilter($event)" class="btn-category" type="button" ><span class="title">- Validateurs</span></a>
+            </li> 
+            <li><a (click)="selectFilter($event)"><span class="title">Selon le pays</span></a></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>

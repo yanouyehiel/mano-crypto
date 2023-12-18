@@ -24,7 +24,7 @@ export class ProfileEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getProfile()  
+    this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
 
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
@@ -34,18 +34,6 @@ export class ProfileEditComponent implements OnInit {
 
     this.fileForm = this.fb.group({
       files: ['', Validators.required]
-    })
-  }
-
-  getProfile() {
-    this.userService.getProfile().subscribe((profile: ResponseProfile) => {
-      this.user = {
-        id: profile.data?.user.id,
-        name: profile.data?.user.name,
-        email: profile.data?.user.email,
-        phone: profile.data?.user.phoneNumber,
-        isPhoneVerified: profile.data?.user.isPhoneNumberVerified
-      }
     })
   }
 

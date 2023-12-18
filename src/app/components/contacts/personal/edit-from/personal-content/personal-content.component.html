@@ -1,0 +1,62 @@
+<div class="mt-0 mb-3 col-md-12">
+   <label>URLS</label>
+   <div class="row">
+     <div class="col-lg-6 col-sm-6">
+       <input class="form-control" id="url_add" type="text" required="">
+     </div>
+     <div class="col-lg-6 col-sm-6">   
+       <select class="js-example-basic-single form-select">
+         <option value="pw">Personal web address</option>
+         <option value="cw">Company web address</option>
+         <option value="fb">Fabebook URL</option>
+         <option value="tw">Twitter URL</option>
+       </select>
+     </div>
+   </div>
+</div>
+<div class="mt-0 mb-3 col-md-12">
+   <label>Personal</label>
+   <div class="d-block">
+     <label class="me-3" for="edo-ani">
+       <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani" checked=""><span>Male</span>
+     </label>
+     <label for="edo-ani1">
+       <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani"><span>Female</span>
+     </label>
+   </div>
+ </div>
+ <div class="mt-0 mb-3 col-md-12">
+   <div class="row">
+     <div class="col-lg-4 col-sm-4">
+       <select class="form-control form-select">
+        <option>Day</option>
+         <option *ngFor="let day of days" value="{{day}}"> 
+          {{day}}           
+        </option> 
+       </select>
+     </div>
+     <div class="col-lg-4 col-sm-4">
+       <select class="form-control form-select" id="birth_month">
+         <option class="f-w-600">Month</option>
+         <option *ngFor="let month of months" value="{{month}}"> 
+          {{month}}           
+        </option> 
+       </select>
+     </div>
+     <div class="col-lg-4 col-sm-4">
+       <input class="form-control" id="birth_year" type="text">
+     </div>
+   </div>
+ </div>
+ <div class="mt-0 mb-3 col-md-12">
+   <div class="row">
+     <div class="col-sm-6">
+       <label>Personality</label>
+       <input class="form-control" id="personality" type="text" required="" autocomplete="off">
+     </div>
+     <div class="col-sm-6">
+       <label>Interest</label>
+       <input class="form-control" id="interest" type="text" required="" autocomplete="off">
+     </div>
+   </div>
+ </div>

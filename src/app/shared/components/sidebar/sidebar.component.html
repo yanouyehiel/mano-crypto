@@ -12,16 +12,16 @@
           <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
           </div>
         </li>
-
-        <li [class]="menuItem.headTitle1 ? 'sidebar-main-title' : 'dropdown'" *ngFor="let menuItem of menuItems"
-          [ngClass]="{active: menuItem.active}">
+        <ng-container *ngFor="let menuItem of menuItems">
+        <li [class]="menuItem.headTitle1 ? 'sidebar-main-title' : 'dropdown'" 
+          [ngClass]="{active: menuItem.active}" *ngIf="!menuItem.isHidden">
           <div class="language">
             <h6 class="lan-1">{{menuItem.headTitle1 }}</h6>
           </div>
           <!-- Sub -->
           <a href="javascript:void(0)" class="nav-link menu-title" [class.link-nav]="!menuItem.children"
             [ngClass]="{active: menuItem.active}" *ngIf="menuItem.type === 'sub'" (click)="toggletNavActive(menuItem)">
-            <app-feather-icons [icon]="menuItem.icon"></app-feather-icons>
+            <app-feather-icons [icon]="menuItem.icon!"></app-feather-icons>
             <span>{{menuItem.title }}</span>
             <div class="according-menu">
               <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
@@ -31,7 +31,7 @@
           <a [routerLink]="!menuItem.type ? null : [menuItem.path]" routerLinkActive="active"
             class="nav-link menu-title" [class.link-nav]="!menuItem.children" [ngClass]="{active: menuItem.active}"
             *ngIf="menuItem.type === 'link'">
-            <app-feather-icons [icon]="menuItem.icon"></app-feather-icons><span>{{menuItem.title }}</span>
+            <app-feather-icons [icon]="menuItem.icon!"></app-feather-icons><span>{{menuItem.title }}</span>
             <div class="according-menu">
               <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
             </div>
@@ -40,7 +40,7 @@
           <a href="{{ !menuItem.type ? null : menuItem.path }}" class="nav-link menu-title"
             [class.link-nav]="!menuItem.children" [ngClass]="{active: menuItem.active}"
             *ngIf="menuItem.type === 'extLink'">
-            <app-feather-icons [icon]="menuItem.icon"></app-feather-icons><span>{{menuItem.title }}</span>
+            <app-feather-icons [icon]="menuItem.icon!"></app-feather-icons><span>{{menuItem.title }}</span>
             <div class="according-menu">
               <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
             </div>
@@ -49,7 +49,7 @@
           <a href="{{ !menuItem.type ? null : menuItem.path }}" target="_blank" class="nav-link menu-title"
             [class.link-nav]="!menuItem.children" [ngClass]="{active: menuItem.active}"
             *ngIf="menuItem.type === 'extTabLink'">
-            <app-feather-icons [icon]="menuItem.icon"></app-feather-icons><span>{{menuItem.title  }}</span>
+            <app-feather-icons [icon]="menuItem.icon!"></app-feather-icons><span>{{menuItem.title  }}</span>
             <div class="according-menu">
               <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
             </div>
@@ -114,6 +114,7 @@
             </li>
           </ul>
         </li>
+        </ng-container>
       </ul>
     </div>
     <div class="right-arrow" id="right-arrow" [class.d-none]="rightArrowNone" (click)="scrollToRight()">

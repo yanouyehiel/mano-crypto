@@ -1,56 +1,52 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
-    <div class="col-md-8 col-12 mb-4">
+    <div class="col-lg-8 col-12 mb-4">
       <div class="card">
-        <div class="card-header"><h5>Make a new crypto transfert</h5></div>
+        <div class="card-header">
+          <h5>Transfert de crypto-monnaies</h5>
+        </div>
+        <form [formGroup]="sendForm">
         <div class="card-body">
           <div class="row g-3">
             <div class="col-lg-6 col-12 d-flex">
               <div class="bookmark" style="margin-right: 8px">
                 <ul>
                   <li>
-                    <a
-                      data-container="body"
-                      data-bs-toggle="popover"
-                      data-placement="top"
-                      title=""
-                      data-original-title="Tables"
-                      ><i data-feather="maximize"></i
-                    ></a>
+                    <a data-container="body" data-bs-toggle="popover" data-placement="top" title=""
+                      data-original-title="Tables"><i data-feather="maximize"></i></a>
                   </li>
                 </ul>
               </div>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Crypto address"
-              />
+              <input type="text" formControlName="address" class="form-control" placeholder="Crypto address" />
+            </div>
+            <div class="col-lg-1 col-6 d-flex">
+              
+              <select class="form-control form-control-primary-fill btn-square" formControlName="currency">
+                <option value="BTC" [selected]="true">BTC</option>
+                <option value="ETH">ETH</option>
+              </select>
             </div>
             <div class="col-lg-3 col-6 d-flex">
-              <input
-                type="number"
-                class="form-control border-black"
-                placeholder="amount"
-              />
+              <input type="number" class="form-control border-black" formControlName="amount" placeholder="amount" />
             </div>
 
-            <div class="col-lg-3 col-6 d-flex">
-              <button
-                class="btn btn-dark"
-                type="submit"
-                (click)="confirmIdentityModal()"
-              >
+            <div class="col-lg-2 col-6 d-flex">
+              <button class="btn btn-dark" type="submit" [disabled]="sendForm.value['address'].invalid || sendForm.value['amount'].invalid" (click)="confirmIdentityModal()">
                 Transfert
               </button>
             </div>
+            <div *ngIf="alertMsg"><p class="text-danger">{{alertMsg}}</p></div>
           </div>
         </div>
+      </form>
       </div>
     </div>
-    <div class="col-xl-4 box-col-12 des-xl-100">
+    <div class="col-lg-4 col-md-6 col-12 des-xl-100">
       <div class="card">
-        <div class="card-header"><h5>Current balance</h5></div>
+        <div class="card-header">
+          <h5>Current balance</h5>
+        </div>
         <div class="card-body p-0">
           <app-crypto-balance></app-crypto-balance>
         </div>

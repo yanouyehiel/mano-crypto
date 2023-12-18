@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ResponseUser } from 'src/app/models/User';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { NavService } from 'src/app/services/nav.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder, 
     public router: Router, 
     public authService: AuthService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private navService:NavService
   ) {}
 
   ngOnInit(): void {
@@ -60,11 +62,13 @@ export class LoginComponent implements OnInit {
           const token = {
             token: response.data?.token
           }
+          localStorage.setItem('user-mansexch', JSON.stringify(response.data))
+          this.navService.setItems()
           localStorage.setItem("token-mansexch", JSON.stringify(token));
-          if (response.data?.user.role == 'customer') {
+          if (response.data?.user.role.toLowerCase() == 'customer') {
             this.router.navigate(['/client/home'])
-          } else if(response.data?.user.role == 'admin') {
-            this.router.navigate(['/client/home'])
+          } else if(response.data?.user.role.toLowerCase() == 'admin') {
+            this.router.navigate(['/admin/home'])
           }
           
         } else if (response.statusCode == 1001) {
