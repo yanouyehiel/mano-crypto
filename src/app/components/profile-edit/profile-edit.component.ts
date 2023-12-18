@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProfileUser, ResponseProfile } from 'src/app/models/User';
+import { ToastrService } from 'ngx-toastr';
+import { ProfileUser, ResponseEmail, ResponseProfile } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 const Swal = require('sweetalert2')
 
@@ -11,28 +12,33 @@ const Swal = require('sweetalert2')
 })
 export class ProfileEditComponent implements OnInit {
   public user: ProfileUser;
-  @Input() files: File[] = [];
+  @Input() files: any[2] = [];
   profileForm: FormGroup;
   profile: any;
+  fileForm: FormGroup
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.getProfile()  
+
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]]
+    })
+
+    this.fileForm = this.fb.group({
       files: ['', Validators.required]
     })
   }
 
   getProfile() {
     this.userService.getProfile().subscribe((profile: ResponseProfile) => {
-      console.log(profile)
       this.user = {
         id: profile.data?.user.id,
         name: profile.data?.user.name,
@@ -48,8 +54,7 @@ export class ProfileEditComponent implements OnInit {
     this.profile = {
       name: this.user.name,
       phoneNumber: this.user.phone,
-      email: this.user.email,
-      files: this.files
+      email: this.user.email
     }
     console.log(this.profile)
     this.dialog()
@@ -67,6 +72,34 @@ export class ProfileEditComponent implements OnInit {
 
   onFileChanged(file: any) {
     this.files.push(file)
-    //console.log(this.files)
+  }
+
+  uploadFiles(): void {
+    const files = this.files
+    const data = {
+      cni: '',
+      cni_person: ''
+    }
+    
+    data.cni = files[0][0].name
+    data.cni_person = files[0][1].name
+    console.log(data)
+
+    this.userService.submitKyc(data).subscribe((res: ResponseEmail) => {
+      console.log(res)
+      
+    }, (error: any) => {
+      if (error.error.statusCode === 200) {
+        this.toast.info(error.error.message)
+      } else if (error.error.statusCode === 400) {
+        this.toast.error(error.error.message)
+      } else if (error.error.statusCode === 401) {
+        this.toast.error(error.error.message)
+      } else if (error.error.statusCode === 500) {
+        this.toast.error(error.error.message)
+      } else if (error.error.statusCode === 1004) {
+        this.toast.error(error.error.message)
+      }
+    })
   }
 }

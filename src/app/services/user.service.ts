@@ -59,4 +59,8 @@ export class UserService {
   getUsersStatistics(country:string): Observable<any> {
     return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase()!='all')?'?countryCode='+country:''}`, this.config)
   }
+
+  submitKyc(data: any): Observable<any> {
+    return this.http.post<any>(`${this.urlUser}/submit-kyc`, data, this.config)
+  }
 }

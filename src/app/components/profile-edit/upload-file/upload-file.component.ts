@@ -9,6 +9,16 @@ export class UploadFileComponent {
   @Output() filesUploaded: EventEmitter<File[]> = new EventEmitter<File[]>();
   files: File[] = [];
 
+  public dropzoneConfig: any = {
+    acceptedFiles: 'image/*',
+    maxFiles: 2,
+    clickable: true,
+    autoReset: null, 
+    errorReset: null,
+    errorFallback: null,
+    previewTemplate: '<div style="display:none"></div>',
+  };
+
   onSelect(event: any) {
     this.files.push(...event.addedFiles);
     this.filesUploaded.emit(this.files)
