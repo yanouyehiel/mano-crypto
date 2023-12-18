@@ -17,7 +17,6 @@ import { FeatherIconsComponent } from './shared/components/feather-icons/feather
 import { ModeComponent } from './shared/components/header/mode/mode.component';
 import { NotificationComponent } from './shared/components/header/notification/notification.component';
 import { ClientComponent } from './shared/components/layout/client/client.component';
-import { AdminComponent } from './shared/components/layout/admin/admin.component';
 import { ChatComponent } from './shared/components/header/chat/chat.component';
 import { MaximizeComponent } from './shared/components/header/maximize/maximize.component';
 import { SearchComponent } from './shared/components/header/search/search.component';
@@ -46,13 +45,10 @@ import { CryptoBalanceComponent } from './shared/components/crypto-balance/crypt
 import { CustomDateFormatPipe } from './shared/pipes/custom-date-format.pipe';
 import { HistoryTableComponent } from './shared/components/history-table/history-table.component';
 import { ToastrModule } from 'ngx-toastr';
-import { SidebarAdminComponent } from './shared/components/sidebar-admin/sidebar-admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { CurrencyBalanceComponent } from './shared/components/currency-balance/currency-balance.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
-import { UsersAdminComponent } from './components/users-admin/users-admin.component';
 import { SortableDirective } from './directives/sortable.directive';
 import { FileManagerComponent } from './components/home-admin/stats/stats.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
@@ -77,13 +73,11 @@ import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
     ModeComponent,
     NotificationComponent,
     ClientComponent,
-    AdminComponent,
     ChatComponent,
     MaximizeComponent,
     SearchComponent,
     UserInfoComponent,
     SidebarComponent,
-    SidebarAdminComponent,
     FooterComponent,
     BreadcrumbComponent,
     AddCryptoComponent,
@@ -107,10 +101,7 @@ import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
     HomeAdminComponent,
     CurrencyBalanceComponent,
     RechargeCryptoComponent,
-    OperationsListAdminComponent,
-    UsersAdminComponent,
     SortableDirective,
-    UsersAdminComponent,
     FileManagerComponent,
     ContactsComponent,
     ContactsFilterComponent,

@@ -9,5 +9,6 @@ export interface Menu {
     badgeValue?: string;
     active?: boolean;
     bookmark?: boolean;
+    isHidden?: boolean;
     children?: Menu[];
 }

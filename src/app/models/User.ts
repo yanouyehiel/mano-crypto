@@ -1,6 +1,7 @@
 export interface User {
     id?: number;
     name: string;
+    role?:string;
     country?:string;
     email: string;
     password: string;
@@ -10,6 +11,7 @@ export interface User {
 
 export interface ProfileUser {
     id: string | undefined;
+    role?:string;
     name: string | undefined;
     email: string | undefined;
     phone: string | undefined;
@@ -34,6 +36,7 @@ export interface ResponseProfile {
             id: string;
             name: string;
             email: string;
+            role?:string;
             phoneNumber: string;
             isEmailVerified: boolean;
             isPhoneNumberVerified: boolean;

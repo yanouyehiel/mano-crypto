@@ -10,7 +10,9 @@
     perspective:  1200px;
     transform-style:  preserve-3d;
 }
-
+.login-form{
+    border: 1px solid #f2f2f2;
+  }
 :host  {
     display: block;
     position: absolute;

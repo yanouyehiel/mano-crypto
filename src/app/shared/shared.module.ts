@@ -18,7 +18,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    ModeComponent,
     ConfirmPasswordComponent,
     SelectCryptoModalComponent,
     AwaitTransactionValidationComponent,

@@ -14,25 +14,13 @@ export class ProfileComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.getProfile()
+    this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
   }
 
   openProfileEdit(): any {
     this.router.navigate(['/client/profile-edit'])
   }
 
-  getProfile() {
-    this.userService.getProfile().subscribe((result: ResponseProfile) => {
-      console.log(result.data)
-      this.user = {
-        id: result.data?.user.id,
-        name: result.data?.user.name,
-        email: result.data?.user.email,
-        phone: result.data?.user.phoneNumber,
-        isPhoneVerified: result.data?.user.isPhoneNumberVerified,
-        isEmailVerified: result.data?.user.isEmailVerified
-      }
-    })
-  }
+
 }
 

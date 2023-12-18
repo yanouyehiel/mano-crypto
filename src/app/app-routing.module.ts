@@ -14,14 +14,10 @@ import { MyListingComponent } from './components/my-listing/my-listing.component
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { RetirerFondsComponent } from './components/retirer-fonds/retirer-fonds.component';
-
 import { EnterEmailComponent } from './pages/enter-email/enter-email.component';
 import { SendCryptoComponent } from './components/send-crypto/send-crypto.component';
-import { AdminComponent } from './shared/components/layout/admin/admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
-import { OperationsListAdminComponent } from './components/operations-list-admin/operations-list-admin.component';
-import { UsersAdminComponent } from './components/users-admin/users-admin.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 
 
@@ -87,7 +83,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminComponent,
+    component: ClientComponent,
     children: [
       {
         path: 'home',
@@ -95,16 +91,13 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UsersAdminComponent
+        component: ContactsComponent
       },
-      {
-        path: 'users/:id',
-        component: OperationsListAdminComponent
-      },
-      {
-        path:'operations',
-        component: ContactsComponent,
-      }
+      
+      // {
+      //   path:'operations',
+      //   component: O,
+      // }
     ]
   },
   {
