@@ -21,8 +21,9 @@
               />
             </div>
             <div
-              *ngIf="verifyCodeForm.controls['codeValue'].value.length < 6"
-              class="text text-danger mt-1"
+              *ngIf="isClicked && verifyCodeForm.controls['codeValue'].value.length < 6"
+              class="text mt-1"
+              style="color: red; font-size: 15px;" 
             >
             Le code entré doit avoir 6 chiffres
             </div>
@@ -31,7 +32,7 @@
           <div class="form-group">
             <button
               class="btn btn-primary btn-block"
-              [disabled]="!verifyCodeForm.valid || textBtn === 'Confirmation en cours...'"
+              [disabled]="(!verifyCodeForm.valid || textBtn === 'Confirmation en cours...') && !isClicked"
               type="submit"
               (click)="verifyCode()"
             >

@@ -65,7 +65,7 @@
             </div>
            
             <div
-              *ngIf="registerForm.controls['phoneNumber'].touched && registerForm.controls['phoneNumber'].invalid"
+              *ngIf="isClicked && registerForm.controls['phoneNumber'].invalid"
               class="text text-danger mt-1"
             >
               Ne correspond pas à un numéro de téléphone
@@ -111,16 +111,22 @@
               </div>
             </div>
             <div
-              *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value != registerForm.controls['confirmPassword'].value)"
+              *ngIf="isClicked && (registerForm.controls['password'].value != registerForm.controls['confirmPassword'].value)"
               class="text text-danger mt-1"
             >
               Les mots de passe ne correspondent pas
             </div>
             <div
-              *ngIf="registerForm.controls['password'].touched && (registerForm.controls['password'].value.length < 8 || registerForm.controls['confirmPassword'].value.length < 8)"
+              *ngIf="isClicked && (registerForm.controls['password'].value.length < 8 || registerForm.controls['confirmPassword'].value.length < 8)"
               class="text text-danger mt-1"
             >
             Les mots de passe doivent avoir au moins 8 caractères
+            </div>
+            <div
+              *ngIf="isClicked && passwordIsCorrect"
+              class="text text-danger mt-1"
+            >
+              Les mots de passe doivent avoir au moins une lettre majuscule, un chiffre et un caractère spécial
             </div>
           </div>
           <div class="form-group">
@@ -142,7 +148,7 @@
             <button
               class="btn btn-primary btn-block"
               type="submit"
-              [disabled]="!registerForm.valid || textBtn === 'Chargement...' || !selectedCountry"
+              [disabled]="(!registerForm.valid || textBtn === 'Chargement...' || !selectedCountry) && !isClicked"
               (click)="register()"
             >
               {{ textBtn }}
