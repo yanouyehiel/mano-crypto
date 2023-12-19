@@ -48,8 +48,8 @@ export class UserService {
     return this.http.put<ResponseUser>(`${this.urlUser}/reset-password`, data, this.headReset)
   }
 
-  getUsersByCountryCode(): Observable<any> {
-    return this.http.get<any>(`${this.urlAdmin}/users`, this.config)
+  getUsersByCriteria(criteria:any): Observable<any> {
+    return this.http.post<any>(`${this.urlAdmin}/users`,criteria, this.config)
   }
 
   getUsersTransactions(id?:string): Observable<any> {

@@ -20,17 +20,8 @@
              <li>
                <button class="btn btn-category" type="button" ><span class="title"> + Add Category</span></button>
              </li> -->
-             <li><a class="bg-primary-subtle" (click)="selectFilter($event)"><span class="title"> Tous</span></a></li>
-             <li><a (click)="selectFilter($event)"><span class="title">Comptes valides</span></a></li>
-             <li><a (click)="selectFilter($event)"><span class="title">Comptes à valider</span></a></li>
-             <li><a (click)="selectFilter($event)"><span class="title">Administrateurs</span></a></li>
-             <li>
-              <a (click)="selectFilter($event)" class="btn-category" type="button" ><span class="title">- Gestionnaires</span></a>
-            </li> 
-            <li>
-              <a (click)="selectFilter($event)" class="btn-category" type="button" ><span class="title">- Validateurs</span></a>
-            </li> 
-            <li><a (click)="selectFilter($event)"><span class="title">Selon le pays</span></a></li>
+             <li *ngFor="let item of filters; let i=index"><a [ngClass]="item.isSubItem?'btn-category':''" [class]="i==0?'bg-primary-subtle':''" (click)="selectFilter($event, item)"><span class="title">{{item.name}}</span></a></li>
+             
            </ul>
          </div>
        </div>

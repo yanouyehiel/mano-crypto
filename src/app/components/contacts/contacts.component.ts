@@ -7,17 +7,20 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
-  users :any[] = []
-
+  users? :any[]
+filterName:string='l'
   constructor(private userService:UserService) { }
 
   ngOnInit(): void {
-    this.fetchUsers()
-
+    this.fetchUsers({})
+  }
+  getFilterName(event:any){
+    console.log(event+" The filter")
+    this.filterName=event
   }
  
-  fetchUsers(){
-    this.userService.getUsersByCountryCode().subscribe((res: any) => {
+  fetchUsers(criteria:any){
+    this.userService.getUsersByCriteria(criteria).subscribe((res: any) => {
       this.users = res.data
     })
   }

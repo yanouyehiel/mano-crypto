@@ -1,13 +1,17 @@
 <div class="card mb-0">
   <div class="card-header d-flex">
-    <h5>Comptes</h5><span class="f-14 pull-right mt-0">{{users.length}} Utilisateurs</span>
+    <h5>{{filterName}}</h5> <div class="row"><div class="col-8 input-group">
+      <input [(ngModel)]="term" class="form-control me-2" type="text" placeholder="Recherche"><a class="btn btn-primary" (click)="emitFilterWithTerm()">Rechercher</a>
+    </div></div><span class="f-14 pull-right mt-0">{{users.length}} Utilisateurs</span>
   </div>
   <div class="card-body p-0">
     <div class="row list-persons" id="addcon">
       <div class="col-xl-4 xl-50 col-md-5 box-col-6">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+         <p *ngIf="users.length===0" class="text-center f-20">Pas de compte</p>
           <ng-container *ngFor="let userItem of users">
-            <a (click)="setUserDisplay(userItem)" [ngClass]="user==userItem?'bg-secondary-subtle':''" class="contact-tab-0 nav-link" role="tab">
+            <a (click)="setUserDisplay(userItem)" [ngClass]="user==userItem?'bg-secondary-subtle':''"
+              class="contact-tab-0 nav-link" role="tab">
               <div class="media">
                 <!-- <img class="img-50 img-fluid m-r-20 rounded-circle update_img_1" src="assets/images/dashboard/1.png" alt=""> -->
                 <div class="media-body">
@@ -31,9 +35,11 @@
                   <h5><span class="first_name_0">{{user.name}} </span></h5>
                   <p class="email_add_0">{{user.email}}</p>
                   <ul>
-                    <li><a (click)="editContact = true">Modifier</a></li>
-                    <li (click)="deleteContact()"><a>Bloquer</a></li>
-                    <li (click)="openHistory()"><a>Voir l'historique</a></li>
+                    <li *ngIf="user.account_status!='suspended'"><a
+                        (click)="manageUserStatus('suspended')">Suspendre</a></li>
+                    <li *ngIf="user.account_status!='banned'"><a (click)="manageUserStatus('banned')">Bloquer</a></li>
+                    <li *ngIf="user.account_status!='active'"><a (click)="manageUserStatus('active')">Activer</a></li>
+                    <li><a (click)="openHistory()">Voir l'historique</a></li>
                     <!-- <li (click)="openPrint()"><a>Print</a></li> -->
                   </ul>
                 </div>
@@ -44,14 +50,20 @@
                   <li>Nom <span class="font-primary first_name_0">{{user.name | capitalize}}</span></li>
                   <li>Email <span class="font-primary">{{user.email}}</span></li>
                   <li>Role <span class="font-primary">{{user.role}}</span></li>
-                  <li>Pays<span class="font-primary">{{user.countryCode}} </span></li>
+                  <li>Pays<span class="font-primary">{{user.country}} </span></li>
                   <li>Numéro de téléphone<span class="font-primary mobile_num_0">{{user.phoneNumber}}</span></li>
                   <li>Status du compte<span class="font-primary city_0">{{user.account_status}}</span></li>
-                  <li>Activité<span class="font-primary personality_0">{{user.isOnline}}<i class="icofont icofont-star me-3"></i></span></li>
+                  <li>En ligne<span class="font-primary personality_0"><i class="fa fa-circle"
+                        [style]="user.isOnline?'color:green;':'color:red;'"></i><i
+                        class="icofont icofont-star me-3"></i></span></li>
+                  <li>Email verifié<span class="font-primary personality_0"><i class="fa fa-circle"
+                        [style]="user.isEmailVerified?'color:green;':'color:red;'"></i><i
+                        class="icofont icofont-star me-3"></i></span></li>
+                  <li>Numéro verifié<span class="font-primary personality_0"><i class="fa fa-circle"
+                        [style]="user.isPhoneNumberVerified?'color:green;':'color:red;'"></i><i
+                        class="icofont icofont-star me-3"></i></span></li>
                   <li>Crée le<span class="font-primary birth_day_0"> {{user.createdAt | customDateFormat}}</span></li>
                 </ul>
-                
-
               </div>
               <div class="email-general">
                 <h6 class="mb-3">Soldes</h6>
@@ -59,16 +71,28 @@
                 <ul>
                   <ng-container *ngFor="let wallet of user.wallets">
                     <ng-container [ngSwitch]="wallet.type">
-                      <li *ngSwitchCase="'BTC'">Bitcoin <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} BTC</span></li>
-                      <li *ngSwitchCase="'ETH'">Ethereum <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} ETH</span></li>
-                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} FCFA</span></li>
+                      <li *ngSwitchCase="'BTC'">Bitcoin <span
+                          class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} BTC</span></li>
+                      <li *ngSwitchCase="'ETH'">Ethereum <span
+                          class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} ETH</span></li>
+                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}}
+                          FCFA</span></li>
                     </ng-container>
                   </ng-container>
                 </ul>
               </div>
               <div class="email-general">
-                <h6 class="mb-3">Documents KYC</h6>
-
+                <h6 class="mb-3">KYC <span class="float-end badge badge-{{isKycApprouved()?'success':'warning'}}">{{isKycApprouved()?'Approuvé':'Non-approuvé'}}</span></h6>
+                
+                <ul>
+                  <ng-container *ngFor="let kycElement of user.kyc">
+                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo CNI':'Photo CNI-Utilisateur'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><a class="font-primary" [href]="kycElement.document_url" target="_blank">Voir l'image</a><span *ngIf="kycElement.status!='approved'" class="d-block"><a class="text-success " (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a><span *ngIf="kycElement.status!='rejected'">{{'  |  '}}<a class="text-danger " (click)="manageKYCStatus('rejected', kycElement.document_type)">Rejéter</a></span></span></span></li>
+                  </ng-container>
+                </ul>
+                <ng-template #TemplateElse>
+                  <span>Aucune image</span>
+                </ng-template>
+                <!-- <button *ngIf="user.kyc[0].status!='approved'||user.kyc[1].status!='approved'" class="btn btn-dark-gradien update-contact" type="button">Approuver</button> -->
               </div>
             </div>
           </div>
@@ -98,15 +122,16 @@
     <h6 class="modal-title w-100">Historique de l'utilisateur<span class="pull-right"><a (click)="openHistory()"
           class="closehistory"><i class="fa fa-times"></i></a></span></h6>
   </div>
-  <div class="history-details">
+  <div class="history-details overflow-auto">
     <div class="text-center" *ngIf="transactions.length==0"><i class="icofont icofont-ui-edit"></i>
       <p>{{alertMsg}}</p>
     </div>
-    <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3" [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
+    <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3"
+        [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
       <div class="media-body mt-0">
         <h6 class="mt-0">{{item.status}}</h6>
         <p class="mb-0">{{item.type}}</p><span class="f-12">{{item.creationDate|customDateFormat}}</span>
       </div>
     </div>
   </div>
-</div>
+</div> 
