@@ -28,7 +28,7 @@
                     <input 
                       class="form-control" 
                       type="text" 
-                      [value]="user.phone"
+                      [value]="user.phoneNumber"
                     >
                   </div>
                 </div>
@@ -68,7 +68,7 @@
           </div>
           <div class="card-body">
             <form class="form theme-form projectcreate" (ngSubmit)="uploadFiles()" enctype="multipart/form-data">
-              <div class="row" [style]="user.isPhoneVerified ? 'display: none;' : 'display: visible'">
+              <div class="row">
                 <div class="col">
                   <div class="mb-3">
                     <app-upload-file 

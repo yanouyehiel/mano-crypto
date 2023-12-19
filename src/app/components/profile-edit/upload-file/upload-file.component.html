@@ -1,6 +1,6 @@
 <label>Ajouter une photo et une photo de votre CNI</label>
 <div  class="dropzone dz-clickable" >
-   <ngx-dropzone (change)="onSelect($event)">
+   <ngx-dropzone (change)="onSelect($event)" accept="image/*" [multiple]="true">
       <ngx-dropzone-label>
          <div>
             <div class="dz-message needsclick ">
