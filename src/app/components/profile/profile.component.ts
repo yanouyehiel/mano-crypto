@@ -15,12 +15,12 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
+    console.log(this.user)
   }
 
   openProfileEdit(): any {
     this.router.navigate(['/client/profile-edit'])
   }
-
 
 }
 

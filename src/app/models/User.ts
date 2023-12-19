@@ -14,7 +14,7 @@ export interface ProfileUser {
     role?:string;
     name: string | undefined;
     email: string | undefined;
-    phone: string | undefined;
+    phoneNumber: string | undefined;
     isPhoneVerified?: boolean | undefined;
     isEmailVerified?: boolean | undefined;
 }
