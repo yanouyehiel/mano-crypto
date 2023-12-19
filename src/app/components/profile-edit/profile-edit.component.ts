@@ -12,7 +12,7 @@ const Swal = require('sweetalert2')
 })
 export class ProfileEditComponent implements OnInit {
   public user: ProfileUser;
-  @Input() files: any[2] = [];
+  @Input() files: any[] = [];
   profileForm: FormGroup;
   profile: any;
   fileForm: FormGroup
@@ -62,32 +62,77 @@ export class ProfileEditComponent implements OnInit {
     this.files.push(file)
   }
 
-  uploadFiles(): void {
-    const files = this.files
-    const data = {
-      cni: '',
-      cni_person: ''
-    }
-    
-    data.cni = files[0][0].name
-    data.cni_person = files[0][1].name
-    console.log(data)
-
-    this.userService.submitKyc(data).subscribe((res: ResponseEmail) => {
-      console.log(res)
-      
-    }, (error: any) => {
-      if (error.error.statusCode === 200) {
-        this.toast.info(error.error.message)
-      } else if (error.error.statusCode === 400) {
-        this.toast.error(error.error.message)
-      } else if (error.error.statusCode === 401) {
-        this.toast.error(error.error.message)
-      } else if (error.error.statusCode === 500) {
-        this.toast.error(error.error.message)
-      } else if (error.error.statusCode === 1004) {
-        this.toast.error(error.error.message)
+  checkFileSize(file: File): Promise<void> {
+    const maxSize = 2 * 1024 * 1024;
+  
+    return new Promise((resolve, reject) => {
+      if (file.size <= maxSize) {
+        resolve();
+      } else {
+        reject(this.toast.error("La taille des 2 fichiers ne doit pas dépasser 2 Mo"));
       }
-    })
+    });
+  }
+
+  encodeImageToBinary(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onloadend = () => {
+        const binaryString = reader.result as string;
+        resolve(binaryString);
+      };
+  
+      reader.onerror = (error) => {
+        reject(error);
+      };
+  
+      reader.readAsBinaryString(file);
+    });
+  }
+
+  uploadFiles(): void {
+    if (this.files[0].length === 2) {
+      const promises: Promise<string>[] = [];
+      
+      this.files.forEach((fileArray: File[]) => {
+        fileArray.forEach((file: File) => {
+          const promise = this.checkFileSize(file)
+          .then(() => this.encodeImageToBinary(file));
+          promises.push(promise);
+        });
+      });
+  
+      Promise.all(promises)
+        .then((binaryStrings: string[]) => {
+          const data = {
+            cni: binaryStrings[0],
+            cni_person: binaryStrings[1]
+          };
+          console.log(data)
+  
+          this.userService.submitKyc(data).subscribe((res: ResponseEmail) => {
+            console.log(res);
+          }, (error: any) => {
+            console.log(error)
+            if (error.error.statusCode === 200) {
+              this.toast.info(error.error.message)
+            } else if (error.error.statusCode === 400) {
+              this.toast.error(error.error.message)
+            } else if (error.error.statusCode === 401) {
+              this.toast.error(error.error.message)
+            } else if (error.error.statusCode === 500) {
+              this.toast.error(error.error.message)
+            } else if (error.error.statusCode === 1004) {
+              this.toast.error(error.error.message)
+            }
+          });
+        })
+        .catch((error) => {
+          this.toast.error("Erreur d'encodage, veuillez réessayer !")
+        });
+    } else {
+      this.toast.error("Veuillez insérer 2 fichiers");
+    }
   }
 }

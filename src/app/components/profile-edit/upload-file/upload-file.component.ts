@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class UploadFileComponent {
   @Output() filesUploaded: EventEmitter<File[]> = new EventEmitter<File[]>();
-  files: File[] = [];
+  files: any[] = [];
 
   public dropzoneConfig: any = {
     acceptedFiles: 'image/*',
