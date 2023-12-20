@@ -4,11 +4,11 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header pb-0">
-              <h4 class="card-title mb-0">Edit Profile</h4>
+              <h4 class="card-title mb-0">Changer le nom</h4>
               <div class="card-options"><a class="card-options-collapse" href="javascript:void(0)" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:void(0)" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
           </div>
           <div class="card-body">
-            <form class="form theme-form projectcreate" (ngSubmit)="updateProfile()">
+            <form class="form theme-form projectcreate" (ngSubmit)="updateProfile()" [formGroup]="profileForm">
               <div class="row">
                 <div class="col">
                   <div class="mb-3">
@@ -16,7 +16,8 @@
                     <input 
                       class="form-control" 
                       type="text" 
-                      [value]="user.name"
+                      [placeholder]="user.name"
+                      formControlName="name"
                     >
                   </div>
                 </div>
@@ -29,6 +30,7 @@
                       class="form-control" 
                       type="text" 
                       [value]="user.phoneNumber"
+                      disabled="true"
                     >
                   </div>
                 </div>
@@ -41,6 +43,7 @@
                       class="form-control" 
                       type="email" 
                       [value]="user.email"
+                      disabled="true"
                     >
                   </div>
                 </div>
@@ -51,6 +54,7 @@
                     <button 
                       type="submit" 
                       class="btn btn-secondary me-3"
+                      [disabled]="!profileForm.valid"
                     >
                       Mettre à jour
                     </button>

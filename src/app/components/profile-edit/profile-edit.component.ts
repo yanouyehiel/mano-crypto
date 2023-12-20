@@ -28,9 +28,7 @@ export class ProfileEditComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
 
     this.profileForm = this.fb.group({
-      name: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      name: ['', Validators.required]
     })
 
     this.fileForm = this.fb.group({
@@ -39,14 +37,23 @@ export class ProfileEditComponent implements OnInit {
   }
 
   updateProfile() {
-    console.log('Updated')
     this.profile = {
-      name: this.user.name,
+      name: this.profileForm.controls['name'].value,
       phoneNumber: this.user.phoneNumber,
       email: this.user.email
     }
-    console.log(this.profile)
-    this.dialog()
+    
+    this.userService.updateName(this.profile.name).subscribe((res: ResponseProfile) => {
+      if (res.statusCode === 1000) {
+        this.toast.success("Mise à jour du nom réussie !")
+      }
+    }, (error: any) => {
+      if (error.error.statusCode === 1001) {
+        this.toast.error(error.error.message)
+      } else if (error.error.statusCode === 1005) {
+        this.toast.error(error.error.message)
+      }
+    })
   }
 
   dialog(){

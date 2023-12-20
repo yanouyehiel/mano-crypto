@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ResponseProfile, ResponseUser } from '../models/User';
+import { ResponseEmail, ResponseProfile, ResponseUser } from '../models/User';
 import { Observable } from 'rxjs';
 import { TableUser } from '../models/Table';
 // import { TableUser } from '../models/Table';
@@ -38,6 +38,10 @@ export class UserService {
 
   getProfile(): Observable<ResponseProfile> {
     return this.http.get<ResponseProfile>(`${this.urlUser}/profile`, this.config)
+  }
+
+  updateName(name: string): Observable<ResponseProfile> {
+    return this.http.put<ResponseProfile>(`${this.urlUser}/update-profile`, {name: name}, this.config)
   }
 
   askResetPassword(email: any): Observable<ResponseUser> {
