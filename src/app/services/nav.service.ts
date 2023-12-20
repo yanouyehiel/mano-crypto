@@ -158,6 +158,14 @@ export class NavService {
         active: false
       },
       {
+        path: '/client/vente-crypto',
+        title: 'Vendre de la crypto',
+        type: 'link',
+        icon: 'trending-down',
+        badgeType: 'success',
+        active: false
+      },
+      {
         path: '/client/retirer-crypto',
         title: 'Retirer de la crypto',
         type: 'link',

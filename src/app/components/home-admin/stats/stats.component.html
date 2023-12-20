@@ -76,7 +76,7 @@
                             <app-feather-icons icon="credit-card"></app-feather-icons>
                         </div>
                         <div class="media-body"><span class="m-0">Chiffre d'affaires</span>
-                            <h4 class="mb-0 counter"> --- </h4>
+                            <h4 class="mb-0 counter"> {{datas.wallets.sales.toLocaleString('fr-FR')}} FCFA </h4>
                             <app-feather-icons icon="credit-card" class="icon-bg"></app-feather-icons>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde Crypto</h6>
-                    <p class="f-20">--- USD</p>
+                    <p class="f-20">{{datas.wallets.crypto_balance_to_usdc.toLocaleString('fr-FR')}} USD</p>
                   </div>
                 </div>
               </li>
@@ -163,7 +163,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges XAF</h6>
-                    <p class="f-20">{{datas.transactions.deposit_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
+                    <p class="f-20">{{datas.transactions.xaf_deposit_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
                   </div>
                 </div>
               </li>
@@ -174,7 +174,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits XAF</h6>
-                    <p class="f-20">{{datas.transactions.withdraw_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
+                    <p class="f-20">{{datas.transactions.xaf_withdraw_transactions_amount.toLocaleString('fr-FR')}} FCFA</p>
                   </div>
                 </div>
               </li>
@@ -188,7 +188,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges BTC</h6>
-                    <p class="f-20">--- BTC</p>
+                    <p class="f-20">{{datas.transactions.btc_recharge_transactions_amount.toLocaleString('fr-FR')}} BTC</p>
                   </div>
                 </div>
               </li>
@@ -200,7 +200,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits BTC</h6>
-                    <p class="f-20">--- BTC</p>
+                    <p class="f-20">{{datas.transactions.btc_withdraw_transactions_amount.toLocaleString('fr-FR')}} BTC</p>
                   </div>
                 </div>
               </li>
@@ -212,7 +212,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges ETH</h6>
-                    <p class="f-20">--- ETH</p>
+                    <p class="f-20">{{datas.transactions.eth_recharge_transactions_amount.toLocaleString('fr-FR')}} ETH</p>
                   </div>
                 </div>
               </li>
@@ -224,7 +224,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits ETH</h6>
-                    <p class="f-20">--- ETH</p>
+                    <p class="f-20">{{datas.transactions.eth_withdraw_transactions_amount.toLocaleString('fr-FR')}} ETH</p>
                   </div>
                 </div>
               </li>

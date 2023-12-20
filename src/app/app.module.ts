@@ -52,12 +52,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SortableDirective } from './directives/sortable.directive';
 import { FileManagerComponent } from './components/home-admin/stats/stats.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
-import { AddressContentComponent } from './components/contacts/personal/edit-from/address-content/address-content.component';
-import { GeneralComponent } from './components/contacts/personal/edit-from/general/general.component';
-import { PersonalContentComponent } from './components/contacts/personal/edit-from/personal-content/personal-content.component';
 import { PersonalComponent } from './components/contacts/personal/personal.component';
 import { ContactsFilterComponent } from './components/contacts/contacts-filter/contacts-filter.component';
 import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
+import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.component';
 
 
 @NgModule({
@@ -106,9 +104,7 @@ import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
     ContactsComponent,
     ContactsFilterComponent,
     PersonalComponent,
-    AddressContentComponent,
-    PersonalContentComponent,
-    GeneralComponent,
+    VenteCryptoComponent,
    ],
 
   imports: [

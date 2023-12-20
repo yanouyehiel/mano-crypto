@@ -1,0 +1,57 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>Balance crypto</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec"
+                            *ngFor="let crypto of wallet">
+                            <div class="card income-card card-primary">
+                                <div class="card-body text-center">
+                                  <div class="round-box mb-3">
+                                    <img
+                                      [src]="crypto.image_url"
+                                      alt=""
+                                      width="60"
+                                      class="image-thumbnail"
+                                    />
+                                  </div>
+                                  <h5>{{ crypto.wallet.solde }}</h5>
+                                  <p>Les derniers Jours</p>
+                                  <a class="btn-arrow arrow-primary"
+                                  [ngClass]="crypto.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"
+                                    ><i
+                                    class="toprightarrow-primary fa fa-arrow-{{
+                                     crypto.details.weekly_percentage > 0 ? 'up' : 'down'
+                                    }} me-2"
+                                  ></i>
+                                  {{ crypto.details.weekly_percentage | number : "1.2-2" }} %</a
+                                  >
+                                  <a class="btn btn-dark-gradien mt-3 arrow-primary"
+                                        (click)="initBuyingProcess(crypto.details.type)">Vendre</a>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 box-col-12 des-xl-100">
+            <div class="card">
+              <div class="card-header">
+                <h5>Précédentes ventes de cryptomonnaies</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <app-history-table type="SELL_CRYPTO"></app-history-table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+</div>
