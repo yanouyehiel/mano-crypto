@@ -8,6 +8,7 @@ import { ResponseCryptoFee, ResponseParent } from '../models/Transaction';
 })
 export class CryptoTransactionService {
   private cryptoUrl = environment.backend_api_url + environment.cryptoUrl;
+  private walletUrl = environment.backend_api_url + environment.url_deposit;
   private tokenRegistred: any = localStorage.getItem('token-mansexch');
   private data: any = JSON.parse(this.tokenRegistred);
 
@@ -19,6 +20,10 @@ export class CryptoTransactionService {
   };
 
   constructor(private http: HttpClient) {}
+
+  getWalletDetails(): Observable<ResponseParent> {
+    return this.http.get<ResponseParent>(`${this.walletUrl}/details`, this.config)
+  }
 
   getCryptoFees(data: any): Observable<ResponseParent> {
     return this.http.post<ResponseCryptoFee>(
@@ -48,6 +53,14 @@ export class CryptoTransactionService {
     return this.http
       .post<ResponseCryptoFee>(
         `${this.cryptoUrl}/init-buy`,
+        data,
+        this.config
+      );
+    }
+    sellCrypto(data:any):Observable<ResponseParent>{
+      return this.http
+      .post<ResponseCryptoFee>(
+        `${this.cryptoUrl}/init-sell`,
         data,
         this.config
       );

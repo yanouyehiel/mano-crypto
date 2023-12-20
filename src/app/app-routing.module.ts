@@ -19,6 +19,7 @@ import { SendCryptoComponent } from './components/send-crypto/send-crypto.compon
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
+import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,10 @@ const routes: Routes = [
       {
         path: 'add-crypto',
         component: AddCryptoComponent
+      },
+      {
+        path: 'vente-crypto',
+        component: VenteCryptoComponent
       },
       {
         path: 'recharge-crypto',

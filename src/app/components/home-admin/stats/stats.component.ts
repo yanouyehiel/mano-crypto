@@ -9,7 +9,7 @@ export class FileManagerComponent implements OnInit {
   @Input() datas: any = {};
   @Output() filterEvent = new EventEmitter()
   
-  public countries = ["all","Cameroun", "Benin", "Gabon"]
+  public countries = ["all","Cameroon", "Benin", "Gabon"]
   public selectedCountry:string;
   constructor() {}
 

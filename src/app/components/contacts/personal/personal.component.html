@@ -1,14 +1,18 @@
 <div class="card mb-0">
   <div class="card-header d-flex">
-    <h5>{{filterName}}</h5> <div class="row"><div class="col-8 input-group">
-      <input [(ngModel)]="term" class="form-control me-2" type="text" placeholder="Recherche"><a class="btn btn-primary" (click)="emitFilterWithTerm()">Rechercher</a>
-    </div></div><span class="f-14 pull-right mt-0">{{users.length}} Utilisateurs</span>
+    <h5>{{filterName}}</h5>
+    <div class="row">
+      <div class="col-8 input-group">
+        <input [(ngModel)]="term" class="form-control me-2" type="text" placeholder="Recherche"><a
+          class="btn btn-primary" (click)="emitFilterWithTerm()">Rechercher</a>
+      </div>
+    </div><span class="f-14 pull-right mt-0">{{users.length}} Utilisateurs</span>
   </div>
   <div class="card-body p-0">
     <div class="row list-persons" id="addcon">
       <div class="col-xl-4 xl-50 col-md-5 box-col-6">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-         <p *ngIf="users.length===0" class="text-center f-20">Pas de compte</p>
+          <p *ngIf="users.length===0" class="text-center f-20">Pas de compte</p>
           <ng-container *ngFor="let userItem of users">
             <a (click)="setUserDisplay(userItem)" [ngClass]="user==userItem?'bg-secondary-subtle':''"
               class="contact-tab-0 nav-link" role="tab">
@@ -82,11 +86,19 @@
                 </ul>
               </div>
               <div class="email-general">
-                <h6 class="mb-3">KYC <span class="float-end badge badge-{{isKycApprouved()?'success':'warning'}}">{{isKycApprouved()?'Approuvé':'Non-approuvé'}}</span></h6>
-                
+                <h6 class="mb-3">KYC <span
+                    class="float-end badge badge-{{isKycApprouved()?'success':'warning'}}">{{isKycApprouved()?'Approuvé':'Non-approuvé'}}</span>
+                </h6>
+
                 <ul>
                   <ng-container *ngFor="let kycElement of user.kyc">
-                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo CNI':'Photo CNI-Utilisateur'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><a class="font-primary" [href]="kycElement.document_url" target="_blank">Voir l'image</a><span *ngIf="kycElement.status!='approved'" class="d-block"><a class="text-success " (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a><span *ngIf="kycElement.status!='rejected'">{{'  |  '}}<a class="text-danger " (click)="manageKYCStatus('rejected', kycElement.document_type)">Rejéter</a></span></span></span></li>
+                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo CNI':'Photo CNI-Utilisateur'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><a
+                          class="font-primary" [href]="kycElement.document_url" target="_blank">Voir l'image</a><span
+                          *ngIf="kycElement.status!='approved'" class="d-block"><a class="text-success "
+                            (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a><span
+                            *ngIf="kycElement.status!='rejected'">{{' | '}}<a class="text-danger "
+                              (click)="manageKYCStatus('rejected', kycElement.document_type)">Rejéter</a></span></span></span>
+                    </li>
                   </ng-container>
                 </ul>
                 <ng-template #TemplateElse>
@@ -97,22 +109,7 @@
             </div>
           </div>
         </div>
-        <div class="contact-editform" [ngStyle]="{ 'display': !editContact ? 'none' : ''}">
-          <form>
-            <div class="row g-2">
-              <app-general></app-general>
-            </div>
-            <div class="row g-2 more-data">
-              <app-personal-content></app-personal-content>
-              <div class="mb-3 col-md-12">
-                <app-address-content></app-address-content>
-              </div>
-            </div>
-            <button class="btn btn-dark-gradien update-contact" type="button">Save</button>
-            <button class="btn btn-primary ms-2" type="button" data-bs-dismiss="modal"
-              (click)="editContact = false">Cancel</button>
-          </form>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -134,4 +131,4 @@
       </div>
     </div>
   </div>
-</div> 
+</div>

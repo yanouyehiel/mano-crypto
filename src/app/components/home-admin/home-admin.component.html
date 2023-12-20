@@ -2,7 +2,7 @@
 <div class="container-fluid dashboard-default-sec">
   <div class="row">
     <div class="col-12">
-      <app-stats (filterEvent)="fetchStatistics($event)"
+      <app-stats *ngIf="datas" (filterEvent)="fetchStatistics($event)"
         [datas]="{users:datas.users, transactions:datas.transactions, wallets:datas.wallets}"></app-stats>
     </div>
 

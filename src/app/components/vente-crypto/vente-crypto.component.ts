@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  catchError,
-  of,
-} from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -11,28 +7,13 @@ import { NavService } from 'src/app/services/nav.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-crypto',
-  templateUrl: './add-crypto.component.html',
-  styleUrls: ['./add-crypto.component.scss'],
+  selector: 'app-vente-crypto',
+  templateUrl: './vente-crypto.component.html',
+  styleUrls: ['./vente-crypto.component.scss']
 })
-export class AddCryptoComponent implements OnInit {
-  public items = [
-    {
-      name: 'Bitcoin',
-      abv: 'BTC',
-      value: 31000,
-      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1.png',
-
-    },
-    {
-      name: 'Etheurium',
-      abv: 'ETH',
-      value: 1900,
-      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png',
-    },
-
-  ];
-
+export class VenteCryptoComponent  implements OnInit{
+  public cryptos = []
+  public wallet:any;
   public typeCrypto: string;
   public recentOrders: any[] = [];
   public loader: boolean = true;
@@ -41,53 +22,47 @@ export class AddCryptoComponent implements OnInit {
   xafAmount:number;
 
   constructor(
-    private modalService: NgbModal,
     public navService: NavService,
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService
   ) {}
 
-  ngOnInit(): void {}
+ngOnInit(): void {
+  this.getWalletDetails()
+    
+}
 
-  VerticallyCenteredModal(verticallyContent: any, item: any) {
-    const modalRef = this.modalService.open(verticallyContent);
-    this.typeCrypto = item;
-  }
+getWalletDetails() {
+  
+  this.cryptoService.getWalletDetails().subscribe((value) => {
+    console.log(value)
+    if(value && value.statusCode==1000){
+      this.wallet = value.data.details.filter((e:any)=>e.image_url!=null);
+      console.log(this.wallet)
+    }
+  });
+}
 
-  get layoutClass() {
-    return (
-      this.layoutService.config.settings.sidebar_type +
-      ' ' +
-      this.layoutService.config.settings.layout.replace('layout', 'sidebar')
-    );
-  }
-
-  getFee(crypto: string, value: number) {
-    this.cryptoService
-      .getCryptoFees({
-        crypto_currency: this.typeCrypto,
-        amount: value,
-      })
-      .subscribe((response) => {
-        this.responseFee = response;
-      });
-  }
 
   async initBuyingProcess(crypto: string) {
     const { value: result } = await Swal.fire({
-      titleText:`Achat de ${crypto}`,
-      html: `Combien de ${crypto} voulez vous acheter?`,
+      titleText:`Vente de ${crypto}`,
+      html: `Combien de ${crypto} voulez vous vendre?`,
       input: 'text',
       inputAutoFocus:true,
       inputPlaceholder: `Ex: 0.02`,
       showCancelButton: true,
-      confirmButtonText: 'Acheter',
+      confirmButtonText: 'Vendre',
       cancelButtonText: 'Fermer',
       inputValidator: (value) => {
         // Ajoutez une validation personnalisée ici si nécessaire
         if (isNaN(parseFloat(value))) {
           return 'Veuillez entrer un nombre valide.';
         }
+      else if( parseFloat(value)>(this.wallet as any[]).find((e)=>e.details.type==crypto).wallet.solde){
+        return "Vous n'en possedez pas autant"
+      }
+       
         return null
       },
       inputAttributes: {
@@ -99,7 +74,7 @@ export class AddCryptoComponent implements OnInit {
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
-          const responseFees = await this.cryptoService
+          const responseFees:any = await this.cryptoService
             .getCryptoFees({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
@@ -134,7 +109,7 @@ export class AddCryptoComponent implements OnInit {
             const responseFeeToXAF = await this.cryptoService
             .convertToFiat({
               crypto_currency: this.typeCrypto,
-              amount:parseFloat(responseFees.data.buyFees.fee),
+              amount:parseFloat(responseFees.data.withdrawFees.fee),
             }).pipe(
               catchError((error)=>of(error.error))
             )
@@ -142,7 +117,7 @@ export class AddCryptoComponent implements OnInit {
             if(responseFeeToXAF.statusCode!=1000){
               throw new Error(responseFeeToXAF);
             }
-            this.xafAmount = parseInt(responseAmountToXAF.data.xaf_amount) + parseInt(responseFeeToXAF.data.xaf_amount)
+            this.xafAmount = parseInt(responseAmountToXAF.data.xaf_amount) - parseInt(responseFeeToXAF.data.xaf_amount)
             return responseFeeToXAF;
           } else {
             throw new Error('User not found');
@@ -164,7 +139,7 @@ export class AddCryptoComponent implements OnInit {
     console.log(result)
 
     if (result.statusCode!=1000) {
-      Swal.fire('Achat annulée', result.message, 'error');
+      Swal.fire('Vente annulée', result.message, 'error');
     }else{
       this.askConfirmTransaction(result);
     }
@@ -172,17 +147,17 @@ export class AddCryptoComponent implements OnInit {
 
   askConfirmTransaction(value: any) {
     Swal.fire({
-      titleText:`Recharge de ${this.typeCrypto}`,
-      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${
+      titleText:`Vente de ${this.typeCrypto}`,
+      html: `Vous recevrez au total <b class="text-success"> ${
         this.xafAmount.toLocaleString('fr-FR')} XAF</b>`,
       showDenyButton: true,
-      confirmButtonText: 'Payer',
+      confirmButtonText: 'Finaliser',
       denyButtonText: `Annuler`,
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
         try {
           const response = await this.cryptoService
-            .buyCrypto({
+            .sellCrypto({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             }).pipe(
@@ -214,13 +189,13 @@ export class AddCryptoComponent implements OnInit {
       console.log(result)
       if (result.isConfirmed) {
         if(result.value.statusCode!=1000){
-          Swal.fire('Achat annulée', result.value.message, 'error');
+          Swal.fire('Vante annulée', result.value.message, 'error');
         }else{
-          Swal.fire('Success',`Achat effectué avec success`,  'success');
+          Swal.fire('Success',`Vente effectué avec success`,  'success');
         }
 
       } else if (result.isDenied) {
-        Swal.fire('Achat annulée', '', 'error');
+        Swal.fire('Vente annulée', '', 'error');
       }
     });
   }

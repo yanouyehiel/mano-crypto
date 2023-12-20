@@ -16,7 +16,7 @@ export class HomeAdminComponent implements OnInit {
   public growthChart = chartData.growthChart;
   private users: any
   private solde: any
-  public datas:any
+  public datas?:any
   public configs:any[]
   private transaction: any
   public barChart = chartData.barChart
