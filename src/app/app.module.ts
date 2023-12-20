@@ -56,6 +56,7 @@ import { PersonalComponent } from './components/contacts/personal/personal.compo
 import { ContactsFilterComponent } from './components/contacts/contacts-filter/contacts-filter.component';
 import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
 import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -108,6 +109,7 @@ import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.com
    ],
 
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -119,7 +121,8 @@ import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.com
     BrowserAnimationsModule,
     NgSelectModule,
     ToastrModule.forRoot(),
-    AngularSvgIconModule.forRoot()
+    AngularSvgIconModule.forRoot(),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

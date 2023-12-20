@@ -52,18 +52,6 @@ export class UserService {
     return this.http.put<ResponseUser>(`${this.urlUser}/reset-password`, data, this.headReset)
   }
 
-  getUsersByCriteria(criteria:any): Observable<any> {
-    return this.http.post<any>(`${this.urlAdmin}/users`,criteria, this.config)
-  }
-
-  getUsersTransactions(id?:string): Observable<any> {
-    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}`:`${this.urlAdmin}/transactions`, this.config)
-  }
-
-  getUsersStatistics(country:string): Observable<any> {
-    return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase()!='all')?'?country='+country:''}`, this.config)
-  }
-
   submitKyc(data: any): Observable<any> {
     return this.http.post<any>(`${this.urlUser}/submit-kyc`, data, this.config)
   }

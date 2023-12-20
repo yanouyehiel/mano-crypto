@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as data from '../contact'
-import { Observable, catchError } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { AdminService } from 'src/app/services/admin.service';
 const Swal = require('sweetalert2')
@@ -15,14 +14,17 @@ const Swal = require('sweetalert2')
 export class PersonalComponent implements OnInit {
   public history: boolean = false;
   public editContact: boolean = false;
+  public currentPage:number = 1;
   public contacts = data.contactData.contact
   public open: boolean = false
   public term:string=''
-  @Output() applyFilterWithTerm = new EventEmitter()
   @Input() users:any[];
+  @Input() usersLength:number;
   @Input() filterName:string
+  @Output() applyFilterWithTerm = new EventEmitter()
+  @Output() applyPageChange = new EventEmitter()
   user:any
-  public transactions:any[]
+  public transactions?:any[]
   public alertMsg = "Pas d'historique disponible."
 
   //  $users :Observable<any[]> = new Observable()
@@ -52,10 +54,14 @@ export class PersonalComponent implements OnInit {
     this.fetchHistory(this.user._id)
   }
   fetchHistory(userId:string){
-    this.userService.getUsersTransactions(userId).subscribe((res: any) => {
-      
-      this.transactions = res.data.reverse();
+    this.adminServise.getUsersTransactions(userId).subscribe((res: any) => {
+      this.transactions = res.data.transactions.reverse();
     })
+  }
+
+  pageChange(page:number){
+    this.currentPage = page;
+    this.applyPageChange.emit(page)
   }
   
   manageUserStatus(action: "active" | "banned" | "suspended"){

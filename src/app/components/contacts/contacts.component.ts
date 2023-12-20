@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-contacts',
@@ -8,20 +8,23 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ContactsComponent implements OnInit {
   users? :any[]
-filterName:string='l'
-  constructor(private userService:UserService) { }
+filterName:string
+usersLength:number
+public criteriaFilter:any
+  constructor(private adminService:AdminService) { }
 
   ngOnInit(): void {
-    this.fetchUsers({})
+    this.fetchUsers({criteria:{}, page:1})
   }
   getFilterName(event:any){
-    console.log(event+" The filter")
     this.filterName=event
   }
  
-  fetchUsers(criteria:any){
-    this.userService.getUsersByCriteria(criteria).subscribe((res: any) => {
-      this.users = res.data
+  fetchUsers(bodyFilter:any){
+    this.criteriaFilter = bodyFilter.criteria
+    this.adminService.getUsersByCriteria(bodyFilter).subscribe((res: any) => {
+      this.users = res.data.users
+      this.usersLength = res.data.total_users
     })
   }
 

@@ -35,7 +35,7 @@ export class HomeAdminComponent implements OnInit {
     return key=='SALT_ROUNDS'?"key":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"ticket":key=='MIN_XAF_AMOUNT'?'money':"question"
   }
   fetchStatistics(country:string){
-    this.userService.getUsersStatistics(country).subscribe((res: any) => {
+    this.adminService.getUsersStatistics(country).subscribe((res: any) => {
       this.datas = res.data
       this.users = res.data.users
       this.growthChart.series = [this.users.total_users, this.users.connected_users, this.users.unconnected_users]

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-contacts-filter',
@@ -9,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ContactsFilterComponent implements OnInit {
   public type: any;
   public open: boolean = false;
+  public countries:any[]
   
   public filters = [
     {
@@ -21,11 +23,11 @@ export class ContactsFilterComponent implements OnInit {
       isSubItem:true
     },
     {
-      name: 'Comptes valides',
-      criteria: {}
+      name: 'Comptes validés',
+      criteria: {kyc_status:'approved'}
     }, {
       name: 'Comptes à valider',
-      criteria: {}
+      criteria: {kyc_status:'submitted'}
     },
     
     {
@@ -40,16 +42,23 @@ export class ContactsFilterComponent implements OnInit {
   @Output() emitFilterName = new EventEmitter()
   @Output() applyFilter = new EventEmitter()
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.emitFilterName.emit(this.filters[0].name)
+    this.fetchCountries()
   }
 
 
 
   openMenu() {
     this.open = !this.open
+  }
+
+  fetchCountries(){
+    this.adminService.getCountries().subscribe((response)=>{
+      this.countries = response.data.countries
+    })
   }
 
   selectFilter(event: any, filter: any) {

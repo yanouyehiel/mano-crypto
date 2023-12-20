@@ -42,6 +42,19 @@ export class AdminService {
         }));
     }
 
+    
+  getUsersByCriteria(bodyFilter:any): Observable<any> {
+    return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`,bodyFilter.criteria, this.config)
+  }
+
+  getUsersTransactions(id?:string): Observable<any> {
+    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}`:`${this.urlAdmin}/transactions`, this.config)
+  }
+
+  getUsersStatistics(country:string): Observable<any> {
+    return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase()!='all')?'?country='+country:''}`, this.config)
+  }
+
     banAnUser(uid: string, action: "active" | "banned" | "suspended"): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
             `${this.urlAdmin}/ban?userId=${uid}&action=${action}`,{},
@@ -54,6 +67,14 @@ export class AdminService {
     kyc(uid: string, action: "approved" | "rejected", document_type: string): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
             `${this.urlAdmin}/kyc?userId=${uid}&action=${action}&document_type=${document_type}`,{},
+            this.config
+        ).pipe(catchError((error) => {
+            return of(error.error)
+        }));
+    }
+    getCountries(): Observable<ResponseParent> {
+        return this.http.get<ResponseParent>(
+            `${this.urlAdmin}/countries`,
             this.config
         ).pipe(catchError((error) => {
             return of(error.error)

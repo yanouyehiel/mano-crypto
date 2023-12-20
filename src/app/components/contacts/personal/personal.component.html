@@ -6,7 +6,7 @@
         <input [(ngModel)]="term" class="form-control me-2" type="text" placeholder="Recherche"><a
           class="btn btn-primary" (click)="emitFilterWithTerm()">Rechercher</a>
       </div>
-    </div><span class="f-14 pull-right mt-0">{{users.length}} Utilisateurs</span>
+    </div><span class="f-14 pull-right mt-0">{{usersLength}} Utilisateurs</span>
   </div>
   <div class="card-body p-0">
     <div class="row list-persons" id="addcon">
@@ -26,9 +26,10 @@
             </a>
           </ng-container>
         </div>
+
       </div>
       <div class="col-xl-8 xl-50 col-md-7 box-col-6">
-        <div class="tab-content" id="v-pills-tabContent" [ngStyle]="{ 'display': editContact ? 'none' : ''}">
+        <div class="tab-content" id="v-pills-tabContent">
           <div class="tab-pane contact-tab-0 tab-content-child fade show active" id="v-pills-user" role="tabpanel"
             aria-labelledby="v-pills-user-tab">
             <div class="profile-mail">
@@ -92,7 +93,8 @@
 
                 <ul>
                   <ng-container *ngFor="let kycElement of user.kyc">
-                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo CNI':'Photo CNI-Utilisateur'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><a
+                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo CNI':'Photo
+                      CNI-Utilisateur'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><a
                           class="font-primary" [href]="kycElement.document_url" target="_blank">Voir l'image</a><span
                           *ngIf="kycElement.status!='approved'" class="d-block"><a class="text-success "
                             (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a><span
@@ -109,17 +111,26 @@
             </div>
           </div>
         </div>
-        
+
       </div>
+      <ngb-pagination class="ms-3 mb-3" [collectionSize]="usersLength" [page]="currentPage" [pageSize]="25"
+        (pageChange)="pageChange($event)">
+      </ngb-pagination>
+
     </div>
   </div>
 </div>
 <div id="right-history" [class.show]="open">
   <div class="modal-header p-20">
-    <h6 class="modal-title w-100">Historique de l'utilisateur<span class="pull-right"><a (click)="openHistory()"
-          class="closehistory"><i class="fa fa-times"></i></a></span></h6>
+    <h6 class="modal-title w-100">Historique de l'utilisateur
+      <span class="pull-right">
+        <a (click)="openHistory()" class="closehistory">
+          <i class="fa fa-times"></i>
+        </a>
+      </span>
+    </h6>
   </div>
-  <div class="history-details overflow-auto">
+  <div class="history-details overflow-auto" *ngIf="transactions">
     <div class="text-center" *ngIf="transactions.length==0"><i class="icofont icofont-ui-edit"></i>
       <p>{{alertMsg}}</p>
     </div>
