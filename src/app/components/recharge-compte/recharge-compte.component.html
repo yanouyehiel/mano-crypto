@@ -4,7 +4,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header pb-0">
-          <h5>Payment</h5>
+          <h5>Transaction</h5>
         </div>
         <div class="card-body megaoptions-border-space-sm">
           <div class="row">
@@ -13,24 +13,24 @@
                 <div class="u-step" [ngClass]="classStep1">
                   <span class="u-step-number">1</span>
                   <div class="u-step-desc">
-                    <span class="u-step-title">Payment Type</span>
-                    <p>Different types of payment</p>
+                    <span class="u-step-title">Méthodes de paiement</span>
+                    <p>Il y a deux méthodes de paiement</p>
                   </div>
                 </div>
 
                 <div class="u-step" [ngClass]="classStep2">
                   <span class="u-step-number">2</span>
                   <div class="u-step-desc">
-                    <span class="u-step-title">Payment Information</span>
-                    <p>Pay for the bill</p>
+                    <span class="u-step-title">Information transaction</span>
+                    <p>Entrez les informations</p>
                   </div>
                 </div>
 
                 <div class="u-step" [ngClass]="classStep3">
                   <span class="u-step-number">3</span>
                   <div class="u-step-desc">
-                    <span class="u-step-title">Completed</span>
-                    <p>Review and Submit</p>
+                    <span class="u-step-title">Résumé</span>
+                    <p>Vérifiez et validez</p>
                   </div>
                 </div>
               </div>
@@ -41,7 +41,7 @@
                 [formGroup]="depositForm"
               >
                 <div class="row" *ngIf="step === 1">
-                  <h4 class="title-method">Choose Method Type</h4>
+                  <h4 class="title-method">Choisissez une méthode de paiement</h4>
                   <div class="col-sm-6">
                     <div class="card">
                       <div class="media p-20">
@@ -105,7 +105,7 @@
                   </div>
                 </div>
                 <div class="row" *ngIf="step === 2">
-                  <h5 class="title-method">Numero de Telephone</h5>
+                  <h5 class="title-method">Numero de téléphone</h5>
                   <div class="mb-5">
                     <input
                       *ngIf="
@@ -154,7 +154,7 @@
                           class="btn btn-secondary"
                           (click)="stepAttribute(0)"
                         >
-                          Precedent
+                          Précédent
                         </button>
                       </div>
                       <div class="col-md-4">
@@ -190,7 +190,7 @@
                     </div>
                     <div class="row" style="margin-top: 20px">
                       <div class="col">
-                        <h5>Phone Number</h5>
+                        <h5>Numéro de téléphone</h5>
                         <p style="font-size: 15px">
                           {{ depositForm.controls["phoneNumber"].value }}
                         </p>
@@ -214,7 +214,7 @@
                           class="btn btn-secondary"
                           (click)="stepAttribute(1)"
                         >
-                          Back
+                          Retour
                         </button>
                       </div>
                       <div class="col-md-4">

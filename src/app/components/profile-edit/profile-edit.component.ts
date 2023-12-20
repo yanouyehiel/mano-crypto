@@ -115,7 +115,7 @@ export class ProfileEditComponent implements OnInit {
       this.formData.append('cni', promises[0], promises[0].name)
       this.formData.append('cni_person', promises[1], promises[1].name)
   
-      /*this.userService.submitKyc(this.formData).subscribe((res: ResponseEmail) => {
+      this.userService.submitKyc(this.formData).subscribe((res: ResponseEmail) => {
         console.log(res);
       }, (error: any) => {
         console.log(error)
@@ -130,7 +130,7 @@ export class ProfileEditComponent implements OnInit {
         } else if (error.error.statusCode === 1004) {
           this.toast.error(error.error.message)
         }
-      });*/
+      });
     } else {
       this.toast.error("Veuillez n'insérer que 2 fichiers");
     }
