@@ -25,6 +25,13 @@ export class UserService {
       }
     )
   }
+  private simpleAuthHeader = {
+    headers: new HttpHeaders(
+      {
+        'Authorization': `Bearer ${this.data.token}`
+      }
+    )
+  }
   private headReset = {
     headers: new HttpHeaders(
       {
@@ -52,7 +59,7 @@ export class UserService {
     return this.http.put<ResponseUser>(`${this.urlUser}/reset-password`, data, this.headReset)
   }
 
-  submitKyc(data: any): Observable<any> {
-    return this.http.post<any>(`${this.urlUser}/submit-kyc`, data, this.config)
+  submitKyc(data: FormData): Observable<any> {
+    return this.http.post<any>(`${this.urlUser}/submit-kyc`, data, this.simpleAuthHeader)
   }
 }

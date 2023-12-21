@@ -71,29 +71,9 @@
             <div class="card-options"><a class="card-options-collapse" href="javascript:void(0)" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:void(0)" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
           </div>
           <div class="card-body">
-            <form class="form theme-form projectcreate" (ngSubmit)="uploadFiles()" enctype="multipart/form-data">
-              <div class="row">
-                <div class="col">
-                  <div class="mb-3">
-                    <app-upload-file 
-                      (filesUploaded)="onFileChanged($event)"
-                    ></app-upload-file>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="text-end">
-                    <button 
-                      type="submit" 
-                      class="btn btn-secondary me-3"
-                    >
-                      Importer
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
+            <app-upload-file 
+            [kyc]="user.kyc"
+          ></app-upload-file>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileUser, ResponseEmail, ResponseProfile } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
@@ -11,7 +11,7 @@ const Swal = require('sweetalert2')
   styleUrls: ['./profile-edit.component.scss']
 })
 export class ProfileEditComponent implements OnInit {
-  public user: ProfileUser;
+  public user: any;
   @Input() files: any[] = [];
   profileForm: FormGroup;
   profile: any;
@@ -26,7 +26,6 @@ export class ProfileEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
-
     this.profileForm = this.fb.group({
       name: ['', Validators.required]
     })
@@ -97,42 +96,43 @@ export class ProfileEditComponent implements OnInit {
     });
   }
 
-  uploadFiles(): void {
-    if (this.files[0].length === 2) {
-      const promises: any[] = [];
+
+  // uploadFiles(): void {
+  //   if (this.files[0].length === 2) {
+  //     const promises: any[] = [];
       
-      this.files.forEach((fileArray: File[]) => {
-        fileArray.forEach((file: File) => {
-          const isWeight = this.checkFileSize(file)
-          if (isWeight) {
-            promises.push(file)
-          } else {
-            this.toast.error("La taille des 2 fichiers ne doit pas dépasser 2 Mo");
-          }
-        });
-      });
+  //     this.files.forEach((fileArray: File[]) => {
+  //       fileArray.forEach((file: File) => {
+  //         const isWeight = this.checkFileSize(file)
+  //         if (isWeight) {
+  //           promises.push(file)
+  //         } else {
+  //           this.toast.error("La taille des 2 fichiers ne doit pas dépasser 2 Mo");
+  //         }
+  //       });
+  //     });
       
-      this.formData.append('cni', promises[0], promises[0].name)
-      this.formData.append('cni_person', promises[1], promises[1].name)
+  //     this.formData.append('cni', promises[0], promises[0].name)
+  //     this.formData.append('cni_person', promises[1], promises[1].name)
   
-      this.userService.submitKyc(this.formData).subscribe((res: ResponseEmail) => {
-        console.log(res);
-      }, (error: any) => {
-        console.log(error)
-        if (error.error.statusCode === 200) {
-          this.toast.info(error.error.message)
-        } else if (error.error.statusCode === 400) {
-          this.toast.error(error.error.message)
-        } else if (error.error.statusCode === 401) {
-          this.toast.error(error.error.message)
-        } else if (error.error.statusCode === 500) {
-          this.toast.error(error.error.message)
-        } else if (error.error.statusCode === 1004) {
-          this.toast.error(error.error.message)
-        }
-      });
-    } else {
-      this.toast.error("Veuillez n'insérer que 2 fichiers");
-    }
-  }
+    //   this.userService.submitKyc(this.formData).subscribe((res: ResponseEmail) => {
+    //     console.log(res);
+    //   }, (error: any) => {
+    //     console.log(error)
+    //     if (error.error.statusCode === 200) {
+    //       this.toast.info(error.error.message)
+    //     } else if (error.error.statusCode === 400) {
+    //       this.toast.error(error.error.message)
+    //     } else if (error.error.statusCode === 401) {
+    //       this.toast.error(error.error.message)
+    //     } else if (error.error.statusCode === 500) {
+    //       this.toast.error(error.error.message)
+    //     } else if (error.error.statusCode === 1004) {
+    //       this.toast.error(error.error.message)
+    //     }
+    //   });
+    // } else {
+    //   this.toast.error("Veuillez n'insérer que 2 fichiers");
+    // }
+  // }
 }

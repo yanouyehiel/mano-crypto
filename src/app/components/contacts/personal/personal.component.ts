@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as data from '../contact'
 import { UserService } from 'src/app/services/user.service';
 import { AdminService } from 'src/app/services/admin.service';
+import { catchError, of } from 'rxjs';
 const Swal = require('sweetalert2')
 // import Swal from 'sweetalert2';
 
@@ -51,7 +52,10 @@ export class PersonalComponent implements OnInit {
     this.fetchHistory(1,this.user._id)
   }
   fetchHistory(page:number, userId:string){
-    this.adminServise.getUsersTransactions(page,userId).subscribe((res: any) => {
+    this.adminServise.getUsersTransactions(page,userId).pipe(catchError((error)=>{
+      this.alertMsg = "Une erreur s'est produite, veuillez reessayer !"
+      return of(error.error)
+    })).subscribe((res: any) => {
       if(res.statusCode!==1000){
         this.alertMsg = "Une erreur s'est produite, veuillez reessayer !"
       }else{

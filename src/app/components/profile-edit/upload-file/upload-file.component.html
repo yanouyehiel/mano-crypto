@@ -1,17 +1,64 @@
-<label>Ajouter une photo et une photo de votre CNI</label>
-<div  class="dropzone dz-clickable" >
-   <ngx-dropzone (change)="onSelect($event)" accept="image/*" [multiple]="true">
-      <ngx-dropzone-label>
-         <div>
-            <div class="dz-message needsclick ">
-              <i class="fa fa-upload"></i>
-                <h6>Importer les fichiers manquants</h6>
-                <span class="dz-message needsclick">(Ajouter juste des fichiers qui ne sont pas encore uploadés)</span>
+<form class="form theme-form projectcreate">
+   <div class="row">
+      <div class="col">
+         <div class="mb-3">
+            <div class="row">
+               <ng-container *ngFor="let item of kyc">
+                  <div class="col-md-6 col-12">
+                     <label class="mb-3">{{item.document_type=='cni'?'Pièce d\'identité':'Selfie de vous tenant la pièce
+                        d\'identité
+                        dans la
+                        main'}}</label>
+                        <span *ngIf="item.status=='rejected'" class="float-end text-center my-3"><span class="text-danger">Rejeté</span><br><span class="text-light">Votre document est vraiment trop floue, il faut bien filmer ca avec un iphone</span> </span>
+                     <div class="dropzone dz-clickable" *ngIf="item.status!='approved';else approvedTemplate">
+
+                        <ngx-dropzone
+                           *ngIf="item.status!='submitted';else waitingTemplate"
+                           (change)="onSelect(item.document_type,$event)" accept="image/*" [multiple]="false">
+                           <ngx-dropzone-label>
+                              <div>
+                                 <div class="dz-message needsclick ">
+                                    <i class="fa fa-upload"></i>
+                                    <h6>Importer une image</h6>
+                                    <span class="dz-message needsclick">(Ajoutez ici une photo de votre
+                                       {{item.document_type=='cni'?'pièce d\'identité':'selfie avec la pièce
+                                       d\'identité'}})</span>
+                                 </div>
+                              </div>
+                           </ngx-dropzone-label>
+                           <ngx-dropzone-preview *ngIf="item.document_type=='cni'&&cniFile">
+                              <ngx-dropzone-label>{{ cniFile.name }} {{ cniFile.type }}</ngx-dropzone-label>
+                           </ngx-dropzone-preview>
+                           <ngx-dropzone-preview *ngIf="item.document_type=='cni_person'&&cniPersonFile">
+                              <ngx-dropzone-label>{{ cniPersonFile.name }} {{ cniPersonFile.type }}</ngx-dropzone-label>
+                           </ngx-dropzone-preview>
+                        </ngx-dropzone>
+
+
+                     </div>
+                  </div>
+               </ng-container>
+               
+
+               <ng-template #approvedTemplate>
+                  <h6 class="text-success text-center mt-5">Approuvé</h6>
+               </ng-template>
+               <ng-template #waitingTemplate>
+                  <h6 class="text-warning text-center mt-5">En attente de validation...</h6>
+               </ng-template>
+
             </div>
          </div>
-      </ngx-dropzone-label>
-      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-         <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-      </ngx-dropzone-preview>
-   </ngx-dropzone>
-</div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col">
+         <div class="text-end">
+            <button type="submit" [disabled]="(!cniFile && !cniPersonFile)||isDisabled" (click)="onSubmitKyc()" class="btn btn-primary me-3">
+               
+               Importer <i *ngIf="isDisabled" class="fa fa-spin fa-circle-o-notch"></i>
+            </button>
+         </div>
+      </div>
+   </div>
+</form>
