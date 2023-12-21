@@ -9,7 +9,7 @@
                         d\'identité
                         dans la
                         main'}}</label>
-                        <span *ngIf="item.status=='rejected'" class="float-end text-center my-3"><span class="text-danger">Rejeté</span><br><span class="text-light">Votre document est vraiment trop floue, il faut bien filmer ca avec un iphone</span> </span>
+                        <span *ngIf="item.status=='rejected'" class="float-end text-center mb-3"><span class="text-danger">Rejeté</span><br><span *ngIf="item.reason" class="text-light">{{item.kyc.reason}}</span> </span>
                      <div class="dropzone dz-clickable" *ngIf="item.status!='approved';else approvedTemplate">
 
                         <ngx-dropzone
@@ -33,8 +33,8 @@
                               <ngx-dropzone-label>{{ cniPersonFile.name }} {{ cniPersonFile.type }}</ngx-dropzone-label>
                            </ngx-dropzone-preview>
                         </ngx-dropzone>
-
-
+                        <p class="text-warning" *ngIf="item.document_type=='cni'&&cniFile&&cniFile!.size>(2 * 1024 * 1024)"><i class="fa fa-warning"></i>Le fichier est trop lourd (>2Mo)</p>
+                        <p class="text-warning" *ngIf="item.document_type=='cni_person'&&cniPersonFile&&cniPersonFile!.size>(2 * 1024 * 1024)"><i class="fa fa-warning"></i>Le fichier est trop lourd (>2Mo)</p>
                      </div>
                   </div>
                </ng-container>
@@ -54,9 +54,9 @@
    <div class="row">
       <div class="col">
          <div class="text-end">
-            <button type="submit" [disabled]="(!cniFile && !cniPersonFile)||isDisabled" (click)="onSubmitKyc()" class="btn btn-primary me-3">
+            <button type="submit" [disabled]="(!cniFile && !cniPersonFile)||isDisabled||isLoading" (click)="onSubmitKyc()" class="btn btn-primary me-3">
                
-               Importer <i *ngIf="isDisabled" class="fa fa-spin fa-circle-o-notch"></i>
+               Importer <i *ngIf="isLoading" class="fa fa-spin fa-circle-o-notch"></i>
             </button>
          </div>
       </div>

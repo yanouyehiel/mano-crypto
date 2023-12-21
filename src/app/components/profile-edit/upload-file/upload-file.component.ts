@@ -16,6 +16,7 @@ export class UploadFileComponent {
   cniFile?: File;
   cniPersonFile?: File;
   public isDisabled: boolean;
+  public isLoading: boolean;
   public formData: FormData = new FormData();
 
   public dropzoneConfig: any = {
@@ -32,16 +33,28 @@ export class UploadFileComponent {
   onSelect(key: string, event: any) {
     if (key == 'cni') {
       this.cniFile = event.addedFiles[0]
-
+      if(this.cniFile!.size>(2 * 1024 * 1024)){
+        this.isDisabled = true;
+      }else{
+        this.isDisabled = false;
+      }
       this.formData.append(key, this.cniFile!, `${URL.createObjectURL(this.cniFile!)}.${this.cniFile!.type.split('/')[1]}`)
+      
     } else {
       this.cniPersonFile = event.addedFiles[0]
+      if(this.cniPersonFile!.size>(2 * 1024 * 1024)){
+        this.isDisabled = true;
+      }else{
+        this.isDisabled = false;
+      }
       this.formData.append(key, this.cniPersonFile!, `${URL.createObjectURL(this.cniPersonFile!)}.${this.cniPersonFile!.type.split('/')[1]}`)
     }
   }
 
+ 
+
   onSubmitKyc() {
-    this.isDisabled = true
+    this.isLoading = true
     this.userService.submitKyc(this.formData).pipe(catchError((error) => of(error.error))).subscribe((response: ResponseParent) => {
       console.log(response)
       if (response.statusCode === 1000) {
@@ -49,7 +62,7 @@ export class UploadFileComponent {
       } else {
         this.toast.error(response.message)
       }
-      this.isDisabled = false;
+      this.isLoading = false;
     })
   }
 
