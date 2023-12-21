@@ -15,7 +15,7 @@
                   src="assets/images/dashboard/1.png"
                 />
               </div>
-              <a class="icon-wrapper" routerLink="../profile-edit"
+              <a *ngIf="user.kyc[0].status !== 'approved' || user.kyc[1].status !== 'approved'" class="icon-wrapper" routerLink="../profile-edit"
                 ><i class="fa fa-edit"></i
               ></a>
             </div>
@@ -38,7 +38,7 @@
                     <div class="follow-num counter">Téléphone</div>
                     <span>{{ user.phoneNumber }}</span>
                   </li>
-                  <ng-container *ngIf="user.isPhoneVerified && user.isEmailVerified else pasValide">
+                  <ng-container *ngIf="user.kyc[0].status === 'approved' && user.kyc[1].status === 'approved' else pasValide">
                     <li>
                       <div class="follow-num counter">Status Compte</div>
                       <span class="text-success txt-bold">Validé</span>
@@ -56,6 +56,13 @@
                     </li>
                   </ng-template>
                 </ul>
+                <div style="margin-top: 10px;">
+                  <span style="color: white;" [class]="kycIsUploaded ? 'badge badge-success' : 'badge badge-danger'">{{ textKYC }}</span>
+                  <ul class="follow-list">
+                    <li [class]="user.kyc[0].status === 'approved' ? 'text-success' : 'text-danger'">CNI: {{user.kyc[0].status}}</li>
+                    <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : 'text-danger'">Photo et CNI: {{user.kyc[1].status}}</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

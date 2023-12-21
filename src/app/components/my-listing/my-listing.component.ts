@@ -11,7 +11,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
   styleUrls: ['./my-listing.component.scss']
 })
 export class MyListingComponent implements OnInit {
-  public historics: any[] = [];
+  public historics: ResponseTransactionList[] = [];
   public loader: boolean = true;
 
   constructor(private transacService: TransactionService) {}
