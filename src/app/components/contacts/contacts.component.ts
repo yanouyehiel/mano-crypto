@@ -10,7 +10,7 @@ export class ContactsComponent implements OnInit {
   users? :any[]
 filterName:string
 usersLength:number
-public criteriaFilter:any
+public criteriaFilter:any = {}
   constructor(private adminService:AdminService) { }
 
   ngOnInit(): void {
@@ -26,6 +26,9 @@ public criteriaFilter:any
       this.users = res.data.users
       this.usersLength = res.data.total_users
     })
+  }
+  fetchUsersWithTerm(termFilter:any){
+    this.fetchUsers({criteria:{...this.criteriaFilter, ...termFilter}, page:1})
   }
 
 }

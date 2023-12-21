@@ -47,8 +47,8 @@ export class AdminService {
     return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`,bodyFilter.criteria, this.config)
   }
 
-  getUsersTransactions(id?:string): Observable<any> {
-    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}`:`${this.urlAdmin}/transactions`, this.config)
+  getUsersTransactions(page:number,id?:string): Observable<any> {
+    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=25`:`${this.urlAdmin}/transactions?page=${page}&limit=25`, this.config)
   }
 
   getUsersStatistics(country:string): Observable<any> {

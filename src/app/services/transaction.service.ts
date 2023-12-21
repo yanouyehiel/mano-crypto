@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   ResponseDeposit,
@@ -50,14 +50,11 @@ export class TransactionService {
     );
   }
 
-  getAllTransaction(data:any): Observable<ResponseTransactionList> {
-    try {
-      return this.http.post<ResponseTransactionList>(
-        `${this.urlTransactionList}/all`,data,
+  getAllTransaction(type:string, page:number): Observable<ResponseTransactionList> {
+      return this.http.get<ResponseTransactionList>(
+        `${this.urlTransactionList}/all?type=${type}&page=${page}&limit=25`,
         this.config
-      );
-    } catch (error) {
-      throw new Error();
-    }
+      ).pipe(catchError((error)=> of(error.error)));
+    
   }
 }

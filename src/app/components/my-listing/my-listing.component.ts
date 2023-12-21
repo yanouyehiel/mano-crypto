@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ALL } from 'dns';
 import { Table } from 'src/app/models/Table';
 import { ResponseTransactionList } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -16,19 +17,6 @@ export class MyListingComponent implements OnInit {
   constructor(private transacService: TransactionService) {}
 
   ngOnInit(): void {
-    this.getAllTransaction()
-  }
-
-  getAllTransaction(): void {
-    try {
-      this.loader = true;
-      this.transacService.getAllTransaction({transactionType:"ALL"}).subscribe((response: ResponseTransactionList) => {
-        this.loader = false;
-        this.historics = response.data.transactions
-        console.log(response)
-      })
-    } catch (error) {
-      console.log(error)
-    }
+      
   }
 }

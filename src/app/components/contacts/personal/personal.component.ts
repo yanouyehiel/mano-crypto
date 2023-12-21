@@ -15,6 +15,8 @@ export class PersonalComponent implements OnInit {
   public history: boolean = false;
   public editContact: boolean = false;
   public currentPage:number = 1;
+  public currentHistoryPage:number =1;
+  public historyLength:number;
   public contacts = data.contactData.contact
   public open: boolean = false
   public term:string=''
@@ -27,13 +29,7 @@ export class PersonalComponent implements OnInit {
   public transactions?:any[]
   public alertMsg = "Pas d'historique disponible."
 
-  //  $users :Observable<any[]> = new Observable()
-  
-
-  public days = ["01", "02", "03","04"]
-  public months = ["January", "February", "March","April", "May", "June", "July", "August", "September","October", "November", "December"]
-
-  constructor(private modalService: NgbModal, private userService:UserService, private adminServise:AdminService) { }
+  constructor( private modalService: NgbModal, private userService:UserService, private adminServise:AdminService) { }
 
   showHistory() {
     this.history = !this.history;
@@ -41,7 +37,8 @@ export class PersonalComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.users)
       this.user = this.users[0]
-      this.fetchHistory(this.user._id)
+      this.fetchHistory(1,this.user._id)
+      this.setPaginationOnBottom()
   }
 
   emitFilterWithTerm(){
@@ -51,11 +48,17 @@ export class PersonalComponent implements OnInit {
 
   setUserDisplay(user:any){
     this.user = user
-    this.fetchHistory(this.user._id)
+    this.fetchHistory(1,this.user._id)
   }
-  fetchHistory(userId:string){
-    this.adminServise.getUsersTransactions(userId).subscribe((res: any) => {
-      this.transactions = res.data.transactions.reverse();
+  fetchHistory(page:number, userId:string){
+    this.adminServise.getUsersTransactions(page,userId).subscribe((res: any) => {
+      if(res.statusCode!==1000){
+        this.alertMsg = "Une erreur s'est produite, veuillez reessayer !"
+      }else{
+        this.currentHistoryPage = parseInt(res.data.currentPage)
+      this.historyLength = res.data.total_transactions
+      this.transactions = res.data.transactions;
+      }
     })
   }
 
@@ -164,6 +167,16 @@ export class PersonalComponent implements OnInit {
 
   openHistory(){
     this.open = !this.open
+  }
+  pageHistoryChange(page:number){
+    this.fetchHistory(page, this.user._id)
+  }
+
+  setPaginationOnBottom(){
+    let windowsHeight = window.innerHeight
+    console.log(windowsHeight)
+    let historyComponent = document.getElementById('right-history')
+    historyComponent!.style.height = `${windowsHeight-50}px`;
   }
 
 

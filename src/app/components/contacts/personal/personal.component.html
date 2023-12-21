@@ -134,12 +134,18 @@
     <div class="text-center" *ngIf="transactions.length==0"><i class="icofont icofont-ui-edit"></i>
       <p>{{alertMsg}}</p>
     </div>
-    <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3"
-        [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
+    <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3" [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
       <div class="media-body mt-0">
         <h6 class="mt-0">{{item.status}}</h6>
         <p class="mb-0">{{item.type}}</p><span class="f-12">{{item.creationDate|customDateFormat}}</span>
       </div>
     </div>
+    <div style="position: absolute; bottom:0px;">
+   <ngb-pagination class="ms-3 mb-3" [collectionSize]="historyLength" [page]="currentHistoryPage" [pageSize]="25"
+        (pageChange)="pageHistoryChange($event)">
+      </ngb-pagination> 
+    </div>
   </div>
+
+  
 </div>

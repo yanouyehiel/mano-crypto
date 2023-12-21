@@ -11,7 +11,7 @@
              <div class="ps-0">
                <div class="tab-content">
                  <div class="tab-pane fade active show" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
-                   <app-personal [usersLength]="usersLength" (applyPageChange)="fetchUsers({criteria:criteriaFilter,page:$event})" (applyFilterWithTerm)="fetchUsers({criteria:$event,page:1})" [filterName]="filterName" *ngIf="users" [users]="users"></app-personal>
+                   <app-personal [usersLength]="usersLength" (applyPageChange)="fetchUsers({criteria:criteriaFilter,page:$event})" (applyFilterWithTerm)="fetchUsersWithTerm($event)" [filterName]="filterName" *ngIf="users" [users]="users"></app-personal>
                  </div>
                </div>
              </div>
