@@ -27,10 +27,10 @@ export class BreadcrumbComponent implements OnInit {
       childWord = childWord.replace('-', ' ')
     }
 
-    this.title = childWord
+    this.title = childWord.toLocaleUpperCase()
     this.breadcrumbs = {
-      "parentBreadcrumb": parentWord,
-      "childBreadcrumb": childWord
+      "parentBreadcrumb": parentWord.toLocaleUpperCase(),
+      "childBreadcrumb": childWord.toLocaleUpperCase()
     }
     
   }

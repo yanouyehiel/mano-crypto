@@ -14,8 +14,7 @@ import { ResponseProfile } from '../models/User';
 export class TransactionService {
   private urlDeposit = environment.backend_api_url + environment.url_deposit;
   private urlUser = environment.backend_api_url + environment.user_url;
-  private urlTransactionList =
-    environment.backend_api_url + environment.url_transaction_list;
+  private urlTransactionList = environment.backend_api_url + environment.url_transaction_list;
   private tokenRegistred: any = localStorage.getItem('token-mansexch');
   private data: any = JSON.parse(this.tokenRegistred);
 
@@ -42,6 +41,7 @@ export class TransactionService {
       this.config
     );
   }
+  
   withdraw(data: any): Observable<ResponseDeposit> {
     return this.http.post<ResponseDeposit>(
       `${this.urlDeposit}/withdraw`,
