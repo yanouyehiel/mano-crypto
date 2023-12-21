@@ -18,6 +18,7 @@ export class PersonalComponent implements OnInit {
   public currentPage:number = 1;
   public currentHistoryPage:number =1;
   public historyLength:number;
+  public isApproved:boolean = false;
   public contacts = data.contactData.contact
   public open: boolean = false
   public term:string=''
@@ -37,9 +38,10 @@ export class PersonalComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this.users)
-      this.user = this.users[0]
+      this.setUserDisplay(this.users[0])
       this.fetchHistory(1,this.user._id)
       this.setPaginationOnBottom()
+      
   }
 
   emitFilterWithTerm(){
@@ -50,6 +52,7 @@ export class PersonalComponent implements OnInit {
   setUserDisplay(user:any){
     this.user = user
     this.fetchHistory(1,this.user._id)
+    this.isApproved = this.isKycApprouved()
   }
   fetchHistory(page:number, userId:string){
     this.adminServise.getUsersTransactions(page,userId).pipe(catchError((error)=>{
@@ -165,7 +168,7 @@ export class PersonalComponent implements OnInit {
   }
 
   isKycApprouved():boolean{
-   return (this.user.kyc as any[])===(this.user.kyc as any[]).filter((e)=>e.status=='approved')
+   return (this.user.kyc as any[]).length===(this.user.kyc as any[]).filter((e)=>e.status=='approved').length
   }
 
 
