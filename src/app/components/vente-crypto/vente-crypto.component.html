@@ -20,9 +20,9 @@
                                       class="image-thumbnail"
                                     />
                                   </div>
-                                  <h5>{{ crypto.wallet.solde }}</h5>
-                                  <p>Les derniers Jours</p>
-                                  <a class="btn-arrow arrow-primary"
+                                  <h5>{{ crypto.wallet.solde+' '+crypto.wallet.type}}</h5>
+                                  <p *ngIf="crypto.details.weekly_percentage">Les derniers Jours</p>
+                                  <a *ngIf="crypto.details.weekly_percentage" class="btn-arrow arrow-primary"
                                   [ngClass]="crypto.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"
                                     ><i
                                     class="toprightarrow-primary fa fa-arrow-{{
