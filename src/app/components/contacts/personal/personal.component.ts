@@ -208,5 +208,12 @@ export class PersonalComponent implements OnInit {
     historyComponent!.style.height = `${windowsHeight - 50}px`;
   }
 
+  getHistory(transaction:any){
+    return {
+      status:transaction.status,
+      description:transaction.type
+    }
+  }
+
 
 }
