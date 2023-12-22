@@ -2,27 +2,36 @@
     <div class="card income-card">
         <div class="card-header">
             <div class="header-top d-sm-flex align-items-center">
-                <h5>Variation de la crypto</h5>
-                <div class="center-content">
-                    <p class="d-sm-flex align-items-center">
-                        <span class="font-primary m-r-10 f-w-700">$859.25k</span>
-                        <i class="toprightarrow-primary fa fa-arrow-up m-r-10"></i>
-                        86% More than last year
-                    </p>
-                </div>
+                <h5>Variation du prix du Bitcoin</h5>
             </div>
         </div>
         <div class="card-body p-0">
             <div id="chart-timeline-dashbord">
-                <apx-chart 
-                    [chart]="areaSpalineChart.chart"
-                    [dataLabels]="areaSpalineChart.dataLabels"
-                    [stroke]="areaSpalineChart.stroke"
-                    [series]="areaSpalineChart.series"
-                    [xaxis]="areaSpalineChart.xaxis"
-                    [colors]="areaSpalineChart.colors"
-                    [fill]="areaSpalineChart.tooltip">
-                </apx-chart>
+                <canvas baseChart
+        [datasets]="btcChart.lineChartData"
+        [labels]="btcChart.lineChartLabels"
+        [options]="btcChart.lineChartOptions"
+        [legend]="btcChart.lineChartLegend"
+        [type]="'line'">
+      </canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card income-card">
+        <div class="card-header">
+            <div class="header-top d-sm-flex align-items-center">
+                <h5>Variation du prix de L'Ethereum</h5>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div id="chart-timeline-dashbord">
+                <canvas baseChart
+        [datasets]="ethChart.lineChartData"
+        [labels]="ethChart.lineChartLabels"
+        [options]="ethChart.lineChartOptions"
+        [legend]="ethChart.lineChartLegend"
+        [type]="'line'">
+      </canvas>
             </div>
         </div>
     </div>

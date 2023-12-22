@@ -10,6 +10,7 @@ import { ValidationComponent } from './pages/validation/validation.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { NgxCaptchaModule } from 'ngx-captcha'
+import { NgChartsModule  } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FeatherIconsComponent } from './shared/components/feather-icons/feather-icons.component';
@@ -109,6 +110,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
   imports: [
     NgbModule,
+    
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -116,11 +118,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgxCaptchaModule,
     HttpClientModule,
     NgApexchartsModule,
+    NgChartsModule,
     NgxDropzoneModule,
     BrowserAnimationsModule,
     NgSelectModule,
     ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot(),
+    
     
   ],
   providers: [],
