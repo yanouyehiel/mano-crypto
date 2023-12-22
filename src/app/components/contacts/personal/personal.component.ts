@@ -148,6 +148,13 @@ export class PersonalComponent implements OnInit {
         input: 'text',
         inputAutoFocus: true,
         inputPlaceholder: `Donnez une raison au rejet`,
+        inputValidator: (value:string) => {
+          // Ajoutez une validation personnalisée ici si nécessaire
+          if (value.length>100) {
+            return 'Texte trop long !';
+          }
+          return null;
+        },
         showCancelButton: true,
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
