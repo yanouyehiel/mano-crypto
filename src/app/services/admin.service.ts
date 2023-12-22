@@ -64,9 +64,9 @@ export class AdminService {
         }));
     }
 
-    kyc(uid: string, action: "approved" | "rejected", document_type: string): Observable<ResponseParent> {
+    kyc(uid: string, action: "approved" | "rejected", document_type: string, reason?:string): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
-            `${this.urlAdmin}/kyc?userId=${uid}&action=${action}&document_type=${document_type}`,{},
+            `${this.urlAdmin}/kyc?userId=${uid}&action=${action}&document_type=${document_type}`,reason?{reason:reason}:{},
             this.config
         ).pipe(catchError((error) => {
             return of(error.error)

@@ -58,7 +58,13 @@ export class UploadFileComponent {
     this.userService.submitKyc(this.formData).pipe(catchError((error) => of(error.error))).subscribe((response: ResponseParent) => {
       console.log(response)
       if (response.statusCode === 1000) {
-        this.toast.success('Fichier envoyé');
+        this.toast.success('Envoyé, vous serrez notifié !');
+        if(this.cniFile){
+          this.kyc[this.kyc.indexOf(this.kyc.find((e)=>e.document_type=='cni'))].status = 'submitted'
+        }
+        if(this.cniPersonFile){
+          this.kyc[this.kyc.indexOf(this.kyc.find((e)=>e.document_type=='cni_person'))].status = 'submitted'
+        }
       } else {
         this.toast.error(response.message)
       }
