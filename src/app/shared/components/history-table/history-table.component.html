@@ -7,11 +7,11 @@
   <span class="text-danger"><strong>Erreur: </strong> {{errorDisplay}} !
   </span>
 </div>
-<table class="table table-bordernone" *ngIf="recentOrders">
+<table class="table table-bordernone">
   <thead>
     <tr>
       <th>Désignation</th>
-      <th>Operateur</th>
+      <!-- <th>Operateur</th> -->
       <th>Date</th>
       <th>Montant</th>
       <th>Status</th>
@@ -24,27 +24,28 @@
   </div> -->
   <p class="text-light"> {{errorDisplay}}
   </p>
-  <tr *ngFor="let recent of recentOrders">
-    <td class="font-success">
-      <app-feather-icons icon="arrow-up-right"></app-feather-icons>
-      {{ recent.type=='BUY_CRYPTO'?'ACHAT DE '+recent.final_amount+'
-      '+recent.final_currency:recent.type=='DEPOSIT'?'RECHARGE':recent.type=='RECHARGE_CRYPTO'?'RECHARGE DE
-      '+recent.final_amount+' '+recent.final_currency:recent.type}}
-    </td>
-    <td>
-      {{recent.provider}}
-    </td>
-    <td>
-      {{ recent.creationDate | customDateFormat }}
-    </td>
-    <td>{{ recent.amount | number:'1.0-0' }} XAF</td>
-    <td>
-      <span class="badge badge-secondary counter digits"
-        [ngClass]="recent.status=='PENDING'?' bg-warning':recent.status=='SUCCESS'?' bg-success':' bg-danger'">{{recent.status=='PENDING'?'EN
-        ATTENTE':recent.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</span>
-    </td>
-  </tr>
-
+  <tbody *ngIf="recentOrders.length > 0 else tabVide">
+    <tr *ngFor="let recent of recentOrders">
+      <td class="font-success">
+        <app-feather-icons icon="{{recent.type=='BUY_CRYPTO'||recent.type=='WITHDRAW'?'dollar-sign':(recent.type=='RECHARGE_CRYPTO'?'arrow-up-right':'arrow-down-left')}}"></app-feather-icons>
+        {{ recent.type=='BUY_CRYPTO'?'ACHAT DE '+recent.final_amount+'
+        '+recent.final_currency:recent.type=='DEPOSIT'?'RECHARGE':recent.type=='RECHARGE_CRYPTO'?'RECHARGE DE
+        '+recent.final_amount+' '+recent.final_currency:recent.type}}
+      </td>
+      <td>
+        {{ recent.creationDate | customDateFormat }}
+      </td>
+      <td>{{ recent.amount | number:'1.0-0' }} XAF</td>
+      <td>
+        <span class="badge badge-secondary counter digits"
+          [ngClass]="recent.status=='PENDING'?' bg-warning':recent.status=='SUCCESS'?' bg-success':' bg-danger'">{{recent.status=='PENDING'?'EN
+          ATTENTE':recent.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</span>
+      </td>
+    </tr>
+  </tbody>
+  <ng-template #tabVide>
+    <p class="text-center" style="font-size: 15px; margin: 0 30%">Aucune donnée n'est disponible</p>
+  </ng-template>
 </table>
 <ngb-pagination class="ms-3 mb-3" [collectionSize]="totalLenght" [page]="currentPage" [pageSize]="25"
   (pageChange)="getTransactions($event)">
