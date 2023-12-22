@@ -52,7 +52,7 @@ export class TransactionService {
 
   getAllTransaction(type:string, page:number): Observable<ResponseTransactionList> {
       return this.http.get<ResponseTransactionList>(
-        `${this.urlTransactionList}/all?type=${type}&page=${page}&limit=25`,
+        `${this.urlTransactionList}/all?page=${page}&limit=25${type?"&type="+type:''}`,
         this.config
       ).pipe(catchError((error)=> of(error.error)));
     

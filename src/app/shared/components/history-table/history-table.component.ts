@@ -9,7 +9,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
   styleUrls: ['./history-table.component.scss']
 })
 export class HistoryTableComponent implements OnInit {
-  @Input() type: string
+  @Input() type?: string
 
   loader: boolean = true
   recentOrders: any[]
@@ -25,7 +25,7 @@ export class HistoryTableComponent implements OnInit {
     this.getTransactions(1)
   }
   getTransactions(page: number): void {
-    this.depositService.getAllTransaction(this.type, page).pipe(
+    this.depositService.getAllTransaction(this.type!, page).pipe(
       catchError((error) => {
         return of(error.error)
       })
