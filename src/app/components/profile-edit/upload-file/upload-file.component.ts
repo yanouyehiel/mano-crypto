@@ -59,12 +59,15 @@ export class UploadFileComponent {
       console.log(response)
       if (response.statusCode === 1000) {
         this.toast.success('Envoyé, vous serrez notifié !');
+        let localStorageUser = JSON.parse(localStorage.getItem('user-mansexch')!)
         if(this.cniFile){
           this.kyc[this.kyc.indexOf(this.kyc.find((e)=>e.document_type=='cni'))].status = 'submitted'
         }
         if(this.cniPersonFile){
           this.kyc[this.kyc.indexOf(this.kyc.find((e)=>e.document_type=='cni_person'))].status = 'submitted'
         }
+        localStorageUser.user.kyc = this.kyc
+        localStorage.setItem('user-mansexch', JSON.stringify(localStorageUser))
       } else {
         this.toast.error(response.message)
       }

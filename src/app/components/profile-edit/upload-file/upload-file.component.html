@@ -5,11 +5,11 @@
             <div class="row">
                <ng-container *ngFor="let item of kyc">
                   <div class="col-md-6 col-12">
-                     <label class="mb-3">{{item.document_type=='cni'?'Pièce d\'identité':'Selfie de vous tenant la pièce
+                     <label class="mb-3 text-light">{{item.document_type=='cni'?'Pièce d\'identité':'Selfie de vous tenant la pièce
                         d\'identité
                         dans la
                         main'}}</label>
-                        <span *ngIf="item.status=='rejected'" class="float-end text-center mb-3"><span class="text-danger">Rejeté</span><br><span *ngIf="item.reason" class="text-light">{{item.kyc.reason}}</span> </span>
+                        <span *ngIf="item.status=='rejected'" class="float-end text-center mb-3"><span class="text-danger">Rejeté</span><br><span *ngIf="item.reject_reason" class="text-light">{{item.kyc.reason}}</span> </span>
                      <div class="dropzone dz-clickable" *ngIf="item.status!='approved';else approvedTemplate">
 
                         <ngx-dropzone
