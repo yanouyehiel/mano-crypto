@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of } from 'rxjs';
 import {
@@ -25,6 +26,7 @@ import Swal from 'sweetalert2';
 })
 export class RetirerFondsComponent implements OnInit {
   constructor(
+    private router: Router,
     private modalService: NgbModal,
     private authService: AuthService,
     private depositService: TransactionService,
@@ -74,6 +76,27 @@ export class RetirerFondsComponent implements OnInit {
 
 
   initTransaction() {
+    let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
+    if((user.kyc as any[]).filter((e)=>e.status!='approved').length!=(user.kyc as any[]).length){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: `Erreur`,
+        text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+        // type: 'warning',
+        confirmButtonText: 'Valider mon compte',
+        reverseButtons: true
+      }).then((result:any)=>{
+        this.router.navigate(['/client/profile-edit'])
+      })
+      return
+    }
     this.authService
       .sendOtp()
       .pipe(

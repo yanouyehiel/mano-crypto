@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of } from 'rxjs';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./send-crypto.component.scss'],
 })
 export class SendCryptoComponent implements OnInit {
-  constructor(private modalService: NgbModal, private fb: FormBuilder, private transactionService: CryptoTransactionService) { }
+  constructor(private router:Router, private modalService: NgbModal, private fb: FormBuilder, private transactionService: CryptoTransactionService) { }
   public recentOrders: any[] = [];
   public loader: boolean = true;
   public sendForm: FormGroup;
@@ -36,6 +37,27 @@ export class SendCryptoComponent implements OnInit {
     } else if (this.sendForm.value['currency'].length < 1) {
       this.alertMsg = "Selectionnez la crypto-monnaie !"
     } else {
+      let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
+    if((user.kyc as any[]).filter((e)=>e.status!='approved').length!=(user.kyc as any[]).length){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: `Erreur`,
+        text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+        // type: 'warning',
+        confirmButtonText: 'Valider mon compte',
+        reverseButtons: true
+      }).then((result:any)=>{
+        this.router.navigate(['/client/profile-edit'])
+      })
+      return
+    }
       let modalRef = this.modalService.open(ConfirmPasswordComponent);
 
       modalRef.dismissed.subscribe((res) => {
