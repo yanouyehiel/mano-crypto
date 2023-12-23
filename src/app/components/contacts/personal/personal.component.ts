@@ -37,7 +37,6 @@ export class PersonalComponent implements OnInit {
     this.history = !this.history;
   }
   ngOnInit(): void {
-    console.log(this.users)
     this.setUserDisplay(this.users[0])
     this.fetchHistory(1, this.user._id)
     this.setPaginationOnBottom()
@@ -203,9 +202,28 @@ export class PersonalComponent implements OnInit {
 
   setPaginationOnBottom() {
     let windowsHeight = window.innerHeight
-    console.log(windowsHeight)
     let historyComponent = document.getElementById('right-history')
     historyComponent!.style.height = `${windowsHeight - 50}px`;
+  }
+
+  getTextHistory(transaction:any):string{
+    switch (transaction.type) {
+      case 'DEPOSIT':
+        return `Recharge de manen mobile de ${transaction.amount} ${transaction.currency}`;
+      case 'WITHDRAW':
+        return `Retrait de manen mobile de ${transaction.amount} ${transaction.currency}`;
+      case 'RECHARGE_CRYPTO':
+        return `Recharge de ${transaction.final_amount} ${transaction.final_currency}`;
+      case 'WITHDRAW_CRYPTO':
+        return `Retrait de ${transaction.final_amount} ${transaction.final_currency}`;
+      case 'BUY_CRYPTO':
+        return `Achat de ${transaction.final_amount} ${transaction.final_currency}`;
+      case 'SELL_CRYPTO':
+        return `Vante de ${transaction.final_amount} ${transaction.final_currency}`;
+      default:
+        return transaction.type;
+
+    }
   }
 
   getHistory(transaction:any){

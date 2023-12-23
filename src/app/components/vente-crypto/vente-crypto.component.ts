@@ -35,10 +35,9 @@ ngOnInit(): void {
 getWalletDetails() {
   
   this.cryptoService.getWalletDetails().subscribe((value) => {
-    console.log(value)
+    
     if(value && value.statusCode==1000){
       this.wallet = value.data.details.filter((e:any)=>e.image_url!=null);
-      console.log(this.wallet)
     }
   });
 }
@@ -70,7 +69,7 @@ getWalletDetails() {
       },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        console.log(value)
+        
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
@@ -95,7 +94,6 @@ getWalletDetails() {
               })
             )
             .toPromise();
-            console.log(responseFees)
             const responseAmountToXAF = await this.cryptoService
             .convertToFiat({
               crypto_currency: this.typeCrypto,
@@ -104,7 +102,6 @@ getWalletDetails() {
               catchError((error)=>of(error.error))
             )
             .toPromise();
-            console.log(responseAmountToXAF)
           if (responseFees.statusCode==1000 && responseAmountToXAF.statusCode==1000) {
             const responseFeeToXAF = await this.cryptoService
             .convertToFiat({
@@ -136,7 +133,7 @@ getWalletDetails() {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-    console.log(result)
+    
 
     if (result.statusCode!=1000) {
       Swal.fire('Vente annulée', result.message, 'error');
@@ -186,7 +183,6 @@ getWalletDetails() {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-      console.log(result)
       if (result.isConfirmed) {
         if(result.value.statusCode!=1000){
           Swal.fire('Vante annulée', result.value.message, 'error');

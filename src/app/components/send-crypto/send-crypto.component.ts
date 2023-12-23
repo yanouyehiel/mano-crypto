@@ -54,7 +54,6 @@ export class SendCryptoComponent implements OnInit {
   }
 
   initTransfert() {
-    console.log(this.sendForm.value)
     this.transactionService.getCryptoFees({ 'crypto_currency': this.sendForm.value['currency'], 'amount': this.sendForm.value['amount'] })
       .pipe(
         catchError((error) => {
@@ -74,7 +73,6 @@ export class SendCryptoComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value.statusCode == 1000) {
-          console.log((parseFloat(value.data.withdrawFees.fee) + parseFloat(this.sendForm.value['amount'])))
           this.askConfirmTransaction(value)
         } else {
           Swal.fire('L\'operation a echoue', value.message, 'error');
@@ -120,7 +118,7 @@ export class SendCryptoComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-      console.log(result)
+      
       if (result.isConfirmed) {
         if (result.value.statusCode == 1000) {
           this.success();

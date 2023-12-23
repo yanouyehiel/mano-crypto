@@ -37,7 +37,6 @@ export class ProfileFinanceComponent implements OnInit {
 
   getWalletDetails() {
     this.cryptoService.getWalletDetails().subscribe((response: any) => {
-      console.log(response)
       this.walletData = response.data.details
     })
   }

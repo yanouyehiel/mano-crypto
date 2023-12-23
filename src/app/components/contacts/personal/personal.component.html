@@ -42,7 +42,7 @@
                   <ul>
                     <li *ngIf="user.account_status!='suspended'"><a
                         (click)="manageUserStatus('suspended')">Suspendre</a></li>
-                    <li *ngIf="user.account_status!='banned'"><a (click)="manageUserStatus('banned')">Bloquer</a></li>
+                    <li *ngIf="user.account_status!='banned'"><a (click)="manageUserStatus('banned')">Bannir</a></li>
                     <li *ngIf="user.account_status!='active'"><a (click)="manageUserStatus('active')">Activer</a></li>
                     <li><a (click)="openHistory()">Voir l'historique</a></li>
                     <!-- <li (click)="openPrint()"><a>Print</a></li> -->
@@ -136,8 +136,8 @@
     </div>
     <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3" [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
       <div class="media-body mt-0">
-        <h6 class="mt-0">{{item.status}}</h6>
-        <p class="mb-0">{{item.type}}</p><span class="f-12">{{item.creationDate|customDateFormat}}</span>
+        <h6 class="mt-0">{{item.status=='PENDING'?'EN ATTENTE':item.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</h6>
+        <p class="mb-0">{{getTextHistory(item)}}</p><span class="f-12">{{item.creationDate|customDateFormat}}</span>
       </div>
     </div>
     <div style="position: absolute; bottom:0px;">

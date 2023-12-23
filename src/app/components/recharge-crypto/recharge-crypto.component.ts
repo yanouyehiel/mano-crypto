@@ -128,7 +128,6 @@ export class RechargeCryptoComponent implements OnInit {
       },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        console.log(value);
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
@@ -151,7 +150,6 @@ export class RechargeCryptoComponent implements OnInit {
             throw new Error('User not found');
           }
         } catch (error: any) {
-          console.log(error);
 
           Swal.showValidationMessage(
             `Impossible de traiter votre requete, Veuillez reessayer plus tard`
@@ -164,7 +162,7 @@ export class RechargeCryptoComponent implements OnInit {
     });
 
     if (result) {
-      console.log(result)
+      
       if (result.statusCode == 1000) {
         Swal.fire(
           'Success',

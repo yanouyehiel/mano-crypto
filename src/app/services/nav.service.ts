@@ -63,7 +63,6 @@ export class NavService {
   private isNotAdmin() {
     try {
       let userLocal = JSON.parse(localStorage.getItem('user-mansexch')!).user
-      console.log(userLocal.role+" His is the user role")
       switch (userLocal.role) {
         case 'customer':
           return true;

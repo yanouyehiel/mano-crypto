@@ -95,7 +95,7 @@ export class AddCryptoComponent implements OnInit {
       },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        console.log(value)
+        
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
@@ -120,7 +120,6 @@ export class AddCryptoComponent implements OnInit {
               })
             )
             .toPromise();
-            console.log(responseFees)
             const responseAmountToXAF = await this.cryptoService
             .convertToFiat({
               crypto_currency: this.typeCrypto,
@@ -129,7 +128,6 @@ export class AddCryptoComponent implements OnInit {
               catchError((error)=>of(error.error))
             )
             .toPromise();
-            console.log(responseAmountToXAF)
           if (responseFees.statusCode==1000 && responseAmountToXAF.statusCode==1000) {
             const responseFeeToXAF = await this.cryptoService
             .convertToFiat({
@@ -161,7 +159,7 @@ export class AddCryptoComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-    console.log(result)
+    
 
     if (result.statusCode!=1000) {
       Swal.fire('Achat annulée', result.message, 'error');
@@ -211,7 +209,7 @@ export class AddCryptoComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-      console.log(result)
+      
       if (result.isConfirmed) {
         if(result.value.statusCode!=1000){
           Swal.fire('Achat annulée', result.value.message, 'error');

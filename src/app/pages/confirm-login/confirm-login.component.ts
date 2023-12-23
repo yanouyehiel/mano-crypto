@@ -54,7 +54,6 @@ export class ConfirmLoginComponent implements OnInit {
     if (code.length == 6 && this.estConstitueeDeChiffres(code)) {
       this.dataUser.otpCode = this.verifyCodeForm.controls['codeValue'].value
       this.authService.verifyUser(this.dataUser).subscribe((response: any) => {
-        console.log(response)
         if (response.statusCode === 1004) {
           this.error = response.statusCode
         } else if (response.statusCode === 1000) {

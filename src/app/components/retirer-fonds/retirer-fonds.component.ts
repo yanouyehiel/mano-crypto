@@ -126,7 +126,7 @@ export class RetirerFondsComponent implements OnInit {
       },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        console.log(value);
+        ;
         try {
           const data = {
             otpSecret: secret,
@@ -153,7 +153,7 @@ export class RetirerFondsComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-    console.log(result);
+    ;
     if (result.statusCode !== 1000) {
       Swal.fire(
         'Erreur',

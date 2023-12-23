@@ -30,7 +30,6 @@ export class HistoryTableComponent implements OnInit {
         return of(error.error)
       })
     ).subscribe((response: ResponseParent) => {
-      console.log(response)
       if (response.statusCode != 1000) {
         this.errorDisplay = "Impossible de charger les donnees, " + response.message ? response.message : " Problème de réseau ";
       }
@@ -42,6 +41,26 @@ export class HistoryTableComponent implements OnInit {
       this.loader = false;
 
     })
+  }
+
+  getTextHistory(transaction:any):string{
+    switch (transaction.type) {
+      case 'DEPOSIT':
+        return `Recharge de manen mobile de ${transaction.amount} ${transaction.currency}`;
+      case 'WITHDRAW':
+        return `Retrait de manen mobile de ${transaction.amount} ${transaction.currency}`;
+      case 'RECHARGE_CRYPTO':
+        return `Recharge de ${transaction.final_amount} ${transaction.final_currency}`;
+      case 'WITHDRAW_CRYPTO':
+        return `Retrait de ${transaction.final_amount} ${transaction.final_currency}`;
+      case 'BUY_CRYPTO':
+        return `Achat de ${transaction.final_amount} ${transaction.final_currency}`;
+      case 'SELL_CRYPTO':
+        return `Vante de ${transaction.final_amount} ${transaction.final_currency}`;
+      default:
+        return transaction.type;
+
+    }
   }
 
 

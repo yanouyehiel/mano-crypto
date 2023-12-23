@@ -41,11 +41,9 @@ export class RegisterComponent implements OnInit {
     public authService: AuthService,
     private toast: ToastrService
   ) {
-    //this.selectedCountry.valueChanges.subscribe(value => console.log(value));
   }
   handle(selectedCountry:any){
     this.selectedCountry = selectedCountry;
-    // console.log(this.selectDiv?.firstChild?.firstChild?.lastChild?.firstChild!)
 
   }
 
@@ -59,7 +57,6 @@ export class RegisterComponent implements OnInit {
     this.selectedCountry = countries.find((e)=>e.dial_code == "+237")
     // selectDiv!.innerText = this.selectedCountry!.name
     // this.selectDiv?.firstChild?.firstChild?.lastChild?.firstChild?.nodeValue?.replace('',this.selectedCountry!.name)
-    // console.log(this.selectDiv)
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.email],
@@ -73,7 +70,6 @@ export class RegisterComponent implements OnInit {
 
   onCountryChange(selectedValue: Country) {
     this.selectedCountry = selectedValue;
-    console.log(this.selectedCountry)
   }
   
 
@@ -136,7 +132,6 @@ export class RegisterComponent implements OnInit {
         phoneNumber: this.registerForm.controls['phoneNumber'].value
       }
       
-      //console.log(this.user)
       this.textBtn = 'Chargement...'
       try {
         this.authService.register(this.user).subscribe((response: ResponseUser) => {
@@ -148,27 +143,23 @@ export class RegisterComponent implements OnInit {
               token: response.data?.token
             }
           }
-          //console.log(this.returnedValue); 
 
           if (this.returnedValue.statusCode == 1000) {
             this.router.navigate([`/auth/confirm-login/${this.user.email}`])
           }     
         }, (error) => {
-          //console.log(error)
           this.showToast(error.error.message)
           this.textBtn = "S'INSCRIRE"
           this.returnedValue = {
             statusCode: error.error.statusCode,
             message: error.error.message
           }
-          //console.log(this.returnedValue)
         });
 
         /*const data = {
           receiver_email: this.user.email
         }
         this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
-          console.log(response)
           this.returnedValue.statusCode = response.statusCode
         })
 
@@ -176,7 +167,6 @@ export class RegisterComponent implements OnInit {
           this.openModal('myModal')
         }*/
       } catch (error) {
-        console.log(error)
       }
     } 
     

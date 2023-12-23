@@ -46,7 +46,6 @@ export class RechargeCompteComponent implements OnInit {
   }
 
   stepAttribute(step: number): void {
-    console.log(this.depositForm.value);
     this.step = step + 1;
     if (this.step === 1) {
       this.classStep1 = 'current';

@@ -38,7 +38,6 @@ export class ForgotPasswordComponent implements OnInit {
     this.passwordForm = this.fb.group({
       password: ['', [Validators.minLength(8), Validators.required]]
     }) 
-    console.log(this.data)
   }
 
   addInfoToast() {
@@ -69,10 +68,8 @@ export class ForgotPasswordComponent implements OnInit {
   changePassword() {
     this.txtBtn = 'Chargement...'
     this.data.newPassword = this.passwordForm.controls['password'].value
-    //console.log(this.data)
     if (this.verifierMotDePasse(this.data.newPassword)) {
       this.userService.resetPassword(this.data).subscribe((res: ResponseUser) => {
-        console.log(res)
         if (res.statusCode === 1000) {
           this.txtBtn = 'Réussi'
           this.addInfoToast()

@@ -43,7 +43,6 @@ export class EnterEmailComponent implements OnInit {
     }
     this.userService.askResetPassword(data)
     .subscribe((res: ResponseUser) => {
-      console.log(res)
       localStorage.setItem('tokenReset-mansexch', JSON.stringify(res.data?.token))
       this.response = res.statusCode
       this.textBtn = 'Success'

@@ -56,7 +56,7 @@ export class UploadFileComponent {
   onSubmitKyc() {
     this.isLoading = true
     this.userService.submitKyc(this.formData).pipe(catchError((error) => of(error.error))).subscribe((response: ResponseParent) => {
-      console.log(response)
+      
       if (response.statusCode === 1000) {
         this.toast.success('Envoyé, vous serrez notifié !');
         let localStorageUser = JSON.parse(localStorage.getItem('user-mansexch')!)

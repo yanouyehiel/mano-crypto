@@ -3,10 +3,7 @@
     <div class="loader-3"></div>
   </div>
 </div>
-<div class="alert alert-light" *ngIf="errorDisplay">
-  <span class="text-danger"><strong>Erreur: </strong> {{errorDisplay}} !
-  </span>
-</div>
+
 <table *ngIf="!loader" class="table table-bordernone">
   <thead>
     <tr>
@@ -17,20 +14,13 @@
       <th>Status</th>
     </tr>
   </thead>
-  <!-- <div class="alert alert-warning my-3" *ngIf="recentOrders.length==0">
-    <span class="text-light"
-      > Aucune donnée n'est disponible !
-    </span>
-  </div> -->
   <p class="text-light"> {{errorDisplay}}
   </p>
   <tbody *ngIf="recentOrders.length > 0 else tabVide">
     <tr *ngFor="let recent of recentOrders">
       <td class="font-success">
         <app-feather-icons icon="{{recent.type=='BUY_CRYPTO'||recent.type=='WITHDRAW'?'dollar-sign':(recent.type=='RECHARGE_CRYPTO'?'arrow-up-right':'arrow-down-left')}}"></app-feather-icons>
-        {{ recent.type=='BUY_CRYPTO'?'ACHAT DE '+recent.final_amount+'
-        '+recent.final_currency:recent.type=='DEPOSIT'?'RECHARGE':recent.type=='RECHARGE_CRYPTO'?'RECHARGE DE
-        '+recent.final_amount+' '+recent.final_currency:recent.type}}
+        {{ getTextHistory(recent)}}
       </td>
       <td>
         {{ recent.creationDate | customDateFormat }}

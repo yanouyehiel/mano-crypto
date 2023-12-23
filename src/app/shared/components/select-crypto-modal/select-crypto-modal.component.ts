@@ -12,7 +12,6 @@ export class SelectCryptoModalComponent implements OnInit{
 
   ngOnInit(): void {
       
-    console.log(this.listItems)
   }
   setSelected(crypto:any){
     this.activatedModal.close(crypto)

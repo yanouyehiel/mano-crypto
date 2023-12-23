@@ -16,7 +16,6 @@ export class ConfirmPasswordComponent {
 
 
   ckeckConfirmation(password: string) {
-    console.log({ email: this.userParse.user.email, password: password })
 
     this.authService.login({ email: this.userParse.user.email, password: password }).pipe(catchError((error) => {
       return of((error.error))
