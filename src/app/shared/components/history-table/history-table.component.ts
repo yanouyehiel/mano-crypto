@@ -44,11 +44,12 @@ export class HistoryTableComponent implements OnInit {
   }
 
   getTextHistory(transaction:any):string{
+    
     switch (transaction.type) {
       case 'DEPOSIT':
-        return `Recharge de manen mobile de ${transaction.amount} ${transaction.currency}`;
+        return `Recharge de manen mobile de ${transaction.amount} FCFA`;
       case 'WITHDRAW':
-        return `Retrait de manen mobile de ${transaction.amount} ${transaction.currency}`;
+        return `Retrait de manen mobile de ${transaction.amount} FCFA`;
       case 'RECHARGE_CRYPTO':
         return `Recharge de ${transaction.final_amount} ${transaction.final_currency}`;
       case 'WITHDRAW_CRYPTO':
