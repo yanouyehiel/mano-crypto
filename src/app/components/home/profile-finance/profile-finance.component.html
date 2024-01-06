@@ -9,7 +9,7 @@
               <img [src]="data.image_url?data.image_url:'../../../../assets/images/XAF.png'" alt="icon" width="60px" height="60px">
             </div>
             <div style="display: flex; justify-content: center; align-items: center;">
-              <h5 style="margin-right: 10px;">{{ data.wallet.solde }}</h5>
+              <h5 style="margin-right: 10px;">{{ data.wallet.type=='XAF'?displaySolde(data.wallet.solde) : data.wallet.solde | number:'1.0-9' }}</h5>
               <p style="margin-top: -9px;" class="devise">{{ data.wallet.type }}</p>
             </div>
 

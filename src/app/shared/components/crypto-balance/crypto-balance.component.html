@@ -17,7 +17,7 @@
                   class="image-thumbnail"
                 />
               </div>
-              <h5>{{ detail.wallet.solde }}</h5>
+              <h5>{{ detail.wallet.solde |number:'1.0-9' }}</h5>
               <p>Les derniers Jours</p>
               <a class="btn-arrow arrow-primary"
               [ngClass]="detail.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"

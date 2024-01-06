@@ -20,7 +20,7 @@
                                       class="image-thumbnail"
                                     />
                                   </div>
-                                  <h5>{{ crypto.wallet.solde+' '+crypto.wallet.type}}</h5>
+                                  <h5>{{ crypto.wallet.solde | number:'1.0-9'}}{{' '+crypto.wallet.type}}</h5>
                                   <p *ngIf="crypto.details.weekly_percentage">Les derniers Jours</p>
                                   <a *ngIf="crypto.details.weekly_percentage" class="btn-arrow arrow-primary"
                                   [ngClass]="crypto.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"
@@ -31,7 +31,7 @@
                                   ></i>
                                   {{ crypto.details.weekly_percentage | number : "1.2-2" }} %</a
                                   >
-                                  <button class="btn btn-dark mt-3 arrow-primary" [disabled]="crypto.wallet.solde===0"
+                                  <button class="btn btn-dark mt-3 arrow-primary" [disabled]="crypto.wallet.solde<=0"
                                         (click)="initBuyingProcess(crypto.wallet.type)">Vendre</button>
                                 </div>
                               </div>

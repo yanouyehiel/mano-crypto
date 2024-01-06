@@ -37,17 +37,18 @@ export class AddCryptoComponent implements OnInit {
   public recentOrders: any[] = [];
   public loader: boolean = true;
   public responseFee: ResponseParent;
+  reload = false;
   cryptoAmount: number;
-  xafAmount:number;
+  xafAmount: number;
 
   constructor(
     private modalService: NgbModal,
     public navService: NavService,
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   VerticallyCenteredModal(verticallyContent: any, item: any) {
     const modalRef = this.modalService.open(verticallyContent);
@@ -75,10 +76,10 @@ export class AddCryptoComponent implements OnInit {
 
   async initBuyingProcess(crypto: string) {
     const { value: result } = await Swal.fire({
-      titleText:`Achat de ${crypto}`,
+      titleText: `Achat de ${crypto}`,
       html: `Combien de ${crypto} voulez vous acheter?`,
       input: 'text',
-      inputAutoFocus:true,
+      inputAutoFocus: true,
       inputPlaceholder: `Ex: 0.02`,
       showCancelButton: true,
       confirmButtonText: 'Acheter',
@@ -95,7 +96,7 @@ export class AddCryptoComponent implements OnInit {
       },
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
-        
+
         this.cryptoAmount = parseFloat(value);
         this.typeCrypto = crypto;
         try {
@@ -104,7 +105,7 @@ export class AddCryptoComponent implements OnInit {
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             }).pipe(
-              catchError((error)=>{
+              catchError((error) => {
                 if (
                   error.status === 0 ||
                   error.statusText === 'Unknown Error'
@@ -120,24 +121,24 @@ export class AddCryptoComponent implements OnInit {
               })
             )
             .toPromise();
-            const responseAmountToXAF = await this.cryptoService
+          const responseAmountToXAF = await this.cryptoService
             .convertToFiat({
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             }).pipe(
-              catchError((error)=>of(error.error))
+              catchError((error) => of(error.error))
             )
             .toPromise();
-          if (responseFees.statusCode==1000 && responseAmountToXAF.statusCode==1000) {
+          if (responseFees.statusCode == 1000 && responseAmountToXAF.statusCode == 1000) {
             const responseFeeToXAF = await this.cryptoService
-            .convertToFiat({
-              crypto_currency: this.typeCrypto,
-              amount:parseFloat(responseFees.data.buyFees.fee),
-            }).pipe(
-              catchError((error)=>of(error.error))
-            )
-            .toPromise();
-            if(responseFeeToXAF.statusCode!=1000){
+              .convertToFiat({
+                crypto_currency: this.typeCrypto,
+                amount: parseFloat(responseFees.data.buyFees.fee),
+              }).pipe(
+                catchError((error) => of(error.error))
+              )
+              .toPromise();
+            if (responseFeeToXAF.statusCode != 1000) {
               throw new Error(responseFeeToXAF);
             }
             this.xafAmount = parseInt(responseAmountToXAF.data.xaf_amount) + parseInt(responseFeeToXAF.data.xaf_amount)
@@ -145,7 +146,7 @@ export class AddCryptoComponent implements OnInit {
           } else {
             throw new Error('User not found');
           }
-        } catch (error:any) {
+        } catch (error: any) {
           if (error.error) {
             Swal.showValidationMessage(`${error.error.message}`);
           } else {
@@ -159,20 +160,19 @@ export class AddCryptoComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-    
 
-    if (result.statusCode!=1000) {
+
+    if (result.statusCode != 1000) {
       Swal.fire('Achat annulée', result.message, 'error');
-    }else{
+    } else {
       this.askConfirmTransaction(result);
     }
   }
 
   askConfirmTransaction(value: any) {
     Swal.fire({
-      titleText:`Recharge de ${this.typeCrypto}`,
-      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${
-        this.xafAmount.toLocaleString('fr-FR')} XAF</b>`,
+      titleText: `Recharge de ${this.typeCrypto}`,
+      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${this.xafAmount.toLocaleString('fr-FR')} XAF</b>`,
       showDenyButton: true,
       confirmButtonText: 'Payer',
       denyButtonText: `Annuler`,
@@ -184,14 +184,15 @@ export class AddCryptoComponent implements OnInit {
               crypto_currency: this.typeCrypto,
               amount: this.cryptoAmount,
             }).pipe(
-              catchError((error)=>{
+              catchError((error) => {
                 if (error.status === 0 || error.statusText === 'Unknown Error') {
                   Swal.showValidationMessage(
                     `Erreur de connexion Internet. Veuillez vérifier votre connexion.`
                   );
                 }
 
-                return of(error.error)})
+                return of(error.error)
+              })
             )
             .toPromise();
           if (response) {
@@ -201,25 +202,27 @@ export class AddCryptoComponent implements OnInit {
           }
         } catch (error: any) {
 
-            Swal.showValidationMessage(
-              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
-            );
+          Swal.showValidationMessage(
+            `Impossible de traiter votre requete, Veuillez reessayer plus tard`
+          );
           return null;
         }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-      
+
       if (result.isConfirmed) {
-        if(result.value.statusCode!=1000){
+        if (result.value.statusCode === 1000) {
+          Swal.fire('Success', `Achat effectué avec success`, 'success');
+          // this.reload = true;
+        } else {
           Swal.fire('Achat annulée', result.value.message, 'error');
-        }else{
-          Swal.fire('Success',`Achat effectué avec success`,  'success');
         }
 
       } else if (result.isDenied) {
         Swal.fire('Achat annulée', '', 'error');
       }
+      // this.reload = false;
     });
   }
 }

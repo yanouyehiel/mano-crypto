@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -8,8 +8,9 @@ import { TransactionService } from 'src/app/services/transaction.service';
   templateUrl: './history-table.component.html',
   styleUrls: ['./history-table.component.scss']
 })
-export class HistoryTableComponent implements OnInit {
+export class HistoryTableComponent implements OnInit, OnChanges {
   @Input() type?: string
+  @Input() reloadChild?: any
 
   loader: boolean = true
   recentOrders: any[]
@@ -35,6 +36,7 @@ export class HistoryTableComponent implements OnInit {
       }
       else {
         this.recentOrders = response.data.transactions
+        console.log(this.recentOrders)
         this.currentPage = parseInt(response.data.currentPage)
         this.totalLenght = response.data.total_transactions
       }
@@ -42,9 +44,14 @@ export class HistoryTableComponent implements OnInit {
 
     })
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getTransactions(1)
+  }
+  getTextUsingStatus = (recent: any) => recent.status == 'PENDING' ? 'EN ATTENTE' : recent.status == 'SUCCESS' ? 'effectué' : recent.status == 'CREATED' ? 'initié' : recent.status == 'REJECTED' ? 'rejeté' : recent.status == 'FAILED' ? 'echoué' : recent.status
+  getClassUsingStatus = (recent: any) => recent.status=='PENDING'?' bg-secondary':recent.status=='SUCCESS'?' bg-success': recent.status == 'CREATED' ? 'bg-primary' : 'bg-danger'
 
-  getTextHistory(transaction:any):string{
-    
+  getTextHistory(transaction: any): string {
+
     switch (transaction.type) {
       case 'DEPOSIT':
         return `Recharge de manen mobile de ${transaction.amount} FCFA`;
@@ -57,7 +64,7 @@ export class HistoryTableComponent implements OnInit {
       case 'BUY_CRYPTO':
         return `Achat de ${transaction.final_amount} ${transaction.final_currency}`;
       case 'SELL_CRYPTO':
-        return `Vante de ${transaction.final_amount} ${transaction.final_currency}`;
+        return `Vente de ${transaction.amount} ${transaction.currency}`;
       default:
         return transaction.type;
 

@@ -1,0 +1,40 @@
+<div class="card">
+  <div
+    class="card-header pb-0 d-flex justify-content-between align-items-center"
+  >
+    <h5>Retraits en attente</h5>
+  </div>
+  <div class="card-body">
+    <div class="user-status table-responsive">
+      <table class="table table-bordernone">
+        <thead>
+          <tr>
+            <th scope="col">Demandeur</th>
+            <th scope="col">Numero de retrait</th>
+            <th scope="col">Montant</th>
+            <th scope="col">Date</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        
+          <tr *ngFor="let operation of operations">
+            <td class="f-w-600" *ngIf="operation.user;else withId">{{ operation.user.name }}</td>
+            <ng-template #withId> <td class="f-w-600">{{ operation.userId }}</td></ng-template>
+            <td>{{ operation.receiver  }}</td>
+            <td>{{ operation.amount.toLocaleString('fr-FR')+' FCFA'}}</td>
+            <td>{{ operation.creationDate | customDateFormat }}</td>
+            <td class="d-flex justify-content-around"><a class="btn btn-success"
+                (click)="manageWithdrawStatus('approved', operation)">Approuver</a><a class="btn btn-danger "
+                  (click)="manageWithdrawStatus('rejected', operation)">Rejéter</a></td>
+            
+            
+          </tr>
+          <p class="text-light"> {{messageToDisplay}}
+          </p>
+      </table>
+      <ngb-pagination class="ms-3 mb-3" [collectionSize]="totalLenght" [page]="currentPage" [pageSize]="25"
+  (pageChange)="fetchAwaitingWithdraws($event)">
+</ngb-pagination>
+    </div>
+  </div>
+</div>

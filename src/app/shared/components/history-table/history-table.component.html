@@ -14,28 +14,31 @@
       <th>Status</th>
     </tr>
   </thead>
-  <p class="text-light"> {{errorDisplay}}
-  </p>
-  <tbody *ngIf="recentOrders.length > 0 else tabVide">
+  
+  <ng-container *ngIf="recentOrders.length > 0 else tabVide">
     <tr *ngFor="let recent of recentOrders">
-      <td class="font-success">
-        <app-feather-icons icon="{{recent.type=='BUY_CRYPTO'||recent.type=='WITHDRAW'?'dollar-sign':(recent.type=='RECHARGE_CRYPTO'?'arrow-up-right':'arrow-down-left')}}"></app-feather-icons>
+      <td>
+        <app-feather-icons
+            icon="{{recent.type=='BUY_CRYPTO'||recent.type=='WITHDRAW'?'dollar-sign':(recent.type=='RECHARGE_CRYPTO'?'arrow-up-right':'arrow-down-left')}}"></app-feather-icons>
         {{ getTextHistory(recent)}}
       </td>
       <td>
         {{ recent.creationDate | customDateFormat }}
+        
       </td>
-      <td>{{ recent.amount | number:'1.0-0' }} XAF</td>
+      <td>{{(recent.type==='SELL_CRYPTO'? recent.final_amount : recent.amount) | number:'1.0-0' }} XAF</td>
       <td>
         <span class="badge badge-secondary counter digits"
-          [ngClass]="recent.status=='PENDING'?' bg-warning':recent.status=='SUCCESS'?' bg-success':' bg-danger'">{{recent.status=='PENDING'?'EN
-          ATTENTE':recent.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</span>
+          [ngClass]="getClassUsingStatus(recent)">{{getTextUsingStatus(recent)|uppercase}}<p *ngIf="recent.status=='REJECTED'">{{recent.reject_reason}}</p> </span>
+          
       </td>
     </tr>
-  </tbody>
+  </ng-container>
   <ng-template #tabVide>
     <p class="text-center" style="font-size: 15px; margin: 0 30%">Aucune donnée n'est disponible</p>
   </ng-template>
+  <p class="text-light"> {{errorDisplay}}
+  </p>
 </table>
 <ngb-pagination class="ms-3 mb-3" [collectionSize]="totalLenght" [page]="currentPage" [pageSize]="25"
   (pageChange)="getTransactions($event)">

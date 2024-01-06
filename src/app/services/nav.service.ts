@@ -60,41 +60,32 @@ export class NavService {
   private setScreenWidth(width: number): void {
     this.screenWidth.next(width);
   }
-  private isNotAdmin() {
+  private getRole() {
     try {
       let userLocal = JSON.parse(localStorage.getItem('user-mansexch')!).user
-      switch (userLocal.role) {
-        case 'customer':
-          return true;
-        case 'admin':
-          return false;
-        default:
-          return true;
-
-      }
+      console.log(userLocal.role != 'customer')
+      return userLocal.role
     } catch (error) {
-      return true;
+      return ''
     }
-
-
   }
 
   MENUITEMS: Menu[] = []
 
   getMenuItems() {
-    let isNoAdmin = this.isNotAdmin()
+    let role = this.getRole()
     this.MENUITEMS = [
 
       {
         headTitle1: 'Administration',
-        isHidden: isNoAdmin
+        isHidden: role == 'customer'
       },
       {
         title: 'Dashboard',
         icon: 'monitor',
         type: 'link',
         active: true,
-        isHidden: isNoAdmin,
+        isHidden: role != 'admin',
         path: '/admin/home'
       },
       {
@@ -102,8 +93,16 @@ export class NavService {
         icon: 'users',
         type: 'link',
         active: false,
-        isHidden: isNoAdmin,
+        isHidden: role == 'customer',
         path: '/admin/users'
+      },
+      {
+        title: 'Opérations',
+        icon: 'activity',
+        type: 'link',
+        active: false,
+        isHidden: role == 'customer',
+        path: '/admin/operations'
       },
       {
         headTitle1: 'Client'
