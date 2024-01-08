@@ -17,19 +17,8 @@
                 type="email"
                 placeholder="Entrer votre email"
                 formControlName="email"
+                required=""
               />
-              <div
-                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']"
-                class="text text-danger mt-1"
-              >
-                Email requis
-              </div>
-              <div
-                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']"
-                class="text text-danger mt-1"
-              >
-                Email invalide
-              </div>
             </div>
           </div>
           <div class="form-group">
@@ -49,18 +38,6 @@
               </div>
               <div class="show-hide" (click)="showPassword()" *ngIf="show">
                 <span class="Hide text-primary"></span>
-              </div>
-              <div
-                *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
-                class="text text-danger mt-1"
-              >
-                Mot de passe requis
-              </div>
-              <div
-                *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].value.length < 8"
-                class="text text-danger mt-1"
-              >
-                Les mots de passe doivent avoir au moins 8 caractères
               </div>
             </div>
           </div>
