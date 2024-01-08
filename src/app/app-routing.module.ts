@@ -20,6 +20,7 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
 import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-crypto.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.component';
+import { OperationsComponent } from './components/operations/operations.component';
 
 
 const routes: Routes = [
@@ -98,11 +99,10 @@ const routes: Routes = [
         path: 'users',
         component: ContactsComponent
       },
-      
-      // {
-      //   path:'operations',
-      //   component: O,
-      // }
+      {
+        path:'operations',
+        component: OperationsComponent,
+      }
     ]
   },
   {

@@ -77,6 +77,7 @@ export class RetirerFondsComponent implements OnInit {
 
   initTransaction() {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
+    console.log((user.kyc as any[]).filter((e)=>e.status!='approved').length+' '+(user.kyc as any[]).length)
     if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {

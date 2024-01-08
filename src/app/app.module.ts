@@ -57,6 +57,8 @@ import { ContactsFilterComponent } from './components/contacts/contacts-filter/c
 import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
 import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WithdrawCartComponent } from './shared/components/withdraw-cart/withdraw-cart.component';
+import { OperationsComponent } from './components/operations/operations.component';
 
 
 @NgModule({
@@ -106,6 +108,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ContactsFilterComponent,
     PersonalComponent,
     VenteCryptoComponent,
+    WithdrawCartComponent,
+    OperationsComponent
    ],
 
   imports: [

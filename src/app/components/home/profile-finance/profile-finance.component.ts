@@ -40,6 +40,10 @@ export class ProfileFinanceComponent implements OnInit {
       this.walletData = response.data.details
     })
   }
+  displaySolde(solde:any){
+    console.log(solde)
+   return parseInt(solde)
+  }
 
   truncateNumber(num: number, numDigits: number = 4): number {
     const factor = Math.pow(10, numDigits);

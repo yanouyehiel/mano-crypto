@@ -22,6 +22,8 @@ export class PersonalComponent implements OnInit {
   public contacts = data.contactData.contact
   public open: boolean = false
   public term: string = ''
+  public currentUser:any;
+  maxHistoryElements:number = 9
   @Input() users: any[];
   @Input() usersLength: number;
   @Input() filterName: string
@@ -33,15 +35,15 @@ export class PersonalComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private userService: UserService, private adminServise: AdminService) { }
 
-  showHistory() {
-    this.history = !this.history;
-  }
   ngOnInit(): void {
+    
+    this.currentUser = JSON.parse(localStorage.getItem('user-mansexch')!).user
     this.setUserDisplay(this.users[0])
-    this.fetchHistory(1, this.user._id)
+    this.pageHistoryChange(1)
     this.setPaginationOnBottom()
 
   }
+  
 
   emitFilterWithTerm() {
     this.applyFilterWithTerm.emit({ name: this.term })
@@ -54,7 +56,9 @@ export class PersonalComponent implements OnInit {
     this.isApproved = this.isKycApprouved()
   }
   fetchHistory(page: number, userId: string) {
-    this.adminServise.getUsersTransactions(page, userId).pipe(catchError((error) => {
+    
+    this.maxHistoryElements = parseInt((document.querySelector('#right-history')?.clientHeight! / document.querySelector('.elementHistory')?.clientHeight!).toString())-1
+    this.adminServise.getUsersTransactions(page, userId, this.maxHistoryElements).pipe(catchError((error) => {
       this.alertMsg = "Une erreur s'est produite, veuillez reessayer !"
       return of(error.error)
     })).subscribe((res: any) => {
@@ -71,6 +75,54 @@ export class PersonalComponent implements OnInit {
   pageChange(page: number) {
     this.currentPage = page;
     this.applyPageChange.emit(page)
+  }
+
+  manageUserRole(role: "validator" | "customer" | "admin") {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false,
+    })
+    swalWithBootstrapButtons.fire({
+      title: `Changer les droits de ce compte`,
+      text: `Voulez vous ${role == 'validator' ? 'donner le role de validateur à ' : role == 'admin' ? 'donner le role d\'administrateur à' : 'Reinitialiser les roles de'} ce compte de ${this.user.name} ?`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true
+    }).then((result: any) => {
+      if (result.value) {
+        this.adminServise.roleOfUser(this.user._id, role).subscribe((result) => {
+          if (result.statusCode === 1000) {
+            this.user.role = role
+            swalWithBootstrapButtons.fire(
+              'Success!',
+              'Opération terminé avec success.',
+              'success'
+            )
+          } else {
+            swalWithBootstrapButtons.fire(
+              'Error',
+              result.message,
+              'error'
+            )
+          }
+        })
+
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        // swalWithBootstrapButtons.fire(
+        //   'Fermé',
+        //   'Tout reste en place :)',
+        //   'error'
+        // )
+      }
+    })
   }
 
   manageUserStatus(action: "active" | "banned" | "suspended") {
@@ -195,6 +247,9 @@ export class PersonalComponent implements OnInit {
 
   openHistory() {
     this.open = !this.open
+    if(this.open){
+      this.pageHistoryChange(1)
+    }
   }
   pageHistoryChange(page: number) {
     this.fetchHistory(page, this.user._id)
@@ -232,6 +287,9 @@ export class PersonalComponent implements OnInit {
       description:transaction.type
     }
   }
+
+  getTextUsingStatus = (recent: any) => recent.status == 'PENDING' ? 'EN ATTENTE' : recent.status == 'SUCCESS' ? 'effectué' : recent.status == 'CREATED' ? 'initié' : recent.status == 'REJECTED' ? 'rejeté' : recent.status == 'FAILED' ? 'echoué' : recent.status
+  getClassUsingStatus = (recent: any) => recent.status=='PENDING'?' bg-secondary':recent.status=='SUCCESS'?' bg-success': recent.status == 'CREATED' ? 'bg-primary' : 'bg-danger'
 
 
 }

@@ -44,6 +44,9 @@
                         (click)="manageUserStatus('suspended')">Suspendre</a></li>
                     <li *ngIf="user.account_status!='banned'"><a (click)="manageUserStatus('banned')">Bannir</a></li>
                     <li *ngIf="user.account_status!='active'"><a (click)="manageUserStatus('active')">Activer</a></li>
+                    <li *ngIf="currentUser.role=='admin'"><a *ngIf="user.role=='customer'"
+                        (click)="manageUserRole('validator')">Rendre validateur</a><a *ngIf="user.role=='validator'"
+                        (click)="manageUserRole('customer')">Reinitialiser le role</a></li>
                     <li><a (click)="openHistory()">Voir l'historique</a></li>
                     <!-- <li (click)="openPrint()"><a>Print</a></li> -->
                   </ul>
@@ -77,9 +80,9 @@
                   <ng-container *ngFor="let wallet of user.wallets">
                     <ng-container [ngSwitch]="wallet.type">
                       <li *ngSwitchCase="'BTC'">Bitcoin <span
-                          class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} BTC</span></li>
+                          class="font-primary">{{wallet.solde |number:'1.0-9' }} BTC</span></li>
                       <li *ngSwitchCase="'ETH'">Ethereum <span
-                          class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}} ETH</span></li>
+                          class="font-primary">{{wallet.solde |number:'1.0-9' }} ETH</span></li>
                       <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}}
                           FCFA</span></li>
                     </ng-container>
@@ -130,22 +133,26 @@
       </span>
     </h6>
   </div>
+
   <div class="history-details overflow-auto" *ngIf="transactions">
+    <div>
+      <ngb-pagination class="ms-3 mb-3" [collectionSize]="historyLength" [page]="currentHistoryPage" [pageSize]="maxHistoryElements"
+        (pageChange)="pageHistoryChange($event)">
+      </ngb-pagination>
+    </div>
     <div class="text-center" *ngIf="transactions.length==0"><i class="icofont icofont-ui-edit"></i>
       <p>{{alertMsg}}</p>
     </div>
-    <div *ngFor="let item of transactions" class="media"><i class="icofont icofont-star me-3" [ngClass]="item.status=='FAILED'?'bg-danger':item.status=='SUCCESS'?'bg-success':''"></i>
+    <div *ngFor="let item of transactions" class="media elementHistory"><i class="icofont icofont-star me-3"
+        [ngClass]="getClassUsingStatus(item)"></i>
       <div class="media-body mt-0">
-        <h6 class="mt-0">{{item.status=='PENDING'?'EN ATTENTE':item.status=='SUCCESS'?'EFFECTUE':'ECHOUE'}}</h6>
+        <h6 class="mt-0">{{getTextUsingStatus(item)|uppercase}}</h6>
         <p class="mb-0">{{getTextHistory(item)}}</p><span class="f-12">{{item.creationDate|customDateFormat}}</span>
       </div>
     </div>
-    <div style="position: absolute; bottom:0px;">
-   <ngb-pagination class="ms-3 mb-3" [collectionSize]="historyLength" [page]="currentHistoryPage" [pageSize]="25"
-        (pageChange)="pageHistoryChange($event)">
-      </ngb-pagination> 
-    </div>
+
+
   </div>
 
-  
+
 </div>

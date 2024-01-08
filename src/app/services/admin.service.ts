@@ -47,8 +47,8 @@ export class AdminService {
     return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`,bodyFilter.criteria, this.config)
   }
 
-  getUsersTransactions(page:number,id?:string): Observable<any> {
-    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=25`:`${this.urlAdmin}/transactions?page=${page}&limit=25`, this.config)
+  getUsersTransactions(page:number,id?:string, max?:number,status?:string): Observable<any> {
+    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=${max?max:9}`:`${this.urlAdmin}/transactions?page=${page}&limit=${max?max:25}&status=${status}`, this.config)
   }
 
   getUsersStatistics(country:string): Observable<any> {
@@ -58,6 +58,24 @@ export class AdminService {
     banAnUser(uid: string, action: "active" | "banned" | "suspended"): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
             `${this.urlAdmin}/ban?userId=${uid}&action=${action}`,{},
+            this.config
+        ).pipe(catchError((error) => {
+            return of(error.error)
+        }));
+    }
+
+    manageWithdrawStatus(transaction_id: string, action: "approved" | "rejected",body:any): Observable<ResponseParent> {
+        return this.http.put<ResponseParent>(
+            `${this.urlAdmin}/withdraw?transaction_id=${transaction_id}&action=${action}`,body,
+            this.config
+        ).pipe(catchError((error) => {
+            return of(error.error)
+        }));
+    }
+
+    roleOfUser(uid: string, role: "validator" | "customer" | "admin"): Observable<ResponseParent> {
+        return this.http.put<ResponseParent>(
+            `${this.urlAdmin}/role?user_id=${uid}&role=${role}`,{},
             this.config
         ).pipe(catchError((error) => {
             return of(error.error)

@@ -23,6 +23,11 @@ export class ContactsFilterComponent implements OnInit {
       isSubItem:true
     },
     {
+      name: 'Validateurs',
+      criteria: {role:'validator'},
+      isSubItem:true
+    },
+    {
       name: 'Comptes validés',
       criteria: {kyc_status:'approved'}
     }, {
