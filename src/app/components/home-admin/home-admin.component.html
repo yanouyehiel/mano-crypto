@@ -13,7 +13,7 @@
             <h5>Statistiques Utilisateurs</h5>
           </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body p-0" *ngIf="datas">
           <div id="chart-dashbord">
             <apx-chart [chart]="growthChart.chart" [plotOptions]="growthChart.plotOptions" [colors]="growthChart.colors"
               [dataLabels]="growthChart.dataLabels" [labels]="growthChart.labels" [stroke]="growthChart.stroke"
@@ -28,7 +28,7 @@
         <div class="card-header pb-0">
           <h5>Portefeuille & Transactions</h5>
         </div>
-        <div class="card-body">
+        <div class="card-body"  *ngIf="datas">
           <div id="basic-bar">
 
             <apx-chart [chart]="barChart.chart" [plotOptions]="barChart.plotOptions" [dataLabels]="barChart.dataLabels"

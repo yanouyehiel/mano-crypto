@@ -24,7 +24,7 @@
         
           <tr *ngFor="let operation of operations">
             <td class="f-w-600" *ngIf="operation.user;else withId">{{ operation.user.name }}</td>
-            <ng-template #withId> <td class="f-w-600">{{ operation.userId }}</td></ng-template>
+            <ng-template #withId> <td class="f-w-600">{{ operation.userId.name }}</td></ng-template>
             <td>{{ operation.receiver  }}</td>
             <td>{{ operation.amount.toLocaleString('fr-FR')+' FCFA'}}</td>
             <td>{{ operation.creationDate | customDateFormat }}</td>

@@ -288,7 +288,7 @@ export class PersonalComponent implements OnInit {
     }
   }
 
-  getTextUsingStatus = (recent: any) => recent.status == 'PENDING' ? 'EN ATTENTE' : recent.status == 'SUCCESS' ? 'effectué' : recent.status == 'CREATED' ? 'initié' : recent.status == 'REJECTED' ? 'rejeté' : recent.status == 'FAILED' ? 'echoué' : recent.status
+  getTextUsingStatus(recent: any) {return recent.status == 'PENDING' ? 'EN ATTENTE' : recent.status == 'SUCCESS' ? 'effectué' : recent.status == 'CREATED' ? 'initié' : recent.status == 'REJECTED' ? 'rejeté ('+recent.reject_reason+')' : recent.status == 'FAILED' ? 'echoué' : recent.status}
   getClassUsingStatus = (recent: any) => recent.status=='PENDING'?' bg-secondary':recent.status=='SUCCESS'?' bg-success': recent.status == 'CREATED' ? 'bg-primary' : 'bg-danger'
 
 

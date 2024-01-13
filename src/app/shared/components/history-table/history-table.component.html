@@ -29,7 +29,8 @@
       <td>{{(recent.type==='SELL_CRYPTO'? recent.final_amount : recent.amount) | number:'1.0-0' }} XAF</td>
       <td>
         <span class="badge badge-secondary counter digits"
-          [ngClass]="getClassUsingStatus(recent)">{{getTextUsingStatus(recent)|uppercase}}<p *ngIf="recent.status=='REJECTED'">{{recent.reject_reason}}</p> </span>
+          [ngClass]="getClassUsingStatus(recent)">{{getTextUsingStatus(recent)|uppercase}}</span>
+          <ng-container *ngIf="recent.status=='REJECTED'">{{'  '+recent.reject_reason}}</ng-container>
           
       </td>
     </tr>
