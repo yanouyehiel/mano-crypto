@@ -9,9 +9,14 @@ import { DataCryptoService } from 'src/app/services/data-crypto.service';
 export class CryptoBalanceComponent implements OnInit {
   wallet: any[];
   response:any;
+  user:any
   constructor(private cryptoService: DataCryptoService) {}
 
-  ngOnInit(): void {this.getWalletDetails()}
+  ngOnInit(): void {
+    // this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
+    // this.wallet = this.user.wallets.filter((e:any)=>e.image_url!=null);
+    this.getWalletDetails()
+  }
 
   getWalletDetails() {
     this.cryptoService.getWalletDetails().subscribe((value) => {

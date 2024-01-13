@@ -103,7 +103,7 @@ export let growthChart: ChartOptions | any = {
       }
     },
     colors: [primary_color, secondary_color, tertiary_color],
-    labels: ['Total Users', 'Users Connectés', 'Users Déconnectés'],
+    labels: ['Total Utilisateurs', 'Utilisateurs Connectés', 'Utilisateurs Déconnectés'],
     legend: {
       show: true,
       floating: true,

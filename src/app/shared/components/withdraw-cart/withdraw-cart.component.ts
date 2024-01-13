@@ -16,6 +16,7 @@ public operations :any[] = []
 public messageToDisplay? :any
 currentPage: number = 1;
 totalLenght: number;
+loader:boolean = true;
 
 
   constructor(private adminService:AdminService) { }
@@ -37,6 +38,7 @@ totalLenght: number;
       }else{
         this.messageToDisplay = response.message
       }
+      this.loader = false
     })
 
   }

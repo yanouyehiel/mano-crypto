@@ -6,7 +6,12 @@
   </div>
   <div class="card-body">
     <div class="user-status table-responsive">
-      <table class="table table-bordernone">
+      <div class="col-md-12" *ngIf="loader">
+        <div class="loader-box">
+          <div class="loader-3"></div>
+        </div>
+      </div>
+      <table class="table table-bordernone" *ngIf="!loader">
         <thead>
           <tr>
             <th scope="col">Demandeur</th>
