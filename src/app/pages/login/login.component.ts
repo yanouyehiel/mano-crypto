@@ -82,7 +82,8 @@ export class LoginComponent implements OnInit {
         this.textBtn = 'SE CONNECTER'
       })
 
-    } catch (error) {
+    } catch (error: any) {
+      this.toast.error(error)
     }
   }
 }

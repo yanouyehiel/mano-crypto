@@ -64,6 +64,7 @@ export class ConfirmLoginComponent implements OnInit {
     } else {
       this.showToast("Le code ne doit contenir que des chiffres")
       this.textBtn = "Confirmer"
+      this.isClicked = false
     }
     
   }

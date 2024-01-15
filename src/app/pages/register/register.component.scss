@@ -20,3 +20,7 @@ button {
 h4, h3, label {
     text-transform: uppercase !important;
 }
+
+ng-select ng-option.selected {
+    background-color: #333;
+}

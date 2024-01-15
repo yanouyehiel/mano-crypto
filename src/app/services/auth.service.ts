@@ -11,8 +11,9 @@ import { ResponseParent } from '../models/Transaction';
 export class AuthService {
 
   private url = environment.backend_api_url + environment.auth_url;
-  private tokenRegistred: any = localStorage.getItem('token-mansexch') ? localStorage.getItem('token-mansexch') : '{}'
+  private tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}'
   private data: any = JSON.parse(this.tokenRegistred)
+  
   private config = {
     headers: new HttpHeaders(
       {
@@ -36,7 +37,7 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   register(user: User): Observable<ResponseUser> {
-    return this.httpClient.post<ResponseUser>(`${this.url}/register`, user, this.config);
+    return this.httpClient.post<ResponseUser>(`${this.url}/register`, user);
   }
 
   login(data: any) {

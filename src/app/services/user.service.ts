@@ -52,7 +52,7 @@ export class UserService {
   }
 
   askResetPassword(email: any): Observable<ResponseUser> {
-    return this.http.post<ResponseUser>(`${this.urlUser}/ask-reset-password-code`, email)
+    return this.http.post<ResponseUser>(`${this.urlUser}/ask-reset-password-code`, email, this.config)
   }
 
   resetPassword(data: any): Observable<ResponseUser> {

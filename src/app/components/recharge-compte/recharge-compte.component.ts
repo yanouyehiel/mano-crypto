@@ -70,7 +70,7 @@ export class RechargeCompteComponent implements OnInit {
 
   initBuyingProcess() {
     const amount = parseFloat(this.depositForm.controls['amount'].value);
-    const phoneNumber = this.userParse.user.phoneNumber;
+    const phoneNumber = this.depositForm.controls['phoneNumber'].value;
 
     if (isNaN(amount) || amount <= 0) {
       Swal.fire('Erreur', 'Veuillez entrer un montant valide.', 'error');

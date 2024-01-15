@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseUser } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
@@ -40,10 +39,6 @@ export class ForgotPasswordComponent implements OnInit {
     }) 
   }
 
-  addInfoToast() {
-    this.toastService.info('Mot de passe modifié !');
- }
-
   showPassword() {
     this.show = !this.show;
   }
@@ -60,7 +55,8 @@ export class ForgotPasswordComponent implements OnInit {
     const toutesLesContraintesSontVerifiees = 
       aDesChiffres &&
       aDesLettresMajuscules &&
-      aDesCaracteresSpeciaux;
+      aDesCaracteresSpeciaux &&
+      motDePasse.length >= 8;
     
     return toutesLesContraintesSontVerifiees;
   }
@@ -72,7 +68,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.userService.resetPassword(this.data).subscribe((res: ResponseUser) => {
         if (res.statusCode === 1000) {
           this.txtBtn = 'Réussi'
-          this.addInfoToast()
+          this.toastService.info('Mot de passe modifié !');
         }
       }, (error) => {
         this.txtBtn = 'Enregistrer'

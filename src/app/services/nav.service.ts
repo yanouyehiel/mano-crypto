@@ -165,7 +165,7 @@ export class NavService {
       },
       {
         path: '/client/retirer-crypto',
-        title: 'Retirer de la crypto',
+        title: 'Transférer de la crypto',
         type: 'link',
         icon: 'chevrons-left',
         badgeType: 'success',

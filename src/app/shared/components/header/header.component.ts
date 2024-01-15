@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavService } from 'src/app/services/nav.service';
 
@@ -11,7 +13,12 @@ import { NavService } from 'src/app/services/nav.service';
 export class HeaderComponent implements OnInit {
 
   collapseSidebar: boolean = true;
-  constructor(private authService: AuthService, private router: Router, private navServices: NavService) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private navServices: NavService,
+    private toast: ToastrService) {}
+
   open = false;
 
   ngOnInit(): void {
@@ -32,9 +39,14 @@ export class HeaderComponent implements OnInit {
   
    logout() {
     this.authService.logout().subscribe((res: any) => {
-      localStorage.removeItem('user-mansexch')
-      localStorage.removeItem('token-mansexch')
-      this.router.navigate(['/auth/login'])
+      if (res.statusCode === 1000) {
+        localStorage.removeItem('user-mansexch')
+        localStorage.removeItem('tokenRegistred')
+        this.router.navigate(['/auth/login'])
+      }
+    }, (error) => {
+      console.log(error.error)
+      this.toast.error(error.error.message)
     });
   }
 }

@@ -113,7 +113,8 @@ export class RegisterComponent implements OnInit {
     const toutesLesContraintesSontVerifiees = 
       aDesChiffres &&
       aDesLettresMajuscules &&
-      aDesCaracteresSpeciaux;
+      aDesCaracteresSpeciaux &&
+      motDePasse.length >= 8;
     
     return toutesLesContraintesSontVerifiees;
   }  
@@ -122,53 +123,61 @@ export class RegisterComponent implements OnInit {
   register(): void {
     this.isClicked = true
     this.passwordIsCorrect = this.verifierMotDePasse(this.registerForm.controls['password'].value)
-    if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
-      this.user = {
-        name: this.registerForm.controls['name'].value,
-        email: this.registerForm.controls['email'].value,
-        password: this.registerForm.controls['password'].value,
-        countryCode: this.selectedCountry!.dial_code,
-        country: this.selectedCountry!.name,
-        phoneNumber: this.registerForm.controls['phoneNumber'].value
-      }
-      
-      this.textBtn = 'Chargement...'
-      try {
-        this.authService.register(this.user).subscribe((response: ResponseUser) => {
-
-          this.returnedValue = {
-            statusCode: response.statusCode,
-            message: response.message,
-            data: {
-              token: response.data?.token
+    if (this.passwordIsCorrect) {
+      if (this.registerForm.controls['password'].value.length < 8 || this.registerForm.controls['confirmPassword'].value.length < 8) {
+        this.toast.error("Les mots de passe doivent avoir au moins 8 caractères")
+      } else {
+        if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
+          this.user = {
+            name: this.registerForm.controls['name'].value,
+            email: this.registerForm.controls['email'].value,
+            password: this.registerForm.controls['password'].value,
+            countryCode: this.selectedCountry!.dial_code,
+            country: this.selectedCountry!.name,
+            phoneNumber: this.registerForm.controls['phoneNumber'].value
+          }
+          
+          this.textBtn = 'Chargement...'
+          try {
+            this.authService.register(this.user).subscribe((response: ResponseUser) => {
+    
+              this.returnedValue = {
+                statusCode: response.statusCode,
+                message: response.message,
+                data: {
+                  token: response.data?.token
+                }
+              }
+              localStorage.setItem('token-mansexch', JSON.stringify(this.returnedValue.data))
+              if (this.returnedValue.statusCode == 1000) {
+                this.router.navigate([`/auth/confirm-login/${this.user.email}`])
+              }     
+            }, (error) => {
+              this.showToast(error.error.message)
+              this.textBtn = "S'INSCRIRE"
+              this.returnedValue = {
+                statusCode: error.error.statusCode,
+                message: error.error.message
+              }
+            });
+    
+            /*const data = {
+              receiver_email: this.user.email
             }
+            this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
+              this.returnedValue.statusCode = response.statusCode
+            })
+    
+            if (this.returnedValue.statusCode === 1000) {
+              this.openModal('myModal')
+            }*/
+          } catch (error) {
           }
-
-          if (this.returnedValue.statusCode == 1000) {
-            this.router.navigate([`/auth/confirm-login/${this.user.email}`])
-          }     
-        }, (error) => {
-          this.showToast(error.error.message)
-          this.textBtn = "S'INSCRIRE"
-          this.returnedValue = {
-            statusCode: error.error.statusCode,
-            message: error.error.message
-          }
-        });
-
-        /*const data = {
-          receiver_email: this.user.email
+        } else {
+          this.toast.error("Les mots de passe ne correspondent pas.")
         }
-        this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
-          this.returnedValue.statusCode = response.statusCode
-        })
-
-        if (this.returnedValue.statusCode === 1000) {
-          this.openModal('myModal')
-        }*/
-      } catch (error) {
       }
-    } 
+    }
     
   }
 }
