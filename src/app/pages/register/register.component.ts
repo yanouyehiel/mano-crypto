@@ -30,31 +30,32 @@ export class RegisterComponent implements OnInit {
   }
   public textBtn: string
   public countries: Country[] = countries;
+  public searchCountries: Country[] = this.countries;
   public selectedCountry?: Country;
-  public selectDiv:HTMLElement | null
+  public selectDiv: HTMLElement | null
   public isClicked: boolean = false
   public passwordIsCorrect: boolean = false
 
   constructor(
-    private fb: FormBuilder, 
-    public router: Router, 
+    private fb: FormBuilder,
+    public router: Router,
     public authService: AuthService,
     private toast: ToastrService
   ) {
   }
-  handle(selectedCountry:any){
+  handle(selectedCountry: any) {
     this.selectedCountry = selectedCountry;
 
   }
 
   ngOnInit(): void {
-    this.selectDiv  = document.getElementById("countrySelector");
+    this.selectDiv = document.getElementById("countrySelector");
     localStorage.removeItem('token-mansexch')
     localStorage.removeItem('user-mansexch')
     localStorage.removeItem('_grecaptcha')
     localStorage.removeItem('tokenReset-mansexch')
     this.textBtn = "S'INSCRIRE"
-    this.selectedCountry = countries.find((e)=>e.dial_code == "+237")
+    this.selectedCountry = countries.find((e) => e.dial_code == "+237")
     // selectDiv!.innerText = this.selectedCountry!.name
     // this.selectDiv?.firstChild?.firstChild?.lastChild?.firstChild?.nodeValue?.replace('',this.selectedCountry!.name)
     this.registerForm = this.fb.group({
@@ -68,10 +69,31 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  filterCountry(countryCriteria: any
+  ) {
+    let selector = document.getElementById('selector');
+    selector!.style.display = "block";
+    this.searchCountries = this.countries.filter((country) => country.name.toLowerCase().includes(countryCriteria.toLowerCase().trim()))
+  }
+
+  toogleSelectorState() {
+    let selector = document.getElementById('selector');
+    if (selector!.style.display == "block") {
+      selector!.style.display = "none";
+    } else {
+      selector!.style.display = "block";
+    }
+  }
+  setSelectedCountry(country:Country){
+    this.selectedCountry = country
+    let selector = document.getElementById('selector');
+    selector!.style.display = "none";
+  }
+
   onCountryChange(selectedValue: Country) {
     this.selectedCountry = selectedValue;
   }
-  
+
 
   showPassword() {
     this.show = !this.show;
@@ -79,11 +101,11 @@ export class RegisterComponent implements OnInit {
 
   openModal(id: string) {
     const modalDiv = document.getElementById(id);
-    
+
     if (modalDiv != null) {
       modalDiv.style.display = 'block';
     }
-    
+
   }
 
   closeModal() {
@@ -92,7 +114,7 @@ export class RegisterComponent implements OnInit {
       modalDiv.style.display = 'none';
       this.router.navigate([`/auth/confirm-login/${this.user.email}`])
     }
-    
+
   }
 
   getFlagCountry(code: string): string {
@@ -109,20 +131,22 @@ export class RegisterComponent implements OnInit {
     const aDesChiffres = /\d/.test(motDePasse);
     const aDesLettresMajuscules = /[A-Z]/.test(motDePasse);
     const aDesCaracteresSpeciaux = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(motDePasse);
-  
-    const toutesLesContraintesSontVerifiees = 
+
+    const toutesLesContraintesSontVerifiees =
       aDesChiffres &&
       aDesLettresMajuscules &&
       aDesCaracteresSpeciaux &&
       motDePasse.length >= 8;
     
+
     return toutesLesContraintesSontVerifiees;
-  }  
+  }
 
 
   register(): void {
     this.isClicked = true
     this.passwordIsCorrect = this.verifierMotDePasse(this.registerForm.controls['password'].value)
+    console.log(this.passwordIsCorrect)
     if (this.passwordIsCorrect) {
       if (this.registerForm.controls['password'].value.length < 8 || this.registerForm.controls['confirmPassword'].value.length < 8) {
         this.toast.error("Les mots de passe doivent avoir au moins 8 caractères")
@@ -163,6 +187,7 @@ export class RegisterComponent implements OnInit {
     
             /*const data = {
               receiver_email: this.user.email
+
             }
             this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
               this.returnedValue.statusCode = response.statusCode
@@ -173,11 +198,14 @@ export class RegisterComponent implements OnInit {
             }*/
           } catch (error) {
           }
+
         } else {
           this.toast.error("Les mots de passe ne correspondent pas.")
+
         }
       }
     }
     
+
   }
 }

@@ -156,7 +156,7 @@ export class RetirerFondsComponent implements OnInit {
             otpSecret: secret,
             otpCode: value,
             amount: parseInt(this.depositForm.controls['amount'].value),
-            phoneNumber: this.userParse.user.phoneNumber,
+            phoneNumber: this.depositForm.controls['phoneNumber'].value,
           };
           const responseWithdraw = await this.depositService
             .withdraw(data)

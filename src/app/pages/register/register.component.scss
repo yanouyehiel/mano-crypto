@@ -21,6 +21,23 @@ h4, h3, label {
     text-transform: uppercase !important;
 }
 
-ng-select ng-option.selected {
-    background-color: #333;
+
+#selector{
+    padding: 8px;
+    position: absolute;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    height: 200px;
+    // margin: 0 auto;
+    width: 80%;
+    overflow-y: scroll;
+}
+#selector .item{
+    padding: 4px 16px;
+    cursor: pointer;
+}
+
+#selector .item:hover{
+    background: rgb(235, 229, 229);
 }
