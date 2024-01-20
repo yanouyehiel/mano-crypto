@@ -18,11 +18,12 @@
                   </li>
                 </ul>
               </div>
-              <input type="text" formControlName="address" class="form-control" placeholder="Crypto address" />
+              <input type="text" formControlName="address" class="form-control border-black" placeholder="Adresse crypto du receveur" />
             </div>
             <div class="col-lg-1 col-6 d-flex">
               
               <select class="form-control form-control-primary-fill btn-square" (change)="getCryptoMinimumAmount()" formControlName="currency">
+
                 <option value="BTC" [selected]="true">BTC</option>
                 <option value="ETH">ETH</option>
               </select>

@@ -147,7 +147,7 @@ export class NavService {
         active: false,
       },
       {
-        path: '/client/add-crypto',
+        path: '/client/acheter-crypto',
         title: 'Acheter de la crypto',
         type: 'link',
         icon: 'trending-up',

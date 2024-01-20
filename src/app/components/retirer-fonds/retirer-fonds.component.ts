@@ -92,11 +92,12 @@ export class RetirerFondsComponent implements OnInit {
         // type: 'warning',
         confirmButtonText: 'Valider mon compte',
         reverseButtons: true
-      }).then((result:any)=>{
+      }).then(()=>{
         this.router.navigate(['/client/profile-edit'])
       })
       return
     }
+
     this.authService
       .sendOtp()
       .pipe(
@@ -152,8 +153,8 @@ export class RetirerFondsComponent implements OnInit {
         ;
         try {
           const data = {
-            otpSecret: secret,
-            otpCode: value,
+            otpSecret: `${secret}`,
+            otpCode: `${value}`,
             amount: parseInt(this.depositForm.controls['amount'].value),
             phoneNumber: this.depositForm.controls['phoneNumber'].value.toString(),
           };

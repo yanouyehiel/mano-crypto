@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2'
 import { Country } from 'src/app/models/Country';
 import { countries } from 'src/app/models/Country';
-import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

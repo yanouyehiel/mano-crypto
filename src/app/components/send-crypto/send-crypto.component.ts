@@ -43,7 +43,7 @@ export class SendCryptoComponent implements OnInit {
       this.alertMsg = `Le montant minimal doit etre ${this.minimumCryptoWithdrawAmount} !`
     }
     else if (this.sendForm.value['address'].length < 10) {
-      this.alertMsg = "Renseignez l'address !"
+      this.alertMsg = "Renseignez l'addresse crypto du receveur !"
     } else if (this.sendForm.value['currency'].length < 1) {
       this.alertMsg = "Selectionnez la crypto-monnaie !"
     } else {

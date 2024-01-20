@@ -21,8 +21,6 @@ export class RechargeCompteComponent implements OnInit {
   public classStep3: string;
   public step!: number;
   public depositForm: FormGroup;
-  private userRegistred: any = localStorage.getItem('user-mansexch');
-  private userParse: any = JSON.parse(this.userRegistred);
   public response?: ResponseDeposit;
 
   constructor(
@@ -75,6 +73,7 @@ export class RechargeCompteComponent implements OnInit {
       Swal.fire('Erreur', 'Veuillez entrer un montant valide.', 'error');
       return;
     }
+
     Swal.fire({
       titleText: `Recharge de compte`,
 
@@ -108,6 +107,7 @@ export class RechargeCompteComponent implements OnInit {
             )
             .subscribe({
               next: (value) => {
+                console.log(value)
                 if (value.statusCode == 1000) {
                   this.successRecharge();
                   setTimeout(() => {
@@ -124,6 +124,7 @@ export class RechargeCompteComponent implements OnInit {
               complete: () =>{
                 
               }
+
             });
         } catch (error: any) {
           Swal.showValidationMessage(
