@@ -18,6 +18,8 @@ export class SendCryptoComponent implements OnInit {
   public loader: boolean = true;
   public sendForm: FormGroup;
   public alertMsg?: string;
+  minimumCryptoWithdrawAmount?:number
+
 
   ngOnInit(): void {
     this.sendForm = this.fb.group({
@@ -25,12 +27,20 @@ export class SendCryptoComponent implements OnInit {
       address: ['', Validators.required],
       currency: ['BTC', Validators.required],
     });
+    this.getCryptoMinimumAmount()
   }
 
+  getCryptoMinimumAmount(){
+    this.transactionService.getMinimumCryptoWithdrawAmount({"currency":this.sendForm.value['currency']}).subscribe((result)=>{
+      this.minimumCryptoWithdrawAmount = parseFloat(result.data.result)
+    })
+  }
 
   confirmIdentityModal() {
     if (isNaN(parseFloat(this.sendForm.value['amount']))) {
       this.alertMsg = "Renseignez le montant !"
+    }else if(this.minimumCryptoWithdrawAmount!>this.sendForm.value['amount']){
+      this.alertMsg = `Le montant minimal doit etre ${this.minimumCryptoWithdrawAmount} !`
     }
     else if (this.sendForm.value['address'].length < 10) {
       this.alertMsg = "Renseignez l'addresse crypto du receveur !"

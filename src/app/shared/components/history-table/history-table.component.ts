@@ -36,7 +36,6 @@ export class HistoryTableComponent implements OnInit, OnChanges {
       }
       else {
         this.recentOrders = response.data.transactions
-        //console.log(this.recentOrders)
         this.currentPage = parseInt(response.data.currentPage)
         this.totalLenght = response.data.total_transactions
       }

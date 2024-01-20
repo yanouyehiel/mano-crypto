@@ -67,15 +67,12 @@ export class RechargeCompteComponent implements OnInit {
   }
 
   initBuyingProcess() {
-    const amount = parseFloat(this.depositForm.controls['amount'].value);
-    const phoneNumber = `${this.depositForm.controls['phoneNumber'].value}`;
-    
-    if (isNaN(amount) || amount <= 0) {
+    const data ={amount:this.depositForm.controls['amount'].value, phoneNumber:this.depositForm.controls['phoneNumber'].value.toString()}
+
+    if (isNaN(data.amount) || data.amount <= 0) {
       Swal.fire('Erreur', 'Veuillez entrer un montant valide.', 'error');
       return;
     }
-    
-    const data = { amount, phoneNumber };
 
     Swal.fire({
       titleText: `Recharge de compte`,
@@ -123,9 +120,11 @@ export class RechargeCompteComponent implements OnInit {
               },
 
               error: (err) =>
-                Swal.fire('Erreur', err.message, 'error'),
-              complete: () =>
-                console.log('Observable emitted the complete notification'),
+                console.error('Observable emitted an error: ' + err),
+              complete: () =>{
+                
+              }
+
             });
         } catch (error: any) {
           Swal.showValidationMessage(
