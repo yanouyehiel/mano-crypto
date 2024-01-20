@@ -58,7 +58,7 @@ const routes: Routes = [
         component: ProfileEditComponent
       },
       {
-        path: 'add-crypto',
+        path: 'acheter-crypto',
         component: AddCryptoComponent
       },
       {

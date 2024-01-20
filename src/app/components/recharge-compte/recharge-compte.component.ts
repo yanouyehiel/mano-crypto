@@ -21,8 +21,6 @@ export class RechargeCompteComponent implements OnInit {
   public classStep3: string;
   public step!: number;
   public depositForm: FormGroup;
-  private userRegistred: any = localStorage.getItem('user-mansexch');
-  private userParse: any = JSON.parse(this.userRegistred);
   public response?: ResponseDeposit;
 
   constructor(
@@ -70,12 +68,13 @@ export class RechargeCompteComponent implements OnInit {
 
   initBuyingProcess() {
     const amount = parseFloat(this.depositForm.controls['amount'].value);
-    const phoneNumber = this.depositForm.controls['phoneNumber'].value;
-
+    const phoneNumber = `${this.depositForm.controls['phoneNumber'].value}`;
+    
     if (isNaN(amount) || amount <= 0) {
       Swal.fire('Erreur', 'Veuillez entrer un montant valide.', 'error');
       return;
     }
+    
     const data = { amount, phoneNumber };
 
     Swal.fire({
@@ -111,6 +110,7 @@ export class RechargeCompteComponent implements OnInit {
             )
             .subscribe({
               next: (value) => {
+                console.log(value)
                 if (value.statusCode == 1000) {
                   this.successRecharge();
                   setTimeout(() => {
@@ -123,7 +123,7 @@ export class RechargeCompteComponent implements OnInit {
               },
 
               error: (err) =>
-                console.error('Observable emitted an error: ' + err),
+                Swal.fire('Erreur', err.message, 'error'),
               complete: () =>
                 console.log('Observable emitted the complete notification'),
             });

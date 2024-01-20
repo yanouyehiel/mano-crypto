@@ -41,7 +41,6 @@ export class ProfileFinanceComponent implements OnInit {
     })
   }
   displaySolde(solde:any){
-    console.log(solde)
    return parseInt(solde)
   }
 

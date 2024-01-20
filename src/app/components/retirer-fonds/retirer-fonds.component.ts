@@ -77,7 +77,7 @@ export class RetirerFondsComponent implements OnInit {
 
   initTransaction() {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-    console.log((user.kyc as any[]).filter((e)=>e.status!='approved').length+' '+(user.kyc as any[]).length)
+    //console.log((user.kyc as any[]).filter((e)=>e.status!='approved').length+' '+(user.kyc as any[]).length)
     if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -93,11 +93,12 @@ export class RetirerFondsComponent implements OnInit {
         // type: 'warning',
         confirmButtonText: 'Valider mon compte',
         reverseButtons: true
-      }).then((result:any)=>{
+      }).then(()=>{
         this.router.navigate(['/client/profile-edit'])
       })
       return
     }
+
     this.authService
       .sendOtp()
       .pipe(
@@ -153,10 +154,10 @@ export class RetirerFondsComponent implements OnInit {
         ;
         try {
           const data = {
-            otpSecret: secret,
-            otpCode: value,
+            otpSecret: `${secret}`,
+            otpCode: `${value}`,
             amount: parseInt(this.depositForm.controls['amount'].value),
-            phoneNumber: this.depositForm.controls['phoneNumber'].value,
+            phoneNumber: `${this.depositForm.controls['phoneNumber'].value}`,
           };
           const responseWithdraw = await this.depositService
             .withdraw(data)
