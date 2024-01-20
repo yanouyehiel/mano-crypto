@@ -63,7 +63,6 @@ export class NavService {
   private getRole() {
     try {
       let userLocal = JSON.parse(localStorage.getItem('user-mansexch')!).user
-      console.log(userLocal.role != 'customer')
       return userLocal.role
     } catch (error) {
       return ''

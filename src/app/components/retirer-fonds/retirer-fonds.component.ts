@@ -77,7 +77,6 @@ export class RetirerFondsComponent implements OnInit {
 
   initTransaction() {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-    console.log((user.kyc as any[]).filter((e)=>e.status!='approved').length+' '+(user.kyc as any[]).length)
     if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -156,7 +155,7 @@ export class RetirerFondsComponent implements OnInit {
             otpSecret: secret,
             otpCode: value,
             amount: parseInt(this.depositForm.controls['amount'].value),
-            phoneNumber: this.depositForm.controls['phoneNumber'].value,
+            phoneNumber: this.depositForm.controls['phoneNumber'].value.toString(),
           };
           const responseWithdraw = await this.depositService
             .withdraw(data)
@@ -185,7 +184,7 @@ export class RetirerFondsComponent implements OnInit {
         'error'
       );
     } else {
-      Swal.fire('Terminé', 'Retrait effectué avec succès', 'success');
+      Swal.fire('Terminé', 'Retrait initié avec succès.', 'success');
       this.success();
       setTimeout(() => {
         Swal.close();

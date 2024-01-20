@@ -33,6 +33,14 @@ export class CryptoTransactionService {
     );
   }
 
+  getMinimumCryptoWithdrawAmount(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseCryptoFee>(
+      `${this.cryptoUrl}/get-minimum-withdrawal-amount`,
+      data,
+      this.config
+    );
+  }
+
   convertToFiat(data: any): Observable<ResponseParent> {
     return this.http.post<ResponseCryptoFee>(
       `${this.cryptoUrl}/convert-crypto-to-fiats`,

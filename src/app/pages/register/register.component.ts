@@ -86,6 +86,7 @@ export class RegisterComponent implements OnInit {
   }
   setSelectedCountry(country:Country){
     this.selectedCountry = country
+    document.getElementById('countrySelector')?.setAttribute('value', country.name);
     let selector = document.getElementById('selector');
     selector!.style.display = "none";
   }
@@ -146,7 +147,6 @@ export class RegisterComponent implements OnInit {
   register(): void {
     this.isClicked = true
     this.passwordIsCorrect = this.verifierMotDePasse(this.registerForm.controls['password'].value)
-    console.log(this.passwordIsCorrect)
     if (this.passwordIsCorrect) {
       if (this.registerForm.controls['password'].value.length < 8 || this.registerForm.controls['confirmPassword'].value.length < 8) {
         this.toast.error("Les mots de passe doivent avoir au moins 8 caractères")

@@ -22,18 +22,20 @@
             </div>
             <div class="col-lg-1 col-6 d-flex">
               
-              <select class="form-control form-control-primary-fill btn-square" formControlName="currency">
+              <select class="form-control form-control-primary-fill btn-square" (change)="getCryptoMinimumAmount()" formControlName="currency">
                 <option value="BTC" [selected]="true">BTC</option>
                 <option value="ETH">ETH</option>
               </select>
             </div>
-            <div class="col-lg-3 col-6 d-flex">
-              <input type="number" class="form-control border-black" formControlName="amount" placeholder="amount" />
+            <div class="col-lg-3 col-6">
+              <input type="number" class="form-control {{(minimumCryptoWithdrawAmount && !sendForm.value['amount'].invalid && minimumCryptoWithdrawAmount<=sendForm.value['amount'])?'border-success':(minimumCryptoWithdrawAmount && sendForm.value['amount']!='' && minimumCryptoWithdrawAmount! > sendForm.value['amount'] )?'border-danger':''}}"  placeholder="Montant" formControlName="amount" />
+              
             </div>
+            
 
-            <div class="col-lg-2 col-6 d-flex">
-              <button class="btn btn-dark" type="submit" [disabled]="sendForm.value['address'].invalid || sendForm.value['amount'].invalid" (click)="confirmIdentityModal()">
-                Transfert
+            <div class="col-lg-2 col-6">
+              <button class="btn btn-primary" type="submit" [disabled]="sendForm.value['address'].invalid || sendForm.value['amount'].invalid" (click)="confirmIdentityModal()">
+                Transferer
               </button>
             </div>
             <div *ngIf="alertMsg"><p class="text-danger">{{alertMsg}}</p></div>

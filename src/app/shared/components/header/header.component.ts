@@ -45,7 +45,6 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/auth/login'])
       }
     }, (error) => {
-      console.log(error.error)
       this.toast.error(error.error.message)
     });
   }
