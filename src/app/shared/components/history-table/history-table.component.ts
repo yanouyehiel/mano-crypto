@@ -59,7 +59,7 @@ export class HistoryTableComponent implements OnInit, OnChanges {
       case 'RECHARGE_CRYPTO':
         return `Recharge de ${transaction.final_amount} ${transaction.final_currency}`;
       case 'WITHDRAW_CRYPTO':
-        return `Retrait de ${transaction.final_amount} ${transaction.final_currency}`;
+        return `Retrait de ${transaction.amount} ${transaction.currency}`;
       case 'BUY_CRYPTO':
         return `Achat de ${transaction.final_amount} ${transaction.final_currency}`;
       case 'SELL_CRYPTO':
