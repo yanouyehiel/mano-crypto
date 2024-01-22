@@ -47,8 +47,8 @@ export class AdminService {
     return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`,bodyFilter.criteria, this.config)
   }
 
-  getUsersTransactions(page:number,id?:string, max?:number,status?:string): Observable<any> {
-    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=${max?max:9}`:`${this.urlAdmin}/transactions?page=${page}&limit=${max?max:25}&status=${status}`, this.config)
+  getUsersTransactions(page:number,id?:string, type?:"WITHDRAW_CRYPTO"|"WITHDRAW", max?:number,status?:string): Observable<any> {
+    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=${max?max:9}`:`${this.urlAdmin}/transactions?page=${page}&limit=${max?max:25}&status=${status}&type=${type}`, this.config)
   }
 
   getUsersStatistics(country:string): Observable<any> {
@@ -67,6 +67,15 @@ export class AdminService {
     manageWithdrawStatus(transaction_id: string, action: "approved" | "rejected",body:any): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
             `${this.urlAdmin}/withdraw?transaction_id=${transaction_id}&action=${action}`,body,
+            this.config
+        ).pipe(catchError((error) => {
+            return of(error.error)
+        }));
+    }
+
+    verifyCryptoWithdraw(reference: string): Observable<ResponseParent> {
+        return this.http.post<ResponseParent>(
+            `${this.urlAdmin}/withdraw-crypto/verify?reference=${reference}`,{},
             this.config
         ).pipe(catchError((error) => {
             return of(error.error)

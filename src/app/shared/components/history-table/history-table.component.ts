@@ -35,11 +35,13 @@ export class HistoryTableComponent implements OnInit, OnChanges {
         this.errorDisplay = "Impossible de charger les donnees, " + response.message ? response.message : " Problème de réseau ";
       }
       else {
+        console.log(response.data.transactions)
         this.recentOrders = response.data.transactions
         this.currentPage = parseInt(response.data.currentPage)
         this.totalLenght = response.data.total_transactions
       }
       this.loader = false;
+
 
     })
   }

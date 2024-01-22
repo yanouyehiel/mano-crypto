@@ -41,7 +41,6 @@ export class PersonalComponent implements OnInit {
     this.setUserDisplay(this.users[0])
     this.pageHistoryChange(1)
     this.setPaginationOnBottom()
-
   }
   
 
@@ -58,7 +57,7 @@ export class PersonalComponent implements OnInit {
   fetchHistory(page: number, userId: string) {
     
     this.maxHistoryElements = parseInt((document.querySelector('#right-history')?.clientHeight! / document.querySelector('.elementHistory')?.clientHeight!).toString())-1
-    this.adminServise.getUsersTransactions(page, userId, this.maxHistoryElements).pipe(catchError((error) => {
+    this.adminServise.getUsersTransactions(page, userId, undefined,this.maxHistoryElements).pipe(catchError((error) => {
       this.alertMsg = "Une erreur s'est produite, veuillez reessayer !"
       return of(error.error)
     })).subscribe((res: any) => {
