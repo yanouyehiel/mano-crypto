@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   catchError,
@@ -40,13 +41,19 @@ export class AddCryptoComponent implements OnInit {
   reloadHistory = false;
   cryptoAmount: number;
   xafAmount: number;
+  private userSaved = localStorage.getItem('user-mansexch')
 
   constructor(
     private modalService: NgbModal,
     public navService: NavService,
     public layoutService: LayoutService,
-    private cryptoService: CryptoTransactionService
-  ) { }
+    private cryptoService: CryptoTransactionService,
+    private router: Router
+  ) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }

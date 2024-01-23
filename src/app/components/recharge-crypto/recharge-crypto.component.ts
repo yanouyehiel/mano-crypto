@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Observable,
@@ -85,13 +86,19 @@ export class RechargeCryptoComponent implements OnInit {
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
+  private userSaved = localStorage.getItem('user-mansexch')
 
   constructor(
     private modalService: NgbModal,
     public navService: NavService,
     public layoutService: LayoutService,
-    private cryptoService: CryptoTransactionService
-  ) {}
+    private cryptoService: CryptoTransactionService,
+    private router: Router
+  ) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   ngOnInit(): void {}
 

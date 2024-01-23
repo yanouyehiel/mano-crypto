@@ -25,13 +25,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./retirer-fonds.component.scss'],
 })
 export class RetirerFondsComponent implements OnInit {
+  private userSaved = localStorage.getItem('user-mansexch')
+
   constructor(
     private router: Router,
     private modalService: NgbModal,
     private authService: AuthService,
     private depositService: TransactionService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   public classStep1: string;
   public classStep2: string;

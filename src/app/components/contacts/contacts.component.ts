@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -11,7 +12,13 @@ export class ContactsComponent implements OnInit {
 filterName:string
 usersLength:number
 public criteriaFilter:any = {}
-  constructor(private adminService:AdminService) { }
+private userSaved = localStorage.getItem('user-mansexch')
+
+  constructor(private adminService:AdminService, private router: Router) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   ngOnInit(): void {
     this.fetchUsers({criteria:{}, page:1})

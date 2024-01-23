@@ -183,19 +183,8 @@ export class RegisterComponent implements OnInit {
                 message: error.error.message
               }
             });
-    
-            /*const data = {
-              receiver_email: this.user.email
-
-            }
-            this.authService.sendEmailCode(data).subscribe((response: ResponseEmail) => {
-              this.returnedValue.statusCode = response.statusCode
-            })
-    
-            if (this.returnedValue.statusCode === 1000) {
-              this.openModal('myModal')
-            }*/
           } catch (error) {
+            this.toast.error("Vérifiez votre connexion internet")
           }
 
         } else {

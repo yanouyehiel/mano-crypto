@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
@@ -24,12 +25,18 @@ export class VenteCryptoComponent  implements OnInit{
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
+  private userSaved = localStorage.getItem('user-mansexch')
 
   constructor(
     public navService: NavService,
     public layoutService: LayoutService,
-    private cryptoService: CryptoTransactionService
-  ) {}
+    private cryptoService: CryptoTransactionService,
+    private router: Router
+  ) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
 ngOnInit(): void {
   this.getWalletDetails()

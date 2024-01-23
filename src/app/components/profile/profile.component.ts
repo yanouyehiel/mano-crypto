@@ -12,8 +12,14 @@ export class ProfileComponent implements OnInit {
   public user!: any;
   public kycIsUploaded: boolean = false;
   public textKYC: string = ""
+  private userSaved = localStorage.getItem('user-mansexch')
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService) 
+  {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user

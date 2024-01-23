@@ -13,7 +13,18 @@ import Swal from 'sweetalert2';
   styleUrls: ['./send-crypto.component.scss'],
 })
 export class SendCryptoComponent implements OnInit {
-  constructor(private router:Router, private modalService: NgbModal, private fb: FormBuilder, private transactionService: CryptoTransactionService) { }
+  private userSaved = localStorage.getItem('user-mansexch')
+  
+  constructor(
+    private router:Router, 
+    private modalService: NgbModal, 
+    private fb: FormBuilder, 
+    private transactionService: CryptoTransactionService) {
+      if (this.userSaved == null) {
+        this.router.navigate(['/auth/login'])
+      }
+    }
+  
   public recentOrders: any[] = [];
   public loader: boolean = true;
   public sendForm: FormGroup;

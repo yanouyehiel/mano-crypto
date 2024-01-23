@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of } from 'rxjs';
 import {
@@ -26,12 +27,18 @@ export class RechargeCompteComponent implements OnInit {
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
+  private userSaved = localStorage.getItem('user-mansexch')
 
   constructor(
     private depositService: TransactionService,
     private fb: FormBuilder,
-    private modalService: NgbModal
-  ) {}
+    private modalService: NgbModal,
+    private router: Router
+  ) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   ngOnInit(): void {
     this.step = 1;

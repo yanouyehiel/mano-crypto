@@ -8,13 +8,15 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  private tokenSaved = JSON.parse(localStorage.getItem('token-mansexch') || '{}')
+  private userSaved = localStorage.getItem('user-mansexch')
 
-  constructor(private router: Router) {}
-
-  ngOnInit(): void {
-    if (!this.tokenSaved) {
+  constructor(private router: Router) {
+    if (this.userSaved == null) {
       this.router.navigate(['/auth/login'])
     }
+  }
+
+  ngOnInit(): void {
+    
   }
 }

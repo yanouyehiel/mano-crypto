@@ -6,6 +6,7 @@ import { ResponseParent } from 'src/app/models/Transaction';
 import Swal from 'sweetalert2';
 import { catchError, of, timeout } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-admin',
@@ -20,8 +21,17 @@ export class HomeAdminComponent implements OnInit {
   public configs:any[]
   private transaction: any
   public barChart = chartData.barChart
+  private userSaved = localStorage.getItem('user-mansexch')
 
-  constructor(private userService: UserService, private adminService:AdminService) {}
+  constructor(
+    private userService: UserService, 
+    private adminService:AdminService,
+    private router: Router
+  ) {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   ngOnInit(): void {
     this.fetchStatistics('all');

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileUser, ResponseEmail, ResponseProfile } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
@@ -17,12 +18,19 @@ export class ProfileEditComponent implements OnInit {
   profile: any;
   fileForm: FormGroup;
   formData: FormData;
+  private userSaved = localStorage.getItem('user-mansexch')
 
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private toast: ToastrService
-  ) {}
+    private toast: ToastrService,
+    private router: Router
+  ) 
+  {
+    if (this.userSaved == null) {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
