@@ -29,10 +29,10 @@ export class HomeAdminComponent implements OnInit {
   }
 
   getConfigKey(key:string):string{
-    return key=='SALT_ROUNDS'?"Chaine de hashage":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"Taxe sur les transactions":key=='MIN_XAF_AMOUNT'?"Montant XAF minimal":key
+    return key=='SALT_ROUNDS'?"Chaine de hashage":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"Taxe sur les transactions (%)":key=='MIN_XAF_AMOUNT'?"Montant minimal de transaction (XAF)":key=='CRYPTO_WITHDRAW_FEES_PERCENTAGE'?'Frais de retrait crypto (x100 (%))':key=='CRYPTO_WITHDRAW_MIN_AMOUNT'?'Montant minimal de retrait crypto':key=='MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT'?'Montant minimal de retrait crypto à vérifier':key
   }
   getConfigIcon(key:string):string{
-    return key=='SALT_ROUNDS'?"key":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"ticket":key=='MIN_XAF_AMOUNT'?'money':"question"
+    return key=='SALT_ROUNDS'?"key":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"percent":key=='MIN_XAF_AMOUNT'?'money':key=='CRYPTO_WITHDRAW_FEES_PERCENTAGE'?'ticket':key=='CRYPTO_WITHDRAW_MIN_AMOUNT'?'link':key=='MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT'?'check':"question"
   }
   fetchStatistics(country:string){
     this.adminService.getUsersStatistics(country).subscribe((res: any) => {

@@ -19,6 +19,10 @@ export class SendCryptoComponent implements OnInit {
   public sendForm: FormGroup;
   public alertMsg?: string;
   minimumCryptoWithdrawAmount?:number
+  reloadHistory = false;
+  setReload(){
+    this.reloadHistory = !this.reloadHistory
+  }
 
 
   ngOnInit(): void {
@@ -154,6 +158,7 @@ export class SendCryptoComponent implements OnInit {
       if (result.isConfirmed) {
         if (result.value.statusCode == 1000) {
           this.success();
+          this.setReload()
           setTimeout(() => {
             Swal.close();
           }, 2000);
@@ -179,6 +184,6 @@ export class SendCryptoComponent implements OnInit {
     Swal.fire('Erreur', "Echec de l'authentification", 'error');
   }
   error(): void {
-    Swal.fire('Erreur', 'Vous ne pouvez pas faire ce retrait ?', 'error');
+    Swal.fire('Erreur', 'Vous ne pouvez pas faire ce retrait ', 'error');
   }
 }

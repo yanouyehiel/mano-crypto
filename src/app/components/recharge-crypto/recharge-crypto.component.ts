@@ -81,8 +81,10 @@ export class RechargeCryptoComponent implements OnInit {
   public recentOrders: any[] = [];
   public loader: boolean = true;
   cryptoAmount: number;
-  public url =
-    'https://nowpayments.io/payment/?iid=4844525512&paymentId=5102569096';
+  reloadHistory = false;
+  setReload(){
+    this.reloadHistory = !this.reloadHistory
+  }
 
   constructor(
     private modalService: NgbModal,
@@ -169,6 +171,7 @@ export class RechargeCryptoComponent implements OnInit {
           `Veuillez suivre la procedure <a href='${result.data.invoice_url}' style="color:green;" target='_blank'>en cliquant ici</a>`,
           'info'
         );
+        this.setReload()
         window.open(result.data.invoice_url, '_blank');
       } else {
         Swal.fire('Operation annulée', result.message.error, 'error');

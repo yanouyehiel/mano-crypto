@@ -44,6 +44,10 @@ export class RetirerFondsComponent implements OnInit {
   public recentOrders: any[] = [];
   public loader: boolean = true;
   public response: ResponseDeposit;
+  reloadHistory = false;
+  setReload(){
+    this.reloadHistory = !this.reloadHistory
+  }
 
   ngOnInit(): void {
     this.step = 1;
@@ -186,7 +190,8 @@ export class RetirerFondsComponent implements OnInit {
       );
     } else {
       Swal.fire('Terminé', 'Retrait initié avec succès.', 'success');
-      this.success();
+      
+      this.setReload()
       setTimeout(() => {
         Swal.close();
       }, 2000);

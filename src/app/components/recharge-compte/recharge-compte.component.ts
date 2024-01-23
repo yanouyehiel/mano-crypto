@@ -22,6 +22,10 @@ export class RechargeCompteComponent implements OnInit {
   public step!: number;
   public depositForm: FormGroup;
   public response?: ResponseDeposit;
+  reloadHistory = false;
+  setReload(){
+    this.reloadHistory = !this.reloadHistory
+  }
 
   constructor(
     private depositService: TransactionService,
@@ -110,6 +114,7 @@ export class RechargeCompteComponent implements OnInit {
                 console.log(value)
                 if (value.statusCode == 1000) {
                   this.successRecharge();
+                  this.setReload()
                   setTimeout(() => {
                     Swal.close();
                   }, 2000);

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -8,9 +8,9 @@ import { TransactionService } from 'src/app/services/transaction.service';
   templateUrl: './history-table.component.html',
   styleUrls: ['./history-table.component.scss']
 })
-export class HistoryTableComponent implements OnInit, OnChanges {
+export class HistoryTableComponent implements OnChanges {
   @Input() type?: string
-  @Input() reloadChild?: any
+  @Input() reloadHistory: any
 
   loader: boolean = true
   recentOrders: any[]
@@ -22,9 +22,7 @@ export class HistoryTableComponent implements OnInit, OnChanges {
     private depositService: TransactionService,
   ) { }
 
-  ngOnInit(): void {
-    this.getTransactions(1)
-  }
+
   getTransactions(page: number): void {
     this.depositService.getAllTransaction(this.type!, page).pipe(
       catchError((error) => {
@@ -35,7 +33,6 @@ export class HistoryTableComponent implements OnInit, OnChanges {
         this.errorDisplay = "Impossible de charger les donnees, " + response.message ? response.message : " Problème de réseau ";
       }
       else {
-        console.log(response.data.transactions)
         this.recentOrders = response.data.transactions
         this.currentPage = parseInt(response.data.currentPage)
         this.totalLenght = response.data.total_transactions

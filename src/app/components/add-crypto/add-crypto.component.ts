@@ -37,7 +37,7 @@ export class AddCryptoComponent implements OnInit {
   public recentOrders: any[] = [];
   public loader: boolean = true;
   public responseFee: ResponseParent;
-  reload = false;
+  reloadHistory = false;
   cryptoAmount: number;
   xafAmount: number;
 
@@ -47,6 +47,9 @@ export class AddCryptoComponent implements OnInit {
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService
   ) { }
+  setReload(){
+    this.reloadHistory = !this.reloadHistory
+  }
 
   ngOnInit(): void { }
 
@@ -214,7 +217,7 @@ export class AddCryptoComponent implements OnInit {
       if (result.isConfirmed) {
         if (result.value.statusCode === 1000) {
           Swal.fire('Success', `Achat effectué avec success`, 'success');
-          // this.reload = true;
+          this.setReload()
         } else {
           Swal.fire('Achat annulée', result.value.message, 'error');
         }
@@ -222,7 +225,6 @@ export class AddCryptoComponent implements OnInit {
       } else if (result.isDenied) {
         Swal.fire('Achat annulée', '', 'error');
       }
-      // this.reload = false;
     });
   }
 }

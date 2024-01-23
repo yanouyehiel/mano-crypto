@@ -20,6 +20,10 @@ export class VenteCryptoComponent  implements OnInit{
   public responseFee: ResponseParent;
   cryptoAmount: number;
   xafAmount:number;
+  reloadHistory = false;
+  setReload(){
+    this.reloadHistory = !this.reloadHistory
+  }
 
   constructor(
     public navService: NavService,
@@ -188,6 +192,7 @@ getWalletDetails() {
           Swal.fire('Vante annulée', result.value.message, 'error');
         }else{
           Swal.fire('Success',`Vente effectué avec success`,  'success');
+          this.setReload()
         }
 
       } else if (result.isDenied) {
