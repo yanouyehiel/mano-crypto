@@ -12,7 +12,7 @@ export class AdminService {
     private urlDeposit = environment.backend_api_url + environment.url_deposit;
     private urlAdmin = environment.backend_api_url + environment.admin_url;
 
-    private tokenRegistred: any = localStorage.getItem('token-mansexch');
+    private tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}';
     private data: any = JSON.parse(this.tokenRegistred);
 
     private config = {

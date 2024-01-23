@@ -44,14 +44,14 @@ export class HeaderComponent implements OnInit {
         localStorage.removeItem('user-mansexch')
         localStorage.removeItem('token-mansexch')
         this.router.navigate(['/auth/login'])
-      }   
-    }, (error) => {
-      if (error.error.statusCode === 1001) {
+      } 
+      if (res.statusCode === 1001) {
         this.toast.error('Veuillez réessayer plus tard !')
-      } else if (error.error.statusCode === 1005) {
+      } else if (res.statusCode === 1005) {
         this.toast.error("Vous n'êtes pas authorisé.")
-      }
-
+      }  
+    }, (error) => {
+      this.toast.error(error)
     });
   }
 }

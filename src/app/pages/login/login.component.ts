@@ -69,6 +69,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/client/home'])
           } else if(response.data?.user.role.toLowerCase() == 'admin') {
             this.router.navigate(['/admin/home'])
+          } else if(response.data?.user.role.toLowerCase() == 'validator') {
+            this.router.navigate(['/admin/home'])
           }
           
         } else if (response.statusCode == 1001) {

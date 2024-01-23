@@ -28,7 +28,7 @@ export class HomeAdminComponent implements OnInit {
     private adminService:AdminService,
     private router: Router
   ) {
-    if (this.userSaved == null) {
+    if (this.userSaved == undefined) {
       this.router.navigate(['/auth/login'])
     }
   }
