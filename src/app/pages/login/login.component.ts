@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
           } else if(response.data?.user.role.toLowerCase() == 'admin') {
             this.router.navigate(['/admin/home'])
           } else if(response.data?.user.role.toLowerCase() == 'validator') {
-            this.router.navigate(['/admin/home'])
+            this.router.navigate(['/admin/users'])
           }
           
         } else if (response.statusCode == 1001) {
