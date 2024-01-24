@@ -24,7 +24,7 @@ export class HistoryTableComponent implements OnChanges {
 
 
   getTransactions(page: number): void {
-    this.depositService.getAllTransaction(this.type!, page).pipe(
+    this.depositService.getAllTransaction(page,this.type).pipe(
       catchError((error) => {
         return of(error.error)
       })
@@ -38,7 +38,6 @@ export class HistoryTableComponent implements OnChanges {
         this.totalLenght = response.data.total_transactions
       }
       this.loader = false;
-
 
     })
   }

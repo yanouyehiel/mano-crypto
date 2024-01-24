@@ -50,7 +50,7 @@ export class TransactionService {
     );
   }
 
-  getAllTransaction(type:string, page:number): Observable<ResponseTransactionList> {
+  getAllTransaction( page:number,type?:string,): Observable<ResponseTransactionList> {
       return this.http.get<ResponseTransactionList>(
         `${this.urlTransactionList}/all?page=${page}&limit=25${type?"&type="+type:''}`,
         this.config
