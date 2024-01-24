@@ -123,7 +123,7 @@ export class RechargeCryptoComponent implements OnInit {
       inputAutoFocus: true,
       inputPlaceholder: `Ex: 0.02`,
       showCancelButton: true,
-      confirmButtonText: 'Acheter',
+      confirmButtonText: 'Recharger',
       cancelButtonText: 'Fermer',
       inputValidator: (value) => {
         // Ajoutez une validation personnalisée ici si nécessaire
