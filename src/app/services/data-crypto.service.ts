@@ -9,22 +9,25 @@ import { environment } from 'src/environments/environment';
 })
 export class DataCryptoService {
 
-  private tokenRegistred: any = localStorage.getItem('token-mansexch')
-  private data: any = JSON.parse(this.tokenRegistred)
+
   private urlDeposit = environment.backend_api_url + environment.url_deposit
-  
-  private config = {
-    headers: new HttpHeaders(
-      {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${this.data.token}`
-      }
-    )
+
+  private getConfig() {
+    let tokenRegistred: any = localStorage.getItem('token-mansexch')
+    let data: any = JSON.parse(tokenRegistred)
+    return {
+      headers: new HttpHeaders(
+        {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${data.token}`
+        }
+      )
+    }
   }
 
   constructor(private http: HttpClient) { }
 
   getWalletDetails(): Observable<ResponseParent> {
-    return this.http.get<ResponseParent>(`${this.urlDeposit}/details`, this.config)
+    return this.http.get<ResponseParent>(`${this.urlDeposit}/details`, this.getConfig())
   }
 }

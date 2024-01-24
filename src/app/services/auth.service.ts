@@ -11,27 +11,32 @@ import { ResponseParent } from '../models/Transaction';
 export class AuthService {
 
   private url = environment.backend_api_url + environment.auth_url;
-  private tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}'
-  private data: any = JSON.parse(this.tokenRegistred)
-  
-  private config = {
-    headers: new HttpHeaders(
-      {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        "Content-Type": "application/json"
-      }
-    )
+
+
+  private getConfig() {
+    return {
+      headers: new HttpHeaders(
+        {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Content-Type": "application/json"
+        }
+      )
+    }
   };
-  private configAuthorized = {
-    headers: new HttpHeaders(
-      {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${this.data.token}`
-      }
-    )
+  private getConfigAuthorized() {
+    let tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}'
+    let data: any = JSON.parse(tokenRegistred)
+    return {
+      headers: new HttpHeaders(
+        {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${data.token}`
+        }
+      )
+    }
   }
 
   constructor(private httpClient: HttpClient) { }
@@ -41,22 +46,22 @@ export class AuthService {
   }
 
   login(data: any) {
-    return this.httpClient.post<ResponseUser>(`${this.url}/login`, data, this.config);
+    return this.httpClient.post<ResponseUser>(`${this.url}/login`, data, this.getConfig());
   }
 
   sendEmailCode(data: any): Observable<ResponseEmail> {
-    return this.httpClient.post<ResponseEmail>(`${this.url}/send-email-code`, data, this.configAuthorized);
+    return this.httpClient.post<ResponseEmail>(`${this.url}/send-email-code`, data, this.getConfigAuthorized());
   }
 
   verifyUser(data: any): Observable<ResponseEmail> {
-    return this.httpClient.post<ResponseEmail>(`${this.url}/verify-user`, data, this.configAuthorized);
+    return this.httpClient.post<ResponseEmail>(`${this.url}/verify-user`, data, this.getConfigAuthorized());
   }
 
-  sendOtp(): Observable<ResponseParent>{
-    return this.httpClient.post<ResponseParent>(`${this.url}/send-email-code`,{}, this.configAuthorized);
+  sendOtp(): Observable<ResponseParent> {
+    return this.httpClient.post<ResponseParent>(`${this.url}/send-email-code`, {}, this.getConfigAuthorized());
   }
 
   logout(): Observable<ResponseUser> {
-    return this.httpClient.get<ResponseUser>(`${this.url}/logout`, this.configAuthorized)
+    return this.httpClient.get<ResponseUser>(`${this.url}/logout`, this.getConfigAuthorized())
   }
 }

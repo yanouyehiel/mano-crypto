@@ -15,14 +15,16 @@ export class TransactionService {
   private urlDeposit = environment.backend_api_url + environment.url_deposit;
   private urlUser = environment.backend_api_url + environment.user_url;
   private urlTransactionList = environment.backend_api_url + environment.url_transaction_list;
-  private tokenRegistred: any = localStorage.getItem('token-mansexch');
-  private data: any = JSON.parse(this.tokenRegistred);
+  
 
-  private config = {
+  private getConfig() {
+    let tokenRegistred: any = localStorage.getItem('token-mansexch');
+  let data: any = JSON.parse(tokenRegistred);
+    return{
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.data.token}`,
-    }),
+      Authorization: `Bearer ${data.token}`,
+    }),}
   };
 
   constructor(private http: HttpClient) {}
@@ -30,7 +32,7 @@ export class TransactionService {
   getProfile(): Observable<ResponseProfile> {
     return this.http.get<ResponseProfile>(
       `${this.urlUser}/profile`,
-      this.config
+      this.getConfig()
     );
   }
 
@@ -38,7 +40,7 @@ export class TransactionService {
     return this.http.post<ResponseDeposit>(
       `${this.urlDeposit}/deposits`,
       data,
-      this.config
+      this.getConfig()
     );
   }
   
@@ -46,14 +48,14 @@ export class TransactionService {
     return this.http.post<ResponseDeposit>(
       `${this.urlDeposit}/withdraw`,
       data,
-      this.config
+      this.getConfig()
     );
   }
 
   getAllTransaction( page:number,type?:string,): Observable<ResponseTransactionList> {
       return this.http.get<ResponseTransactionList>(
         `${this.urlTransactionList}/all?page=${page}&limit=25${type?"&type="+type:''}`,
-        this.config
+        this.getConfig()
       ).pipe(catchError((error)=> of(error.error)));
     
   }

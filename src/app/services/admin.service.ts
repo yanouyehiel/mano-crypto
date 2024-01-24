@@ -12,14 +12,17 @@ export class AdminService {
     private urlDeposit = environment.backend_api_url + environment.url_deposit;
     private urlAdmin = environment.backend_api_url + environment.admin_url;
 
-    private tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}';
-    private data: any = JSON.parse(this.tokenRegistred);
 
-    private config = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.data.token}`,
-        }),
+
+    private getConfig() {
+        let tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}';
+        let data: any = JSON.parse(tokenRegistred);
+        return {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${data.token}`,
+            }),
+        }
     };
 
     constructor(private http: HttpClient) { }
@@ -27,7 +30,7 @@ export class AdminService {
     getConfigs(): Observable<ResponseParent> {
         return this.http.get<ResponseParent>(
             `${this.urlAdmin}/configs`,
-            this.config
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
@@ -36,38 +39,38 @@ export class AdminService {
     setConfigs(body: any): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
             `${this.urlAdmin}/configs`, body,
-            this.config
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
     }
 
-    
-  getUsersByCriteria(bodyFilter:any): Observable<any> {
-    return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`,bodyFilter.criteria, this.config)
-  }
 
-  getUsersTransactions(page:number,id?:string, type?:"WITHDRAW_CRYPTO"|"WITHDRAW", max?:number,status?:string): Observable<any> {
-    return this.http.get<any>(id!=null?`${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=${max?max:9}`:`${this.urlAdmin}/transactions?page=${page}&limit=${max?max:25}&status=${status}&type=${type}`, this.config)
-  }
+    getUsersByCriteria(bodyFilter: any): Observable<any> {
+        return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`, bodyFilter.criteria, this.getConfig())
+    }
 
-  getUsersStatistics(country:string): Observable<any> {
-    return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase()!='all')?'?country='+country:''}`, this.config)
-  }
+    getUsersTransactions(page: number, id?: string, type?: "WITHDRAW_CRYPTO" | "WITHDRAW", max?: number, status?: string): Observable<any> {
+        return this.http.get<any>(id != null ? `${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=${max ? max : 9}` : `${this.urlAdmin}/transactions?page=${page}&limit=${max ? max : 25}&status=${status}&type=${type}`, this.getConfig())
+    }
+
+    getUsersStatistics(country: string): Observable<any> {
+        return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase() != 'all') ? '?country=' + country : ''}`, this.getConfig())
+    }
 
     banAnUser(uid: string, action: "active" | "banned" | "suspended"): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
-            `${this.urlAdmin}/ban?userId=${uid}&action=${action}`,{},
-            this.config
+            `${this.urlAdmin}/ban?userId=${uid}&action=${action}`, {},
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
     }
 
-    manageWithdrawStatus(transaction_id: string, action: "approved" | "rejected",body:any): Observable<ResponseParent> {
+    manageWithdrawStatus(transaction_id: string, action: "approved" | "rejected", body: any): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
-            `${this.urlAdmin}/withdraw?transaction_id=${transaction_id}&action=${action}`,body,
-            this.config
+            `${this.urlAdmin}/withdraw?transaction_id=${transaction_id}&action=${action}`, body,
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
@@ -75,8 +78,8 @@ export class AdminService {
 
     verifyCryptoWithdraw(reference: string): Observable<ResponseParent> {
         return this.http.post<ResponseParent>(
-            `${this.urlAdmin}/withdraw-crypto/verify?reference=${reference}`,{},
-            this.config
+            `${this.urlAdmin}/withdraw-crypto/verify?reference=${reference}`, {},
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
@@ -84,17 +87,17 @@ export class AdminService {
 
     roleOfUser(uid: string, role: "validator" | "customer" | "admin"): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
-            `${this.urlAdmin}/role?user_id=${uid}&role=${role}`,{},
-            this.config
+            `${this.urlAdmin}/role?user_id=${uid}&role=${role}`, {},
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
     }
 
-    kyc(uid: string, action: "approved" | "rejected", document_type: string, reason?:string): Observable<ResponseParent> {
+    kyc(uid: string, action: "approved" | "rejected", document_type: string, reason?: string): Observable<ResponseParent> {
         return this.http.put<ResponseParent>(
-            `${this.urlAdmin}/kyc?userId=${uid}&action=${action}&document_type=${document_type}`,reason?{reject_reason:reason}:{},
-            this.config
+            `${this.urlAdmin}/kyc?userId=${uid}&action=${action}&document_type=${document_type}`, reason ? { reject_reason: reason } : {},
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
@@ -102,7 +105,7 @@ export class AdminService {
     getCountries(): Observable<ResponseParent> {
         return this.http.get<ResponseParent>(
             `${this.urlAdmin}/countries`,
-            this.config
+            this.getConfig()
         ).pipe(catchError((error) => {
             return of(error.error)
         }));
