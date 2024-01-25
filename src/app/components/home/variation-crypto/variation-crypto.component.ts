@@ -12,7 +12,7 @@ export class VariationCryptoComponent implements OnInit {
 
   public btcChart = {
     lineChartData: [{ data: [],fill: false,
-      borderWidth: 2,
+      borderWidth: 1,
       pointRadius: 0, label: 'Bitcoin(USD)',borderColor: '#F7931A',},],
   lineChartLabels: [],
   lineChartOptions: { responsive: true },
@@ -21,7 +21,7 @@ export class VariationCryptoComponent implements OnInit {
   public ethChart = {
     lineChartData: [{ data: [], 
           fill: false,
-          borderWidth: 2,
+          borderWidth: 1,
           pointRadius: 0,
           label: 'Ethereum(USD)',
           borderColor: '#8585ff'}],
@@ -49,6 +49,7 @@ export class VariationCryptoComponent implements OnInit {
     this.ethChart.lineChartLabels = ethPrices.map((priceData: any) => new Date(priceData[0]).toLocaleDateString('fr-FR'));
   });
   window.addEventListener('resize', this.onResize.bind(this));
+  this.onResize()
   }
 
   getBitcoinPriceData(): Observable<any> {
