@@ -6,12 +6,13 @@
             </div>
         </div>
         <div class="card-body p-0">
-            <div id="chart-timeline-dashbord">
+            <div class="chart-timeline-dashbord">
                 <canvas baseChart
         [datasets]="btcChart.lineChartData"
         [labels]="btcChart.lineChartLabels"
         [options]="btcChart.lineChartOptions"
         [legend]="btcChart.lineChartLegend"
+        
         [type]="'line'">
       </canvas>
             </div>
@@ -24,7 +25,7 @@
             </div>
         </div>
         <div class="card-body p-0">
-            <div id="chart-timeline-dashbord">
+            <div class="chart-timeline-dashbord">
                 <canvas baseChart
         [datasets]="ethChart.lineChartData"
         [labels]="ethChart.lineChartLabels"

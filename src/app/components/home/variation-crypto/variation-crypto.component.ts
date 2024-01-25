@@ -9,14 +9,22 @@ import { Observable } from 'rxjs';
   styleUrls: ['./variation-crypto.component.scss']
 })
 export class VariationCryptoComponent implements OnInit {
+
   public btcChart = {
-    lineChartData: [{ data: [], label: 'Bitcoin',borderColor: '#F7931A',},],
+    lineChartData: [{ data: [],fill: false,
+      borderWidth: 2,
+      pointRadius: 0, label: 'Bitcoin(USD)',borderColor: '#F7931A',},],
   lineChartLabels: [],
   lineChartOptions: { responsive: true },
   lineChartLegend : true,
   }
   public ethChart = {
-    lineChartData: [{ data: [], label: 'Ethereum',borderColor: '#8585ff'}],
+    lineChartData: [{ data: [], 
+          fill: false,
+          borderWidth: 2,
+          pointRadius: 0,
+          label: 'Ethereum(USD)',
+          borderColor: '#8585ff'}],
   lineChartLabels: [],
   lineChartOptions: { responsive: true },
   lineChartLegend : true,
@@ -28,6 +36,7 @@ export class VariationCryptoComponent implements OnInit {
     this.getBitcoinPriceData().subscribe((dataBtc: any) => {
       const btcPrices = dataBtc.prices;
       this.btcChart.lineChartData[0].data = btcPrices.map((priceData: any) => priceData[1]);
+      
       this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleDateString('fr-FR'));
   });
   this.getEthereumPriceData().subscribe((dataEth: any) => {
@@ -39,6 +48,7 @@ export class VariationCryptoComponent implements OnInit {
     this.ethChart.lineChartData[0].data = ethPrices.map((priceData: any) => priceData[1]);
     this.ethChart.lineChartLabels = ethPrices.map((priceData: any) => new Date(priceData[0]).toLocaleDateString('fr-FR'));
   });
+  window.addEventListener('resize', this.onResize.bind(this));
   }
 
   getBitcoinPriceData(): Observable<any> {
@@ -48,5 +58,9 @@ export class VariationCryptoComponent implements OnInit {
   getEthereumPriceData(): Observable<any> {
     const url = 'https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=30';
     return this.http.get(url);
+  }
+  onResize(){
+    this.btcChart.lineChartData[0].borderWidth = window.innerWidth>850 ?2:1;
+    this.ethChart.lineChartData[0].borderWidth =  window.innerWidth>850 ?2:1;
   }
 }
