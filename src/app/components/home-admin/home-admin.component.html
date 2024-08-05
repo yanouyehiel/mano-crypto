@@ -6,51 +6,68 @@
         [datas]="{users:datas.users, transactions:datas.transactions, wallets:datas.wallets}"></app-stats>
     </div>
 
-    <div class="col-xl-6 col-50 box-col-6 des-xl-50">
-      <div class="card">
-        <div class="card-header">
-          <div class="header-top d-sm-flex align-items-center">
-            <h5>Statistiques Utilisateurs</h5>
-          </div>
-        </div>
-        <div class="card-body p-0" *ngIf="datas">
-          <div id="chart-dashbord">
-            <apx-chart [chart]="growthChart.chart" [plotOptions]="growthChart.plotOptions" [colors]="growthChart.colors"
-              [dataLabels]="growthChart.dataLabels" [labels]="growthChart.labels" [stroke]="growthChart.stroke"
-              [legend]="growthChart.legend" [series]="growthChart.series" [responsive]="growthChart.responsive">
-            </apx-chart>
-          </div>
+    <div class="card" *ngIf="loader">
+      <div class="card-header pb-0">
+        <h5>Statistiques</h5>
+      </div>
+      <div class="col-md-12">
+        <div class="loader-box">
+          <div class="loader-3"></div>
         </div>
       </div>
     </div>
-    <div class="col-xl-6 col-50 box-col-6 des-xl-50">
-      <div class="card">
-        <div class="card-header pb-0">
-          <h5>Portefeuille & Transactions</h5>
-        </div>
-        <div class="card-body"  *ngIf="datas">
-          <div id="basic-bar">
 
-            <apx-chart [chart]="barChart.chart" [plotOptions]="barChart.plotOptions" [dataLabels]="barChart.dataLabels"
-              [series]="barChart.series" [xaxis]="barChart.xaxis" [colors]="barChart.colors">
-            </apx-chart>
+    <ng-template *ngIf="!loader">
+      <div class="col-xl-6 col-50 box-col-6 des-xl-50">
+        <div class="card">
+          <div class="card-header">
+            <div class="header-top d-sm-flex align-items-center">
+              <h5>Statistiques Utilisateurs</h5>
+            </div>
+          </div>
+          <div class="card-body p-0" *ngIf="datas">
+            <div id="chart-dashbord">
+              <apx-chart [chart]="growthChart.chart" [plotOptions]="growthChart.plotOptions" [colors]="growthChart.colors"
+                [dataLabels]="growthChart.dataLabels" [labels]="growthChart.labels" [stroke]="growthChart.stroke"
+                [legend]="growthChart.legend" [series]="growthChart.series" [responsive]="growthChart.responsive">
+              </apx-chart>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="col-xl-6 col-50 box-col-6 des-xl-50">
+        <div class="card">
+          <div class="card-header pb-0">
+            <h5>Portefeuille & Transactions</h5>
+          </div>
+          <div class="card-body"  *ngIf="datas">
+            <div id="basic-bar">
+  
+              <apx-chart [chart]="barChart.chart" [plotOptions]="barChart.plotOptions" [dataLabels]="barChart.dataLabels"
+                [series]="barChart.series" [xaxis]="barChart.xaxis" [colors]="barChart.colors">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
   </div>
   <div class="card">
     <div class="card-header pb-0">
       <h5>Configurations</h5>
     </div>
-    <div class="card-body">
+    <div class="col-md-12" *ngIf="loaderConfig">
+      <div class="loader-box">
+        <div class="loader-3"></div>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="!loaderConfig">
       <div class="row">
         <div class="col-xl-3 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec" *ngFor="let config of configs">
           <div class="card income-card card-primary">
             <div class="card-body text-center">
               <div class="round-box">
                 <i class="fa fa-{{getConfigIcon(config.key)}}" style="font-size:40px;"></i>
-                
               </div>
               <h5>{{config.value}}</h5>
               <p>{{getConfigKey(config.key)}}</p><a class="btn-arrow arrow-primary" (click)="updateConfigs(config)"><i

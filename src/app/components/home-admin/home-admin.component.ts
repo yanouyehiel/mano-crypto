@@ -22,6 +22,8 @@ export class HomeAdminComponent implements OnInit {
   private transaction: any
   public barChart = chartData.barChart
   private userSaved = localStorage.getItem('user-mansexch')
+  public loader: boolean = true;
+  public loaderConfig: boolean = true;
 
   constructor(
     private userService: UserService, 
@@ -44,7 +46,12 @@ export class HomeAdminComponent implements OnInit {
   getConfigIcon(key:string):string{
     return key=='SALT_ROUNDS'?"key":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"percent":key=='MIN_XAF_AMOUNT'?'money':key=='CRYPTO_WITHDRAW_FEES_PERCENTAGE'?'ticket':key=='CRYPTO_WITHDRAW_MIN_AMOUNT'?'link':key=='MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT'?'check':"question"
   }
-  fetchStatistics(country:string){
+  fetchStatistics(data:string){
+    let country: string =  "all"
+    if (data !== country) {
+      country = data.toLowerCase()
+    }
+    console.log(country)
     this.adminService.getUsersStatistics(country).subscribe((res: any) => {
       this.datas = res.data
       this.users = res.data.users
@@ -60,12 +67,14 @@ export class HomeAdminComponent implements OnInit {
         this.transaction.crypto_recharge_transactions_amount,
         this.transaction.crypto_withdraw_transactions_amount
       ]
+      this.loader = false;
     })
   }
   fetchConfigs(){
     this.adminService.getConfigs().subscribe((response:ResponseParent)=>{
       if(response.statusCode===1000){
         this.configs = response.data;
+        this.loaderConfig = false;
       }
     })
   }

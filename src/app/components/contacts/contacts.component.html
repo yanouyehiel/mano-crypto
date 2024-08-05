@@ -6,6 +6,21 @@
          <app-contacts-filter (emitFilterName)="getFilterName($event)" (applyFilter)="fetchUsers({criteria:$event, page:1})"></app-contacts-filter>
        </div>
        <div class="col-xl-9 col-md-12 box-col-9 xl-70">
+          <div class="email-right-aside bookmark-tabcontent contacts-tabs" *ngIf="loader">
+            <div class="card email-body radius-left">
+              <div class="ps-0">
+                <div class="tab-content">
+                  <div class="tab-pane fade active show" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
+                    <div class="col-md-12">
+                      <div class="loader-box">
+                        <div class="loader-3"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
          <div class="email-right-aside bookmark-tabcontent contacts-tabs">
            <div class="card email-body radius-left">
              <div class="ps-0">

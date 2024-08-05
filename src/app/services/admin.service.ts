@@ -45,6 +45,31 @@ export class AdminService {
         }));
     }
 
+    formatWithSeparator(value: number | string): string {
+        const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+      
+        if (isNaN(numericValue)) {
+          return '';
+        }
+      
+        const numStr = numericValue.toString();
+    
+        let result = '';
+        let counter = 0;
+      
+        for (let i = numStr.length - 1; i >= 0; i--) {
+          result = numStr[i] + result;
+      
+          counter++;
+          if (counter === 3 && i > 0) {
+            result = ' ' + result;
+            counter = 1;
+          }
+        }
+      
+        return result;
+    }
+
 
     getUsersByCriteria(bodyFilter: any): Observable<any> {
         return this.http.post<any>(`${this.urlAdmin}/users?page=${bodyFilter.page}&limit=25`, bodyFilter.criteria, this.getConfig())
@@ -55,7 +80,7 @@ export class AdminService {
     }
 
     getUsersStatistics(country: string): Observable<any> {
-        return this.http.get<any>(`${this.urlAdmin}/statistics${(country.toLowerCase() != 'all') ? '?country=' + country : ''}`, this.getConfig())
+        return this.http.get<any>(`${this.urlAdmin}/statistics${'?country=' + country}`, this.getConfig())
     }
 
     banAnUser(uid: string, action: "active" | "banned" | "suspended"): Observable<ResponseParent> {

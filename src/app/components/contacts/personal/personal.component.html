@@ -37,7 +37,7 @@
                   src="assets/images/dashboard/1.png" alt="">
                 <input class="updateimg" type="file" name="img" onchange="readURL(this,0)">
                 <div class="media-body mt-0">
-                  <h5><span class="first_name_0">{{user.name}} </span></h5>
+                  <h5><span class="first_name_0">{{user.name | capitalize}} </span></h5>
                   <p class="email_add_0">{{user.email}}</p>
                   <ul>
                     <li *ngIf="user.account_status!='suspended'"><a
@@ -83,7 +83,7 @@
                           class="font-primary">{{wallet.solde |number:'1.0-9' }} BTC</span></li>
                       <li *ngSwitchCase="'ETH'">Ethereum <span
                           class="font-primary">{{wallet.solde |number:'1.0-9' }} ETH</span></li>
-                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde.toLocaleString('fr-FR')}}
+                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde}}
                           FCFA</span></li>
                     </ng-container>
                   </ng-container>
@@ -96,9 +96,9 @@
 
                 <ul>
                   <ng-container *ngFor="let kycElement of user.kyc">
-                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo CNI':'Photo
-                      CNI-Utilisateur'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><a
-                          class="font-primary" [href]="kycElement.document_url" target="_blank">Voir l'image</a><span
+                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo 4*4':'Photo
+                      CNI'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><p
+                          class="font-primary" style="cursor: pointer" (click)="showImageKYC(kycElement.document_url)">Voir l'image</p><span
                           *ngIf="kycElement.status!='approved'" class="d-block"><a class="text-success "
                             (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a><span
                             *ngIf="kycElement.status!='rejected'">{{' | '}}<a class="text-danger "

@@ -11,6 +11,7 @@ export class ContactsComponent implements OnInit {
   users? :any[]
 filterName:string
 usersLength:number
+public loader: boolean = true;
 public criteriaFilter:any = {}
 private userSaved = localStorage.getItem('user-mansexch')
 
@@ -32,6 +33,7 @@ private userSaved = localStorage.getItem('user-mansexch')
     this.adminService.getUsersByCriteria(bodyFilter).subscribe((res: any) => {
       this.users = res.data.users
       this.usersLength = res.data.total_users
+      this.loader = false;
     })
   }
   fetchUsersWithTerm(termFilter:any){

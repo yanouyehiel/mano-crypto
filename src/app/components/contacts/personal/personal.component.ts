@@ -4,6 +4,8 @@ import * as data from '../contact'
 import { UserService } from 'src/app/services/user.service';
 import { AdminService } from 'src/app/services/admin.service';
 import { catchError, of } from 'rxjs';
+import { title } from 'process';
+import { text } from 'stream/consumers';
 const Swal = require('sweetalert2')
 // import Swal from 'sweetalert2';
 
@@ -76,6 +78,10 @@ export class PersonalComponent implements OnInit {
     this.applyPageChange.emit(page)
   }
 
+  parseSoldeAmount(amount: string|number) {
+    return this.adminServise.formatWithSeparator(amount)
+  }
+
   manageUserRole(role: "validator" | "customer" | "admin") {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -138,7 +144,7 @@ export class PersonalComponent implements OnInit {
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
+      cancelButtonText: 'Annuler',
       reverseButtons: true
     }).then((result: any) => {
       if (result.value) {
@@ -172,9 +178,39 @@ export class PersonalComponent implements OnInit {
     })
   }
 
+  showImageKYC(image: string): void {
+    console.log(image)
+    const swalModal = Swal.mixin(
+      {
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      }
+    )
+    swalModal.fire({
+      title: 'Voulez-vous télécharger cette image ?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui',
+      cancelButtonText: 'Annuler',
+      showLoaderOnConfirm: true,
+      imageUrl: image
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        const link = document.createElement('a');
+        link.href = image;
+        link.setAttribute('download', 'image');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    })
+  }
+
   manageKYCStatus(action: "approved" | "rejected", docType: string) {
     const swalWithBootstrapButtons = Swal.mixin(
-
       {
         customClass: {
           confirmButton: 'btn btn-success',
