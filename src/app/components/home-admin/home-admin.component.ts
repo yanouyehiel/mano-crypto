@@ -51,8 +51,9 @@ export class HomeAdminComponent implements OnInit {
     if (data !== country) {
       country = data.toLowerCase()
     }
-    console.log(country)
+    
     this.adminService.getUsersStatistics(country).subscribe((res: any) => {
+      console.log(res.data)
       this.datas = res.data
       this.users = res.data.users
       this.growthChart.series = [this.users.total_users, this.users.connected_users, this.users.unconnected_users]
@@ -73,6 +74,7 @@ export class HomeAdminComponent implements OnInit {
   fetchConfigs(){
     this.adminService.getConfigs().subscribe((response:ResponseParent)=>{
       if(response.statusCode===1000){
+        console.log(response.data)
         this.configs = response.data;
         this.loaderConfig = false;
       }

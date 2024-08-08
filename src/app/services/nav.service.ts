@@ -163,7 +163,7 @@ export class NavService {
         active: false
       },
       {
-        path: '/client/retirer-crypto',
+        path: '/client/transferer-crypto',
         title: 'Transférer de la crypto',
         type: 'link',
         icon: 'chevrons-left',
@@ -175,6 +175,14 @@ export class NavService {
         title: 'Retirer des fonds',
         type: 'link',
         icon: 'credit-card',
+        badgeType: 'success',
+        active: false
+      },
+      {
+        path: '/client/share-to-friend',
+        title: 'Envoyer la crypto à un ami',
+        type: 'link',
+        icon: 'repeat',
         badgeType: 'success',
         active: false
       }

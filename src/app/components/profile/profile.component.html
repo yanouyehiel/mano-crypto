@@ -1,6 +1,11 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid">
   <div class="user-profile email-wrap bookmark-wrap">
+    <div class="row" *ngIf="this.user.kyc[0].document_url === ''">
+      <div class="btn-showcase mb-2">
+        <button (click)="openProfileEdit()" class="btn btn-pill btn-secondary btn-air-secondary text-white" [class.text-dark]="'light'" type="button">Insérer vos photos</button>
+     </div>
+    </div>
     <div class="row">
       <div class="col-sm-6">
         <div class="card profile-header">
@@ -60,7 +65,7 @@
                   <span style="color: white;" [class]="kycIsUploaded ? 'badge badge-success' : 'badge badge-danger'">{{ textKYC }}</span>
                   <ul class="follow-list">
                     <li [class]="user.kyc[0].status === 'approved' ? 'text-success' : 'text-danger'">CNI: {{user.kyc[0].status}}</li>
-                    <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : 'text-danger'">Photo et CNI: {{user.kyc[1].status}}</li>
+                    <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : 'text-danger'">Photo 4x4: {{user.kyc[1].status}}</li>
                   </ul>
                 </div>
               </div>

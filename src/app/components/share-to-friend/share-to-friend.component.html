@@ -1,6 +1,16 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
+    <div class="col-xl-4 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Solde actuel</h5>
+        </div>
+        <div class="card-body p-0">
+          <app-crypto-balance></app-crypto-balance>
+        </div>
+      </div>
+    </div>
     <div class="col-xl-8 box-col-12 des-xl-100">
       <div class="card">
         <div class="card-header">
@@ -22,7 +32,7 @@
             </div>
             <div class="col-lg-1 col-6 d-flex">
               
-              <select class="form-control form-control-primary-fill btn-square" (change)="getCryptoMinimumAmount()" formControlName="currency">
+              <select class="form-control form-control-primary-fill border-black" (change)="getCryptoMinimumAmount()" formControlName="currency">
                 <option value="BTC" [selected]="true">BTC</option>
                 <option value="ETH">ETH</option>
               </select>
@@ -42,16 +52,6 @@
           </div>
         </div>
       </form>
-      </div>
-    </div>
-    <div class="col-xl-4 box-col-12 des-xl-100">
-      <div class="card">
-        <div class="card-header">
-          <h5>Solde actuel</h5>
-        </div>
-        <div class="card-body p-0">
-          <app-crypto-balance></app-crypto-balance>
-        </div>
       </div>
     </div>
   </div>

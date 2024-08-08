@@ -59,6 +59,7 @@ import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WithdrawCartComponent } from './shared/components/withdraw-cart/withdraw-cart.component';
 import { OperationsComponent } from './components/operations/operations.component';
+import { ShareToFriendComponent } from './components/share-to-friend/share-to-friend.component';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { OperationsComponent } from './components/operations/operations.componen
     PersonalComponent,
     VenteCryptoComponent,
     WithdrawCartComponent,
-    OperationsComponent
+    OperationsComponent,
+    ShareToFriendComponent
    ],
 
   imports: [

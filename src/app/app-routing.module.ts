@@ -21,6 +21,7 @@ import { RechargeCryptoComponent } from './components/recharge-crypto/recharge-c
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { VenteCryptoComponent } from './components/vente-crypto/vente-crypto.component';
 import { OperationsComponent } from './components/operations/operations.component';
+import { ShareToFriendComponent } from './components/share-to-friend/share-to-friend.component';
 
 
 const routes: Routes = [
@@ -82,9 +83,13 @@ const routes: Routes = [
         component: RetirerFondsComponent
       },
       {
-        path: 'retirer-crypto',
+        path: 'transferer-crypto',
         component: SendCryptoComponent
       },
+      {
+        path: 'share-to-friend',
+        component: ShareToFriendComponent
+      }
     ]
   },
   {

@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
-
+    
     if (this.user.kyc[0].document_url === "") {
       this.textKYC = "Veuillez insérer votre CNI"
       this.kycIsUploaded = false
