@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
       this.textKYC = "Veuillez insérer votre CNI"
       this.kycIsUploaded = false
     } else if (this.user.kyc[1].document_url === "") {
-      this.textKYC = "Veuillez insérer une photo de vous avec votre CNI"
+      this.textKYC = "Veuillez insérer votre photo 4x4"
       this.kycIsUploaded = false
     } else {
       this.textKYC = "Vous documents ont déjà été soumis"
