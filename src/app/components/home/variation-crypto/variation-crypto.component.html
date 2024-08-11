@@ -1,13 +1,25 @@
 <div class="row">        
     <div class="card income-card">
         <div class="card-header">
-            <div class="header-top d-sm-flex align-items-center">
-                <h5>Variation du prix du Bitcoin  </h5>
+            <div class="header-top d-sm-flex align-items-center mb-5">
+                <h5>Variation du prix du Bitcoin  <div class="float-end"><div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==1?'active':''" (click)="setBtcVariationDuration(1)" type="button">
+                      Jour
+                    </button>
+                    <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==7?'active':''" (click)="setBtcVariationDuration(7)" type="button">
+                      Semaine
+                    </button>
+                    <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==30?'active':''" (click)="setBtcVariationDuration(30)" type="button">
+                      Mois
+                    </button>
+                  </div>
+                </div></h5>
                
-            </div><h6 *ngIf="latestBtcPrice" class="float-end" [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">{{latestBtcPrice | number}}  <p class="d-inline"  [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">USDT</p></h6>
+            </div>
         </div>
         <div class="card-body p-0">
             <div class="chart-timeline-dashbord">
+                <h6 *ngIf="latestBtcPrice" class="float-end" [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">{{latestBtcPrice | number}}  <p class="d-inline"  [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">USDT</p></h6>
                 <canvas baseChart
         [datasets]="btcChart.lineChartData"
         [labels]="btcChart.lineChartLabels"
@@ -21,12 +33,27 @@
     </div>
     <div class="card income-card">
         <div class="card-header">
-            <div class="header-top d-sm-flex align-items-center">
-                <h5>Variation du prix de L'Ethereum</h5>
-            </div><h6 *ngIf="latestEthPrice" class="float-end" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">{{latestEthPrice | number}} <p class="d-inline" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">USDT</p></h6>
+            <div class="header-top d-sm-flex align-items-center  mb-5">
+                <h5>Variation du prix de L'Ethereum <div class="float-end"><div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==1?'active':''" (click)="setEthVariationDuration(1)" type="button">
+                      Jour
+                    </button>
+                    <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==7?'active':''" (click)="setEthVariationDuration(7)" type="button">
+                      Semaine
+                    </button>
+                    <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==30?'active':''" (click)="setEthVariationDuration(30)" type="button">
+                      Mois
+                    </button>
+                  </div>
+                </div></h5>
+                
+            </div>
+            
         </div>
+        
         <div class="card-body p-0">
             <div class="chart-timeline-dashbord">
+                <h6 *ngIf="latestEthPrice" class="float-end" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">{{latestEthPrice | number}} <p class="d-inline" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">USDT</p></h6>
                 <canvas baseChart
         [datasets]="ethChart.lineChartData"
         [labels]="ethChart.lineChartLabels"
