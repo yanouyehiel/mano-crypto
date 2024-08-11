@@ -9,7 +9,31 @@ import { ResponseCryptoFee, ResponseParent } from '../models/Transaction';
 export class CryptoTransactionService {
   private cryptoUrl = environment.backend_api_url + environment.cryptoUrl;
   private walletUrl = environment.backend_api_url + environment.url_deposit;
+  private socket: WebSocket;
 
+  connectToBTC(): Observable<any> {
+    this.socket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
+
+    return new Observable(observer => {
+      this.socket.onmessage = (event) => observer.next(JSON.parse(event.data));
+      this.socket.onerror = (error) => observer.error(error);
+      this.socket.onclose = () => observer.complete();
+
+      return () => this.socket.close();
+    });
+  }
+
+  connectToETH(): Observable<any> {
+    this.socket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
+
+    return new Observable(observer => {
+      this.socket.onmessage = (event) => observer.next(JSON.parse(event.data));
+      this.socket.onerror = (error) => observer.error(error);
+      this.socket.onclose = () => observer.complete();
+
+      return () => this.socket.close();
+    });
+  }
 
   private getConfig() {
     let tokenRegistred: any = localStorage.getItem('token-mansexch');

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as chartData from '../../../shared/data/chartData'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 
 @Component({
   selector: 'app-variation-crypto',
@@ -10,6 +11,11 @@ import { Observable } from 'rxjs';
 })
 export class VariationCryptoComponent implements OnInit {
 
+  prices: any[] = [];
+  previousBtcPrice: any;
+  latestBtcPrice:any;
+  previousEthPrice: any;
+  latestEthPrice:any;
   public btcChart = {
     lineChartData: [{ data: [],fill: false,
       borderWidth: 1,
@@ -19,18 +25,21 @@ export class VariationCryptoComponent implements OnInit {
   lineChartLegend : true,
   }
   public ethChart = {
-    lineChartData: [{ data: [], 
+    lineChartData: [{ 
+      data: [], 
           fill: false,
           borderWidth: 1,
           pointRadius: 0,
-          label: 'Ethereum(USD)',
+          label: `Ethereum(USD)`,
           borderColor: '#8585ff'}],
   lineChartLabels: [],
   lineChartOptions: { responsive: true },
   lineChartLegend : true,
   }
 
-  constructor(private http: HttpClient) { }
+
+
+  constructor(private http: HttpClient, private transactionService:CryptoTransactionService) { }
 
   ngOnInit() {
     this.getBitcoinPriceData().subscribe((dataBtc: any) => {
@@ -50,6 +59,18 @@ export class VariationCryptoComponent implements OnInit {
   });
   window.addEventListener('resize', this.onResize.bind(this));
   this.onResize()
+
+
+  this.transactionService.connectToBTC().subscribe(data => {
+    const price = parseFloat(data.p).toFixed(2);
+    this.previousBtcPrice = this.latestBtcPrice;
+    this.latestBtcPrice = price;
+  });
+  this.transactionService.connectToETH().subscribe(data => {
+    const price = parseFloat(data.p).toFixed(2);
+    this.previousEthPrice = this.latestEthPrice;
+    this.latestEthPrice = price;
+  });
   }
 
   getBitcoinPriceData(): Observable<any> {

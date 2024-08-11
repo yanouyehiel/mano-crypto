@@ -146,6 +146,7 @@ export class RechargeCompteComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
+    
     this.stepAttribute(0);
   }
 }
