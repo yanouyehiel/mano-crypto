@@ -1,163 +1,170 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid">
-  <div class="user-profile email-wrap bookmark-wrap">
-    <div class="row" *ngIf="this.user.kyc[0].document_url === ''">
-      <div class="btn-showcase mb-2">
-        <button (click)="openProfileEdit()" class="btn btn-pill btn-secondary btn-air-secondary text-white" [class.text-dark]="'light'" type="button">Insérer vos photos</button>
-     </div>
+  <div class="col-md-12" *ngIf="loader else closeLoader">
+    <div class="loader-box">
+      <div class="loader-3"></div>
     </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card profile-header">
-          <div class="profile-img-wrrap shadow-lg">
-          </div>
-          <div class="userpro-box shadow-lg">
-            <div class="img-wrraper">
-              <div class="avatar">
-                <img
-                  class="img-fluid"
-                  alt=""
-                  src="assets/images/dashboard/1.png"
-                />
-              </div>
-              <a class="icon-wrapper" routerLink="../profile-edit"
-                ><i class="fa fa-edit"></i
-              ></a>
+  </div>
+  <ng-template #closeLoader>
+    <div class="user-profile email-wrap bookmark-wrap">
+      <div class="row" *ngIf="this.user.kyc[0].document_url === ''">
+        <div class="btn-showcase mb-2">
+          <button (click)="openProfileEdit()" class="btn btn-pill btn-secondary btn-air-secondary text-white" [class.text-dark]="'light'" type="button">Insérer vos photos</button>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card profile-header">
+            <div class="profile-img-wrrap shadow-lg">
             </div>
-            <div class="user-designation">
-              <div class="title">
-                <h4>{{ user.name }}</h4>
-                <h6 class="email" [class]="
-                  !user.isEmailVerified
-                    ? 'text-danger txt-bold'
-                    : 'text-success'
-                ">
-                  {{ user.email }}
-                  <span *ngIf="user.isEmailVerified" class="badge badge-success">Validé</span>
-                  <span *ngIf="!user.isEmailVerified" class="badge badge-danger">Pas Validé</span>
-                </h6>
+            <div class="userpro-box shadow-lg">
+              <div class="img-wrraper">
+                <div class="avatar">
+                  <img
+                    class="img-fluid"
+                    alt=""
+                    src="assets/images/dashboard/1.png"
+                  />
+                </div>
+                <a class="icon-wrapper" routerLink="../profile-edit"
+                  ><i class="fa fa-edit"></i
+                ></a>
               </div>
-              <div class="follow">
-                <ul class="follow-list">
-                  <li>
-                    <div class="follow-num counter">Téléphone</div>
-                    <span>{{ user.phoneNumber }}</span>
-                  </li>
-                  <ng-container *ngIf="user.kyc[0].status === 'approved' && user.kyc[1].status === 'approved' else pasValide">
-                    <li>
-                      <div class="follow-num counter">Status Compte</div>
-                      <span class="text-success txt-bold">Validé</span>
-                    </li>
-                  </ng-container>
-
-                  <ng-template #pasValide>
-                    <li
-                      [routerLink]="'/client/profile-edit'"
-                      class="not-validated"
-                    >
-                      <div class="follow-num counter">Status Compte</div>
-                      <span class="text-danger txt-bold">Pas validé</span
-                      >
-                    </li>
-                  </ng-template>
-                </ul>
-                <div style="margin-top: 10px;">
-                  <span style="color: white;" [class]="kycIsUploaded ? 'badge badge-success' : 'badge badge-danger'">{{ textKYC }}</span>
+              <div class="user-designation">
+                <div class="title">
+                  <h4>{{ user.name }}</h4>
+                  <h6 class="email" [class]="
+                    !user.isEmailVerified
+                      ? 'text-danger txt-bold'
+                      : 'text-success'
+                  ">
+                    {{ user.email }}
+                    <span *ngIf="user.isEmailVerified" class="badge badge-success">Validé</span>
+                    <span *ngIf="!user.isEmailVerified" class="badge badge-danger">Pas Validé</span>
+                  </h6>
+                </div>
+                <div class="follow">
                   <ul class="follow-list">
-                    <li [class]="user.kyc[0].status === 'approved' ? 'text-success' : 'text-danger'">CNI: {{user.kyc[0].status}}</li>
-                    <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : 'text-danger'">Photo 4x4: {{user.kyc[1].status}}</li>
+                    <li>
+                      <div class="follow-num counter">Téléphone</div>
+                      <span>{{ user.phoneNumber }}</span>
+                    </li>
+                    <ng-container *ngIf="user.kyc[0].status === 'approved' && user.kyc[1].status === 'approved' else pasValide">
+                      <li>
+                        <div class="follow-num counter">Status Compte</div>
+                        <span class="text-success txt-bold">Validé</span>
+                      </li>
+                    </ng-container>
+
+                    <ng-template #pasValide>
+                      <li
+                        [routerLink]="'/client/profile-edit'"
+                        class="not-validated"
+                      >
+                        <div class="follow-num counter">Status Compte</div>
+                        <span class="text-danger txt-bold">Pas validé</span
+                        >
+                      </li>
+                    </ng-template>
                   </ul>
+                  <div style="margin-top: 10px;">
+                    <span style="color: white;" [class]="kycIsUploaded ? 'badge badge-success' : 'badge badge-danger'">{{ textKYC }}</span>
+                    <ul class="follow-list">
+                      <li [class]="user.kyc[0].status === 'approved' ? 'text-success' : 'text-danger'">CNI: {{user.kyc[0].status}}</li>
+                      <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : 'text-danger'">Photo 4x4: {{user.kyc[1].status}}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="default-according style-1 faq-accordion job-accordion">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="p-0">Détails</h5>
-                </div>
-                <div class="collapse show">
-                  <div class="card-body post-about">
-                    <ul>
-                      <li>
-                        <div class="icon">
-                          <app-feather-icons
-                            [icon]="'user'"
-                          ></app-feather-icons>
-                        </div>
-                        <div>
-                          <h5>Noms</h5>
-                          <p>{{ user.name }}</p>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="icon">
-                          <app-feather-icons
-                            [icon]="'mail'"
-                          ></app-feather-icons>
-                        </div>
-                        <div>
-                          <h5>Email</h5>
-                          <p
-                            [class]="
-                              !user.isEmailVerified
-                                ? 'text-danger txt-bold'
-                                : 'text-success'
-                            "
-                          >
-                            {{ user.email }}
-                            <span *ngIf="user.isEmailVerified" class="badge badge-success">Validé</span>
-                            <span *ngIf="!user.isEmailVerified" class="badge badge-danger">Pas Validé</span>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="icon">
-                          <app-feather-icons
-                            [icon]="'phone'"
-                          ></app-feather-icons>
-                        </div>
-                        <div>
-                          <h5>Telephone</h5>
-                          <p
-                            [class]="
-                              !user.isPhoneVerified
-                                ? 'text-danger txt-bold'
-                                : 'text-success'
-                            "
-                          >
-                            {{ user.phoneNumber }}
-                            <span *ngIf="user.isPhoneVerified" class="badge badge-success">Validé</span>
-                            <span *ngIf="!user.isPhoneVerified" class="badge badge-danger">Pas Validé</span>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="icon">
-                          <app-feather-icons
-                            [icon]="'clock'"
-                          ></app-feather-icons>
-                        </div>
-                        <div>
-                          <h5>Date d'inscription</h5>
-                          <p>29 Septembre 2023</p>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="icon">
-                          <app-feather-icons [icon]="'eye'"></app-feather-icons>
-                        </div>
-                        <div>
-                          <h5>Derniere connexion</h5>
-                          <p>03 Octobre 2023</p>
-                        </div>
-                      </li>
-                    </ul>
+        <div class="col-sm-6">
+          <div class="default-according style-1 faq-accordion job-accordion">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="p-0">Détails</h5>
+                  </div>
+                  <div class="collapse show">
+                    <div class="card-body post-about">
+                      <ul>
+                        <li>
+                          <div class="icon">
+                            <app-feather-icons
+                              [icon]="'user'"
+                            ></app-feather-icons>
+                          </div>
+                          <div>
+                            <h5>Noms et prénoms</h5>
+                            <p style="text-transform: uppercase !important;">{{ user.name }}</p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon">
+                            <app-feather-icons
+                              [icon]="'mail'"
+                            ></app-feather-icons>
+                          </div>
+                          <div>
+                            <h5>Email</h5>
+                            <p
+                              [class]="
+                                !user.isEmailVerified
+                                  ? 'text-danger txt-bold'
+                                  : 'text-success'
+                              "
+                            >
+                              {{ user.email }}
+                              <span *ngIf="user.isEmailVerified" class="badge badge-success">Validé</span>
+                              <span *ngIf="!user.isEmailVerified" class="badge badge-danger">Pas Validé</span>
+                            </p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon">
+                            <app-feather-icons
+                              [icon]="'phone'"
+                            ></app-feather-icons>
+                          </div>
+                          <div>
+                            <h5>Telephone</h5>
+                            <p
+                              [class]="
+                                !user.isPhoneVerified
+                                  ? 'text-danger txt-bold'
+                                  : 'text-success'
+                              "
+                            >
+                              {{ user.phoneNumber }}
+                              <span *ngIf="user.isPhoneVerified" class="badge badge-success">Validé</span>
+                              <span *ngIf="!user.isPhoneVerified" class="badge badge-danger">Pas Validé</span>
+                            </p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon">
+                            <app-feather-icons
+                              [icon]="'clock'"
+                            ></app-feather-icons>
+                          </div>
+                          <div>
+                            <h5>Date d'inscription</h5>
+                            <p>29 Septembre 2023</p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon">
+                            <app-feather-icons [icon]="'eye'"></app-feather-icons>
+                          </div>
+                          <div>
+                            <h5>Derniere connexion</h5>
+                            <p>03 Octobre 2023</p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -166,5 +173,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>

@@ -13,12 +13,12 @@ const Swal = require('sweetalert2')
 })
 export class ProfileEditComponent implements OnInit {
   public user: any;
-  @Input() files: any[] = [];
   profileForm: FormGroup;
   profile: any;
   fileForm: FormGroup;
   formData: FormData;
   private userSaved = localStorage.getItem('user-mansexch')
+  public loader: boolean = true;
 
   constructor(
     private userService: UserService,
@@ -33,14 +33,24 @@ export class ProfileEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
+    this.getProfileUser()
     this.profileForm = this.fb.group({
       name: ['', Validators.required]
     })
-
     this.fileForm = this.fb.group({
       files: ['', Validators.required]
     })
+  }
+
+  getProfileUser(): void {
+    this.userService.getProfile().subscribe((response: any) => {
+      this.user = response.data.user
+    }, (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/auth/login'])
+      }
+    })
+    this.loader = false;
   }
 
   updateProfile() {
@@ -54,11 +64,9 @@ export class ProfileEditComponent implements OnInit {
       if (res.statusCode === 1000) {
         this.toast.success("Mise à jour du nom réussie !")
       }
-    }, (error: any) => {
-      if (error.error.statusCode === 1001) {
-        this.toast.error(error.error.message)
-      } else if (error.error.statusCode === 1005) {
-        this.toast.error(error.error.message)
+    }, (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/auth/login'])
       }
     })
   }
@@ -71,10 +79,6 @@ export class ProfileEditComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     })
-  }
-
-  onFileChanged(file: any) {
-    this.files.push(file)
   }
 
   checkFileSize(file: File): boolean {

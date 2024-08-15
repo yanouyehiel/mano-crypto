@@ -28,7 +28,9 @@ export class UploadFileComponent {
     errorFallback: null,
     previewTemplate: '<div style="display:none"></div>',
   };
-  constructor(private userService: UserService, private toast: ToastrService) { }
+  constructor(private userService: UserService, private toast: ToastrService) {
+    console.log(this.kyc)
+  }
 
   onSelect(key: string, event: any) {
     if (key == 'cni') {

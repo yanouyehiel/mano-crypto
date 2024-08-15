@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -20,6 +21,7 @@ export class HistoryTableComponent implements OnChanges {
 
   constructor(
     private depositService: TransactionService,
+    private router: Router
   ) { }
 
 
@@ -29,16 +31,19 @@ export class HistoryTableComponent implements OnChanges {
         return of(error.error)
       })
     ).subscribe((response: ResponseParent) => {
-      if (response.statusCode != 1000) {
-        this.errorDisplay = "Impossible de charger les donnees, " + response.message ? response.message : " Problème de réseau ";
-      }
-      else {
-        this.recentOrders = response.data.transactions
-        this.currentPage = parseInt(response.data.currentPage)
-        this.totalLenght = response.data.total_transactions
+      if (response.statusCode === 1001) {
+        this.router.navigate(['/auth/login'])
+      } else {
+        if (response.statusCode != 1000) {
+          this.errorDisplay = "Impossible de charger les donnees, " + response.message ? response.message : " Problème de réseau ";
+        }
+        else {
+          this.recentOrders = response.data.transactions
+          this.currentPage = parseInt(response.data.currentPage)
+          this.totalLenght = response.data.total_transactions
+        }
       }
       this.loader = false;
-
     })
   }
   ngOnChanges(changes: SimpleChanges): void {

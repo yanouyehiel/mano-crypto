@@ -2,7 +2,14 @@
 <div class="container-fluid dashboard-default-sec">
     <div class="row">
         <div class="col-xl-12 box-col-12 des-xl-100"> 
-            <app-profile-finance></app-profile-finance>
+            <div class="col-md-12" *ngIf="loader; else data">
+                <div class="loader-box">
+                    <div class="loader-3"></div>
+                </div>
+            </div>
+            <ng-template #data>
+                <app-profile-finance [walletData]="walletData"></app-profile-finance>
+            </ng-template>
         </div>
         <div class="col-xl-12 box-col-12 des-xl-100 dashboard-sec">
             <app-variation-crypto></app-variation-crypto>

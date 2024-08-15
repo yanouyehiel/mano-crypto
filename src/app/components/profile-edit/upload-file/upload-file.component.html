@@ -9,19 +9,22 @@
                         d\'identité
                         dans la
                         main'}}</label>
-                        <span *ngIf="item.status=='rejected'" class="float-end text-center mb-3"><span class="text-danger">Rejeté</span><br><span *ngIf="item.reject_reason" class="text-light">{{item.kyc.reason}}</span> </span>
+                        <div *ngIf="item.status=='rejected'" class="row text-center mb-3">
+                           <span class="text-danger">Rejeté</span><br>
+                           <span class="text-danger">{{item.reject_reason}}</span>
+                        </div>
                      <div class="dropzone dz-clickable" *ngIf="item.status!='approved';else approvedTemplate">
 
                         <ngx-dropzone
                            *ngIf="item.status!='submitted';else waitingTemplate"
-                           (change)="onSelect(item.document_type,$event)" accept="image/*" [multiple]="false">
+                           (change)="onSelect(item.document_type,$event)" accept="image/*" [multiple]="item.document_type=='cni' ? true : false">
                            <ngx-dropzone-label>
                               <div>
                                  <div class="dz-message needsclick ">
                                     <i class="fa fa-upload"></i>
                                     <h6>Importer une image</h6>
                                     <span class="dz-message needsclick">(
-                                       {{item.document_type=='cni'?'Ajoutez ici une photo de votre pièce d\'identité':'Ajoutez ici votre photo 4x4'}})</span>
+                                       {{item.document_type=='cni'?'Ajoutez ici deux photos de votre pièce d\'identité recto et verso':'Ajoutez ici votre photo 4x4'}})</span>
                                  </div>
                               </div>
                            </ngx-dropzone-label>
@@ -32,7 +35,7 @@
                               <ngx-dropzone-label>{{ cniPersonFile.name }} {{ cniPersonFile.type }}</ngx-dropzone-label>
                            </ngx-dropzone-preview>
                         </ngx-dropzone>
-                        <p class="text-warning" *ngIf="item.document_type=='cni'&&cniFile&&cniFile!.size>(2 * 1024 * 1024)"><i class="fa fa-warning"></i>Le fichier est trop lourd (>2Mo)</p>
+                        <p class="text-warning" *ngIf="item.document_type=='cni'&&cniFile&&cniFile!.size>(4 * 1024 * 1024)"><i class="fa fa-warning"></i>Le fichier est trop lourd (>4Mo)</p>
                         <p class="text-warning" *ngIf="item.document_type=='cni_person'&&cniPersonFile&&cniPersonFile!.size>(2 * 1024 * 1024)"><i class="fa fa-warning"></i>Le fichier est trop lourd (>2Mo)</p>
                      </div>
                   </div>
@@ -53,8 +56,7 @@
    <div class="row">
       <div class="col">
          <div class="text-end">
-            <button type="submit" [disabled]="(!cniFile && !cniPersonFile)||isDisabled||isLoading" (click)="onSubmitKyc()" class="btn btn-primary me-3">
-               
+            <button type="submit" [disabled]="(!cniFile && !cniPersonFile)||isDisabled||isLoading" (click)="onSubmitKyc()" class="btn btn-primary me-3">             
                Importer <i *ngIf="isLoading" class="fa fa-spin fa-circle-o-notch"></i>
             </button>
          </div>

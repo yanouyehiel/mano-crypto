@@ -1,5 +1,11 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid">
+  <div class="col-md-12" *ngIf="loader else closeLoader">
+    <div class="loader-box">
+      <div class="loader-3"></div>
+    </div>
+  </div>
+  <ng-template #closeLoader>
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
@@ -72,10 +78,11 @@
           </div>
           <div class="card-body">
             <app-upload-file  id="kycElement"
-            [kyc]="user.kyc"
-          ></app-upload-file>
+              [kyc]="user.kyc"
+            ></app-upload-file>
           </div>
         </div>
       </div>
     </div>
+  </ng-template>
 </div>

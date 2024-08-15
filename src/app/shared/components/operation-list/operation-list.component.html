@@ -1,0 +1,51 @@
+<div class="card-body">
+    <div class="user-status table-responsive">
+      <div class="col-md-12" *ngIf="loader">
+        <div class="loader-box">
+          <div class="loader-3"></div>
+        </div>
+      </div>
+      <table class="table table-bordernone" *ngIf="!loader">
+        <thead>
+          <tr>
+            <th scope="col">Demandeur</th>
+            <th scope="col">Type d'opération</th>
+            <th scope="col">Valeur</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+  
+        <tr *ngFor="let operation of operations">
+          <td class="f-w-600" *ngIf="operation.user;else withId">{{ operation.user.name }}</td>
+          <ng-template #withId>
+            <td class="f-w-600">{{ operation.userId.name }}</td>
+          </ng-template>
+          <td>{{ operation.type }}</td>
+          <td *ngIf="operation.type === 'DEPOSIT'; else amountCrypto">
+            {{ operation.amount + ' FCFA' }}
+          </td>
+          <ng-template #amountCrypto>
+            <ng-container *ngIf="operation.type !== 'WITHDRAW'">
+              {{ operation.amount | number: '1.0-8' }} {{ operation.currency }}
+            </ng-container>
+            <ng-container *ngIf="operation.type == 'WITHDRAW'">
+            {{ operation.amount + ' FCFA' }}
+            </ng-container>
+          </ng-template>
+          <td>{{ operation.creationDate | customDateFormat }}</td>
+          <td *ngIf="operation.status=='SUCCESS'; else status" class="badge badge-success text-white">{{ operation.status }}</td>
+          <ng-template #status>
+            <ng-container *ngIf="operation.status=='FAILED'" class="badge badge-danger text-white">{{ operation.status }}</ng-container>
+            <ng-container *ngIf="operation.status=='PENDING'" class="badge badge-warning text-white">{{ operation.status }}</ng-container>
+            <ng-container *ngIf="operation.status=='REJECTED'" class="badge badge-danger text-white">{{ operation.status }}</ng-container>
+            <ng-container *ngIf="operation.status=='CREATED'" class="badge badge-warning text-white">{{ operation.status }}</ng-container>
+          </ng-template>
+        </tr>
+        <p class="text-dark-emphasis">{{messageToDisplay}}</p>
+      </table>
+      <ngb-pagination class="ms-3 mb-3" [collectionSize]="totalLenght" [page]="currentPage" [pageSize]="25"
+        (pageChange)="fetchAwaitingWithdraws($event)">
+      </ngb-pagination>
+    </div>
+  </div>

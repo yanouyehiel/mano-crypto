@@ -6,16 +6,24 @@
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                   <h5>Retraits mobile en attente</h5>
                 </div>
-            <app-withdraw-cart operationType="WITHDRAW"></app-withdraw-cart>
-        </div>
+                <app-withdraw-cart operationType="WITHDRAW"></app-withdraw-cart>
+            </div>
         </div>
         <div class="col-12">
             <div class="card">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                   <h5>Retraits crypto en attente</h5>
                 </div>
-            <app-withdraw-cart operationType="WITHDRAW_CRYPTO"></app-withdraw-cart>
+                <app-withdraw-cart operationType="WITHDRAW_CRYPTO"></app-withdraw-cart>
+            </div>
         </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                  <h5>Toutes les opérations réalisées</h5>
+                </div>
+                <app-operation-list></app-operation-list>
+            </div>
         </div>
     </div>
 </div>

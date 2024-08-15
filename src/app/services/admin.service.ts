@@ -79,6 +79,10 @@ export class AdminService {
         return this.http.get<any>(id != null ? `${this.urlAdmin}/transactions?userId=${id}&page=${page}&limit=${max ? max : 9}` : `${this.urlAdmin}/transactions?page=${page}&limit=${max ? max : 25}&status=${status}&type=${type}`, this.getConfig())
     }
 
+    getAllUsersTransactions(page: number): Observable<any> {
+        return this.http.get<any>(`${this.urlAdmin}/transactions?page=${page}`, this.getConfig())
+    }
+
     getUsersStatistics(country: string): Observable<any> {
         return this.http.get<any>(`${this.urlAdmin}/statistics${'?country=' + country}`, this.getConfig())
     }

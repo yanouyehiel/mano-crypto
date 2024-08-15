@@ -27,6 +27,7 @@ loader:boolean = true;
 
   fetchAwaitingWithdraws(pageNumber:number){
     this.adminService.getUsersTransactions(pageNumber,undefined,this.operationType,25,'CREATED').subscribe((response:ResponseParent)=>{
+      console.log(response)
       if(response.statusCode===1000){
         this.operations = response.data.transactions
         this.currentPage = parseInt(response.data.currentPage)
