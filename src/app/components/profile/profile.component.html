@@ -9,7 +9,7 @@
     <div class="user-profile email-wrap bookmark-wrap">
       <div class="row" *ngIf="this.user.kyc[0].document_url === ''">
         <div class="btn-showcase mb-2">
-          <button (click)="openProfileEdit()" class="btn btn-pill btn-secondary btn-air-secondary text-white" [class.text-dark]="'light'" type="button">Insérer vos photos</button>
+          <button (click)="openProfileEdit()" class="btn btn-pill btn-secondary btn-air-secondary text-white" [class.text-dark]="'light'" type="button">Insérer vos documents</button>
       </div>
       </div>
       <div class="row">
@@ -69,9 +69,10 @@
                   </ul>
                   <div style="margin-top: 10px;">
                     <span style="color: white;" [class]="kycIsUploaded ? 'badge badge-success' : 'badge badge-danger'">{{ textKYC }}</span>
-                    <ul class="follow-list">
-                      <li [class]="user.kyc[0].status === 'approved' ? 'text-success' : 'text-danger'">CNI: {{user.kyc[0].status}}</li>
-                      <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : 'text-danger'">Photo 4x4: {{user.kyc[1].status}}</li>
+                    <ul class="follow-list d-flex">
+                      <li [class]="user.kyc[0].status === 'approved' ? 'text-success' : (user.kyc[0].status === 'submitted' ? 'text-warning' : 'text-danger')">CNI Recto: {{user.kyc[0].status}}</li>
+                      <li [class]="user.kyc[1].status === 'approved' ? 'text-success' : (user.kyc[1].status === 'submitted' ? 'text-warning' : 'text-danger')">CNI Verso: {{user.kyc[1].status}}</li>
+                      <li [class]="user.kyc[2].status === 'approved' ? 'text-success' : (user.kyc[2].status === 'submitted' ? 'text-warning' : 'text-danger')">Photo 4x4: {{user.kyc[2].status}}</li>
                     </ul>
                   </div>
                 </div>

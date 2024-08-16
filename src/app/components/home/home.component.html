@@ -2,12 +2,33 @@
 <div class="container-fluid dashboard-default-sec">
     <div class="row">
         <div class="col-xl-12 box-col-12 des-xl-100"> 
+            <div class="col-sm-12">
+                <div class="row">
+                    <h6 style="font-weight: 600; text-transform: capitalize; color: black;">EFFECTUEZ DES TRANSACTIONS CRYPTO DES MAINTENANT</h6>
+                    <div class="col-sm-6 col-xl-3 col-lg-6" *ngFor="let data of earningData">
+                        <div class="card o-hidden border-0" style="cursor: pointer;" (click)="joinService(data.link)">
+                            <div class="{{data.classCompo}} b-r-4 card-body">
+                                <div class="media static-top-widget">
+                                    <div class="align-self-center text-center">
+                                        <app-feather-icons [icon]="data.icon"></app-feather-icons>
+                                    </div>
+                                    <div class="media-body"><span class="m-0">{{ data.title }}</span>
+                                        <h4 class="mb-0 counter">{{ data.count }}</h4>
+                                        <app-feather-icons [icon]="data.icon" class="icon-bg"></app-feather-icons>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-12" *ngIf="loader; else data">
                 <div class="loader-box">
                     <div class="loader-3"></div>
                 </div>
             </div>
             <ng-template #data>
+                <h5 style="font-weight: bold; text-transform: capitalize; color: black;">Votre portefeuille actuel</h5>
                 <app-profile-finance [walletData]="walletData"></app-profile-finance>
             </ng-template>
         </div>

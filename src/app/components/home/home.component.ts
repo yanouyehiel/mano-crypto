@@ -11,6 +11,40 @@ export class HomeComponent implements OnInit {
   public walletData: any;
   public loader: boolean = true;
   private userSaved = localStorage.getItem('user-mansexch')
+  public earningData = [
+    {
+      id: 1,
+      classCompo: 'bg-primary',
+      icon: 'trending-up',
+      title: 'Cliquez ici pour',
+      count: 'Acheter',
+      link: "/client/acheter-crypto"
+    },
+    {
+      id: 2,
+      classCompo: 'bg-secondary',
+      icon: 'trending-down',
+      title: 'Cliquez ici pour',
+      count: 'Vendre',
+      link: "/client/vente-crypto"
+    },
+    {
+      id: 3,
+      classCompo: 'bg-success',
+      icon: 'chevrons-left',
+      title: 'Cliquez ici pour',
+      count: 'Transférer',
+      link: "/client/transferer-crypto"
+    },
+    {
+      id: 4,
+      classCompo: 'bg-warning',
+      icon: 'repeat',
+      title: 'Cliquez ici pour',
+      count: 'Partager',
+      link: "/client/share-to-friend"
+    },
+  ];
 
   constructor(private router: Router, private cryptoService: DataCryptoService) {
     if (this.userSaved == null) {
@@ -32,5 +66,9 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/auth/login'])
       }
     })
+  }
+
+  joinService(url: string) {
+    this.router.navigate([url])
   }
 }

@@ -45,12 +45,12 @@ export class ProfileEditComponent implements OnInit {
   getProfileUser(): void {
     this.userService.getProfile().subscribe((response: any) => {
       this.user = response.data.user
+      this.loader = false;
     }, (err) => {
       if (err.status === 401) {
         this.router.navigate(['/auth/login'])
       }
     })
-    this.loader = false;
   }
 
   updateProfile() {

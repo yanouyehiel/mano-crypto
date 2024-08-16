@@ -37,8 +37,7 @@ export class PersonalComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private userService: UserService, private adminServise: AdminService) { }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {   
     this.currentUser = JSON.parse(localStorage.getItem('user-mansexch')!).user
     this.setUserDisplay(this.users[0])
     this.pageHistoryChange(1)
@@ -56,8 +55,7 @@ export class PersonalComponent implements OnInit {
     this.fetchHistory(1, this.user._id)
     this.isApproved = this.isKycApprouved()
   }
-  fetchHistory(page: number, userId: string) {
-    
+  fetchHistory(page: number, userId: string) {  
     this.maxHistoryElements = parseInt((document.querySelector('#right-history')?.clientHeight! / document.querySelector('.elementHistory')?.clientHeight!).toString())-1
     this.adminServise.getUsersTransactions(page, userId, undefined,this.maxHistoryElements).pipe(catchError((error) => {
       this.alertMsg = "Une erreur s'est produite, veuillez reessayer !"
@@ -179,7 +177,6 @@ export class PersonalComponent implements OnInit {
   }
 
   showImageKYC(image: string): void {
-    console.log(image)
     const swalModal = Swal.mixin(
       {
         customClass: {
