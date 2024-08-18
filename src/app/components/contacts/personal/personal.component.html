@@ -80,10 +80,10 @@
                   <ng-container *ngFor="let wallet of user.wallets">
                     <ng-container [ngSwitch]="wallet.type">
                       <li *ngSwitchCase="'BTC'">Bitcoin <span
-                          class="font-primary">{{wallet.solde |number:'1.0-9' }} BTC</span></li>
+                          class="font-primary">{{wallet.solde |number:'1.0-8' }} BTC</span></li>
                       <li *ngSwitchCase="'ETH'">Ethereum <span
-                          class="font-primary">{{wallet.solde |number:'1.0-9' }} ETH</span></li>
-                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde}}
+                          class="font-primary">{{wallet.solde |number:'1.0-8' }} ETH</span></li>
+                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde | number: '1.0-2'}}
                           FCFA</span></li>
                     </ng-container>
                   </ng-container>
@@ -96,13 +96,18 @@
 
                 <ul>
                   <ng-container *ngFor="let kycElement of user.kyc">
-                    <li class="d-flex justify-content-between">{{kycElement.document_type=='cni'?'Photo 4*4':'Photo
-                      CNI'}} <span *ngIf="kycElement.document_url.length>5;else TemplateElse"><p
-                          class="font-primary" style="cursor: pointer" (click)="showImageKYC(kycElement.document_url)">Voir l'image</p><span
-                          *ngIf="kycElement.status!='approved'" class="d-block"><a class="text-success "
-                            (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a><span
-                            *ngIf="kycElement.status!='rejected'">{{' | '}}<a class="text-danger "
-                              (click)="manageKYCStatus('rejected', kycElement.document_type)">Rejéter</a></span></span></span>
+                    <li class="d-flex justify-content-between">
+                      {{kycElement.document_type=='cni_recto'?'Photo CNI Recto':(kycElement.document_type=='cni_verso'?'Photo CNI Verso':'Photo User 4x4')}} 
+                      <span *ngIf="kycElement.document_url.length>5;else TemplateElse">
+                        <p class="font-primary" style="cursor: pointer" (click)="showImageKYC(kycElement.document_url)">Voir l'image</p>
+                        <span *ngIf="kycElement.status!='approved'" class="d-block">
+                          <a class="text-success " (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a>
+                          <span *ngIf="kycElement.status!='rejected'">
+                            {{' | '}}
+                            <a class="text-danger" (click)="manageKYCStatus('rejected', kycElement.document_type)">Rejéter</a>
+                          </span>
+                        </span>
+                      </span>
                     </li>
                   </ng-container>
                 </ul>

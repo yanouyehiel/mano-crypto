@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { DataCryptoService } from 'src/app/services/data-crypto.service';
 const Swal = require('sweetalert2')
@@ -10,10 +10,10 @@ const Swal = require('sweetalert2')
 })
 export class ProfileFinanceComponent implements OnInit {
   private alertWelcomeTime: number = 0;
-  public walletData: any;
+  @Input() walletData: any;
 
-  constructor(private cryptoService: DataCryptoService) {
-
+  constructor() {
+    
   }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class ProfileFinanceComponent implements OnInit {
     if (this.alertWelcomeTime !== 1) {
       this.dialog()
     }
-    this.getWalletDetails()
+    
   }
 
 
@@ -35,11 +35,6 @@ export class ProfileFinanceComponent implements OnInit {
     })
   }
 
-  getWalletDetails() {
-    this.cryptoService.getWalletDetails().subscribe((response: any) => {
-      this.walletData = response.data.details
-    })
-  }
   displaySolde(solde:any){
    return parseInt(solde)
   }

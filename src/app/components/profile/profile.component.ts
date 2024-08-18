@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   public kycIsUploaded: boolean = false;
   public textKYC: string = ""
   private userSaved = localStorage.getItem('user-mansexch')
+  public loader: boolean = true;
 
   constructor(private router: Router, private userService: UserService) 
   {
@@ -22,8 +23,8 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('user-mansexch')!).user
-    
+    this.loader = true;
+    this.getProfileUser()
     if (this.user.kyc[0].document_url === "") {
       this.textKYC = "Veuillez insérer votre CNI"
       this.kycIsUploaded = false
@@ -38,6 +39,18 @@ export class ProfileComponent implements OnInit {
 
   openProfileEdit(): any {
     this.router.navigate(['/client/profile-edit'])
+  }
+
+  getProfileUser(): void {
+    this.loader = true;
+    this.userService.getProfile().subscribe((response: any) => {
+      this.user = response.data.user
+      this.loader = false;
+    }, (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/auth/login'])
+      }
+    })
   }
 
 }

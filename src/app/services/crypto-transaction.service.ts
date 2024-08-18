@@ -116,4 +116,12 @@ export class CryptoTransactionService {
       this.getConfig()
     );
   }
+
+  p2pTransfert(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseParent>(
+      `${this.walletUrl}/friend-transfer`,
+      data,
+      this.getConfig()
+    );
+  }
 }

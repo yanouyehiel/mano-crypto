@@ -45,6 +45,7 @@ export class SendCryptoComponent implements OnInit {
   liveResponse$: Observable<any>;
   liveSpinner: HTMLElement | null;
   liveContent: HTMLElement | null;
+  loadingTransfert = false;
 
   setReload() {
     this.reloadHistory = !this.reloadHistory
@@ -71,7 +72,7 @@ export class SendCryptoComponent implements OnInit {
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "inline-block";
           }
-console.log( this.sendForm.value)
+          console.log(this.sendForm.value)
           // Utiliser forkJoin pour exécuter les requêtes en parallèle
           return forkJoin({
             conversion: this.transactionService.convertToFiat({
@@ -98,7 +99,7 @@ console.log( this.sendForm.value)
     );
 
     this.liveResponse$.subscribe((response) => {
-      
+
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
@@ -115,13 +116,13 @@ console.log( this.sendForm.value)
       if (liveValue3) {
         let total1 = parseFloat(response.conversion.data.crypto_amount) + parseFloat(response.fees.data.withdrawFees.fee)
 
-        liveValue3.innerText = `${(response.conversion.data.crypto_amount && response.fees.data.withdrawFees.fee) ? total1 + ' '+ response.fees.data.withdrawFees.currency : ''}`;
+        liveValue3.innerText = `${(response.conversion.data.crypto_amount && response.fees.data.withdrawFees.fee) ? total1 + ' ' + response.fees.data.withdrawFees.currency : ''}`;
       }
 
     })
   }
 
-  bindInputValue(){
+  bindInputValue() {
     this.swalInputValue.next(this.sendForm.value['amount'])
   }
 
@@ -167,7 +168,7 @@ console.log( this.sendForm.value)
 
       modalRef.dismissed.subscribe((res) => {
         if (res == true) {
-          this.initTransfert()
+          this.askConfirmTransaction()
         } else {
           this.failedAuth();
         }
@@ -175,44 +176,16 @@ console.log( this.sendForm.value)
 
     }
 
-
-
     this.resetError()
   }
 
-  initTransfert() {
-    this.transactionService.getCryptoFees({ 'crypto_currency': this.sendForm.value['currency'], 'amount': this.sendForm.value['amount'] })
-      .pipe(
-        catchError((error) => {
-          if (
-            error.status === 0 ||
-            error.statusText === 'Unknown Error'
-          ) {
-            Swal.fire(
-              'Erreur',
-              `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-              'error'
-            );
-          }
-
-          return of(error.error);
-        })
-      )
-      .subscribe((value) => {
-        if (value.statusCode == 1000) {
-          this.askConfirmTransaction(value)
-        } else {
-          Swal.fire('L\'operation a echoue', value.message, 'error');
-        }
-
-      })
-  }
-  askConfirmTransaction(value: any) {
+  askConfirmTransaction() {
+    this.loadingTransfert = true;
     Swal.fire({
       titleText: `Transfert de ${this.sendForm.value['currency']}`,
-      html: `Le cout total de la transaction va s'elevé a<b class="text-success"> ${(parseFloat(value.data.withdrawFees.fee) + parseFloat(this.sendForm.value['amount']))} ${this.sendForm.value['currency']}</b>`,
+      html: `Vous allez transferer <b class="text-success">${this.sendForm.value['amount']} ${this.sendForm.value['currency']}</b> a l'adresse ${this.sendForm.value['address']} <br> Veuilliez confirmer la transaction`,
       showDenyButton: true,
-      confirmButtonText: 'Transferer',
+      confirmButtonText: 'Confirmer',
       denyButtonText: `Annuler`,
       showLoaderOnConfirm: true,
       preConfirm: async (value) => {
@@ -245,7 +218,7 @@ console.log( this.sendForm.value)
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
-
+      this.loadingTransfert = false
       if (result.isConfirmed) {
         if (result.value.statusCode == 1000) {
           this.success();
@@ -254,15 +227,16 @@ console.log( this.sendForm.value)
             Swal.close();
           }, 2000);
         } else {
-          Swal.fire('L\'operation a echoue', value.message, 'error');
+          Swal.fire('L\'operation a echoue', result.value.message, 'error');
         }
 
       } else if (result.isDenied) {
-        Swal.fire('Achat annulée', '', 'error');
+        Swal.fire('Achat annulée', 'Vous avez annulé l\'opération !', 'error');
       }
     });
   }
   resetError() {
+    this.loadingTransfert = false
     setTimeout(() => {
       this.alertMsg = ''
     }, 3000)

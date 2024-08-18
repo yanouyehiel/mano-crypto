@@ -118,13 +118,14 @@ export class RechargeCompteComponent implements OnInit {
             )
             .subscribe({
               next: (value) => {
-                console.log(value)
                 if (value.statusCode == 1000) {
                   this.successRecharge();
                   this.setReload()
                   setTimeout(() => {
                     Swal.close();
                   }, 2000);
+                } else if (value.statusCode == 1001) {
+                  this.router.navigate(['/auth/login'])
                 } else {
                   Swal.fire('Opération annulée', value.message, 'error');
                 }

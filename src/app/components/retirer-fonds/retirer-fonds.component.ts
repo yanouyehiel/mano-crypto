@@ -131,6 +131,8 @@ export class RetirerFondsComponent implements OnInit {
                 `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
               'error'
             );
+          } else if (value.statusCode === 1001) {
+            this.router.navigate(['/auth/login'])
           } else {
             this.otpVerificationAndWithdraw(value.data!.secret);
           }

@@ -60,6 +60,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WithdrawCartComponent } from './shared/components/withdraw-cart/withdraw-cart.component';
 import { OperationsComponent } from './components/operations/operations.component';
 import { ShareToFriendComponent } from './components/share-to-friend/share-to-friend.component';
+import { OperationListComponent } from './shared/components/operation-list/operation-list.component';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { ShareToFriendComponent } from './components/share-to-friend/share-to-fr
     VenteCryptoComponent,
     WithdrawCartComponent,
     OperationsComponent,
-    ShareToFriendComponent
+    ShareToFriendComponent,
+    OperationListComponent
    ],
 
   imports: [

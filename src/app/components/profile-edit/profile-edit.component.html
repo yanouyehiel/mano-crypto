@@ -1,5 +1,11 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid">
+  <div class="col-md-12" *ngIf="loader else closeLoader">
+    <div class="loader-box">
+      <div class="loader-3"></div>
+    </div>
+  </div>
+  <ng-template #closeLoader>
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
@@ -70,12 +76,13 @@
             <h4 class="card-title mb-0">Importer les fichiers</h4>
             <div class="card-options"><a class="card-options-collapse" href="javascript:void(0)" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:void(0)" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
           </div>
-          <div class="card-body">
+          <div class="card-body" *ngIf="user.kyc.length > 0">
             <app-upload-file  id="kycElement"
-            [kyc]="user.kyc"
-          ></app-upload-file>
+              [kyc]="user.kyc"
+            ></app-upload-file>
           </div>
         </div>
       </div>
     </div>
+  </ng-template>
 </div>
