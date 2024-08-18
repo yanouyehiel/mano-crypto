@@ -12,6 +12,9 @@
                     <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==30?'active':''" (click)="setBtcVariationDuration(30)" type="button">
                       Mois
                     </button>
+                    <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==0?'active':''" (click)="openMdoModal(modBtcContent)" type="button">
+                      Personnalisé
+                    </button>
                   </div>
                 </div></h5>
             </div>
@@ -43,6 +46,9 @@
                     <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==30?'active':''" (click)="setEthVariationDuration(30)" type="button">
                       Mois
                     </button>
+                    <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==0?'active':''" (click)="openMdoModal(modEthContent)" type="button">
+                      Personnalisé
+                    </button>
                   </div>
                 </div></h5>
                 
@@ -64,3 +70,49 @@
         </div>
     </div>
 </div>
+
+<ng-template #modBtcContent let-modalBtc>
+  <div class="modal-header">
+    <h5 class="modal-title">Variation BTC personnalisé</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalBtc.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label class="col-form-label" for="date-start">De :</label>
+        <input class="form-control" id="date-start" type="datetime-local" #startDate>
+      </div>
+      <div class="mb-3">
+        <label class="col-form-label" for="date-end">A :</label>
+        <input class="form-control" id="date-end" type="datetime-local" #endDate>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" type="button" (click)="modalBtc.dismiss('Cross click')" data-bs-dismiss="modal">Ferner</button>
+    <button class="btn btn-primary" type="button" (click)="getCustomizedDateTime(startDate.value, endDate.value, 'BTC')">Valider</button>
+  </div>
+</ng-template> 
+
+<ng-template #modEthContent let-modalEth>
+  <div class="modal-header">
+    <h5 class="modal-title">Variation ETH personnalisé</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalEth.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label class="col-form-label" for="date-start">De :</label>
+        <input class="form-control" id="date-start" type="datetime-local" #startDate>
+      </div>
+      <div class="mb-3">
+        <label class="col-form-label" for="date-end">A :</label>
+        <input class="form-control" id="date-end" type="datetime-local" #endDate>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" type="button" (click)="modalEth.dismiss('Cross click')" data-bs-dismiss="modal">Ferner</button>
+    <button class="btn btn-primary" type="button" (click)="getCustomizedDateTime(startDate.value, endDate.value, 'ETH')">Valider</button>
+  </div>
+</ng-template> 

@@ -7,6 +7,8 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  forkJoin,
+  map,
   of,
   switchMap,
 } from 'rxjs';
@@ -22,6 +24,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./recharge-crypto.component.scss'],
 })
 export class RechargeCryptoComponent implements OnInit {
+
   public earningData = [
     {
       id: 1,
@@ -34,13 +37,19 @@ export class RechargeCryptoComponent implements OnInit {
       id: 2,
       classCompo: 'bg-secondary',
       icon: 'shopping-bag',
-      title: 'USD USA',
+      title: 'USDT USA',
       count: '56850',
     },
   ];
 
   public items = [
+    
     {
+      name: 'Tether',
+      abv: 'USDT',
+      value: 1,
+      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/825.png',
+    },{
       name: 'Bitcoin',
       abv: 'BTC',
       value: 31000,
@@ -70,11 +79,11 @@ export class RechargeCryptoComponent implements OnInit {
       icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png',
     },
     {
-      type: 'USD',
+      type: 'USDT',
       value: 54.6,
       actuelValue: 39485,
       class: 'primary',
-      icon: 'usd-svg.svg',
+      icon: 'USDT-svg.svg',
     },
   ];
 
@@ -83,7 +92,11 @@ export class RechargeCryptoComponent implements OnInit {
   public loader: boolean = true;
   cryptoAmount: number;
   reloadHistory = false;
-  setReload(){
+  swalInputValue = new Subject<string>();
+  liveResponse$: Observable<any>;
+  liveSpinner : HTMLElement | null;
+  liveContent : HTMLElement | null;
+  setReload() {
     this.reloadHistory = !this.reloadHistory
   }
   private userSaved = localStorage.getItem('user-mansexch')
@@ -100,7 +113,66 @@ export class RechargeCryptoComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.liveResponse$ = this.swalInputValue.pipe(
+      //On va attendre un certain temps avant de lancer la requete au serveur
+      debounceTime(300),
+      // Éviter les requêtes qui auront le même terme de recherche
+      distinctUntilChanged(),
+      switchMap((term) => {
+        if (parseFloat(term) > 0) {
+           
+          if (this.liveSpinner) {
+            this.liveSpinner.style.display = "block";
+          }
+          // Utiliser forkJoin pour exécuter les requêtes en parallèle
+          return forkJoin({
+            conversion: this.cryptoService.convertToFiat({
+              crypto_currency: this.typeCrypto,
+              amount: term,
+            }),
+            fees: this.cryptoService.getCryptoFees({
+              crypto_currency: this.typeCrypto,
+              amount: term,
+            })
+          }).pipe(
+            // Combiner les résultats en un seul objet
+            map(({ conversion, fees }) => ({
+              conversion,
+              fees
+            }))
+          );
+    
+        } else {
+          return of(null);
+        }
+      })
+    );
+
+    this.liveResponse$.subscribe((response) => {
+      this.liveSpinner!.style.display = 'none';
+      if (this.liveContent) {
+        this.liveContent.style.display = 'block';
+      }
+      const liveContent = document.getElementById('live-content'); 
+      if(liveContent){
+        liveContent.style.display = 'block';
+      }
+      const liveValue1 = document.getElementById('live-value1');
+      if (liveValue1) {
+        liveValue1.innerText = `${response.conversion.data.xaf_amount && parseInt(response.conversion.data.xaf_amount).toLocaleString('fr-FR')+' XAF'}`;
+      }
+      const liveValue2 = document.getElementById('live-value2');
+      if (liveValue2) {
+        liveValue2.innerText = `${response.fees.data.buyFees.fee && response.fees.data.buyFees.fee+' '+response.fees.data.buyFees.currency}`;
+      }
+      const liveValue3 = document.getElementById('live-value3');
+      if (liveValue3) {
+        liveValue3.innerText = `${(response.conversion.data.crypto_amount && response.fees.data.buyFees.fee)?parseFloat(response.conversion.data.crypto_amount) + parseFloat(response.fees.data.buyFees.fee) +' '+ response.fees.data.buyFees.currency :''}`;
+      }
+     
+    })
+  }
 
   VerticallyCenteredModal(verticallyContent: any, item: any) {
     const modalRef = this.modalService.open(verticallyContent);
@@ -118,11 +190,18 @@ export class RechargeCryptoComponent implements OnInit {
   async initBuyingProcess(crypto: string) {
     const { value: result } = await Swal.fire({
       titleText: `Recharge de ${crypto}`,
-      html: `Combien de ${crypto} voulez vous recharger?`,
+
       input: 'text',
       inputAutoFocus: true,
       inputPlaceholder: `Ex: 0.02`,
       showCancelButton: true,
+      html: `Combien de ${crypto} voulez vous recharger?
+      <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
+      <ul id="live-content" style="display:none;">
+        <li>Valeur en XAF : <span style="color:green;" id="live-value1"></span></li>
+        <li>Frais Manen : <span style="color:green;" id="live-value2"></span></li>
+        <li>Net à dépenser : <span style="color:green;" id="live-value3"></span></li>
+      </ul>`,
       confirmButtonText: 'Recharger',
       cancelButtonText: 'Fermer',
       inputValidator: (value) => {
@@ -136,9 +215,22 @@ export class RechargeCryptoComponent implements OnInit {
         autocapitalize: 'off',
       },
       showLoaderOnConfirm: true,
+      didOpen: async (popup) => {
+        this.liveSpinner = document.getElementById('live-spinner')
+        this.liveContent = document.getElementById('live-content');
+        this.typeCrypto = crypto;
+        const inputElement = Swal.getInput()
+        if (inputElement) {
+          inputElement.addEventListener('keyup', (event) => {
+            let inputValue = (event.target as HTMLInputElement).value
+            this.swalInputValue.next(inputValue)
+          });
+        }
+
+      },
       preConfirm: async (value) => {
         this.cryptoAmount = parseFloat(value);
-        this.typeCrypto = crypto;
+        // this.typeCrypto = crypto;
         try {
           const response = await this.cryptoService
             .importCrypto({
@@ -151,7 +243,8 @@ export class RechargeCryptoComponent implements OnInit {
                   `Erreur de connexion Internet. Veuillez vérifier votre connexion.`
                 );
               }
-             return of(error.error)}))
+              return of(error.error)
+            }))
             .toPromise();
           if (response) {
             return response;
@@ -171,7 +264,7 @@ export class RechargeCryptoComponent implements OnInit {
     });
 
     if (result) {
-      
+
       if (result.statusCode == 1000) {
         Swal.fire(
           'Success',
@@ -185,4 +278,7 @@ export class RechargeCryptoComponent implements OnInit {
       }
     }
   }
+
 }
+
+

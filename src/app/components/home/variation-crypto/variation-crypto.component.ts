@@ -3,6 +3,7 @@ import * as chartData from '../../../shared/data/chartData'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-variation-crypto',
@@ -20,7 +21,7 @@ export class VariationCryptoComponent implements OnInit {
     lineChartData: [{
       data: [], fill: false,
       borderWidth: 1,
-      pointRadius: 0, label: 'Bitcoin(USD)', borderColor: '#F7931A',
+      pointRadius: 0, label: 'Bitcoin(USDT)', borderColor: '#F7931A',
     },],
     lineChartLabels: [],
     lineChartOptions: { responsive: true },
@@ -32,7 +33,7 @@ export class VariationCryptoComponent implements OnInit {
       fill: false,
       borderWidth: 1,
       pointRadius: 0,
-      label: `Ethereum(USD)`,
+      label: `Ethereum(USDT)`,
       borderColor: '#8585ff'
     }],
     lineChartLabels: [],
@@ -40,16 +41,19 @@ export class VariationCryptoComponent implements OnInit {
     lineChartLegend: true,
   }
 
+  dateStart: any;
+  dateEnd: any;
+
   activatedEthVariation: number
   activatedBtcVariation: number
 
 
 
-  constructor(private http: HttpClient, private transactionService: CryptoTransactionService) { }
+  constructor(private http: HttpClient, private transactionService: CryptoTransactionService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.setBtcVariationDuration(30)
-    this.setEthVariationDuration(30)
+    this.setBtcVariationDuration(7)
+    this.setEthVariationDuration(7)
     window.addEventListener('resize', this.onResize.bind(this));
     this.onResize()
 
@@ -65,12 +69,38 @@ export class VariationCryptoComponent implements OnInit {
     });
   }
 
-  getBitcoinPriceData(days: number): Observable<any> {
-    const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${days.toString()}`;
+  getBitcoinPriceData(): Observable<any> {
+    let url = ''
+    if ([1, 7, 30].includes(this.activatedBtcVariation)) {
+      url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=USDT&days=${this.activatedBtcVariation.toString()}`;
+    } else {
+      let stampNow = new Date().getTime()
+      // if(this.dateStart && this.dateStart < stampNow){
+      //   if(this.dateEnd && this.dateEnd < stampNow){
+
+      //   }
+      url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=USDT&from=${this.dateStart}&to=${this.dateEnd}`
+      // }
+      // console.info(url)
+    }
     return this.http.get(url);
   }
-  getEthereumPriceData(days: number): Observable<any> {
-    const url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=${days.toString()}`;
+  getEthereumPriceData(): Observable<any> {
+    let url = ''
+    if ([1, 7, 30].includes(this.activatedEthVariation)) {
+      url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=USDT&days=${this.activatedBtcVariation.toString()}`;
+    } else {
+      let stampNow = new Date().getTime()
+      // if(this.dateStart && this.dateStart < stampNow){
+      //   if(this.dateEnd && this.dateEnd < stampNow){
+
+      //   }else{
+      url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=USDT&from=${this.dateStart}&to=${this.dateEnd}`
+      //   }
+
+      // }
+      // console.info(url)
+    }
     return this.http.get(url);
   }
   onResize() {
@@ -78,45 +108,63 @@ export class VariationCryptoComponent implements OnInit {
     this.ethChart.lineChartData[0].borderWidth = window.innerWidth > 850 ? 2 : 1;
   }
 
-  buildBtcChart(days: number) {
-    this.getBitcoinPriceData(days).subscribe((dataBtc: any) => {
+  buildBtcChart() {
+    this.getBitcoinPriceData().subscribe((dataBtc: any) => {
       const btcPrices = dataBtc.prices;
       this.btcChart.lineChartData[0].data = btcPrices.map((priceData: any) => priceData[1]);
 
-     if(this.activatedBtcVariation==1){
-      this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleTimeString('fr-FR'));
-     }else if(this.activatedBtcVariation==7){
-      this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleString('fr-FR'));
-     }else{
-      this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleDateString('fr-FR'));
-     }
+      if (this.activatedBtcVariation == 1) {
+        this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleTimeString('fr-FR'));
+      } else if (this.activatedBtcVariation == 30) {
+        this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleDateString('fr-FR'));
+      } else {
+        this.btcChart.lineChartLabels = btcPrices.map((priceData: any) => new Date(priceData[0]).toLocaleString('fr-FR'));
+      }
     });
   }
 
-  buildEthChart(days: number) {
-    this.getEthereumPriceData(days).subscribe((dataEth: any) => {
+  buildEthChart() {
+    this.getEthereumPriceData().subscribe((dataEth: any) => {
       // Traitement des données reçues depuis l'API
 
       const ethPrices = dataEth.prices;
 
 
       this.ethChart.lineChartData[0].data = ethPrices.map((priceData: any) => priceData[1]);
-      if(this.activatedEthVariation==1){
+      if (this.activatedEthVariation == 1) {
         this.ethChart.lineChartLabels = ethPrices.map((priceData: any) => new Date(priceData[0]).toLocaleTimeString('fr-FR'));
-       }else if(this.activatedEthVariation==7){
-        this.ethChart.lineChartLabels = ethPrices.map((priceData: any) => new Date(priceData[0]).toLocaleString('fr-FR'));
-       }else{
+      } else if (this.activatedEthVariation == 30) {
         this.ethChart.lineChartLabels = ethPrices.map((priceData: any) => new Date(priceData[0]).toLocaleDateString('fr-FR'));
-       }
+      } else {
+        this.ethChart.lineChartLabels = ethPrices.map((priceData: any) => new Date(priceData[0]).toLocaleString('fr-FR'));
+      }
     });
   }
 
   setBtcVariationDuration(days: number) {
     this.activatedBtcVariation = days;
-    this.buildBtcChart(this.activatedBtcVariation)
+    this.buildBtcChart()
   }
   setEthVariationDuration(days: number) {
     this.activatedEthVariation = days;
-    this.buildEthChart(this.activatedEthVariation)
+    this.buildEthChart()
+  }
+
+  openMdoModal(modContent: any) {
+    const modalRef = this.modalService.open(modContent);
+  }
+
+  getCustomizedDateTime(startDate: string, endDate: string, crypto: string) {
+
+    this.dateStart = (new Date(startDate).getTime())/1000
+    this.dateEnd = (new Date(endDate).getTime())/1000
+    if (crypto == 'BTC') {
+      this.activatedBtcVariation = 0;
+      this.buildBtcChart()
+    } else {
+      this.activatedEthVariation = 0;
+      this.buildEthChart()
+    }
+    this.modalService.dismissAll();
   }
 }

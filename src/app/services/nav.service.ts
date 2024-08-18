@@ -171,21 +171,22 @@ export class NavService {
         active: false
       },
       {
+        path: '/client/share-to-friend',
+        title: 'Envoyer à un ami',
+        type: 'link',
+        icon: 'repeat',
+        badgeType: 'success',
+        active: false
+      },
+      {
         path: '/client/retrait-fonds',
         title: 'Retirer des fonds',
         type: 'link',
         icon: 'credit-card',
         badgeType: 'success',
         active: false
-      },
-      {
-        path: '/client/share-to-friend',
-        title: 'Envoyer la crypto à un ami',
-        type: 'link',
-        icon: 'repeat',
-        badgeType: 'success',
-        active: false
       }
+     
     ]
   }
 

@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, of } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  forkJoin,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -22,6 +32,10 @@ export class VenteCryptoComponent  implements OnInit{
   cryptoAmount: number;
   xafAmount:number;
   reloadHistory = false;
+  swalInputValue = new Subject<string>();
+  liveResponse$: Observable<any>;
+   liveSpinner : HTMLElement | null;
+   liveContent : HTMLElement | null;
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
@@ -40,7 +54,69 @@ export class VenteCryptoComponent  implements OnInit{
 
 ngOnInit(): void {
   this.getWalletDetails()
-    
+  
+  this.liveResponse$ = this.swalInputValue.pipe(
+    //On va attendre un certain temps avant de lancer la requete au serveur
+    debounceTime(300),
+    // Éviter les requêtes qui auront le même terme de recherche
+    distinctUntilChanged(),
+    switchMap((term) => {
+      if (parseFloat(term) > 0) {
+        
+        if (this.liveSpinner) {
+          this.liveSpinner.style.display = "block";
+        }
+        this.cryptoAmount = parseFloat(term);
+        
+        // Utiliser forkJoin pour exécuter les requêtes en parallèle
+        return forkJoin({
+          conversion: this.cryptoService.convertToFiat({
+            crypto_currency: this.typeCrypto,
+            amount: term,
+          }),
+          fees: this.cryptoService.getCryptoFees({
+            crypto_currency: this.typeCrypto,
+            amount: term,
+          })
+          
+        }).pipe(
+          // Combiner les résultats en un seul objet
+          map(({ conversion, fees }) => ({
+            conversion,
+            fees
+          }))
+        );
+
+      } else {
+        return of(null);
+      }
+    })
+  );
+
+  this.liveResponse$.subscribe((response) => {
+    console.log('--------');
+    console.log(response);
+    this.liveSpinner!.style.display = 'none';
+    if (this.liveContent) {
+      this.liveContent.style.display = 'block';
+    }
+    const liveValue1 = document.getElementById('live-value1');
+    if (liveValue1) {
+      liveValue1.innerText = `${response.conversion.data.xaf_amount && parseInt(response.conversion.data.xaf_amount).toLocaleString('fr-FR') + ' XAF'}`;
+    }
+    const liveValue2 = document.getElementById('live-value2');
+    if (liveValue2) {
+      liveValue2.innerText = `${response.fees.data.withdrawFees.fee && response.fees.data.withdrawFees.fee + ' ' + response.fees.data.withdrawFees.currency}`;
+    }
+    const liveValue3 = document.getElementById('live-value3');
+    if (liveValue3) {
+      let total1 = parseFloat(response.conversion.data.crypto_amount) - parseFloat(response.fees.data.withdrawFees.fee)
+
+      let total2 = parseFloat(response.conversion.data.xaf_amount) / parseFloat(response.conversion.data.crypto_amount)
+      liveValue3.innerText = `${(response.conversion.data.crypto_amount && response.fees.data.withdrawFees.fee && response.conversion.data.xaf_amount) ? parseInt((total1 * total2).toString()).toLocaleString('fr-FR') + ' XAF' : ''}`;
+    }
+
+  })
 }
 
 getWalletDetails() {
@@ -54,10 +130,16 @@ getWalletDetails() {
 }
 
 
-  async initBuyingProcess(crypto: string) {
-    const { value: result } = await Swal.fire({
+  async initSellingProcess(crypto: string) {
+   await Swal.fire({
       titleText:`Vente de ${crypto}`,
-      html: `Combien de ${crypto} voulez vous vendre?`,
+      html: `Combien de ${crypto} voulez vous vendre?
+      <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
+      <ul id="live-content" style="display:none;">
+        <li>Valeur en XAF : <span style="color:green;" id="live-value1"></span></li>
+        <li>Frais Manen : <span style="color:green;" id="live-value2"></span></li>
+        <li>Net à recevoir : <span style="color:green;" id="live-value3"></span></li>
+      </ul>`,
       input: 'text',
       inputAutoFocus:true,
       inputPlaceholder: `Ex: 0.02`,
@@ -79,89 +161,19 @@ getWalletDetails() {
         autocapitalize: 'off'
       },
       showLoaderOnConfirm: true,
-      preConfirm: async (value) => {
-        
-        this.cryptoAmount = parseFloat(value);
+      didOpen: async (popup) => {
+        this.liveSpinner = document.getElementById('live-spinner')
+        this.liveContent = document.getElementById('live-content');
         this.typeCrypto = crypto;
-        try {
-          const responseFees:any = await this.cryptoService
-            .getCryptoFees({
-              crypto_currency: this.typeCrypto,
-              amount: this.cryptoAmount,
-            }).pipe(
-              catchError((error)=>{
-                if (
-                  error.status === 0 ||
-                  error.statusText === 'Unknown Error'
-                ) {
-                  Swal.fire(
-                    'Erreur',
-                    `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-                    'error'
-                  );
-                }
-
-                return of(error.error);
-              })
-            )
-            .toPromise();
-            const responseAmountToXAF = await this.cryptoService
-            .convertToFiat({
-              crypto_currency: this.typeCrypto,
-              amount: this.cryptoAmount,
-            }).pipe(
-              catchError((error)=>of(error.error))
-            )
-            .toPromise();
-          if (responseFees.statusCode==1000 && responseAmountToXAF.statusCode==1000) {
-            const responseFeeToXAF = await this.cryptoService
-            .convertToFiat({
-              crypto_currency: this.typeCrypto,
-              amount:parseFloat(responseFees.data.withdrawFees.fee),
-            }).pipe(
-              catchError((error)=>of(error.error))
-            )
-            .toPromise();
-            if(responseFeeToXAF.statusCode!=1000){
-              throw new Error(responseFeeToXAF);
-            }
-            this.xafAmount = parseInt(responseAmountToXAF.data.xaf_amount) - parseInt(responseFeeToXAF.data.xaf_amount)
-            return responseFeeToXAF;
-          } else {
-            throw new Error('User not found');
-          }
-        } catch (error:any) {
-          if (error.error) {
-            Swal.showValidationMessage(`${error.error.message}`);
-          } else {
-            Swal.showValidationMessage(
-              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
-            );
-          }
-
-          return null;
+        const inputElement = Swal.getInput()
+        if (inputElement) {
+          inputElement.addEventListener('keyup', (event) => {
+            let inputValue = (event.target as HTMLInputElement).value
+            this.swalInputValue.next(inputValue)
+          });
         }
+
       },
-      allowOutsideClick: () => !Swal.isLoading(),
-    });
-    
-
-    if (result.statusCode!=1000) {
-      Swal.fire('Vente annulée', result.message, 'error');
-    }else{
-      this.askConfirmTransaction(result);
-    }
-  }
-
-  askConfirmTransaction(value: any) {
-    Swal.fire({
-      titleText:`Vente de ${this.typeCrypto}`,
-      html: `Vous recevrez au total <b class="text-success"> ${
-        this.xafAmount.toLocaleString('fr-FR')} XAF</b>`,
-      showDenyButton: true,
-      confirmButtonText: 'Finaliser',
-      denyButtonText: `Annuler`,
-      showLoaderOnConfirm: true,
       preConfirm: async (value) => {
         try {
           const response = await this.cryptoService
@@ -170,6 +182,7 @@ getWalletDetails() {
               amount: this.cryptoAmount,
             }).pipe(
               catchError((error)=>{
+                this.liveSpinner!.style.display = 'none';
                 if (error.status === 0 || error.statusText === 'Unknown Error') {
                   Swal.showValidationMessage(
                     `Erreur de connexion Internet. Veuillez vérifier votre connexion.`
@@ -185,7 +198,7 @@ getWalletDetails() {
             throw new Error("Can't buy");
           }
         } catch (error: any) {
-
+          this.liveSpinner!.style.display = 'none';
             Swal.showValidationMessage(
               `Impossible de traiter votre requete, Veuillez reessayer plus tard`
             );
@@ -196,7 +209,7 @@ getWalletDetails() {
     }).then((result: any) => {
       if (result.isConfirmed) {
         if(result.value.statusCode!=1000){
-          Swal.fire('Vante annulée', result.value.message, 'error');
+          Swal.fire('Vente annulée', result.value.message, 'error');
         }else{
           Swal.fire('Success',`Vente effectué avec success`,  'success');
           this.setReload()
@@ -207,4 +220,5 @@ getWalletDetails() {
       }
     });
   }
+
 }

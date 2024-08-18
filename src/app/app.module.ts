@@ -118,7 +118,6 @@ import { OperationListComponent } from './shared/components/operation-list/opera
 
   imports: [
     NgbModule,
-    
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -132,8 +131,6 @@ import { OperationListComponent } from './shared/components/operation-list/opera
     NgSelectModule,
     ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot(),
-    
-    
   ],
   providers: [],
   bootstrap: [AppComponent]
