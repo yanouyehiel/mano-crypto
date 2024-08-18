@@ -1,16 +1,7 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
-    <div class="col-xl-4 box-col-12 des-xl-100">
-      <div class="card">
-        <div class="card-header">
-          <h5>Solde actuel</h5>
-        </div>
-        <div class="card-body p-0">
-          <app-crypto-balance></app-crypto-balance>
-        </div>
-      </div>
-    </div>
+    
     <div class="col-xl-8 box-col-12 des-xl-100">
       <div class="card">
         <div class="card-header">
@@ -20,20 +11,13 @@
         <div class="card-body">
           <div class="row g-3">
             <div class="col-lg-6 col-12 d-flex">
-              <div class="bookmark" style="margin-right: 8px">
-                <ul>
-                  <li>
-                    <a data-container="body" data-bs-toggle="popover" data-placement="top" title=""
-                      data-original-title="Tables"><i data-feather="maximize"></i></a>
-                  </li>
-                </ul>
-              </div>
               <input type="text" formControlName="address" class="form-control border-black" placeholder="Adresse crypto du receveur" />
             </div>
             <div class="col-lg-1 col-6 d-flex">
               
               <select class="form-control form-control-primary-fill border-black" (change)="getCryptoMinimumAmount()" formControlName="currency">
-                <option value="BTC" [selected]="true">BTC</option>
+                <option value="BTC" [selected]="true">USDT</option>
+                <option value="BTC">BTC</option>
                 <option value="ETH">ETH</option>
               </select>
             </div>
@@ -52,6 +36,16 @@
           </div>
         </div>
       </form>
+      </div>
+    </div>
+    <div class="col-xl-4 box-col-12 des-xl-100">
+      <div class="card">
+        <div class="card-header">
+          <h5>Solde actuel</h5>
+        </div>
+        <div class="card-body p-0">
+          <app-crypto-balance></app-crypto-balance>
+        </div>
       </div>
     </div>
   </div>

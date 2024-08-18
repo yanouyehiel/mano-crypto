@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-xl-6 col-md-6 col-sm-12 box-col-3"
+                        <div class="col-xl-4 col-md-6 col-sm-12 box-col-3"
                             *ngFor="let crypto of wallet">
                             <div class="card income-card card-primary">
                                 <div class="card-body text-center">
@@ -32,7 +32,7 @@
                                   {{ crypto.details.weekly_percentage | number : "1.2-2" }} %</a
                                   >
                                   <button class="btn btn-dark mt-3 arrow-primary" [disabled]="crypto.wallet.solde<=0"
-                                        (click)="initBuyingProcess(crypto.wallet.type)">Vendre</button>
+                                        (click)="initSellingProcess(crypto.wallet.type)">Vendre</button>
                                 </div>
                               </div>
                         </div>

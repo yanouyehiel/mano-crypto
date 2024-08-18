@@ -116,7 +116,6 @@ import { ShareToFriendComponent } from './components/share-to-friend/share-to-fr
 
   imports: [
     NgbModule,
-    
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -130,8 +129,6 @@ import { ShareToFriendComponent } from './components/share-to-friend/share-to-fr
     NgSelectModule,
     ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot(),
-    
-    
   ],
   providers: [],
   bootstrap: [AppComponent]

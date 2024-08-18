@@ -41,7 +41,7 @@ export class ShareToFriendComponent {
     this.sendForm = this.fb.group({
       amount: ['', Validators.required],
       address: ['', Validators.required],
-      currency: ['BTC', Validators.required],
+      currency: ['USDT', Validators.required],
     });
     this.getCryptoMinimumAmount()
   }
