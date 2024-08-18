@@ -153,14 +153,14 @@ export class ShareToFriendComponent {
       this.alertMsg = "Email ou numéro invalide !"
     } else {
       let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-      if (false) {
-        const swalWithBootstrapButtons = Swal.mixin({
-          customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-          },
-          buttonsStyling: false,
-        });
+    if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
 
         swalWithBootstrapButtons.fire({
           title: `Erreur`,
@@ -281,7 +281,7 @@ export class ShareToFriendComponent {
         'error'
       );
     } else {
-      Swal.fire('Terminé', 'Retrait initié avec succès.', 'success');
+      Swal.fire('Terminé', 'Transfert effectué avec succès.', 'success');
 
       this.setReload()
       setTimeout(() => {
@@ -298,12 +298,12 @@ export class ShareToFriendComponent {
   }
 
   success(): void {
-    Swal.fire('Transfert initié !');
+    Swal.fire('Transfert effectué !');
   }
   failedAuth(): void {
     Swal.fire('Erreur', "Echec de l'authentification", 'error');
   }
   error(): void {
-    Swal.fire('Erreur', 'Vous ne pouvez pas faire ce retrait ', 'error');
+    Swal.fire('Erreur', 'Vous ne pouvez pas faire ce transfert ', 'error');
   }
 }
