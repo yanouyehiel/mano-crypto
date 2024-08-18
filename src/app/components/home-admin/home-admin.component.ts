@@ -26,7 +26,6 @@ export class HomeAdminComponent implements OnInit {
   public loaderConfig: boolean = true;
 
   constructor(
-    private userService: UserService, 
     private adminService:AdminService,
     private router: Router
   ) {
@@ -51,7 +50,6 @@ export class HomeAdminComponent implements OnInit {
     if (data !== country) {
       country = data.toLowerCase()
     }
-    
     this.adminService.getUsersStatistics(country).subscribe((res: any) => {
       console.log(res.data)
       this.datas = res.data
@@ -74,7 +72,6 @@ export class HomeAdminComponent implements OnInit {
   fetchConfigs(){
     this.adminService.getConfigs().subscribe((response:ResponseParent)=>{
       if(response.statusCode===1000){
-        console.log(response.data)
         this.configs = response.data;
         this.loaderConfig = false;
       }

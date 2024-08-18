@@ -14,12 +14,11 @@
                     </button>
                   </div>
                 </div></h5>
-               
             </div>
         </div>
         <div class="card-body p-0">
             <div class="chart-timeline-dashbord">
-                <h6 *ngIf="latestBtcPrice" class="float-end" [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">{{latestBtcPrice | number}}  <p class="d-inline"  [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">USDT</p></h6>
+                <h6 *ngIf="latestBtcPrice" class="float-end" [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">Valeur du BTC en temps réel {{latestBtcPrice | number}}  <p class="d-inline"  [ngClass]="latestBtcPrice>previousBtcPrice?' text-success':latestBtcPrice==previousBtcPrice?' ':' text-danger'">USDT</p></h6>
                 <canvas baseChart
         [datasets]="btcChart.lineChartData"
         [labels]="btcChart.lineChartLabels"
@@ -53,7 +52,7 @@
         
         <div class="card-body p-0">
             <div class="chart-timeline-dashbord">
-                <h6 *ngIf="latestEthPrice" class="float-end" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">{{latestEthPrice | number}} <p class="d-inline" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">USDT</p></h6>
+                <h6 *ngIf="latestEthPrice" class="float-end" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">Valeur de l'ETH en temps réel {{latestEthPrice | number}} <p class="d-inline" [ngClass]="latestEthPrice>previousEthPrice?' text-success':latestEthPrice==previousEthPrice?' ':' text-danger'">USDT</p></h6>
                 <canvas baseChart
         [datasets]="ethChart.lineChartData"
         [labels]="ethChart.lineChartLabels"
