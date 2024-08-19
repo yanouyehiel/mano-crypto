@@ -199,7 +199,7 @@ export class RechargeCryptoComponent implements OnInit {
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content" style="display:none;">
         <li>Valeur en XAF : <span style="color:green;" id="live-value1"></span></li>
-        <li>Frais Manen : <span style="color:green;" id="live-value2"></span></li>
+        <li>Frais de transaction : <span style="color:green;" id="live-value2"></span></li>
         <li>Net à dépenser : <span style="color:green;" id="live-value3"></span></li>
       </ul>`,
       confirmButtonText: 'Recharger',
@@ -273,7 +273,9 @@ export class RechargeCryptoComponent implements OnInit {
         );
         this.setReload()
         window.open(result.data.invoice_url, '_blank');
-      } else {
+      }else if (result.statusCode == 1001) {
+        this.router.navigate(['/auth/login'])
+      }  else {
         Swal.fire('Operation annulée', result.message.error, 'error');
       }
     }

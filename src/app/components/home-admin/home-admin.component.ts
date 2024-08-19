@@ -53,7 +53,7 @@ export class HomeAdminComponent implements OnInit {
     }
     
     this.adminService.getUsersStatistics(country).subscribe((res: any) => {
-      console.log(res.data)
+
       this.datas = res.data
       this.users = res.data.users
       this.growthChart.series = [this.users.total_users, this.users.connected_users, this.users.unconnected_users]

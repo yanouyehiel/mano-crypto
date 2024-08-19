@@ -72,7 +72,7 @@ export class SendCryptoComponent implements OnInit {
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "inline-block";
           }
-          console.log(this.sendForm.value)
+
           // Utiliser forkJoin pour exécuter les requêtes en parallèle
           return forkJoin({
             conversion: this.transactionService.convertToFiat({
@@ -226,7 +226,9 @@ export class SendCryptoComponent implements OnInit {
           setTimeout(() => {
             Swal.close();
           }, 2000);
-        } else {
+        }else if (result.value.statusCode == 1001) {
+          this.router.navigate(['/auth/login'])
+        }  else {
           Swal.fire('L\'operation a echoue', result.value.message, 'error');
         }
 

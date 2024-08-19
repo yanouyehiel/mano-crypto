@@ -4,7 +4,7 @@
          <div class="mb-3">
             <div class="row">
                <ng-container *ngFor="let item of kyc">
-                  <div class="col-md-6 col-12 mb-4">
+                  <div class="col-md-4 col-12 mb-4">
                      <div *ngIf="item.status=='rejected'" class="row text-center mb-3">
                         <span class="text-danger">Rejeté</span><br>
                         <span class="text-danger">{{item.reject_reason}}</span>
@@ -58,7 +58,7 @@
       <div class="col">
          <div class="text-end">
             <button type="submit" [disabled]="(!cniRecto && !cniVerso && !userPicture)||isDisabled||isLoading" (click)="onSubmitKyc()" class="btn btn-primary me-3">             
-               Importer <i *ngIf="isLoading" class="fa fa-spin fa-circle-o-notch"></i>
+               Soumettre <i *ngIf="isLoading" class="fa fa-spin fa-circle-o-notch"></i>
             </button>
          </div>
       </div>

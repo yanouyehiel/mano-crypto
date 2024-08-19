@@ -81,7 +81,6 @@ export class VariationCryptoComponent implements OnInit {
       //   }
       url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=${this.dateStart}&to=${this.dateEnd}`
       // }
-      // console.info(url)
     }
     return this.http.get(url);
   }
@@ -99,7 +98,7 @@ export class VariationCryptoComponent implements OnInit {
       //   }
 
       // }
-      // console.info(url)
+
     }
     return this.http.get(url);
   }

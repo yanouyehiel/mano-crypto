@@ -34,7 +34,6 @@ export class UploadFileComponent implements OnInit {
   constructor(private userService: UserService, private toast: ToastrService) {}
 
   ngOnInit(): void {
-    console.log(this.kyc)
   }
 
   onSelect(key: string, event: any) {
