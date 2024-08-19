@@ -4,13 +4,13 @@
             <div class="header-top d-sm-flex align-items-center mb-5">
                 <h5>Variation du prix du Bitcoin  <div class="float-end"><div class="btn-group" role="group" aria-label="Basic example">
                     <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==1?'active':''" (click)="setBtcVariationDuration(1)" type="button">
-                      Jour
+                      Aujourd'hui
                     </button>
                     <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==7?'active':''" (click)="setBtcVariationDuration(7)" type="button">
-                      Semaine
+                      Cette semaine
                     </button>
                     <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==30?'active':''" (click)="setBtcVariationDuration(30)" type="button">
-                      Mois
+                      Ce mois
                     </button>
                     <button class="btn btn-outline-primary" [ngClass]="activatedBtcVariation==0?'active':''" (click)="openMdoModal(modBtcContent)" type="button">
                       Personnalisé
@@ -38,14 +38,13 @@
             <div class="header-top d-sm-flex align-items-center  mb-5">
                 <h5>Variation du prix de L'Ethereum <div class="float-end"><div class="btn-group" role="group" aria-label="Basic example">
                     <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==1?'active':''" (click)="setEthVariationDuration(1)" type="button">
-                      Jour
+                      Aujourd'hui
                     </button>
                     <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==7?'active':''" (click)="setEthVariationDuration(7)" type="button">
-                      Semaine
+                      Cette semaine
                     </button>
                     <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==30?'active':''" (click)="setEthVariationDuration(30)" type="button">
-                      Mois
-                    </button>
+                      Ce mois                    </button>
                     <button class="btn btn-outline-primary" [ngClass]="activatedEthVariation==0?'active':''" (click)="openMdoModal(modEthContent)" type="button">
                       Personnalisé
                     </button>

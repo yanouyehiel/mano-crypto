@@ -72,34 +72,33 @@ export class VariationCryptoComponent implements OnInit {
   getBitcoinPriceData(): Observable<any> {
     let url = ''
     if ([1, 7, 30].includes(this.activatedBtcVariation)) {
-      url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=USDT&days=${this.activatedBtcVariation.toString()}`;
+      url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${this.activatedBtcVariation.toString()}`;
     } else {
       let stampNow = new Date().getTime()
       // if(this.dateStart && this.dateStart < stampNow){
       //   if(this.dateEnd && this.dateEnd < stampNow){
 
       //   }
-      url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=USDT&from=${this.dateStart}&to=${this.dateEnd}`
+      url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=${this.dateStart}&to=${this.dateEnd}`
       // }
-      // console.info(url)
     }
     return this.http.get(url);
   }
   getEthereumPriceData(): Observable<any> {
     let url = ''
     if ([1, 7, 30].includes(this.activatedEthVariation)) {
-      url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=USDT&days=${this.activatedBtcVariation.toString()}`;
+      url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=${this.activatedBtcVariation.toString()}`;
     } else {
       let stampNow = new Date().getTime()
       // if(this.dateStart && this.dateStart < stampNow){
       //   if(this.dateEnd && this.dateEnd < stampNow){
 
       //   }else{
-      url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=USDT&from=${this.dateStart}&to=${this.dateEnd}`
+      url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=${this.dateStart}&to=${this.dateEnd}`
       //   }
 
       // }
-      // console.info(url)
+
     }
     return this.http.get(url);
   }

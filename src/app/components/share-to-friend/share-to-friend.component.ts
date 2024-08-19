@@ -76,7 +76,7 @@ export class ShareToFriendComponent {
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "inline-block";
           }
-          console.log(this.sendForm.value)
+  
           // Utiliser forkJoin pour exécuter les requêtes en parallèle
           return forkJoin({
             conversion: this.transactionService.convertToFiat({
@@ -153,14 +153,14 @@ export class ShareToFriendComponent {
       this.alertMsg = "Email ou numéro invalide !"
     } else {
       let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-    if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false,
-      });
+      if ((user.kyc as any[]).filter((e) => e.status != 'approved').length > 0) {
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false,
+        });
 
         swalWithBootstrapButtons.fire({
           title: `Erreur`,
@@ -190,8 +190,11 @@ export class ShareToFriendComponent {
         )
         .subscribe({
           next: (value) => {
-            if (value.statusCode != 1000) {
-
+            if (value.statusCode == 1000) {
+              this.otpVerificationAndWithdraw(value.data!.secret);
+            } else if (value.statusCode == 1001) {
+              this.router.navigate(['/auth/login'])
+            } else {
               this.loadingTransfert = false;
               Swal.fire(
                 'Erreur',
@@ -199,8 +202,7 @@ export class ShareToFriendComponent {
                 `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
                 'error'
               );
-            } else {
-              this.otpVerificationAndWithdraw(value.data!.secret);
+
             }
           },
         });

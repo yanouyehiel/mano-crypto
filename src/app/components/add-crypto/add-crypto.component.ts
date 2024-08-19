@@ -115,8 +115,6 @@ export class AddCryptoComponent implements OnInit {
     );
 
     this.liveResponse$.subscribe((response) => {
-      // console.log('--------');
-      // console.log(response);
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
         this.liveContent.style.display = 'block';
@@ -157,7 +155,7 @@ export class AddCryptoComponent implements OnInit {
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content" style="display:none;">
         <li>Valeur en XAF : <span style="color:green;" id="live-value1"></span></li>
-        <li>Frais Manen : <span style="color:green;" id="live-value2"></span></li>
+        <li>Frais de transaction : <span style="color:green;" id="live-value2"></span></li>
         <li>Net à dépenser : <span style="color:green;" id="live-value3"></span></li>
       </ul>`,
       input: 'text',
@@ -228,7 +226,9 @@ export class AddCryptoComponent implements OnInit {
         if (result.value.statusCode === 1000) {
           Swal.fire('Success', `Achat effectué avec success`, 'success');
           this.setReload()
-        } else {
+        }else if (result.value.statusCode == 1001) {
+          this.router.navigate(['/auth/login'])
+        }  else {
           Swal.fire('Achat annulée', result.value.message, 'error');
         }
 
