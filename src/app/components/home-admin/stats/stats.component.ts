@@ -16,13 +16,14 @@ export class FileManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCountries()
-    this.selectedCountry = "all"
+    this.selectedCountry = "Tous les pays"
   }
 
   applyFilter(country:string){
     this.selectedCountry = country
-    this.filterEvent.emit(country)
+    this.filterEvent.emit(country === "Tous les pays" ? "" : country)
   }
+
   fetchCountries(){
     this.adminService.getCountries().subscribe((response)=>{
       this.countries = [this.selectedCountry,...response.data.countries]

@@ -11,8 +11,12 @@
                     <div class="btn-group">
                       <button class="btn btn-primary" type="button">{{selectedCountry.toUpperCase()}}</button>
                       <div class="dropdown separated-btn">
-                        <button class="btn btn-primary" type="button"><i class="fa fa-angle-down"></i></button>
-                        <div class="dropdown-content text-center"><a *ngFor="let country of countries" (click)="applyFilter(country)">{{country}}</a></div>
+                        <button class="btn btn-primary" type="button">
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown-content text-center">
+                          <a class="country" *ngFor="let country of countries" (click)="applyFilter(country)">{{country==""?"Tous les pays":country}}</a>
+                        </div>
                       </div>
                     </div>
                  </div>
@@ -31,7 +35,7 @@
                                   <app-feather-icons icon="users"></app-feather-icons>
                               </div>
                               <div class="media-body"><span class="m-0">Utilisateurs</span>
-                                  <h4 class="mb-0 counter"> {{datas.users.total_users.toLocaleString('fr-FR')}} </h4>
+                                  <h4 class="mb-0 counter"> {{datas.users.total_users}} </h4>
                                   <app-feather-icons icon="users" class="icon-bg"></app-feather-icons>
                               </div>
                           </div>
@@ -46,7 +50,7 @@
                                 <app-feather-icons icon="user-check"></app-feather-icons>
                             </div>
                             <div class="media-body"><span class="m-0">Connectées</span>
-                                <h4 class="mb-0 counter"> {{datas.users.connected_users.toLocaleString('fr-FR')}} </h4>
+                                <h4 class="mb-0 counter"> {{datas.users.connected_users}} </h4>
                                 <app-feather-icons icon="user-check" class="icon-bg"></app-feather-icons>
                             </div>
                         </div>
@@ -61,7 +65,7 @@
                               <app-feather-icons icon="user-x"></app-feather-icons>
                           </div>
                           <div class="media-body"><span class="m-0">Non-connectées</span>
-                              <h4 class="mb-0 counter">{{datas.users.unconnected_users.toLocaleString('fr-FR')}} </h4>
+                              <h4 class="mb-0 counter">{{datas.users.unconnected_users}} </h4>
                               <app-feather-icons icon="user-x" class="icon-bg"></app-feather-icons>
                           </div>
                       </div>
@@ -131,6 +135,17 @@
                   </div>
                 </div>
               </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <img src="../../../../assets/images/usdt.png" alt="usdt" width="40px" height="40px">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde USDT</h6>
+                    <p class="f-20">{{datas.wallets.USDT_balance | number: '1.0-8'}} USDT</p>
+                  </div>
+                </div>
+              </li>
             </ul>
             <h5 class="mt-5">Soldes de transactions</h5>
             <ul class="folder">
@@ -159,6 +174,28 @@
               <li class="folder-box">
                 <div class="d-flex align-items-center files-list">
                   <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de vente crypto</h6>
+                    <p class="f-20">{{datas.transactions.crypto_sell_transactions_amount | number: '1.0-2'}} USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-dollar f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde d'achat crypto</h6>
+                    <p class="f-20">{{datas.transactions.crypto_buy_transactions_amount | number: '1.0-2'}} USD</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
                     <i class="fa fa-money f-44 txt-success"></i>
                   </div>
                   <div class="flex-grow-1 ms-3">
@@ -181,6 +218,7 @@
             </ul>
             <h5 class="mt-5">Details de transactions crypto</h5>
             <ul class="folder">
+              <!-- Details crypto BTC -->
               <li class="folder-box">
                 <div class="d-flex align-items-center files-list">
                   <div class="flex-shrink-0 file-left">
@@ -192,7 +230,6 @@
                   </div>
                 </div>
               </li>
-
               <li class="folder-box">
                 <div class="d-flex align-items-center files-list">
                   <div class="flex-shrink-0 file-left">
@@ -207,8 +244,31 @@
               <li class="folder-box">
                 <div class="d-flex align-items-center files-list">
                   <div class="flex-shrink-0 file-left">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#43DF97" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+                    <i class="fa fa-bitcoin f-44 txt-success"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de ventes BTC</h6>
+                    <p class="f-20">{{datas.transactions.btc_sell_transactions_amount | number: '1.0-8'}} BTC</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <i class="fa fa-bitcoin f-44 txt-danger"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde d'achats BTC</h6>
+                    <p class="f-20">{{datas.transactions.btc_buy_transactions_amount | number: '1.0-8'}} BTC</p>
+                  </div>
+                </div>
+              </li>
 
+              <!-- Detail crypto ETH -->
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#43DF97" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de recharges ETH</h6>
@@ -220,11 +280,78 @@
                 <div class="d-flex align-items-center files-list">
                   <div class="flex-shrink-0 file-left">
                     <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#d22d3d" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
-
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde de retraits ETH</h6>
                     <p class="f-20">{{datas.transactions.eth_withdraw_transactions_amount | number: '1.0-8'}} ETH</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#43DF97" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de ventes ETH</h6>
+                    <p class="f-20">{{datas.transactions.eth_sell_transactions_amount | number: '1.0-8'}} ETH</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" width="30" viewBox="0 0 320 512"><path opacity="1" fill="#d22d3d" d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde d'achats ETH</h6>
+                    <p class="f-20">{{datas.transactions.eth_buy_transactions_amount | number: '1.0-8'}} ETH</p>
+                  </div>
+                </div>
+              </li>
+
+              <!-- Detail crypto USDT -->
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <img src="../../../../assets/images/usdt.png" alt="usdt" width="40px" height="40px">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de recharges USDT</h6>
+                    <p class="f-20">{{datas.transactions.usdt_recharge_transactions_amount | number: '1.0-8'}} USDT</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <img src="../../../../assets/images/usdt.png" alt="usdt" width="40px" height="40px">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de retraits USDT</h6>
+                    <p class="f-20">{{datas.transactions.usdt_withdraw_transactions_amount | number: '1.0-8'}} USDT</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <img src="../../../../assets/images/usdt.png" alt="usdt" width="40px" height="40px">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde de ventes USDT</h6>
+                    <p class="f-20">{{datas.transactions.usdt_sell_transactions_amount | number: '1.0-8'}} USDT</p>
+                  </div>
+                </div>
+              </li>
+              <li class="folder-box">
+                <div class="d-flex align-items-center files-list">
+                  <div class="flex-shrink-0 file-left">
+                    <img src="../../../../assets/images/usdt.png" alt="usdt" width="40px" height="40px">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Solde d'achats USDT</h6>
+                    <p class="f-20">{{datas.transactions.usdt_buy_transactions_amount | number: '1.0-8'}} USDT</p>
                   </div>
                 </div>
               </li>

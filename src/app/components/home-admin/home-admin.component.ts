@@ -35,23 +35,66 @@ export class HomeAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchStatistics('all');
+    this.fetchStatistics('');
     this.fetchConfigs();
   }
 
   getConfigKey(key:string):string{
-    return key=='SALT_ROUNDS'?"Chaine de hashage":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"Taxe sur les transactions (%)":key=='MIN_XAF_AMOUNT'?"Montant minimal de transaction (XAF)":key=='CRYPTO_WITHDRAW_FEES_PERCENTAGE'?'Frais de retrait crypto (x100 (%))':key=='CRYPTO_WITHDRAW_MIN_AMOUNT'?'Montant minimal de retrait crypto':key=='MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT'?'Montant minimal de retrait crypto à vérifier':key
+    switch (key) {
+      case 'SALT_ROUNDS':
+        return "Chaine de hashage"
+        break;
+      case 'CRYPTO_BUY_SERVICE_FEES_PERCENTAGE':
+        return "Taxe sur les transactions (%)"
+        break;
+      case 'MIN_XAF_AMOUNT':
+        return "Montant minimal de transaction (XAF)"
+        break;
+      case 'CRYPTO_WITHDRAW_FEES_PERCENTAGE':
+        return 'Frais de retrait crypto (x100 (%))'
+        break;
+      case 'CRYPTO_WITHDRAW_MIN_AMOUNT':
+        return 'Montant minimal de retrait crypto'
+        break;
+      case 'MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT':
+        return 'Montant minimal de retrait crypto à vérifier'
+        break;
+      default:
+        return "Frais de retrait mobile (x100 (%))";
+        break;
+    }
   }
   getConfigIcon(key:string):string{
-    return key=='SALT_ROUNDS'?"key":key=='CRYPTO_BUY_SERVICE_FEES_PERCENTAGE'?"percent":key=='MIN_XAF_AMOUNT'?'money':key=='CRYPTO_WITHDRAW_FEES_PERCENTAGE'?'ticket':key=='CRYPTO_WITHDRAW_MIN_AMOUNT'?'link':key=='MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT'?'check':"question"
+    switch (key) {
+      case 'SALT_ROUNDS':
+        return "key"
+        break;
+      case 'CRYPTO_BUY_SERVICE_FEES_PERCENTAGE':
+        return "percent"
+        break;
+      case 'MIN_XAF_AMOUNT':
+        return "money"
+        break;
+      case 'CRYPTO_WITHDRAW_FEES_PERCENTAGE':
+        return "ticket"
+        break;
+      case 'CRYPTO_WITHDRAW_MIN_AMOUNT':
+        return "link"
+        break;
+      case 'MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT':
+        return "question"
+        break;
+      default:
+        return "money";
+        break;
+    }
   }
   fetchStatistics(data:string){
-    let country: string =  "all"
+    let country: string =  ""
     if (data !== country) {
       country = data.toLowerCase()
     }
     this.adminService.getUsersStatistics(country).subscribe((res: any) => {
-
       this.datas = res.data
       this.users = res.data.users
       this.growthChart.series = [this.users.total_users, this.users.connected_users, this.users.unconnected_users]

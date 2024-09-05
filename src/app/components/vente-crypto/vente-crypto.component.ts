@@ -15,6 +15,7 @@ import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -39,22 +40,27 @@ export class VenteCryptoComponent implements OnInit {
   setReload() {
     this.reloadHistory = !this.reloadHistory
   }
-  private userSaved = localStorage.getItem('user-mansexch')
+  private userSaved: any
 
   constructor(
     public navService: NavService,
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService,
-    private router: Router
-  ) {
-    if (this.userSaved == null) {
+    private router: Router,
+    private userService: UserService
+  ) {}
+
+  getProfileUser(): void {
+    this.userService.getProfile().subscribe((response: any) => {
+      this.userSaved = response.data.user
+    }, (err) => {
       this.router.navigate(['/auth/login'])
-    }
+    })
   }
 
   ngOnInit(): void {
     this.getWalletDetails()
-
+    this.getProfileUser()
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
       debounceTime(300),
@@ -131,6 +137,27 @@ export class VenteCryptoComponent implements OnInit {
 
 
   async initSellingProcess(crypto: string) {
+    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: `Erreur`,
+        text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+        // type: 'warning',
+        confirmButtonText: 'Valider mon compte',
+        reverseButtons: true
+      }).then(()=>{
+        this.router.navigate(['/client/profile-edit'])
+      })
+      return
+    }
+    
     await Swal.fire({
       titleText: `Vente de ${crypto}`,
       html: `Combien de ${crypto} voulez vous vendre?
