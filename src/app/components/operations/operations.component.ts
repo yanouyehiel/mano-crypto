@@ -10,11 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 export class OperationsComponent implements OnInit {
   private userSaved: any;
   
-  constructor(private router: Router, private userService: UserService) {
-    if (this.userSaved == undefined) {
-      this.router.navigate(['/auth/login'])
-    }
-  }
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this.getProfileUser()
