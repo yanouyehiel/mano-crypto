@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, of } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import {
   ResponseDeposit,
   ResponseTransactionList,
@@ -84,7 +84,7 @@ export class RechargeCompteComponent implements OnInit {
     Swal.fire('Terminé', 'Recharge effectué avec succès', 'success');
   }
 
-  initBuyingProcess() {
+  async initBuyingProcess() {
     const data ={amount:this.depositForm.controls['amount'].value, phoneNumber:this.depositForm.controls['phoneNumber'].value.toString()}
 
     if (isNaN(data.amount) || data.amount <= 0) {
@@ -115,7 +115,6 @@ export class RechargeCompteComponent implements OnInit {
 
     Swal.fire({
       titleText: `Recharge de compte`,
-
       html: `Vous voulez effectuer une recharge de ${
         data.amount
       } F\nVeuillez saisir <b>${
@@ -147,7 +146,10 @@ export class RechargeCompteComponent implements OnInit {
             .subscribe({
               next: (value) => {
                 if (value.statusCode == 1000) {
-                  this.successRecharge();
+                  this.getStatusTransaction(value.data.transaction._id).then(res => {
+                    console.log(res)
+                  })
+                  //this.successRecharge();
                   this.setReload()
                   setTimeout(() => {
                     Swal.close();
@@ -177,5 +179,12 @@ export class RechargeCompteComponent implements OnInit {
     });
     
     this.stepAttribute(0);
+  }
+
+  async getStatusTransaction(idTransaction: string) {
+    await this.depositService.getSingleTransaction(idTransaction)
+    .subscribe(result => {
+      return result
+    })
   }
 }

@@ -115,6 +115,7 @@ export class HomeAdminComponent implements OnInit {
   fetchConfigs(){
     this.adminService.getConfigs().subscribe((response:ResponseParent)=>{
       if(response.statusCode===1000){
+        console.log(response.data)
         this.configs = response.data;
         this.loaderConfig = false;
       }

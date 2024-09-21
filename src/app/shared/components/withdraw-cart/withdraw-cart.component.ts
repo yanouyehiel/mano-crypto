@@ -58,7 +58,7 @@ loader:boolean = true;
         // type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
+        cancelButtonText: 'Annuler',
         reverseButtons: true
       }).then((result: any) => {
 
@@ -110,7 +110,7 @@ loader:boolean = true;
         cancelButtonText: 'Cancel',
         reverseButtons: true
       } : {
-        title: `Rejeter le document`,
+        title: `Rejeter le retrait`,
         text: `Voulez vous rejeter le retrait de ${operation.amount} FCFA vers ${operation.receiver} ?`,
         // type: 'warning',
         input: 'text',

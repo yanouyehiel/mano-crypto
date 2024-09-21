@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" *ngIf="loader; else data">
+            <!-- <div class="col-md-12" *ngIf="loader; else data">
                 <div class="loader-box">
                     <div class="loader-3"></div>
                 </div>
@@ -30,7 +30,9 @@
             <ng-template #data>
                 <h5 style="font-weight: bold; text-transform: capitalize; color: black;">Votre portefeuille actuel</h5>
                 <app-profile-finance [walletData]="walletData"></app-profile-finance>
-            </ng-template>
+            </ng-template> -->
+            <h5 style="font-weight: bold; text-transform: capitalize; color: black;">Votre portefeuille actuel</h5>
+            <app-profile-finance [walletData]="walletData"></app-profile-finance>
         </div>
         <div class="col-xl-12 box-col-12 des-xl-100 dashboard-sec">
             <app-variation-crypto></app-variation-crypto>

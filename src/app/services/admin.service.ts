@@ -142,6 +142,4 @@ export class AdminService {
             return of(error.error)
         }));
     }
-
-
 }
