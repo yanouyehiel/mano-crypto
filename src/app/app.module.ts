@@ -61,6 +61,8 @@ import { WithdrawCartComponent } from './shared/components/withdraw-cart/withdra
 import { OperationsComponent } from './components/operations/operations.component';
 import { ShareToFriendComponent } from './components/share-to-friend/share-to-friend.component';
 import { OperationListComponent } from './shared/components/operation-list/operation-list.component';
+import { BitcoinChartComponent } from './components/home/variation-crypto/bitcoin-chart/bitcoin-chart.component';
+import { EthereumChartComponent } from './components/home/variation-crypto/ethereum-chart/ethereum-chart.component';
 
 
 @NgModule({
@@ -89,6 +91,9 @@ import { OperationListComponent } from './shared/components/operation-list/opera
     HomeComponent,
     RechargeCompteComponent,
     MyListingComponent,
+    
+    BitcoinChartComponent,
+    EthereumChartComponent,
     ProfileComponent,
     ProfileFinanceComponent,
     VariationCryptoComponent,
@@ -113,7 +118,7 @@ import { OperationListComponent } from './shared/components/operation-list/opera
     WithdrawCartComponent,
     OperationsComponent,
     ShareToFriendComponent,
-    OperationListComponent
+    OperationListComponent,
    ],
 
   imports: [

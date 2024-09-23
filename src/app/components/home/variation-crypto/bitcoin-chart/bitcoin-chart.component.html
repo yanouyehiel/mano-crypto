@@ -1,0 +1,57 @@
+
+  <div class="card income-card">
+        <div class="card-header">
+            <div class="header-top d-sm-flex align-items-center mb-5">
+                <h5>Variation du prix du Bitcoin  <div class="float-end"><div class="btn-group" role="group" aria-label="Basic example">
+                  <button class="btn btn-outline-primary" [ngClass]="timeRange=='live'?'active':''" (click)="updateChartRange('live')" type="button">
+                    Live
+                  </button>      
+                  <button class="btn btn-outline-primary" [ngClass]="timeRange=='1d'?'active':''" (click)="updateChartRange('1d')" type="button">
+                                Aujourd'hui
+                              </button>
+                              <button class="btn btn-outline-primary" [ngClass]="timeRange=='7d'?'active':''" (click)="updateChartRange('7d')" type="button">
+                                Cette semaine
+                              </button>
+                              <button class="btn btn-outline-primary" [ngClass]="timeRange=='30d'?'active':''" (click)="updateChartRange('30d')" type="button">
+                                Ce mois                    </button>
+                              <button class="btn btn-outline-primary" [ngClass]="timeRange=='0'?'active':''" (click)="openMdoModal(modBtcContent)" type="button">
+                                Personnalisé
+                              </button>
+                  </div>
+                </div></h5>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="chart-timeline-dashbord">
+                <h6 *ngIf="closingPrice" class="float-end" [ngClass]="closingPrice>openingPrice?' text-success':closingPrice==openingPrice?' ':' text-danger'">{{closingPrice | number}}  <p class="d-inline"  [ngClass]="closingPrice>openingPrice?' text-success':closingPrice==openingPrice?' ':' text-danger'">USDT</p></h6>
+                <canvas baseChart
+                [data]="lineChartData"
+                [options]="lineChartOptions"
+                [type]="lineChartType">
+        </canvas>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #modBtcContent let-modalBtc>
+        <div class="modal-header">
+          <h5 class="modal-title">Variation BTC personnalisé</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modalBtc.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="col-form-label" for="date-start">De :</label>
+              <input class="form-control" id="date-start" type="datetime-local" #startDate>
+            </div>
+            <div class="mb-3">
+              <label class="col-form-label" for="date-end">A :</label>
+              <input class="form-control" id="date-end" type="datetime-local" #endDate>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" (click)="modalBtc.dismiss('Cross click')" data-bs-dismiss="modal">Ferner</button>
+          <button class="btn btn-primary" type="button" (click)="customizeRange(startDate.value, endDate.value)">Valider</button>
+        </div>
+        </ng-template> 

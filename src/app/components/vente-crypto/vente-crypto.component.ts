@@ -55,6 +55,7 @@ export class VenteCryptoComponent implements OnInit {
   ngOnInit(): void {
     this.getWalletDetails()
 
+    
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
       debounceTime(300),
@@ -62,31 +63,18 @@ export class VenteCryptoComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((term) => {
         if (parseFloat(term) > 0) {
-
+           
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "block";
           }
-          this.cryptoAmount = parseFloat(term);
-
           // Utiliser forkJoin pour exécuter les requêtes en parallèle
-          return forkJoin({
-            conversion: this.cryptoService.convertToFiat({
-              crypto_currency: this.typeCrypto,
-              amount: term,
-            }),
-            fees: this.cryptoService.getCryptoFees({
-              crypto_currency: this.typeCrypto,
-              amount: term,
-            })
-
-          }).pipe(
-            // Combiner les résultats en un seul objet
-            map(({ conversion, fees }) => ({
-              conversion,
-              fees
-            }))
-          );
-
+          return this.cryptoService.transactionFees({
+            amount: term,
+            currency: this.typeCrypto,
+            
+            type: "SELL_CRYPTO"
+          });
+          
         } else {
           return of(null);
         }
@@ -94,26 +82,41 @@ export class VenteCryptoComponent implements OnInit {
     );
 
     this.liveResponse$.subscribe((response) => {
+      
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
-        this.liveContent.style.display = 'block';
+        this.liveContent.style.display = 'flex';
       }
+      const liveContent = document.getElementById('live-content'); 
+      if(liveContent){
+        liveContent.style.display = 'flex';
+      }
+     
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${response.conversion.data.xaf_amount && parseInt(response.conversion.data.xaf_amount).toLocaleString('fr-FR') + ' XAF'}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_amount).toLocaleString('fr-FR')+' XAF'}`;
       }
       const liveValue2 = document.getElementById('live-value2');
       if (liveValue2) {
-        liveValue2.innerText = `${response.fees.data.withdrawFees.fee && response.fees.data.withdrawFees.fee + ' ' + response.fees.data.withdrawFees.currency}`;
+        liveValue2.innerText = `${parseInt(response.data.xaf_fees).toLocaleString('fr-FR')+' XAF'}`;
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        let total1 = parseFloat(response.conversion.data.crypto_amount) - parseFloat(response.fees.data.withdrawFees.fee)
-
-        let total2 = parseFloat(response.conversion.data.xaf_amount) / parseFloat(response.conversion.data.crypto_amount)
-        liveValue3.innerText = `${(response.conversion.data.crypto_amount && response.fees.data.withdrawFees.fee && response.conversion.data.xaf_amount) ? parseInt((total1 * total2).toString()).toLocaleString('fr-FR') + ' XAF' : ''}`;
+        liveValue3.innerText = `${parseInt(response.data.xaf_network_fees).toLocaleString('fr-FR')+' XAF'}`;
       }
-
+      const liveValue4 = document.getElementById('live-value4');
+      if (liveValue4) {
+        liveValue4.innerText = `${parseFloat(response.data.crypto_fees).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+      }
+      const liveValue5 = document.getElementById('live-value5');
+      if (liveValue5) {
+        liveValue5.innerText = `${parseFloat(response.data.crypto_network_fees).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+      }
+      const liveValue6 = document.getElementById('live-value6');
+      if (liveValue6) {
+        liveValue6.innerText = `${parseFloat(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
+      }
+     
     })
   }
 
@@ -136,9 +139,13 @@ export class VenteCryptoComponent implements OnInit {
       html: `Combien de ${crypto} voulez vous vendre?
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content" style="display:none;">
-        <li>Valeur en XAF : <span style="color:green;" id="live-value1"></span></li>
-        <li>Frais de transaction : <span style="color:green;" id="live-value2"></span></li>
-        <li>Net à recevoir : <span style="color:green;" id="live-value3"></span></li>
+        <li><b id="live-value1"></b> exactement</li>
+        <li><b id="live-value2"></b> de frais de transaction</li>
+        <li><b id="live-value3"></b> de frais reseau</li>
+        
+        <li><b id="live-value4"></b> de frais manen crypto</li>
+        <li><b id="live-value5"></b> de frais réseau crypto</li>
+        <li><b id="live-value6"></b> à recevoir au total</li>
       </ul>`,
       input: 'text',
       inputAutoFocus: true,

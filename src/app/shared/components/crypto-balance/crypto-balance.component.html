@@ -18,7 +18,7 @@
                 />
               </div>
               <h5>{{ detail.wallet.solde |number:'1.0-9' }}</h5>
-              <p>Les derniers Jours</p>
+              
               <a class="btn-arrow arrow-primary"
               [ngClass]="detail.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"
                 ><i
@@ -27,6 +27,15 @@
                 }} me-2"
               ></i>
               {{ detail.details.weekly_percentage | number : "1.2-2" }} %</a
+              >
+              <a class="btn-arrow arrow-primary"
+              [ngClass]="detail.details.monthly_percentage > 0 ? ' text-success' : ' text-danger'"
+                ><i
+                class="toprightarrow-primary fa fa-arrow-{{
+                 detail.details.monthly_percentage > 0 ? 'up' : 'down'
+                }} me-2"
+              ></i>
+              {{ detail.details.monthly_percentage | number : "1.2-2" }} %</a
               >
             </div>
           </div>

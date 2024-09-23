@@ -23,3 +23,52 @@
 *{
     text-transform: none !important;
 }
+#live-content{
+    display:none; 
+    padding-left: 30px;
+    flex-direction:column;
+    justify-content:start;
+    align-items:start; 
+   font-size: 12px;
+  }
+
+#live-content {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#live-content::before {
+    border-left: 0.5px solid rgb(207, 206, 206);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    height: 90%;
+    z-index: 0;
+}
+
+#live-content li {
+    position: relative;
+    font-size: 10px;
+    padding: 10px 10px 5px 20px;
+}
+
+#live-content li::before {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: gray;
+    left: 0;
+    text-align: center;
+    top: 10px;
+    content: '';
+    border-radius: 50%;
+}
+canvas {
+    width: 100% !important;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  

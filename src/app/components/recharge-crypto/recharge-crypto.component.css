@@ -1,3 +1,12 @@
 app-breadcrumb {
   margin-top: 100px !important;
 }/*# sourceMappingURL=recharge-crypto.component.css.map */
+
+#live-content{
+  display:nones; 
+  padding-left:30; 
+  display:flex;
+  justify-content:start;
+  align-items:start; 
+  flex-direction:column
+}

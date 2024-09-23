@@ -57,16 +57,16 @@ export class VariationCryptoComponent implements OnInit {
     window.addEventListener('resize', this.onResize.bind(this));
     this.onResize()
 
-    this.transactionService.connectToBTC().subscribe(data => {
-      const price = parseFloat(data.p).toFixed(2);
-      this.previousBtcPrice = this.latestBtcPrice;
-      this.latestBtcPrice = price;
-    });
-    this.transactionService.connectToETH().subscribe(data => {
-      const price = parseFloat(data.p).toFixed(2);
-      this.previousEthPrice = this.latestEthPrice;
-      this.latestEthPrice = price;
-    });
+    // this.transactionService.connectToBTC().subscribe(data => {
+    //   const price = parseFloat(data.p).toFixed(2);
+    //   this.previousBtcPrice = this.latestBtcPrice;
+    //   this.latestBtcPrice = price;
+    // });
+    // this.transactionService.connectToETH().subscribe(data => {
+    //   const price = parseFloat(data.p).toFixed(2);
+    //   this.previousEthPrice = this.latestEthPrice;
+    //   this.latestEthPrice = price;
+    // });
   }
 
   getBitcoinPriceData(): Observable<any> {
@@ -110,6 +110,7 @@ export class VariationCryptoComponent implements OnInit {
   buildBtcChart() {
     this.getBitcoinPriceData().subscribe((dataBtc: any) => {
       const btcPrices = dataBtc.prices;
+
       this.btcChart.lineChartData[0].data = btcPrices.map((priceData: any) => priceData[1]);
 
       if (this.activatedBtcVariation == 1) {
@@ -127,7 +128,6 @@ export class VariationCryptoComponent implements OnInit {
       // Traitement des données reçues depuis l'API
 
       const ethPrices = dataEth.prices;
-
 
       this.ethChart.lineChartData[0].data = ethPrices.map((priceData: any) => priceData[1]);
       if (this.activatedEthVariation == 1) {

@@ -31,6 +31,15 @@
                                   ></i>
                                   {{ crypto.details.weekly_percentage | number : "1.2-2" }} %</a
                                   >
+                                  <a *ngIf="crypto.details.monthly_percentage" class="btn-arrow arrow-primary"
+                                  [ngClass]="crypto.details.monthly_percentage > 0 ? ' text-success' : ' text-danger'"
+                                    ><i
+                                    class="toprightarrow-primary fa fa-arrow-{{
+                                     crypto.details.monthly_percentage > 0 ? 'up' : 'down'
+                                    }} me-2"
+                                  ></i>
+                                  {{ crypto.details.monthly_percentage | number : "1.2-2" }} %</a
+                                  >
                                   <button class="btn btn-dark mt-3 arrow-primary" [disabled]="crypto.wallet.solde<=0"
                                         (click)="initSellingProcess(crypto.wallet.type)">Vendre</button>
                                 </div>

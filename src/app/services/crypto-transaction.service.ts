@@ -11,27 +11,27 @@ export class CryptoTransactionService {
   private walletUrl = environment.backend_api_url + environment.url_deposit;
   private socket: WebSocket;
 
-  connectToBTC(): Observable<any> {
-    this.socket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
-
-    return new Observable(observer => {
-      this.socket.onmessage = (event) => observer.next(JSON.parse(event.data));
-      this.socket.onerror = (error) => observer.error(error);
-      this.socket.onclose = () => observer.complete();
-
-      return () => this.socket.close();
-    });
+  getHistoricalData(params:any): Observable<any> {
+    let url =  '';
+    if(params.byRange){
+url =  `https://api.binance.com/api/v3/klines?symbol=${params.symbol}&interval=${params.interval}&startTime=${params.startTime}&endTime=${params.endTime}&limit=${params.limit}`;
+    }else{
+url = `https://api.binance.com/api/v3/klines?symbol=${params.symbol}&interval=${params.interval}&limit=${params.limit}`;
+    }
+    
+    return this.http.get<any>(url);
   }
+  
 
-  connectToETH(): Observable<any> {
-    this.socket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
-
+  // Méthode pour recevoir les données en temps réel via WebSocket
+  getCryptoData(symbol: string): Observable<any> {
+    const wsUrl = `wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@kline_1m`;
     return new Observable(observer => {
-      this.socket.onmessage = (event) => observer.next(JSON.parse(event.data));
-      this.socket.onerror = (error) => observer.error(error);
-      this.socket.onclose = () => observer.complete();
-
-      return () => this.socket.close();
+      const ws = new WebSocket(wsUrl);
+      ws.onmessage = (event) => observer.next(JSON.parse(event.data));
+      ws.onerror = (error) => observer.error(error);
+      ws.onclose = () => observer.complete();
+      return () => ws.close();
     });
   }
 
@@ -71,6 +71,14 @@ export class CryptoTransactionService {
   convertToFiat(data: any): Observable<ResponseParent> {
     return this.http.post<ResponseCryptoFee>(
       `${this.cryptoUrl}/convert-crypto-to-fiats`,
+      data,
+      this.getConfig()
+    );
+  }
+
+  transactionFees(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseCryptoFee>(
+      `${this.walletUrl}/fees`,
       data,
       this.getConfig()
     );
