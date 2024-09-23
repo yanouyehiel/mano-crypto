@@ -83,7 +83,9 @@
                           class="font-primary">{{wallet.solde |number:'1.0-8' }} BTC</span></li>
                       <li *ngSwitchCase="'ETH'">Ethereum <span
                           class="font-primary">{{wallet.solde |number:'1.0-8' }} ETH</span></li>
-                      <li *ngSwitchDefault>XAF <span class="font-primary">{{wallet.solde | number: '1.0-2'}}
+                      <li  *ngSwitchCase="'USDT'">Tether <span class="font-primary">{{wallet.solde | number: '1.0-8'}}
+                        USDT</span></li>
+                      <li  *ngSwitchCase="'XAF'">XAF <span class="font-primary">{{wallet.solde | number: '1.0-2'}}
                           FCFA</span></li>
                     </ng-container>
                   </ng-container>

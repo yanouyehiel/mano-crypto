@@ -32,7 +32,7 @@ export class RetirerFondsComponent implements OnInit {
     private modalService: NgbModal,
     private authService: AuthService,
     private depositService: TransactionService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     if (this.userSaved == null) {
       this.router.navigate(['/auth/login'])
@@ -108,37 +108,69 @@ export class RetirerFondsComponent implements OnInit {
       return
     }
 
-    this.authService
-      .sendOtp()
-      .pipe(
-        catchError((error) => {
-          if (error.status === 0 || error.statusText === 'Unknown Error') {
-            Swal.fire(
-              'Erreur',
-              `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-              'error'
-            );
-          }
-          return of(error.error);
-        })
-      )
-      .subscribe({
-        next: (value) => {
-          if (value.statusCode != 1000) {
-            Swal.fire(
-              'Erreur',
-              value.message ||
-                `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-              'error'
-            );
-          } else if (value.statusCode === 1001) {
-            this.router.navigate(['/auth/login'])
-          } else {
-            this.otpVerificationAndWithdraw(value.data!.secret);
-          }
-        },
-      });
+    const data = {
+      currency: 'XAF',
+      amount: this.depositForm.controls["amount"].value,
+      type: "WITHDRAW"
+    }
 
+    this.depositService.getFees(data).subscribe(res => {
+      if (res.statusCode === 1000) {
+        Swal.fire({
+          titleText: "Récapitulatif financier du retrait",
+          showCancelButton: true,
+          html: `
+          <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
+          <ul>
+            <li>Montant initié : <span style="color:green;">${res.data.xaf_amount} XAF</span></li>
+            <li>Frais de réseau : <span style="color:green;">${res.data.xaf_network_fees} XAF</span></li>
+            <li>Net à recevoir : <span style="color:green;">${res.data.xaf_total} XAF</span></li>
+          </ul>`,
+          confirmButtonText: 'Continuer',
+          cancelButtonText: 'Annuler',
+          showLoaderOnConfirm: true,
+          preConfirm: async (value) => {
+            this.authService
+            .sendOtp()
+            .pipe(
+              catchError((error) => {
+                if (error.status === 0 || error.statusText === 'Unknown Error') {
+                  Swal.fire(
+                    'Erreur',
+                    `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
+                    'error'
+                  );
+                }
+                return of(error.error);
+              })
+            )
+            .subscribe({
+              next: (value) => {
+                if (value.statusCode != 1000) {
+                  Swal.fire(
+                    'Erreur',
+                    value.message ||
+                      `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
+                    'error'
+                  );
+                } else if (value.statusCode === 1001) {
+                  this.router.navigate(['/auth/login'])
+                } else {
+                  this.otpVerificationAndWithdraw(value.data!.secret);
+                }
+              },
+            });
+          },
+          allowOutsideClick: () => !Swal.isLoading(),
+        })
+      } else {
+        Swal.fire(
+          'Erreur',
+          `Veuillez reessayer.`,
+          'error'
+        );
+      }
+    })
     this.stepAttribute(0);
   }
 

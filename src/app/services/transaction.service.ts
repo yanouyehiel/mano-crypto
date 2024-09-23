@@ -4,6 +4,7 @@ import { Observable, catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   ResponseDeposit,
+  ResponseParent,
   ResponseTransactionList,
 } from '../models/Transaction';
 import { ResponseProfile } from '../models/User';
@@ -59,4 +60,21 @@ export class TransactionService {
       ).pipe(catchError((error)=> of(error.error)));
     
   }
+
+  getSingleTransaction(idTransaction: string): Observable<ResponseTransactionList> {
+    return this.http.get<ResponseTransactionList>(
+      `${this.urlTransactionList}/${idTransaction}`,
+      this.getConfig()
+    ).pipe(catchError((error)=> of(error.error)));
+  }
+
+  getFees(data: any): Observable<ResponseParent> {
+    return this.http.post<ResponseParent>(
+        `${this.urlDeposit}/fees`,
+        data,
+        this.getConfig()
+    ).pipe(catchError((error) => {
+        return of(error.error)
+    }));
+}
 }

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, of } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import {
   ResponseDeposit,
   ResponseTransactionList,
 } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { UserService } from 'src/app/services/user.service';
 import { AwaitTransactionValidationComponent } from 'src/app/shared/components/await-transaction-validation/await-transaction-validation.component';
 import Swal from 'sweetalert2';
 
@@ -27,18 +28,15 @@ export class RechargeCompteComponent implements OnInit {
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
-  private userSaved = localStorage.getItem('user-mansexch')
+  private userSaved: any
 
   constructor(
     private depositService: TransactionService,
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private router: Router
-  ) {
-    if (this.userSaved == null) {
-      this.router.navigate(['/auth/login'])
-    }
-  }
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.step = 1;
@@ -48,10 +46,19 @@ export class RechargeCompteComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       paiementMethod: ['', Validators.required],
     });
+    this.getProfileUser()
   }
 
   verifyPhoneNumber(): boolean {
     return true;
+  }
+
+  getProfileUser(): void {
+    this.userService.getProfile().subscribe((response: any) => {
+      this.userSaved = response.data.user
+    }, (err) => {
+      this.router.navigate(['/auth/login'])
+    })
   }
 
   stepAttribute(step: number): void {
@@ -77,7 +84,7 @@ export class RechargeCompteComponent implements OnInit {
     Swal.fire('Terminé', 'Recharge effectué avec succès', 'success');
   }
 
-  initBuyingProcess() {
+  async initBuyingProcess() {
     const data ={amount:this.depositForm.controls['amount'].value, phoneNumber:this.depositForm.controls['phoneNumber'].value.toString()}
 
     if (isNaN(data.amount) || data.amount <= 0) {
@@ -85,9 +92,29 @@ export class RechargeCompteComponent implements OnInit {
       return;
     }
 
+    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: `Erreur`,
+        text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+        // type: 'warning',
+        confirmButtonText: 'Valider mon compte',
+        reverseButtons: true
+      }).then(()=>{
+        this.router.navigate(['/client/profile-edit'])
+      })
+      return
+    }
+
     Swal.fire({
       titleText: `Recharge de compte`,
-
       html: `Vous voulez effectuer une recharge de ${
         data.amount
       } F\nVeuillez saisir <b>${
@@ -119,13 +146,16 @@ export class RechargeCompteComponent implements OnInit {
             .subscribe({
               next: (value) => {
                 if (value.statusCode == 1000) {
-                  this.successRecharge();
+                  this.getStatusTransaction(value.data.transaction._id).then(res => {
+                    console.log(res)
+                  })
+                  //this.successRecharge();
                   this.setReload()
                   setTimeout(() => {
                     Swal.close();
                   }, 2000);
                 } else if (value.statusCode == 1001) {
-                  this.router.navigate(['/auth/login'])
+                  Swal.fire('Opération annulée', value.message, 'error');
                 } else {
                   Swal.fire('Opération annulée', value.message, 'error');
                 }
@@ -149,5 +179,12 @@ export class RechargeCompteComponent implements OnInit {
     });
     
     this.stepAttribute(0);
+  }
+
+  async getStatusTransaction(idTransaction: string) {
+    await this.depositService.getSingleTransaction(idTransaction)
+    .subscribe(result => {
+      return result
+    })
   }
 }

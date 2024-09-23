@@ -15,6 +15,7 @@ import {
 } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
+import { UserService } from 'src/app/services/user.service';
 import { ConfirmPasswordComponent } from 'src/app/shared/components/confirm-password/confirm-password.component';
 import Swal from 'sweetalert2';
 
@@ -24,18 +25,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./share-to-friend.component.scss']
 })
 export class ShareToFriendComponent {
-  private userSaved = localStorage.getItem('user-mansexch')
+  private userSaved: any
 
   constructor(
     private router: Router,
     private modalService: NgbModal,
     private fb: FormBuilder,
     private authService: AuthService,
-    private transactionService: CryptoTransactionService) {
-    if (this.userSaved == null) {
-      this.router.navigate(['/auth/login'])
-    }
-  }
+    private transactionService: CryptoTransactionService,
+    private userService: UserService) {}
 
   public recentOrders: any[] = [];
   public loader: boolean = true;
@@ -55,8 +53,16 @@ export class ShareToFriendComponent {
     this.reloadHistory = !this.reloadHistory
   }
 
+  getProfileUser(): void {
+    this.userService.getProfile().subscribe((response: any) => {
+      this.userSaved = response.data.user
+    }, (err) => {
+      this.router.navigate(['/auth/login'])
+    })
+  }
 
   ngOnInit(): void {
+    this.getProfileUser()
     this.liveSpinner = document.getElementById('live-spinner')
     this.liveContent = document.getElementById('live-content');
     this.sendForm = this.fb.group({
@@ -145,6 +151,26 @@ export class ShareToFriendComponent {
   }
 
   confirmIdentityModal() {
+    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: `Erreur`,
+        text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+        // type: 'warning',
+        confirmButtonText: 'Valider mon compte',
+        reverseButtons: true
+      }).then(()=>{
+        this.router.navigate(['/client/profile-edit'])
+      })
+      return
+    }
 
     if (isNaN(parseFloat(this.sendForm.value['amount']))) {
       this.alertMsg = "Renseignez le montant !"

@@ -9,7 +9,7 @@ import { DataCryptoService } from 'src/app/services/data-crypto.service';
 })
 export class HomeComponent implements OnInit {
   public walletData: any;
-  public loader: boolean = true;
+  //public loader: boolean = true;
   private userSaved = localStorage.getItem('user-mansexch')
   public earningData = [
     {
@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
       link: "/client/share-to-friend"
     },
   ];
+  private intervalId: any;
 
   constructor(private router: Router, private cryptoService: DataCryptoService) {
     if (this.userSaved == null) {
@@ -53,14 +54,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getWalletDetails()
+    this.intervalId = setInterval(() => {
+      this.getWalletDetails()
+    }, 3000);
   }
 
   getWalletDetails() {
-    this.loader = true;
+    //this.loader = true;
     this.cryptoService.getWalletDetails().subscribe((response: any) => {
+      console.log(response.data)
       this.walletData = response.data.details
-      this.loader = false;
+      //this.loader = false;
     }, (err) => {
       if (err.status === 401) {
         this.router.navigate(['/auth/login'])
@@ -70,5 +74,9 @@ export class HomeComponent implements OnInit {
 
   joinService(url: string) {
     this.router.navigate([url])
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalId);
   }
 }

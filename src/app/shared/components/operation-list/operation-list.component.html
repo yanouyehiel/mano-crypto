@@ -36,10 +36,18 @@
           <td>{{ operation.creationDate | customDateFormat }}</td>
           <td *ngIf="operation.status=='SUCCESS'; else status" class="badge badge-success text-white">{{ operation.status }}</td>
           <ng-template #status>
-            <ng-container *ngIf="operation.status=='FAILED'" class="badge badge-danger text-white">{{ operation.status }}</ng-container>
-            <ng-container *ngIf="operation.status=='PENDING'" class="badge badge-warning text-white">{{ operation.status }}</ng-container>
-            <ng-container *ngIf="operation.status=='REJECTED'" class="badge badge-danger text-white">{{ operation.status }}</ng-container>
-            <ng-container *ngIf="operation.status=='CREATED'" class="badge badge-warning text-white">{{ operation.status }}</ng-container>
+            <ng-container *ngIf="operation.status=='FAILED'">
+              <td class="badge badge-danger text-white">{{ operation.status }}</td>
+            </ng-container>
+            <ng-container *ngIf="operation.status=='PENDING'">
+              <td class="badge badge-warning text-white">{{ operation.status }}</td>
+            </ng-container>
+            <ng-container *ngIf="operation.status=='REJECTED'">
+              <td class="badge badge-danger text-white">{{ operation.status }}</td>
+            </ng-container>
+            <ng-container *ngIf="operation.status=='CREATED'">
+              <td class="badge badge-primary text-white">{{ operation.status }}</td>
+            </ng-container>
           </ng-template>
         </tr>
         <p class="text-dark-emphasis">{{messageToDisplay}}</p>

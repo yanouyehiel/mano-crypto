@@ -21,7 +21,6 @@ export class ProfileFinanceComponent implements OnInit {
     if (this.alertWelcomeTime !== 1) {
       this.dialog()
     }
-    
   }
 
 
@@ -33,10 +32,6 @@ export class ProfileFinanceComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     })
-  }
-
-  displaySolde(solde:any){
-   return parseInt(solde)
   }
 
   truncateNumber(num: number, numDigits: number = 4): number {

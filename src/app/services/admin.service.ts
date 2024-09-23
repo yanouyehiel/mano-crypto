@@ -84,6 +84,9 @@ export class AdminService {
     }
 
     getUsersStatistics(country: string): Observable<any> {
+        if (country === "" || country === "Tous les pays") {
+            return this.http.get<any>(`${this.urlAdmin}/statistics`, this.getConfig())
+        }
         return this.http.get<any>(`${this.urlAdmin}/statistics${'?country=' + country}`, this.getConfig())
     }
 
@@ -139,6 +142,4 @@ export class AdminService {
             return of(error.error)
         }));
     }
-
-
 }

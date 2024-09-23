@@ -19,6 +19,12 @@
                                  <div class="dz-message needsclick ">
                                     <i class="fa fa-upload"></i>
                                     <h6>Importer une image</h6>
+                                    <img 
+                                       [src]="item.document_type=='cni_recto'?'../../../assets/images/cni_recto.png':(item.document_type=='cni_verso'?'../../../assets/images/cni_verso.png':'../../../assets/images/selfie.png')" 
+                                       alt="image" 
+                                       width="150px" 
+                                       height="100px"
+                                    >
                                     <span class="dz-message needsclick">
                                        ({{item.document_type=='cni_recto'?'Insérer votre pièce d\'identité recto':(item.document_type=='cni_verso'?'Insérer votre pièce d\'identité verso':'Insérer un selfie de vous')}})
                                     </span>

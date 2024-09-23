@@ -70,7 +70,7 @@ export class UploadFileComponent implements OnInit {
 
   onSubmitKyc() {
     this.isLoading = true
-    if (this.cniRecto && this.cniVerso && this.userPicture) {
+    if (this.cniRecto || this.cniVerso || this.userPicture) {
       this.userService.submitKyc(this.formData).pipe(catchError((error) => of(error.error))).subscribe((response: ResponseParent) => {
       
         if (response.statusCode === 1000) {
@@ -94,7 +94,7 @@ export class UploadFileComponent implements OnInit {
         console.log(err)
       })
     } else {
-      this.toast.error("Veuillez toutes les photos")
+      this.toast.error("Veuillez insérer toutes les photos")
     }
     this.isLoading = false;
   }
