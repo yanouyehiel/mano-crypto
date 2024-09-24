@@ -12,9 +12,7 @@ export class ProfileFinanceComponent implements OnInit {
   private alertWelcomeTime: number = 0;
   @Input() walletData: any;
 
-  constructor() {
-    
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.alertWelcomeTime = 1;
@@ -34,7 +32,7 @@ export class ProfileFinanceComponent implements OnInit {
     })
   }
 
-  truncateNumber(num: number, numDigits: number = 4): number {
+  truncateNumber(num: number, numDigits: number = 3): number {
     const factor = Math.pow(10, numDigits);
     return Math.trunc(num * factor) / factor;
   }

@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
     },
   ];
   private intervalId: any;
+  public valueChanged: boolean = false;
 
   constructor(private router: Router, private cryptoService: DataCryptoService) {
     if (this.userSaved == null) {
@@ -62,8 +63,8 @@ export class HomeComponent implements OnInit {
   getWalletDetails() {
     //this.loader = true;
     this.cryptoService.getWalletDetails().subscribe((response: any) => {
-      console.log(response.data)
       this.walletData = response.data.details
+      this.walletData.valueChanged = true
       //this.loader = false;
     }, (err) => {
       if (err.status === 401) {
