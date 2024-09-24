@@ -17,8 +17,8 @@ export class HomeAdminComponent implements OnInit {
   public growthChart = chartData.growthChart;
   private users: any
   private solde: any
-  public datas?:any
-  public configs:any[]
+  public datas?: any
+  public configs: any[]
   private transaction: any
   public barChart = chartData.barChart
   private userSaved = localStorage.getItem('user-mansexch')
@@ -26,7 +26,7 @@ export class HomeAdminComponent implements OnInit {
   public loaderConfig: boolean = true;
 
   constructor(
-    private adminService:AdminService,
+    private adminService: AdminService,
     private router: Router
   ) {
     if (this.userSaved == undefined) {
@@ -38,6 +38,7 @@ export class HomeAdminComponent implements OnInit {
     this.fetchStatistics('');
     this.fetchConfigs();
   }
+
 
   getConfigKey(key:string):string{
     switch (key) {
@@ -149,6 +150,7 @@ export class HomeAdminComponent implements OnInit {
       this.loader = false;
     })
   }
+
   fetchConfigs(){
     this.adminService.getConfigs().subscribe((response:ResponseParent)=>{
       if(response.statusCode===1000){
@@ -161,10 +163,10 @@ export class HomeAdminComponent implements OnInit {
 
   async updateConfigs(element: any) {
     Swal.fire({
-      titleText:`Modification du ${this.getConfigKey(element.key)}`,
+      titleText: `Modification du ${this.getConfigKey(element.key)}`,
       html: `Quelle est la nouvelle valeur ?`,
       input: 'text',
-      inputAutoFocus:true,
+      inputAutoFocus: true,
       inputPlaceholder: element.value,
       showCancelButton: true,
       confirmButtonText: 'Modifier',
@@ -180,13 +182,13 @@ export class HomeAdminComponent implements OnInit {
         autocapitalize: 'off'
       },
       showLoaderOnConfirm: true,
-      preConfirm:async (value)=>this.askConfirmTransaction({...element, value:value})
+      preConfirm: async (value) => this.askConfirmTransaction({ ...element, value: value })
     });
   }
 
   askConfirmTransaction(element: any) {
     Swal.fire({
-      titleText:`Modification du ${this.getConfigKey(element.key)}`,
+      titleText: `Modification du ${this.getConfigKey(element.key)}`,
       html: `Voulez vous vraiment effectuer cette opération ?`,
       showDenyButton: true,
       confirmButtonText: 'Oui',
@@ -195,25 +197,25 @@ export class HomeAdminComponent implements OnInit {
       preConfirm: async (value) => {
         try {
           const response = await this.adminService
-      .setConfigs(element).pipe(
-        timeout(10000), // Définir le délai d'attente en millisecondes (ici, 5 secondes)
-         
-        catchError((error)=>{
-          if (
-            error.status === 0 ||
-            error.statusText === 'Unknown Error'|| error.name === 'TimeoutError'
-          ) {
-            Swal.fire(
-              'Erreur',
-              `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-              'error'
-            );
-          }
+            .setConfigs(element).pipe(
+              timeout(10000), // Définir le délai d'attente en millisecondes (ici, 5 secondes)
 
-          return of(error.error);
-        })
-      )
-      .toPromise();
+              catchError((error) => {
+                if (
+                  error.status === 0 ||
+                  error.statusText === 'Unknown Error' || error.name === 'TimeoutError'
+                ) {
+                  Swal.fire(
+                    'Erreur',
+                    `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
+                    'error'
+                  );
+                }
+
+                return of(error.error);
+              })
+            )
+            .toPromise();
           if (response) {
             return response;
           } else {
@@ -221,21 +223,21 @@ export class HomeAdminComponent implements OnInit {
           }
         } catch (error: any) {
 
-            Swal.showValidationMessage(
-              `Impossible de traiter votre requete, Veuillez reessayer plus tard`
-            );
+          Swal.showValidationMessage(
+            `Impossible de traiter votre requete, Veuillez reessayer plus tard`
+          );
           return null;
         }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result: any) => {
       if (result.isConfirmed) {
-        if(result.value.statusCode!=1000){
+        if (result.value.statusCode != 1000) {
           Swal.fire('Opération annulée', result.value.message, 'error');
-        }else{
-          Swal.fire('Success',`Opération effectué avec success`,  'success');
-          let index = this.configs.indexOf(this.configs.find((el)=>el.key===element.key))
-          this.configs[index]=element;
+        } else {
+          Swal.fire('Success', `Opération effectué avec success`, 'success');
+          let index = this.configs.indexOf(this.configs.find((el) => el.key === element.key))
+          this.configs[index] = element;
         }
 
       } else if (result.isDenied) {

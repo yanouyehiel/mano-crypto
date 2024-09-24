@@ -9,10 +9,10 @@
         <form [formGroup]="sendForm">
         <div class="card-body">
           <div class="row g-3">
-            <div class="col-lg-6 col-12 d-flex">
+            <div class="col-lg-5 col-12 d-flex">
               <input type="text" formControlName="address" class="form-control border-black" placeholder="Adresse crypto du receveur" />
             </div>
-            <div class="col-lg-1 col-6 d-flex">
+            <div class="col-lg-2 col-6 d-flex">
               
               <select class="form-control form-control-primary-fill btn-square" (change)="getCryptoMinimumAmount()" formControlName="currency">
                 <option value="USDT" [selected]="true">USDT</option>
@@ -20,7 +20,7 @@
                 <option value="ETH">ETH</option>
               </select>
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-2 col-6">
               <input type="number" (keyup)="bindInputValue()" class="form-control border-black {{(minimumCryptoWithdrawAmount && !sendForm.value['amount'].invalid && minimumCryptoWithdrawAmount<=sendForm.value['amount'])?'border-success':(minimumCryptoWithdrawAmount && sendForm.value['amount']!='' && minimumCryptoWithdrawAmount! > sendForm.value['amount'] )?'border-danger':''}}"  placeholder="Montant" formControlName="amount" />
               
             </div>
@@ -28,15 +28,19 @@
 
             <div class="col-lg-2 col-6">
               <button class="btn btn-primary" type="submit" [disabled]="sendForm.value['address'].invalid || sendForm.value['amount'].invalid || loadingTransfert" (click)="confirmIdentityModal()">
-               {{!loadingTransfert ? "Transferer" : ""}}<i *ngIf="loadingTransfert" class="fa fa-spin fa-circle-o-notch"></i>
+               {{!loadingTransfert ? "Transférer" : ""}}<i *ngIf="loadingTransfert" class="fa fa-spin fa-circle-o-notch"></i>
               </button>
             </div>
             <div *ngIf="alertMsg"><p class="text-danger">{{alertMsg}}</p></div>
-            <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
+            <p style="display:none;" id="live-spinner"><i class="fa fa-spin fa-spinner"></i></p>
       <ul id="live-content" style="display:none; justify-content: space-around;">
-        <li>Valeur en XAF : <span style="color:green;" id="live-value1"></span></li>
-        <li>Frais de transaction : <span style="color:green;" id="live-value2"></span></li>
-        <li>Cout total : <span style="color:green;" id="live-value3"></span></li>
+        <li><b id="live-value1"></b> exactement</li>
+        <li><b id="live-value2"></b> de frais de transaction</li>
+        <li><b id="live-value3"></b> de frais reseau</li>
+        
+        <li><b id="live-value4"></b> de frais manen crypto</li>
+        <li><b id="live-value5"></b> de frais réseau crypto</li>
+        <li><b id="live-value6"></b> à dépenser au total</li>
       </ul>
           </div>
         </div>

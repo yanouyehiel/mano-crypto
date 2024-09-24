@@ -68,7 +68,7 @@ export class ShareToFriendComponent {
     this.sendForm = this.fb.group({
       amount: ['', Validators.required],
       address: ['', Validators.required],
-      currency: ['USDT', Validators.required],
+      currency: ['XAF', Validators.required],
     });
     this.getCryptoMinimumAmount()
     this.liveResponse$ = this.swalInputValue.pipe(
@@ -78,30 +78,18 @@ export class ShareToFriendComponent {
       distinctUntilChanged(),
       switchMap((term) => {
         if (parseFloat(term) > 0) {
-
+           
           if (this.liveSpinner) {
-            this.liveSpinner.style.display = "inline-block";
+            this.liveSpinner.style.display = "block";
           }
-  
           // Utiliser forkJoin pour exécuter les requêtes en parallèle
-          return forkJoin({
-            conversion: this.transactionService.convertToFiat({
-              crypto_currency: this.sendForm.value['currency'],
-              amount: term,
-            }),
-            fees: this.transactionService.getCryptoFees({
-              crypto_currency: this.sendForm.value['currency'],
-              amount: term,
-            })
-
-          }).pipe(
-            // Combiner les résultats en un seul objet
-            map(({ conversion, fees }) => ({
-              conversion,
-              fees
-            }))
-          );
-
+          return this.transactionService.transactionFees({
+            amount: term,
+            currency: this.sendForm.value['currency'],
+            
+            type: "WITHDRAW_CRYPTO"
+          });
+          
         } else {
           return of(null);
         }
@@ -109,35 +97,53 @@ export class ShareToFriendComponent {
     );
 
     this.liveResponse$.subscribe((response) => {
-
+      
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
       }
+      const liveContent = document.getElementById('live-content'); 
+      if(liveContent){
+        liveContent.style.display = 'flex';
+      }
+     
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${response.conversion.data.xaf_amount && parseInt(response.conversion.data.xaf_amount).toLocaleString('fr-FR') + ' XAF'}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_amount).toLocaleString('fr-FR')+' XAF'}`;
       }
       const liveValue2 = document.getElementById('live-value2');
       if (liveValue2) {
-        liveValue2.innerText = `${response.fees.data.withdrawFees.fee && response.fees.data.withdrawFees.fee + ' ' + response.fees.data.withdrawFees.currency}`;
+        liveValue2.innerText = `${parseInt(response.data.xaf_fees).toLocaleString('fr-FR')+' XAF'}`;
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        let total1 = parseFloat(response.conversion.data.crypto_amount) + parseFloat(response.fees.data.withdrawFees.fee)
-
-        liveValue3.innerText = `${(response.conversion.data.crypto_amount && response.fees.data.withdrawFees.fee) ? total1 + ' ' + response.fees.data.withdrawFees.currency : ''}`;
+        liveValue3.innerText = `${parseInt(response.data.xaf_network_fees).toLocaleString('fr-FR')+' XAF'}`;
       }
-
+      const liveValue4 = document.getElementById('live-value4');
+      if (liveValue4) {
+        liveValue4.innerText = `${parseFloat(response.data.crypto_fees).toLocaleString('fr-FR')+' '+ this.sendForm.value['currency']}`;
+      }
+      const liveValue5 = document.getElementById('live-value5');
+      if (liveValue5) {
+        liveValue5.innerText = `${parseFloat(response.data.crypto_network_fees).toLocaleString('fr-FR')+' '+ this.sendForm.value['currency']}`;
+      }
+      const liveValue6 = document.getElementById('live-value6');
+      if (liveValue6) {
+        liveValue6.innerText = `${parseFloat(response.data.crypto_total).toLocaleString('fr-FR')+' '+ this.sendForm.value['currency']}`;
+      }
+     
     })
   }
 
 
   getCryptoMinimumAmount() {
-    this.bindInputValue()
+    if(this.sendForm.value['amount']){
+      this.bindInputValue()
+    }
     this.transactionService.getMinimumCryptoWithdrawAmount({ "currency": this.sendForm.value['currency'] }).subscribe((result) => {
       this.minimumCryptoWithdrawAmount = parseFloat(result.data.result)
     })
+    
   }
 
   bindInputValue() {
