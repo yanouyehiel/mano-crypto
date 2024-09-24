@@ -59,11 +59,30 @@ export class HomeAdminComponent implements OnInit {
       case 'MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT':
         return 'Montant minimal de retrait crypto à vérifier'
         break;
+      case 'CRYPTO_BUY_SERVICE_NETWORK_FEES_PERCENTAGE':
+        return "Pourcentage des frais de réseau d'achat crypto"
+        break;
+      case 'CRYPTO_RECHARGE_SERVICE_FEES_PERCENTAGE':
+        return 'Frais de service de recharge crypto (x100 (%))'
+        break;
+      case 'USDT_OTHER_WALLET_TRANSFER_FEES':
+        return "Frais de transfert de l'USDT"
+        break;
+      case 'BTC_OTHER_WALLET_TRANSFER_FEES':
+        return "Frais de transfert du BTC"
+        break;
+      case 'XAF_DEPOSITS_FEES':
+        return "Frais de recharge mobile"
+        break;
+      case 'CRYPTO_SELL_SERVICE_FEES_PERCENTAGE':
+        return "Frais de service de vente crypto (x100 (%))"
+        break;
       default:
         return "Frais de retrait mobile (x100 (%))";
         break;
     }
   }
+
   getConfigIcon(key:string):string{
     switch (key) {
       case 'SALT_ROUNDS':
@@ -72,17 +91,35 @@ export class HomeAdminComponent implements OnInit {
       case 'CRYPTO_BUY_SERVICE_FEES_PERCENTAGE':
         return "percent"
         break;
+      case 'CRYPTO_BUY_SERVICE_NETWORK_FEES_PERCENTAGE':
+        return "percent"
+        break;
+      case 'CRYPTO_RECHARGE_SERVICE_FEES_PERCENTAGE':
+        return 'percent'
+        break;
+      case 'USDT_OTHER_WALLET_TRANSFER_FEES':
+        return "money"
+        break;
+      case 'BTC_OTHER_WALLET_TRANSFER_FEES':
+        return "money"
+        break;
       case 'MIN_XAF_AMOUNT':
         return "money"
         break;
+      case 'XAF_DEPOSITS_FEES':
+        return "money"
+        break;
       case 'CRYPTO_WITHDRAW_FEES_PERCENTAGE':
-        return "ticket"
+        return "percent"
         break;
       case 'CRYPTO_WITHDRAW_MIN_AMOUNT':
-        return "link"
+        return "money"
         break;
       case 'MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT':
-        return "question"
+        return "money"
+        break;
+      case 'CRYPTO_SELL_SERVICE_FEES_PERCENTAGE':
+        return "percent"
         break;
       default:
         return "money";
