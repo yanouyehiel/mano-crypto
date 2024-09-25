@@ -61,8 +61,8 @@ export class TransactionService {
     
   }
 
-  getSingleTransaction(idTransaction: string): Observable<ResponseTransactionList> {
-    return this.http.get<ResponseTransactionList>(
+  getSingleTransaction(idTransaction: string): Observable<ResponseParent> {
+    return this.http.get<ResponseParent>(
       `${this.urlTransactionList}/${idTransaction}`,
       this.getConfig()
     ).pipe(catchError((error)=> of(error.error)));

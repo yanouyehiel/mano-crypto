@@ -90,8 +90,7 @@ import { EthereumChartComponent } from './components/home/variation-crypto/ether
     ConfirmLoginComponent,
     HomeComponent,
     RechargeCompteComponent,
-    MyListingComponent,
-    
+    MyListingComponent,  
     BitcoinChartComponent,
     EthereumChartComponent,
     ProfileComponent,

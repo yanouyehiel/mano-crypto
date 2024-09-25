@@ -1,0 +1,70 @@
+/**=====================
+     List CSS Start
+==========================**/
+.list-group-item.active {
+  background-color: var(--theme-default);
+  border-color: var(--theme-default);
+}
+.list-group-item{
+  .badge{
+    &.digits{
+      padding: 5px 7px 4px;
+    }
+  }
+}
+.list-group {
+  i {
+    margin-right: $list-group-margin;
+  }
+  img {
+    height: 40px;
+    width: 40px;
+    margin-right: $list-group-margin;
+  }
+}
+.vertical-tab {
+  .nav-tabs {
+    display: inline-block;
+    width: 28%;
+    margin-right: 2%;
+    margin-bottom: 0;
+    .nav-item {
+      border: 1px solid rgba($black, 0.125);
+      background-color: $light-background;
+      + .nav-item {
+        border-top: none;
+      }
+      &:first-child{
+        border-radius: 4px 4px 0 0;
+        .nav-link{
+          border-radius: 4px 4px 0 0;
+        }
+      }
+      &:last-child {
+        border-radius: 0 0 4px 4px;
+        .nav-link{
+          border-radius: 0 0 4px 4px;
+        }
+      }
+    }
+    .nav-link {
+      padding: 8px 16px;
+      color: #495057;
+      border: none;
+      border-radius: 0;
+      &.active {
+        color: $white;
+        background-color: var(--theme-default);
+        border-radius: 0;
+      }
+    }
+  }
+  .tab-content {
+    display: inline-block;
+    width: 70%;
+    vertical-align: top;
+  }
+}
+/**=====================
+     List CSS Ends
+==========================**/

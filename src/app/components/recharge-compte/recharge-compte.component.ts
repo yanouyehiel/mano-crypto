@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, debounce, debounceTime, Observable, of, switchMap, take, takeWhile, timer } from 'rxjs';
 import {
   ResponseDeposit,
+  ResponseParent,
   ResponseTransactionList,
 } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -29,6 +30,9 @@ export class RechargeCompteComponent implements OnInit {
     this.reloadHistory = !this.reloadHistory
   }
   private userSaved: any
+  private statusTransaction: string = "";
+  private isProcessing: boolean;
+  private nbBoucle: number = 0
 
   constructor(
     private depositService: TransactionService,
@@ -125,6 +129,7 @@ export class RechargeCompteComponent implements OnInit {
       showLoaderOnConfirm: true,
       didRender: () => {
         try {
+          this.isProcessing = true;
           this.depositService
             .addDeposit(data)
             .pipe(
@@ -145,15 +150,35 @@ export class RechargeCompteComponent implements OnInit {
             )
             .subscribe({
               next: (value) => {
+                this.processingSwal()
                 if (value.statusCode == 1000) {
-                  this.getStatusTransaction(value.data.transaction._id).then(res => {
-                    console.log(res)
-                  })
-                  //this.successRecharge();
-                  this.setReload()
-                  setTimeout(() => {
-                    Swal.close();
-                  }, 2000);
+                  this.pollTransactionStatus(value.data.transaction._id).subscribe(
+                    result => {
+                      this.statusTransaction = result.data.transaction._id;
+                      if (this.statusTransaction === 'SUCCESS') {
+                        this.isProcessing = false;
+                        this.setReload()
+                        this.successRecharge();
+                      }
+                    },
+                    error => {
+                      console.error('Erreur lors de la vérification du statut', error);
+                      this.isProcessing = false;
+                      Swal.fire('Opération annulée', error.message, 'error');
+                    },
+                    () => {
+                      // Cette fonction est appelée lorsque l'Observable est complété (après 3 tentatives ou un statut non-pending)
+                      if (this.statusTransaction === 'PENDING') {
+                        this.isProcessing = false;
+                        Swal.fire('Opération annulée', "Le service de recharge ne sont pas disponibles pour l'instant", 'error');
+                        this.setReload()
+                        setTimeout(() => {
+                          Swal.close();
+                        }, 1000);
+                      }
+                    }
+                  );
+                  
                 } else if (value.statusCode == 1001) {
                   Swal.fire('Opération annulée', value.message, 'error');
                 } else {
@@ -162,8 +187,11 @@ export class RechargeCompteComponent implements OnInit {
 
               },
 
-              error: (err) =>
-                console.error('Observable emitted an error: ' + err),
+              error: (err) => {
+                this.isProcessing = false;
+                console.error('Observable emitted an error: ' + err)
+              },
+
               complete: () =>{
                 
               }
@@ -181,10 +209,25 @@ export class RechargeCompteComponent implements OnInit {
     this.stepAttribute(0);
   }
 
-  async getStatusTransaction(idTransaction: string) {
-    await this.depositService.getSingleTransaction(idTransaction)
-    .subscribe(result => {
-      return result
+  processingSwal(): void {
+    Swal.fire({
+      titleText: "Recharge en cours",
+      html: `
+        <div class="col-md-4">
+          <div class="loader-box">
+            <div class="loader-2"></div>
+          </div>
+        </div>
+      `,
+      allowOutsideClick: () => !Swal.isLoading(),
     })
+  }
+
+  pollTransactionStatus(transactionId: string): Observable<ResponseParent> {
+    return timer(0, 3000).pipe(
+      switchMap(() => this.depositService.getSingleTransaction(transactionId)),
+      takeWhile(value => value.data?.transaction.status === 'PENDING', true),
+      take(3)
+    );
   }
 }
