@@ -176,7 +176,7 @@ export class PersonalComponent implements OnInit {
     })
   }
 
-  showImageKYC(image: string): void {
+  showImageKYC(image: string, docType:string): void {
     const swalModal = Swal.mixin(
       {
         customClass: {
@@ -187,13 +187,16 @@ export class PersonalComponent implements OnInit {
       }
     )
     swalModal.fire({
-      title: 'Voulez-vous télécharger cette image ?',
+      title: 'Approuvez-vous ce document ?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Oui',
+      confirmButtonText: 'Approuver',
+      
       cancelButtonText: 'Annuler',
       showLoaderOnConfirm: true,
-      imageUrl: image
+      html:'',
+      imageUrl: image,
+      
     }).then((result: any) => {
       if (result.isConfirmed) {
         const link = document.createElement('a');

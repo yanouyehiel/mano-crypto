@@ -80,7 +80,7 @@
                             <app-feather-icons icon="credit-card"></app-feather-icons>
                         </div>
                         <div class="media-body"><span class="m-0">Chiffre d'affaires</span>
-                            <h4 class="mb-0 counter"> {{datas.wallets.sales.toLocaleString('fr-FR')}} FCFA </h4>
+                            <h4 class="mb-0 counter"> {{datas.wallets.sales | number: '1.0-0'}} FCFA </h4>
                             <app-feather-icons icon="credit-card" class="icon-bg"></app-feather-icons>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                   </div>
                   <div class="flex-grow-1 ms-3">
                     <h6 class="mb-1">Solde ETH</h6>
-                    <p class="f-20">{{datas.wallets.ETH_balance | number: '1.0-8'}} BTC</p>
+                    <p class="f-20">{{datas.wallets.ETH_balance | number: '1.0-8'}} ETH</p>
                   </div>
                 </div>
               </li>

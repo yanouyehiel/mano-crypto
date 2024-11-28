@@ -68,13 +68,13 @@ export class UploadFileComponent implements OnInit {
 
   
 
-  onSubmitKyc() {
+  async onSubmitKyc() {
     this.isLoading = true
     if (this.cniRecto || this.cniVerso || this.userPicture) {
-      this.userService.submitKyc(this.formData).pipe(catchError((error) => of(error.error))).subscribe((response: ResponseParent) => {
-      
+    const response: ResponseParent  =   await this.userService.submitKyc(this.formData).pipe(catchError((error) => of(error.error))).toPromise()
+       
         if (response.statusCode === 1000) {
-          this.toast.success('Photos envoyées, vous serrez notifié !');
+          
           let localStorageUser = JSON.parse(localStorage.getItem('user-mansexch')!)
           if(this.cniRecto){
             this.kyc[this.kyc.indexOf(this.kyc.find((e)=>e.document_type=='cni_recto'))].status = 'submitted'
@@ -87,12 +87,10 @@ export class UploadFileComponent implements OnInit {
           }
           localStorageUser.user.kyc = this.kyc
           localStorage.setItem('user-mansexch', JSON.stringify(localStorageUser))
+          this.toast.success('Photos envoyées, vous serrez notifié !');
         } else {
           this.toast.error(response.message)
         }
-      }, (err) => {
-        console.log(err)
-      })
     } else {
       this.toast.error("Veuillez insérer toutes les photos")
     }
