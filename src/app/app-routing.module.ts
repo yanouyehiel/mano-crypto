@@ -122,7 +122,6 @@ const routes: Routes = [
     path: 'auth/forgot-password',
     component: ForgotPasswordComponent
   },
-
   {
     path: '**',
     component: PageNotFoundComponent

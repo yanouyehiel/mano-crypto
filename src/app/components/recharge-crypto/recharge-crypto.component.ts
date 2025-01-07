@@ -309,9 +309,10 @@ export class RechargeCryptoComponent implements OnInit {
         );
         this.setReload()
         window.open(result.data.invoice_url, '_blank');
-      }else if (result.statusCode == 1001) {
-        this.router.navigate(['/auth/login'])
-      }  else {
+      } else if (result.statusCode == 1001) {
+        //this.router.navigate(['/auth/login'])
+        Swal.fire('Operation annulée', result.message.error, 'error');
+      } else {
         Swal.fire('Operation annulée', result.message.error, 'error');
       }
     }

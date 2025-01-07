@@ -151,7 +151,10 @@ export class RechargeCompteComponent implements OnInit {
             .subscribe({
               next: (value) => {
                 this.processingSwal()
-                if (value.statusCode == 1000) {
+                setTimeout(() => {
+                  Swal.close();
+                }, 3000);
+                /*if (value.statusCode == 1000) {
                   this.pollTransactionStatus(value.data.transaction._id).subscribe(
                     result => {
                       this.statusTransaction = result.data.transaction._id;
@@ -167,7 +170,6 @@ export class RechargeCompteComponent implements OnInit {
                       Swal.fire('Opération annulée', error.message, 'error');
                     },
                     () => {
-                      // Cette fonction est appelée lorsque l'Observable est complété (après 3 tentatives ou un statut non-pending)
                       if (this.statusTransaction === 'PENDING') {
                         this.isProcessing = false;
                         Swal.fire('Opération annulée', "Le service de recharge ne sont pas disponibles pour l'instant", 'error');
@@ -183,7 +185,7 @@ export class RechargeCompteComponent implements OnInit {
                   Swal.fire('Opération annulée', value.message, 'error');
                 } else {
                   Swal.fire('Opération annulée', value.message, 'error');
-                }
+                }*/
 
               },
 
@@ -213,15 +215,19 @@ export class RechargeCompteComponent implements OnInit {
     Swal.fire({
       titleText: "Recharge en cours",
       html: `
-        <div class="col-md-4">
-          <div class="loader-box">
-            <div class="loader-2"></div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <div class="col-md-4">
+            <div class="loader-box">
+              <div class="loader-2"></div>
+            </div>
           </div>
         </div>
       `,
       allowOutsideClick: () => !Swal.isLoading(),
     })
   }
+
+
 
   pollTransactionStatus(transactionId: string): Observable<ResponseParent> {
     return timer(0, 3000).pipe(

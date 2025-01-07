@@ -236,7 +236,8 @@ export class SendCryptoComponent implements OnInit {
             Swal.close();
           }, 2000);
         }else if (result.value.statusCode == 1001) {
-          this.router.navigate(['/auth/login'])
+          //this.router.navigate(['/auth/login'])
+          Swal.fire('L\'operation a echoue', result.value.message, 'error');
         }  else {
           Swal.fire('L\'operation a echoue', result.value.message, 'error');
         }
