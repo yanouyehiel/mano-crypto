@@ -41,3 +41,8 @@ h4, h3, label {
 #selector .item:hover{
     background: rgb(235, 229, 229);
 }
+
+.flex-checkbox {
+    display: flex;
+    gap: 15px;
+}
