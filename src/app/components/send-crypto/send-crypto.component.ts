@@ -112,15 +112,15 @@ export class SendCryptoComponent implements OnInit {
       }
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${parseFloat(response.data.crypto_fees).toLocaleString('fr-FR')+' '+ this.sendForm.value['currency']}`;
+        liveValue4.innerText = `${response.data.crypto_fees+' '+ this.sendForm.value['currency']}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${parseFloat(response.data.crypto_network_fees).toLocaleString('fr-FR')+' '+ this.sendForm.value['currency']}`;
+        liveValue5.innerText = `${response.data.crypto_network_fees+' '+ this.sendForm.value['currency']}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${parseFloat(response.data.crypto_total).toLocaleString('fr-FR')+' '+ this.sendForm.value['currency']}`;
+        liveValue6.innerText = `${response.data.crypto_total+' '+ this.sendForm.value['currency']}`;
       }
      
     })

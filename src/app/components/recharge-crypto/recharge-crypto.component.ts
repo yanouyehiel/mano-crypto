@@ -171,15 +171,15 @@ export class RechargeCryptoComponent implements OnInit {
       }
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${parseFloat(response.data.crypto_fees).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+        liveValue4.innerText = `${response.data.crypto_fees+' '+ this.typeCrypto}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${parseFloat(response.data.crypto_network_fees).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+        liveValue5.innerText = `${response.data.crypto_network_fees+' '+ this.typeCrypto}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${parseFloat(response.data.crypto_total).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+        liveValue6.innerText = `${response.data.crypto_total+' '+ this.typeCrypto}`;
       }
      
     })
@@ -229,14 +229,13 @@ export class RechargeCryptoComponent implements OnInit {
       showCancelButton: true,
       html: `Combien de ${crypto} voulez vous recharger?
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
-      <ul id="live-content">
+      <ul id="live-content"> 
+      <li><b id="live-value6" class="text-success h5 "></b> à transférer au total</li>
         <li><b id="live-value1"></b> exactement</li>
-        <li><b id="live-value2"></b> de frais de transaction</li>
-        <li><b id="live-value3"></b> de frais reseau</li>
         
         <li><b id="live-value4"></b> de frais manen crypto</li>
         <li><b id="live-value5"></b> de frais réseau crypto</li>
-        <li><b id="live-value6"></b> à dépenser au total</li>
+       
       </ul>`,
       confirmButtonText: 'Recharger',
       cancelButtonText: 'Fermer',

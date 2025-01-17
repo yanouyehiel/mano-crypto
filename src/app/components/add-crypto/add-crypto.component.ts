@@ -102,7 +102,6 @@ export class AddCryptoComponent implements OnInit {
     );
 
     this.liveResponse$.subscribe((response) => {
-      console.info(response)
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
@@ -122,15 +121,15 @@ export class AddCryptoComponent implements OnInit {
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        liveValue3.innerText = `${parseInt(response.data.xaf_network_fees).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue3.innerText = `${response.data.crypto_total+ ' '+this.typeCrypto}`;
       }
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${parseFloat(response.data.crypto_fees).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+        liveValue4.innerText = `${response.data.crypto_fees+' '+ this.typeCrypto}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${parseFloat(response.data.crypto_network_fees).toLocaleString('fr-FR')+' '+ this.typeCrypto}`;
+        liveValue5.innerText = `${response.data.crypto_network_fees+' '+ this.typeCrypto}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
@@ -151,18 +150,40 @@ export class AddCryptoComponent implements OnInit {
 
 
   async initBuyingProcess(crypto: string) {
+    let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
+        if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+          const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+          });
+    
+          swalWithBootstrapButtons.fire({
+            title: `Erreur`,
+            text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+            // type: 'warning',
+            confirmButtonText: 'Valider mon compte',
+            reverseButtons: true
+          }).then(()=>{
+            this.router.navigate(['/client/profile-edit'])
+          })
+          return
+        }
     await Swal.fire({
       titleText: `Achat de ${crypto}`,
       html: `Combien de ${crypto} voulez vous acheter?
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content" style="display:none;">
+      <li><b id="live-value6"  class="text-success h5 "></b> à dépenser au total</li>
         <li><b id="live-value1"></b> exactement</li>
         <li><b id="live-value2"></b> de frais de transaction</li>
-        <li><b id="live-value3"></b> de frais reseau</li>
+        <li><b id="live-value3"></b> à acheter</li>
         
         <li><b id="live-value4"></b> de frais manen crypto</li>
         <li><b id="live-value5"></b> de frais réseau crypto</li>
-        <li><b id="live-value6"></b> à dépenser au total</li>
+        
       </ul>`,
       input: 'text',
       inputAutoFocus: true,
@@ -199,7 +220,7 @@ export class AddCryptoComponent implements OnInit {
           const response = await this.cryptoService
             .buyCrypto({
               crypto_currency: this.typeCrypto,
-              amount: this.cryptoAmount,
+              amount: parseFloat(value),
             }).pipe(
               catchError((error) => {
                 if (error.status === 0 || error.statusText === 'Unknown Error') {
@@ -229,6 +250,7 @@ export class AddCryptoComponent implements OnInit {
     }).then((result: any) => {
 
       if (result.isConfirmed) {
+        console.log(result)
         if (result.value.statusCode === 1000) {
           Swal.fire('Success', `Achat effectué avec success`, 'success');
           this.setReload()

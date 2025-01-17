@@ -162,7 +162,7 @@ export class RechargeCompteComponent implements OnInit {
                       }
                     },
                     error => {
-                      console.error('Erreur lors de la vérification du statut', error);
+                     
                       this.isProcessing = false;
                       Swal.fire('Opération annulée', error.message, 'error');
                     },
@@ -189,7 +189,6 @@ export class RechargeCompteComponent implements OnInit {
 
               error: (err) => {
                 this.isProcessing = false;
-                console.error('Observable emitted an error: ' + err)
               },
 
               complete: () =>{

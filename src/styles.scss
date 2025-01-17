@@ -62,9 +62,13 @@
     background: gray;
     left: 0;
     text-align: center;
-    top: 10px;
+    // top: 10px;
     content: '';
     border-radius: 50%;
+}
+#live-value6{
+    font-weight: bold;
+    margin-right: 4px;
 }
 canvas {
     width: 100% !important;
