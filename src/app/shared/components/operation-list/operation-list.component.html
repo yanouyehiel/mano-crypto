@@ -36,7 +36,7 @@
           <td>{{ operation.creationDate | customDateFormat }}</td>
           <td *ngIf="operation.status=='SUCCESS'; else status" class="badge badge-success text-white">{{ operation.status }}</td>
           <ng-template #status>
-            <ng-container *ngIf="operation.status=='FAILED'">
+            <ng-container *ngIf="operation.status=='FAILED' || operation.status=='CANCELED'">
               <td class="badge badge-danger text-white">{{ operation.status }}</td>
             </ng-container>
             <ng-container *ngIf="operation.status=='PENDING'">

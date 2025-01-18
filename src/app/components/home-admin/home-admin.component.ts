@@ -43,10 +43,13 @@ export class HomeAdminComponent implements OnInit {
   getConfigKey(key:string):string{
     switch (key) {
       case 'SALT_ROUNDS':
-        return "Chaine de hashage"
+        return "Nombre de tours pour le hachage"
+        break;
+      case 'TOKEN_EXPIRATION_TIME':
+        return "Durée de validité des tokens"
         break;
       case 'CRYPTO_BUY_SERVICE_FEES_PERCENTAGE':
-        return "Taxe sur les transactions (%)"
+        return "Pourcentage de frais pour l'achat de cryptos"
         break;
       case 'MIN_XAF_AMOUNT':
         return "Montant minimal de transaction (XAF)"
@@ -57,26 +60,44 @@ export class HomeAdminComponent implements OnInit {
       case 'CRYPTO_WITHDRAW_MIN_AMOUNT':
         return 'Montant minimal de retrait crypto'
         break;
+      case 'MIN_CRYPTO_INVOICE_XAF_AMOUNT':
+        return 'Montant minimum pour les factures en crypto'
+        break;
       case 'MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT':
-        return 'Montant minimal de retrait crypto à vérifier'
+        return 'Montant minimal pour vérifier les retraits'
         break;
       case 'CRYPTO_BUY_SERVICE_NETWORK_FEES_PERCENTAGE':
         return "Pourcentage des frais de réseau d'achat crypto"
         break;
       case 'CRYPTO_RECHARGE_SERVICE_FEES_PERCENTAGE':
-        return 'Frais de service de recharge crypto (x100 (%))'
+        return 'Pourcentage de frais pour la recharge crypto'
         break;
       case 'USDT_OTHER_WALLET_TRANSFER_FEES':
         return "Frais de transfert de l'USDT"
         break;
+      case 'CRYPTO_SEND_TO_FRIEND_FEES_PERCENTAGE':
+        return "Frais pour envoyer des cryptos à un ami"
+        break;
       case 'BTC_OTHER_WALLET_TRANSFER_FEES':
-        return "Frais de transfert du BTC"
+        return "Frais pour les transferts de portefeuille BTC"
+        break;
+      case 'ETH_OTHER_WALLET_TRANSFER_FEES':
+        return "Frais pour les transferts de portefeuille ETH"
         break;
       case 'XAF_DEPOSITS_FEES':
-        return "Frais de recharge mobile"
+        return "Frais pour les dépôts en XAF"
         break;
       case 'CRYPTO_SELL_SERVICE_FEES_PERCENTAGE':
-        return "Frais de service de vente crypto (x100 (%))"
+        return "Pourcentage de frais pour la vente de cryptos"
+        break;
+      case 'BASE_STABLE_CRYPTO':
+        return 'Crypto stable par défaut'
+        break;
+      case 'DISPLAY_MIN_WALLET_TRANSFER_AMOUNT_CONFIGS':
+        return 'Afficher les seuils minimaux de transfert de portefeuille'
+        break;
+      case 'XAF_OTHER_WALLET_TRANSFER_FEES':
+        return 'Frais pour les trainsferts de portefeuille XAF'
         break;
       default:
         return "Frais de retrait mobile (x100 (%))";
@@ -88,6 +109,9 @@ export class HomeAdminComponent implements OnInit {
     switch (key) {
       case 'SALT_ROUNDS':
         return "key"
+        break;
+      case 'TOKEN_EXPIRATION_TIME':
+        return "clock-o"
         break;
       case 'CRYPTO_BUY_SERVICE_FEES_PERCENTAGE':
         return "percent"
@@ -101,7 +125,25 @@ export class HomeAdminComponent implements OnInit {
       case 'USDT_OTHER_WALLET_TRANSFER_FEES':
         return "money"
         break;
+      case 'MIN_CRYPTO_INVOICE_XAF_AMOUNT':
+        return 'money'
+        break;
+      case 'CRYPTO_SEND_TO_FRIEND_FEES_PERCENTAGE':
+        return 'money'
+        break;
+      case 'DISPLAY_MIN_WALLET_TRANSFER_AMOUNT_CONFIGS':
+        return 'question'
+        break;
+      case 'XAF_OTHER_WALLET_TRANSFER_FEES':
+        return 'money'
+        break;
+      case 'BASE_STABLE_CRYPTO':
+        return 'bitcoin'
+        break;
       case 'BTC_OTHER_WALLET_TRANSFER_FEES':
+        return "money"
+        break;
+      case 'ETH_OTHER_WALLET_TRANSFER_FEES':
         return "money"
         break;
       case 'MIN_XAF_AMOUNT':

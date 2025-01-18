@@ -176,38 +176,61 @@ export class PersonalComponent implements OnInit {
     })
   }
 
-  showImageKYC(image: string, docType:string): void {
-    const swalModal = Swal.mixin(
-      {
+  showImageKYC(image: string, docType: string, status: string): void {
+    const swalModal = Swal.mixin({
         customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
         },
         buttonsStyling: false,
-      }
-    )
+    });
+
+    const approveButtonHtml = status !== 'approved' ? `<button type='button' class="btn btn-success text-white" id="approve-btn">Approuver</button>` : '';
+    const rejectButtonHtml = status !== 'rejected' ? `<button type='button' class="btn btn-danger text-white" id="reject-btn">Rejeter</button>` : '';
+
     swalModal.fire({
-      title: 'Approuvez-vous ce document ?',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Approuver',
-      
-      cancelButtonText: 'Annuler',
-      showLoaderOnConfirm: true,
-      html:'',
-      imageUrl: image,
-      
+        title: 'Approuvez-vous ce document ?',
+        type: 'warning',
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Annuler',
+        html: `
+            <span id="kyc-buttons" class="d-block">
+              ${approveButtonHtml}
+              ${rejectButtonHtml}
+            </span>
+        `,
+        imageUrl: image,
     }).then((result: any) => {
-      if (result.isConfirmed) {
-        const link = document.createElement('a');
-        link.href = image;
-        link.setAttribute('download', 'image');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    })
+        if (result.isConfirmed) {
+            const link = document.createElement('a');
+            link.href = image;
+            link.setAttribute('download', 'image');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    });
+
+    // Ajout des écouteurs d'événements après l'affichage du modal
+    const approveButton = document.getElementById('approve-btn');
+    const rejectButton = document.getElementById('reject-btn');
+
+    if (approveButton) {
+        approveButton.addEventListener('click', () => {
+          console.log("click btn approve")
+            this.manageKYCStatus('approved', docType);
+        });
+    }
+
+    if (rejectButton) {
+        rejectButton.addEventListener('click', () => {
+          console.log("click btn rejected")
+            this.manageKYCStatus('rejected', docType);
+        });
+    }
   }
+
 
   manageKYCStatus(action: "approved" | "rejected", docType: string) {
     const swalWithBootstrapButtons = Swal.mixin(

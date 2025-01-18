@@ -16,7 +16,7 @@ public messageToDisplay? :any
 currentPage: number = 1;
 totalLenght: number;
 loader:boolean = true;
-@Input() operationType:'WITHDRAW_CRYPTO'|'WITHDRAW'
+@Input() operationType: 'WITHDRAW_CRYPTO'|'WITHDRAW'
 
 
   constructor(private adminService:AdminService) { }

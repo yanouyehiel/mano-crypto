@@ -101,14 +101,14 @@
                     <li class="d-flex justify-content-between">
                       {{kycElement.document_type=='cni_recto'?'Photo CNI Recto':(kycElement.document_type=='cni_verso'?'Photo CNI Verso':'Photo User 4x4')}} 
                       <span *ngIf="kycElement.document_url.length>5;else TemplateElse">
-                        <p class="font-primary" style="cursor: pointer" (click)="showImageKYC(kycElement.document_url,  kycElement.document_type)">Voir l'image</p>
-                        <span *ngIf="kycElement.status!='approved'" class="d-block">
+                        <p class="font-primary" style="cursor: pointer" (click)="showImageKYC(kycElement.document_url,  kycElement.document_type, kycElement.status)">Voir l'image</p>
+                        <!-- <span *ngIf="kycElement.status!='approved'" class="d-block">
                           <a class="text-success " (click)="manageKYCStatus('approved', kycElement.document_type)">Approuver</a>
                           <span *ngIf="kycElement.status!='rejected'">
                             {{' | '}}
                             <a class="text-danger" (click)="manageKYCStatus('rejected', kycElement.document_type)">Rejéter</a>
                           </span>
-                        </span>
+                        </span> -->
                       </span>
                     </li>
                   </ng-container>

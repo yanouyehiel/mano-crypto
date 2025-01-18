@@ -104,13 +104,12 @@
               Les mots de passe doivent avoir au moins une lettre majuscule, un chiffre et un caractère spécial
             </div>
           </div>
-          <div class="form-group">
-            <div class="checkbox">
-              <input id="checkbox1" type="checkbox" required />
-              <label for="checkbox1">J'accepte les conditions d'utilisation <span class="text-primary">Privacy
-                  Policy</span> &
-                <span class="text-primary">Terms</span></label>
-            </div>
+
+          <div class="flex-checkbox">
+            <input type="checkbox" name="checkbox1" id="checkbox1" required="true">
+            <label for="checkbox1">J'accepte les conditions d'utilisation <span class="text-primary">Privacy
+              Policy</span> &
+            <span class="text-primary">Terms</span></label>
           </div>
 
           <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha">
