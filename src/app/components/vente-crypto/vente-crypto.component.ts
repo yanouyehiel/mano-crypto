@@ -17,6 +17,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { parse } from 'url';
 
 @Component({
   selector: 'app-vente-crypto',
@@ -204,7 +205,7 @@ export class VenteCryptoComponent implements OnInit {
           const response = await this.cryptoService
             .sellCrypto({
               crypto_currency: this.typeCrypto,
-              amount: this.cryptoAmount,
+              amount: parseFloat(value),
             }).pipe(
               catchError((error) => {
                 this.liveSpinner!.style.display = 'none';
