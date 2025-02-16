@@ -1,19 +1,51 @@
 <div class="card income-card">
         <div class="card-header">
             <div class="header-top d-sm-flex align-items-center  mb-5">
-                <h5>Variation du prix de L'Ethereum <div class="float-end"><div class="btn-group" role="group" aria-label="Basic example">
-                  <button class="btn btn-outline-primary" [ngClass]="timeRange=='live'?'active':''" (click)="updateChartRange('live')" type="button">
-                    Live
-                  </button>     
-                  <button class="btn btn-outline-primary" [ngClass]="timeRange=='1d'?'active':''" (click)="updateChartRange('1d')" type="button">
+                <h5>Variation du prix de L'Ethereum <div class="float-end">
+                  <div *ngIf="isSmallScreen" dropdown  class="dropdown mt-2">
+                    <button
+                    dropdownToggle
+                      class="btn btn-outline-primary dropdown-toggle w-100"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Filtrer par
+                    </button>
+                    <ul class="dropdown-menu w-100" *dropdownMenu aria-labelledby="dropdownMenuButton">
+                      <li>
+                        <a class="dropdown-item" [ngClass]="timeRange === 'live' ? 'active' : ''" (click)="updateChartRange('live')">Live</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" [ngClass]="timeRange === '1d' ? 'active' : ''" (click)="updateChartRange('1d')">Aujourd'hui</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" [ngClass]="timeRange === '7d' ? 'active' : ''" (click)="updateChartRange('7d')">Cette semaine</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" [ngClass]="timeRange === '30d' ? 'active' : ''" (click)="updateChartRange('30d')">Ce mois</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" [ngClass]="timeRange === '0' ? 'active' : ''" (click)="openMdoModal(modEthContent)">Personnalisé</a>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- Boutons affichés sur les grands écrans -->
+                  <div *ngIf="!isSmallScreen" class="btn-group d-flex flex-wrap justify-content-center" role="group" aria-label="Basic example">
+                    <button class="btn btn-outline-primary" [ngClass]="timeRange === 'live' ? 'active' : ''" (click)="updateChartRange('live')" type="button">
+                      Live
+                    </button>
+                    <button class="btn btn-outline-primary" [ngClass]="timeRange === '1d' ? 'active' : ''" (click)="updateChartRange('1d')" type="button">
                       Aujourd'hui
                     </button>
-                    <button class="btn btn-outline-primary" [ngClass]="timeRange=='7d'?'active':''" (click)="updateChartRange('7d')" type="button">
+                    <button class="btn btn-outline-primary" [ngClass]="timeRange === '7d' ? 'active' : ''" (click)="updateChartRange('7d')" type="button">
                       Cette semaine
                     </button>
-                    <button class="btn btn-outline-primary" [ngClass]="timeRange=='30d'?'active':''" (click)="updateChartRange('30d')" type="button">
-                      Ce mois                    </button>
-                    <button class="btn btn-outline-primary" [ngClass]="timeRange=='0'?'active':''" (click)="openMdoModal(modEthContent)" type="button">
+                    <button class="btn btn-outline-primary" [ngClass]="timeRange === '30d' ? 'active' : ''" (click)="updateChartRange('30d')" type="button">
+                      Ce mois
+                    </button>
+                    <button class="btn btn-outline-primary" [ngClass]="timeRange === '0' ? 'active' : ''" (click)="openMdoModal(modEthContent)" type="button">
                       Personnalisé
                     </button>
                   </div>
@@ -24,7 +56,7 @@
         </div>
         
         <div class="card-body p-0">
-            <div class="chart-timeline-dashbord">
+            <div class="chart-timeline-dashbord chart-container" style="position: relative; height: 40vh; width: 100%;">
                 <h6 *ngIf="closingPrice" class="float-end" [ngClass]="closingPrice>openingPrice?' text-success':closingPrice==openingPrice?' ':' text-danger'">{{closingPrice | number}}  <p class="d-inline"  [ngClass]="closingPrice>openingPrice?' text-success':closingPrice==openingPrice?' ':' text-danger'">USDT</p></h6>
 
                 <canvas baseChart

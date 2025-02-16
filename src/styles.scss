@@ -75,4 +75,84 @@ canvas {
     max-width: 800px;
     margin: 0 auto;
   }
+  /* Styles pour les problèmes de largeur (responsive mobile) */
+@media (max-width: 768px) {
+    .income-card {
+      padding: 10px; /* Diminuez les marges pour les écrans étroits */
+    }
+  
+    .btn-group {
+      flex-direction: column; /* Empile les boutons verticalement */
+    }
+  
+    .btn-group button {
+      width: 100%; /* Les boutons prennent toute la largeur */
+      margin-bottom: 5px; /* Ajoutez des marges entre les boutons verticaux */
+    }
+  
+    h5 .float-end {
+      float: none; /* Évitez les problèmes de chevauchement sur les petits écrans */
+      text-align: center;
+    }
+    
+    .chart-timeline-dashbord canvas {
+      max-width: 100%; /* Assurez que le graphe s’adapte à la largeur disponible */
+      height: auto;
+    }
+  
+    .modal-header {
+      text-align: center; /* Centrez les titres des modales sur mobile */
+    }
+  }
+  @media (max-width: 768px) {
+    .modal-content {
+      padding: 10px; /* Réduire les espaces pour mobile */
+    }
+  
+    .modal-header,
+    .modal-footer {
+      text-align: center;
+    }
+  
+    .modal-body input {
+      width: 100%; /* Ajustez l'entrée à la largeur */
+    }
+  }
+  
+  
+  @media (max-width: 768px) {
+    h6.float-end {
+      display: block; /* Transforme le texte en bloc */
+      text-align: center; /* Centre le texte sur mobile */
+      font-size: 14px; /* Réduisez la taille pour les petits écrans */
+    }
+    
+    .text-success, .text-danger {
+      font-weight: bold; /* Faites ressortir les couleurs positives/négatives */
+    }
+  }
+  /* Les dropdowns prennent toute la largeur sur mobile */
+.dropdown .dropdown-toggle {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Styles personnalisés pour les éléments de la liste déroulante */
+  .dropdown-menu {
+    text-align: left;
+  }
+  
+  /* Activez le bouton actif en indiquant un style correspondant */
+  .dropdown-item.active,
+  .btn-group .btn.active {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+  }
+  
+  /* Largeur des boutons sur les grands écrans */
+  @media (min-width: 768px) {
+    .btn-group .btn {
+      width: auto;
+    }
+  }
   

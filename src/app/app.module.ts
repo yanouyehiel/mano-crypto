@@ -63,7 +63,7 @@ import { ShareToFriendComponent } from './components/share-to-friend/share-to-fr
 import { OperationListComponent } from './shared/components/operation-list/operation-list.component';
 import { BitcoinChartComponent } from './components/home/variation-crypto/bitcoin-chart/bitcoin-chart.component';
 import { EthereumChartComponent } from './components/home/variation-crypto/ethereum-chart/ethereum-chart.component';
-
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -135,6 +135,7 @@ import { EthereumChartComponent } from './components/home/variation-crypto/ether
     NgSelectModule,
     ToastrModule.forRoot(),
     AngularSvgIconModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

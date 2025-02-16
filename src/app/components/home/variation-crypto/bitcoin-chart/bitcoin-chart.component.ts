@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,HostListener, ViewChild } from '@angular/core';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChangeDetectorRef } from '@angular/core';
@@ -17,6 +17,7 @@ export class BitcoinChartComponent implements OnInit {
   public closingPrice: any;
   public openingPrice: any;
   public timeRange: string = 'live'
+  isSmallScreen: boolean = false;
 
   public lineChartData: ChartData<'line'> = {
     labels: [],
@@ -30,6 +31,15 @@ export class BitcoinChartComponent implements OnInit {
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      ticks: {
+        autoSkip: true, 
+        maxRotation: 0,
+      },
+    },
+  },
   };
 
   public lineChartType: ChartType = 'line';
@@ -38,12 +48,19 @@ export class BitcoinChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateChartRange(this.timeRange)
-    this.onResize()
-  }
+    this.checkScreenSize();
 
-  onResize() {
-    this.lineChartData.datasets[0].borderWidth = window.innerWidth > 850 ? 2 : 1;
   }
+ // Détecte les changements de taille d'écran
+ @HostListener('window:resize', [])
+ onResize(): void {
+   this.checkScreenSize();
+   this.lineChartData.datasets[0].borderWidth = window.innerWidth > 850 ? 2 : 1;
+ }
+
+ checkScreenSize(): void {
+  this.isSmallScreen = window.innerWidth <= 768; // Détecte les écrans < 768 px
+}
 
 
   loadHistoricalData(requestParams: any): void {

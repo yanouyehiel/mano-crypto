@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChangeDetectorRef } from '@angular/core';
@@ -30,21 +30,35 @@ export class EthereumChartComponent implements OnInit {
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      ticks: {
+        autoSkip: true, 
+        maxRotation: 0, 
+      },
+    },
+  },
   };
-
+  isSmallScreen: boolean = false;
   public lineChartType: ChartType = 'line';
 
   constructor(private cryptoService: CryptoTransactionService, private modalService: NgbModal, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.updateChartRange(this.timeRange)
-    this.onResize()
+    this.checkScreenSize();
   }
-
-  onResize() {
+  // Détecte les changements de taille d'écran
+  @HostListener('window:resize', [])
+  onResize(): void {
+    this.checkScreenSize();
     this.lineChartData.datasets[0].borderWidth = window.innerWidth > 850 ? 2 : 1;
   }
 
+  checkScreenSize(): void {
+    this.isSmallScreen = window.innerWidth <= 768; // Détecte les écrans < 768 px
+  }
 
   loadHistoricalData(requestParams: any): void {
     this.lineChartData.labels = [];
