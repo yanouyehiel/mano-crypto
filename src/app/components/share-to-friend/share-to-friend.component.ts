@@ -87,7 +87,7 @@ export class ShareToFriendComponent {
             amount: term,
             currency: this.sendForm.value['currency'],
             
-            type: "WITHDRAW_CRYPTO"
+            type: "SEND_TO_FRIEND"
           });
           
         } else {
