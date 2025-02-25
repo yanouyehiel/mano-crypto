@@ -16,6 +16,7 @@ import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -53,29 +54,34 @@ export class AddCryptoComponent implements OnInit {
   reloadHistory = false;
   cryptoAmount: number;
   xafAmount: number;
-  private userSaved = localStorage.getItem('user-mansexch')
+  private userSaved: any
   swalInputValue = new Subject<string>();
   liveResponse$: Observable<any>;
-   liveSpinner : HTMLElement | null;
-   liveContent : HTMLElement | null;
+  liveSpinner: HTMLElement | null;
+  liveContent: HTMLElement | null;
 
   constructor(
     private modalService: NgbModal,
     public navService: NavService,
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
-    if (this.userSaved == null) {
-      this.router.navigate(['/auth/login'])
-    }
+   
   }
   setReload() {
     this.reloadHistory = !this.reloadHistory
   }
-
+  getProfileUser(): void {
+    this.userService.getProfile().subscribe((response: any) => {
+      this.userSaved = response.data.user
+    }, (err) => {
+      this.router.navigate(['/auth/login'])
+    })
+  }
   ngOnInit(): void {
-
+    this.getProfileUser()
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
       debounceTime(300),
@@ -83,7 +89,7 @@ export class AddCryptoComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((term) => {
         if (parseFloat(term) > 0) {
-           
+
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "block";
           }
@@ -91,10 +97,10 @@ export class AddCryptoComponent implements OnInit {
           return this.cryptoService.transactionFees({
             amount: term,
             currency: this.typeCrypto,
-            
+
             type: "BUY_CRYPTO"
           });
-          
+
         } else {
           return of(null);
         }
@@ -106,36 +112,34 @@ export class AddCryptoComponent implements OnInit {
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
       }
-      const liveContent = document.getElementById('live-content'); 
-      if(liveContent){
+      const liveContent = document.getElementById('live-content');
+      if (liveContent) {
         liveContent.style.display = 'flex';
       }
-     
+
+
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${parseInt(response.data.xaf_amount).toLocaleString('fr-FR')+' XAF'}`;
-      }
-      const liveValue2 = document.getElementById('live-value2');
-      if (liveValue2) {
-        liveValue2.innerText = `${parseInt(response.data.xaf_fees).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR') + ' XAF'}`;
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        liveValue3.innerText = `${response.data.crypto_total+ ' '+this.typeCrypto}`;
+        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2) + ' USDT'}`;
       }
+
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${response.data.crypto_fees+' '+ this.typeCrypto}`;
+        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2) + ' USDT'}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${response.data.crypto_network_fees+' '+ this.typeCrypto}`;
+        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2) + ' USDT'}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2) + ' USDT'}`;
       }
-     
+
     })
   }
 
@@ -151,35 +155,33 @@ export class AddCryptoComponent implements OnInit {
 
   async initBuyingProcess(crypto: string) {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-        if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
-          const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-              confirmButton: 'btn btn-success',
-              cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false,
-          });
-    
-          swalWithBootstrapButtons.fire({
-            title: `Erreur`,
-            text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
-            // type: 'warning',
-            confirmButtonText: 'Valider mon compte',
-            reverseButtons: true
-          }).then(()=>{
-            this.router.navigate(['/client/profile-edit'])
-          })
-          return
-        }
+    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: `Erreur`,
+        text: `Vous devez faire valider votre compte avant d'effectuer cette operation !`,
+        // type: 'warning',
+        confirmButtonText: 'Valider mon compte',
+        reverseButtons: true
+      }).then(()=>{
+        this.router.navigate(['/client/profile-edit'])
+      })
+      return
+    }
     await Swal.fire({
       titleText: `Achat de ${crypto}`,
       html: `Combien de ${crypto} voulez vous acheter?
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content" style="display:none;">
-      <li><b id="live-value6"  class="text-success h5 "></b> à dépenser au total</li>
-        <li><b id="live-value1"></b> exactement</li>
-        <li><b id="live-value2"></b> de frais de transaction</li>
-        <li><b id="live-value3"></b> à acheter</li>
+      <li><b id="live-value6"  class="text-success h5 "></b> de cout au total</li>
+        <li><b id="live-value1"></b> </li>
         
         <li><b id="live-value4"></b> de frais manen crypto</li>
         <li><b id="live-value5"></b> de frais réseau crypto</li>
@@ -254,9 +256,9 @@ export class AddCryptoComponent implements OnInit {
         if (result.value.statusCode === 1000) {
           Swal.fire('Success', `Achat effectué avec success`, 'success');
           this.setReload()
-        }else if (result.value.statusCode == 1001) {
+        } else if (result.value.statusCode == 1001) {
           this.router.navigate(['/auth/login'])
-        }  else {
+        } else {
           Swal.fire('Achat annulée', result.value.message, 'error');
         }
 

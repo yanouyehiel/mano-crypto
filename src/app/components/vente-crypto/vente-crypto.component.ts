@@ -63,9 +63,7 @@ export class VenteCryptoComponent implements OnInit {
     this.getWalletDetails()
     this.getProfileUser()
     this.liveResponse$ = this.swalInputValue.pipe(
-      //On va attendre un certain temps avant de lancer la requete au serveur
       debounceTime(300),
-      // Éviter les requêtes qui auront le même terme de recherche
       distinctUntilChanged(),
       switchMap((term) => {
         if (parseFloat(term) > 0) {
@@ -73,7 +71,6 @@ export class VenteCryptoComponent implements OnInit {
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "block";
           }
-          // Utiliser forkJoin pour exécuter les requêtes en parallèle
           return this.cryptoService.transactionFees({
             amount: term,
             currency: this.typeCrypto,
@@ -88,7 +85,7 @@ export class VenteCryptoComponent implements OnInit {
     );
 
     this.liveResponse$.subscribe((response) => {
-      
+      console.log(response)
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
@@ -100,20 +97,24 @@ export class VenteCryptoComponent implements OnInit {
      
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${response.data.crypto_total+ ' '+this.typeCrypto}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
+      }
+      const liveValue3 = document.getElementById('live-value3');
+      if (liveValue3) {
+        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2)+' USDT'}`;
       }
      
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${response.data.crypto_fees+' '+ this.typeCrypto}`;
+        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2)+' USDT'}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${response.data.crypto_network_fees+' '+ this.typeCrypto}`;
+        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2)+' USDT'}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${parseFloat(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2)+' USDT'}`;
       }
      
     })
@@ -160,8 +161,8 @@ export class VenteCryptoComponent implements OnInit {
       html: `Combien de ${crypto} voulez vous vendre?
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content" style="display:none;">
-        <li><b id="live-value6"  class="text-success h5 "></b> à recevoir au total</li>
-        <li><b id="live-value1"></b> exactement</li>
+        <li><b id="live-value6"  class="text-success h5 "></b> à recevoir</li>
+        <li><b id="live-value1"></b> </li>
         <li><b id="live-value4"></b> de frais manen crypto</li>
         <li><b id="live-value5"></b> de frais réseau crypto</li>
         
@@ -178,7 +179,7 @@ export class VenteCryptoComponent implements OnInit {
           return 'Veuillez entrer un nombre valide.';
         }
         else if (parseFloat(value) > (this.wallet as any[]).find((e) => e.details.type == crypto).wallet.solde) {
-          return "Vous n'en possedez pas autant"
+          return "Solde insuffisant"
         }
 
         return null
@@ -202,6 +203,10 @@ export class VenteCryptoComponent implements OnInit {
       },
       preConfirm: async (value) => {
         try {
+          console.log({
+            crypto_currency: this.typeCrypto,
+            amount: parseFloat(value),
+          })
           const response = await this.cryptoService
             .sellCrypto({
               crypto_currency: this.typeCrypto,

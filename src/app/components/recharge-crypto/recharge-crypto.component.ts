@@ -157,29 +157,27 @@ export class RechargeCryptoComponent implements OnInit {
         liveContent.style.display = 'flex';
       }
      
+     
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${parseInt(response.data.xaf_amount).toLocaleString('fr-FR')+' XAF'}`;
-      }
-      const liveValue2 = document.getElementById('live-value2');
-      if (liveValue2) {
-        liveValue2.innerText = `${parseInt(response.data.xaf_fees).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        liveValue3.innerText = `${parseInt(response.data.xaf_network_fees).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2)+' USDT'}`;
       }
+     
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${response.data.crypto_fees+' '+ this.typeCrypto}`;
+        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2)+' USDT'}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${response.data.crypto_network_fees+' '+ this.typeCrypto}`;
+        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2)+' USDT'}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${response.data.crypto_total+' '+ this.typeCrypto}`;
+        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2)+' USDT'}`;
       }
      
     })
@@ -230,8 +228,8 @@ export class RechargeCryptoComponent implements OnInit {
       html: `Combien de ${crypto} voulez vous recharger?
       <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
       <ul id="live-content"> 
-      <li><b id="live-value6" class="text-success h5 "></b> à transférer au total</li>
-        <li><b id="live-value1"></b> exactement</li>
+      <li><b id="live-value6" class="text-success h5 "></b> de cout au total</li>
+        <li><b id="live-value1"></b> </li>
         
         <li><b id="live-value4"></b> de frais manen crypto</li>
         <li><b id="live-value5"></b> de frais réseau crypto</li>

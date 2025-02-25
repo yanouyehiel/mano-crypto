@@ -33,3 +33,13 @@
     "enableIvy": false
   }
 }
+// {
+//   "amount": "0.2",
+//   "currency": "BTC",
+//   "usd_network_fees": 4.15743636,
+//   "usd_fees": 0,
+//   "usd_total": 18391.75743636,
+//   "xaf_total": 11524711.094274417,
+//   "usdc_total": 18305.51861625,
+//   "total": "0.200.00004522"
+// }
