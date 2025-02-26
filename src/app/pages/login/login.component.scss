@@ -11,3 +11,8 @@ button {
 h4, label {
     text-transform: uppercase !important;
 }
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
