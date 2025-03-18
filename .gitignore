@@ -2,10 +2,12 @@
 
 # Compiled output
 /tmp
+
 /out-tsc
 /bazel-out
 
 # Node
+/dist
 /node_modules
 npm-debug.log
 yarn-error.log

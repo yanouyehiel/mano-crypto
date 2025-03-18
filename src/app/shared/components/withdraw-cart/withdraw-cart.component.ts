@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ResponseParent } from 'src/app/models/Transaction';
 import { AdminService } from 'src/app/services/admin.service';
 import Swal from 'sweetalert2';
+import { CustomDateFormatPipe } from '../../pipes/custom-date-format.pipe';
 
 @Component({
   selector: 'app-withdraw-cart',
