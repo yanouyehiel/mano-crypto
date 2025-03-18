@@ -26,7 +26,7 @@ export class HistoryTableComponent implements OnChanges {
 
 
   getTransactions(page: number): void {
-    this.depositService.getAllTransaction(page,this.type).pipe(
+    this.depositService.getAllTransaction(page, this.type).pipe(
       catchError((error) => {
         return of(error.error)
       })
@@ -50,10 +50,9 @@ export class HistoryTableComponent implements OnChanges {
     this.getTransactions(1)
   }
   getTextUsingStatus = (recent: any) => recent.status == 'PENDING' ? 'EN ATTENTE' : recent.status == 'SUCCESS' ? 'effectué' : recent.status == 'CREATED' ? 'initié' : recent.status == 'REJECTED' ? 'rejeté' : recent.status == 'FAILED' ? 'echoué' : recent.status
-  getClassUsingStatus = (recent: any) => recent.status=='PENDING'?' bg-secondary':recent.status=='SUCCESS'?' bg-success': recent.status == 'CREATED' ? 'bg-primary' : 'bg-danger'
+  getClassUsingStatus = (recent: any) => recent.status == 'PENDING' ? ' bg-secondary' : recent.status == 'SUCCESS' ? ' bg-success' : recent.status == 'CREATED' ? 'bg-primary' : 'bg-danger'
 
   getTextHistory(transaction: any): string {
-
     switch (transaction.type) {
       case 'DEPOSIT':
         return `Recharge de manen mobile de ${transaction.amount} FCFA`;
@@ -63,6 +62,8 @@ export class HistoryTableComponent implements OnChanges {
         return `Recharge de ${transaction.final_amount} ${transaction.final_currency}`;
       case 'WITHDRAW_CRYPTO':
         return `Retrait de ${transaction.amount} ${transaction.currency}`;
+      case 'SEND_TO_FRIEND':
+        return `Transfert de ${transaction.amount} ${transaction.currency} à ${transaction.receiver?.name}`;
       case 'BUY_CRYPTO':
         return `Achat de ${transaction.final_amount} ${transaction.final_currency}`;
       case 'SELL_CRYPTO':

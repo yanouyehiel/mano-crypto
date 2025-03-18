@@ -172,7 +172,7 @@ export class NavService {
       },
       {
         path: '/client/share-to-friend',
-        title: 'Envoyer à un ami',
+        title: 'Transferez vers un compte Manen',
         type: 'link',
         icon: 'repeat',
         badgeType: 'success',

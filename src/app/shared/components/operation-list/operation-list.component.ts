@@ -26,7 +26,6 @@ export class OperationListComponent {
     this.loader = true
     this.adminService.getAllUsersTransactions(pageNumber).subscribe((response:ResponseParent)=>{
       if(response.statusCode===1000){
-        console.log(response.data)
         this.operations = response.data.transactions
         this.currentPage = parseInt(response.data.currentPage)
         this.totalLenght = response.data.total_transactions
