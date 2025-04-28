@@ -1,0 +1,30 @@
+<div class="card mt-4">
+    <div class="card-header">
+      <h5>GRILLE TARIFAIRE DES PRIX MANEN</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Description</th>
+              <th scope="col">Valeur</th>
+              <th scope="col">Unité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of pricingGrid; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ item.description_fr === '___' ? item.key : item.description_fr}}</td>
+              <td>{{ item.value }}</td>
+              <td>{{ item.unite }}</td>
+            </tr>
+            <tr *ngIf="pricingGrid.length === 0">
+              <td colspan="5" class="text-center">Aucun élément à afficher</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>  

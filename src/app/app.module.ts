@@ -64,6 +64,7 @@ import { OperationListComponent } from './shared/components/operation-list/opera
 import { BitcoinChartComponent } from './components/home/variation-crypto/bitcoin-chart/bitcoin-chart.component';
 import { EthereumChartComponent } from './components/home/variation-crypto/ethereum-chart/ethereum-chart.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PricingGridComponent } from './shared/components/pricing-grid/pricing-grid.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     OperationsComponent,
     ShareToFriendComponent,
     OperationListComponent,
+    PricingGridComponent
    ],
 
   imports: [

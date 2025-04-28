@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, debounce, debounceTime, Observable, of, switchMap, take, takeWhile, timer } from 'rxjs';
+import { catchError, Observable, of, switchMap, take, takeWhile, timer } from 'rxjs';
 import {
   ResponseDeposit,
   ResponseParent,
-  ResponseTransactionList,
 } from 'src/app/models/Transaction';
+import { AdminService } from 'src/app/services/admin.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { UserService } from 'src/app/services/user.service';
-import { AwaitTransactionValidationComponent } from 'src/app/shared/components/await-transaction-validation/await-transaction-validation.component';
+import { PricingItem } from 'src/app/shared/components/pricing-grid/pricing-grid.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -32,14 +32,14 @@ export class RechargeCompteComponent implements OnInit {
   private userSaved: any
   private statusTransaction: string = "";
   private isProcessing: boolean;
-  private nbBoucle: number = 0
+  private nbBoucle: number = 0  
 
   constructor(
     private depositService: TransactionService,
     private fb: FormBuilder,
     private modalService: NgbModal,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
