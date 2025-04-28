@@ -265,14 +265,17 @@ export class ShareToFriendComponent {
           const data = this.emailRegex.test(this.sendForm.value['address']) ? {
             otpSecret: `${secret}`,
             otpCode: `${value}`,
-            amount: parseInt(this.sendForm.value['amount']),
+            currency:`${this.sendForm.value['currency']}`,
+            amount: parseFloat(this.sendForm.value['amount']),
             email: this.sendForm.value['address'],
           } : {
             otpSecret: `${secret}`,
             otpCode: `${value}`,
-            amount: parseInt(this.sendForm.value['amount']),
+            currency:`${this.sendForm.value['currency']}`,
+            amount: parseFloat(this.sendForm.value['amount']),
             phoneNumber: this.sendForm.value['address'],
           };
+          console.log(data)
           const responseWithdraw = await this.transactionService
             .p2pTransfert(data)
             .pipe(catchError((error) => {
