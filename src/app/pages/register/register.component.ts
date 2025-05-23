@@ -32,8 +32,6 @@ export class RegisterComponent implements OnInit {
   public searchCountries: Country[] = this.countries;
   public selectedCountry?: Country;
   public selectDiv: HTMLElement | null
-  public isClicked: boolean = false
-  public passwordIsCorrect: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -58,14 +56,30 @@ export class RegisterComponent implements OnInit {
     // selectDiv!.innerText = this.selectedCountry!.name
     // this.selectDiv?.firstChild?.firstChild?.lastChild?.firstChild?.nodeValue?.replace('',this.selectedCountry!.name)
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+      ]],
       confirmPassword: ['', Validators.required],
-      //codePays: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [
+        Validators.required,
+        Validators.pattern(/^6\d{8}$/)
+      ]],
+      country: ['', Validators.required],
       recaptcha: ['', Validators.required]
-    })
+      }, 
+      {
+        validators: [this.passwordMatchValidator]
+    });
+  }
+
+  private passwordMatchValidator(form: FormGroup) {
+    return form.controls['password'].value === form.controls['confirmPassword'].value 
+      ? null 
+      : { mismatch: true };
   }
 
   filterCountry(countryCriteria: any
@@ -85,6 +99,9 @@ export class RegisterComponent implements OnInit {
   }
   setSelectedCountry(country:Country){
     this.selectedCountry = country
+    this.registerForm.patchValue({
+      country: country.name
+    });
     document.getElementById('countrySelector')?.setAttribute('value', country.name);
     let selector = document.getElementById('selector');
     selector!.style.display = "none";
@@ -127,73 +144,52 @@ export class RegisterComponent implements OnInit {
     this.toast.error(message)
   }
 
-  verifierMotDePasse(motDePasse: string): boolean {
-    const aDesChiffres = /\d/.test(motDePasse);
-    const aDesLettresMajuscules = /[A-Z]/.test(motDePasse);
-    const aDesCaracteresSpeciaux = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(motDePasse);
-
-    const toutesLesContraintesSontVerifiees =
-      aDesChiffres &&
-      aDesLettresMajuscules &&
-      aDesCaracteresSpeciaux &&
-      motDePasse.length >= 8;
-    
-
-    return toutesLesContraintesSontVerifiees;
-  }
-
 
   register(): void {
-    this.isClicked = true
-    this.passwordIsCorrect = this.verifierMotDePasse(this.registerForm.controls['password'].value)
-    if (this.passwordIsCorrect) {
-      if (this.registerForm.controls['password'].value.length < 8 || this.registerForm.controls['confirmPassword'].value.length < 8) {
-        this.toast.error("Les mots de passe doivent avoir au moins 8 caractères")
-      } else {
-        if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
-          this.user = {
-            name: this.registerForm.controls['name'].value,
-            email: this.registerForm.controls['email'].value,
-            password: this.registerForm.controls['password'].value,
-            countryCode: this.selectedCountry!.dial_code,
-            country: this.selectedCountry!.name,
-            phoneNumber: this.registerForm.controls['phoneNumber'].value
-          }
-          
-          this.textBtn = 'Chargement...'
-          try {
-            this.authService.register(this.user).subscribe((response: ResponseUser) => {
-    
-              this.returnedValue = {
-                statusCode: response.statusCode,
-                message: response.message,
-                data: {
-                  token: response.data?.token
-                }
-              }
-              localStorage.setItem('token-mansexch', JSON.stringify(this.returnedValue.data))
-              if (this.returnedValue.statusCode == 1000) {
-                this.router.navigate([`/auth/confirm-login/${this.user.email}`])
-              }     
-            }, (error) => {
-              this.showToast(error.error.message)
-              this.textBtn = "S'INSCRIRE"
-              this.returnedValue = {
-                statusCode: error.error.statusCode,
-                message: error.error.message
-              }
-            });
-          } catch (error) {
-            this.toast.error("Vérifiez votre connexion internet")
-          }
-
-        } else {
-          this.toast.error("Les mots de passe ne correspondent pas.")
-
+    if (this.registerForm.controls['password'].value.length < 8 || this.registerForm.controls['confirmPassword'].value.length < 8) {
+      this.toast.error("Les mots de passe doivent avoir au moins 8 caractères")
+    } else {
+      if (this.registerForm.controls['password'].value === this.registerForm.controls['confirmPassword'].value) {
+        this.user = {
+          name: this.registerForm.controls['name'].value,
+          email: this.registerForm.controls['email'].value,
+          password: this.registerForm.controls['password'].value,
+          countryCode: this.selectedCountry!.dial_code,
+          country: this.selectedCountry!.name,
+          phoneNumber: this.registerForm.controls['phoneNumber'].value
         }
+        
+        this.textBtn = 'Chargement...'
+        try {
+          this.authService.register(this.user).subscribe((response: ResponseUser) => {
+  
+            this.returnedValue = {
+              statusCode: response.statusCode,
+              message: response.message,
+              data: {
+                token: response.data?.token
+              }
+            }
+            localStorage.setItem('token-mansexch', JSON.stringify(this.returnedValue.data))
+            if (this.returnedValue.statusCode == 1000) {
+              this.router.navigate([`/auth/confirm-login/${this.user.email}`])
+            }     
+          }, (error) => {
+            this.showToast(error.error.message)
+            this.textBtn = "S'INSCRIRE"
+            this.returnedValue = {
+              statusCode: error.error.statusCode,
+              message: error.error.message
+            }
+          });
+        } catch (error) {
+          this.toast.error("Vérifiez votre connexion internet")
+        }
+
+      } else {
+        this.toast.error("Les mots de passe ne correspondent pas.")
+
       }
     }
-    
-
   }
 }
