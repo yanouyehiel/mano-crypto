@@ -27,8 +27,8 @@ export class AdminService {
 
     constructor(private http: HttpClient) { }
 
-    getConfigs(): Observable<ResponseParent> {
-        return this.http.get<ResponseParent>(
+    getConfigs(): Observable<any> {
+        return this.http.get<any>(
             `${this.urlAdmin}/configs`,
             this.getConfig()
         ).pipe(catchError((error) => {

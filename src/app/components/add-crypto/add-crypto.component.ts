@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -11,11 +11,15 @@ import {
   map,
   of,
   switchMap,
+  tap,
 } from 'rxjs';
+import { PricingItem } from 'src/app/models/pricings-elements';
 import { ResponseParent } from 'src/app/models/Transaction';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
+import { PricingService } from 'src/app/services/pricingService';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -24,30 +28,13 @@ import Swal from 'sweetalert2';
   templateUrl: './add-crypto.component.html',
   styleUrls: ['./add-crypto.component.scss'],
 })
-export class AddCryptoComponent implements OnInit {
-  public items = [
-    {
-      name: 'Tether',
-      abv: 'USDT',
-      value: 1,
-      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/825.png',
-    },
-    {
-      name: 'Bitcoin',
-      abv: 'BTC',
-      value: 31000,
-      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1.png',
+export class AddCryptoComponent implements OnInit, OnDestroy {
+  
+  public items$: Observable<PricingItem[]>;
+  public loading$: Observable<boolean>;
+  public error$: Observable<string | null>;
 
-    },
-    {
-      name: 'Etheurium',
-      abv: 'ETH',
-      value: 1900,
-      icon: 'https://raw.githubusercontent.com/coinwink/cryptocurrency-logos/master/coins/128x128/1027.png',
-    },
-
-  ];
-
+  private destroy$ = new Subject<void>();
   public typeCrypto: string;
   public recentOrders: any[] = [];
   public loader: boolean = true;
@@ -66,9 +53,13 @@ export class AddCryptoComponent implements OnInit {
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private pricingService: PricingService,
+    private configurationService: ConfigurationService
   ) {
-   
+    this.items$ = this.pricingService.pricingItems$;
+    this.loading$ = this.pricingService.loading$;
+    this.error$ = this.pricingService.error$;
   }
   setReload() {
     this.reloadHistory = !this.reloadHistory
@@ -80,7 +71,14 @@ export class AddCryptoComponent implements OnInit {
       this.router.navigate(['/auth/login'])
     })
   }
+
+
+onRefresh(): void {
+    this.pricingService.refreshPricing();
+}
   ngOnInit(): void {
+    this.configurationService.updateConfigurations();
+   
     this.getProfileUser()
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
@@ -93,6 +91,7 @@ export class AddCryptoComponent implements OnInit {
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "block";
           }
+
           // Utiliser forkJoin pour exécuter les requêtes en parallèle
           return this.cryptoService.transactionFees({
             amount: term,
@@ -143,6 +142,14 @@ export class AddCryptoComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // onRefresh(): void {
+  //   this.pricingService.refreshPricing();
+  // }
 
   get layoutClass() {
     return (
@@ -155,7 +162,7 @@ export class AddCryptoComponent implements OnInit {
 
   async initBuyingProcess(crypto: string) {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+    if ((this.userSaved.kyc as any[]).filter((e) => e.status != 'approved').length > 0) {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
@@ -170,7 +177,7 @@ export class AddCryptoComponent implements OnInit {
         // type: 'warning',
         confirmButtonText: 'Valider mon compte',
         reverseButtons: true
-      }).then(()=>{
+      }).then(() => {
         this.router.navigate(['/client/profile-edit'])
       })
       return
@@ -267,4 +274,6 @@ export class AddCryptoComponent implements OnInit {
       }
     });
   }
+
+
 }

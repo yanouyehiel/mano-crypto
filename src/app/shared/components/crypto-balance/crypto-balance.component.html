@@ -3,40 +3,25 @@
     <div class="carousel-item active">
       <div class="row px-3">
         <!-- <ng-template *ngIf="response && response.statusCode==1000"> -->
-        <div
-          class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec"
-          *ngFor="let detail of wallet"
-        >
+        <div class="col-xl-6 col-md-3 col-sm-6 box-col-3 des-xl-25 rate-sec" *ngFor="let detail of wallet">
           <div class="card income-card card-primary">
             <div class="card-body text-center">
               <div class="round-box mb-3">
-                <img
-                  [src]="detail.image_url"
-                  alt=""
-                  width="60"
-                  class="image-thumbnail"
-                />
+                <img [src]="detail.image_url?detail.image_url:'../../../../assets/images/XAF.png'" alt="" width="60"
+                  class="image-thumbnail" />
               </div>
-              <h5>{{ detail.wallet.solde |number:'1.0-9' }}</h5>
-              
-              <a class="btn-arrow arrow-primary"
-              [ngClass]="detail.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"
-                ><i
-                class="toprightarrow-primary fa fa-arrow-{{
+              <h5>{{ detail.wallet.solde |number:'1.0-9' }} {{detail.details.crypto_currency_symbol}}</h5>
+
+              <a class="btn-arrow arrow-primary" *ngIf="detail.details.crypto_currency_symbol!='XAF'"
+                [ngClass]="detail.details.weekly_percentage > 0 ? ' text-success' : ' text-danger'"><i class="toprightarrow-primary fa fa-arrow-{{
                  detail.details.weekly_percentage > 0 ? 'up' : 'down'
-                }} me-2"
-              ></i>
-              {{ detail.details.weekly_percentage | number : "1.2-2" }} %</a
-              >
-              <a class="btn-arrow arrow-primary"
-              [ngClass]="detail.details.monthly_percentage > 0 ? ' text-success' : ' text-danger'"
-                ><i
-                class="toprightarrow-primary fa fa-arrow-{{
+                }} me-2"></i>
+                {{ detail.details.weekly_percentage | number : "1.2-2" }} %</a>
+              <a class="btn-arrow arrow-primary" *ngIf="detail.details.crypto_currency_symbol!='XAF'"
+                [ngClass]="detail.details.monthly_percentage > 0 ? ' text-success' : ' text-danger'"><i class="toprightarrow-primary fa fa-arrow-{{
                  detail.details.monthly_percentage > 0 ? 'up' : 'down'
-                }} me-2"
-              ></i>
-              {{ detail.details.monthly_percentage | number : "1.2-2" }} %</a
-              >
+                }} me-2"></i>
+                {{ detail.details.monthly_percentage | number : "1.2-2" }} %</a>
             </div>
           </div>
         </div>

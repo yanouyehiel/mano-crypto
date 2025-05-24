@@ -25,7 +25,7 @@ export class CryptoBalanceComponent implements OnInit {
       if (value.statusCode === 1001) {
         this.router.navigate(['/auth/login'])
       } else if(this.response.statusCode==1000){
-        this.wallet = this.response.data.details.filter((e:any)=>e.image_url!=null);       
+        this.wallet = this.response.data.details;       
       }
     });
   }
