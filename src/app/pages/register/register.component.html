@@ -12,7 +12,7 @@
             <label>Nom</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fa fa-user text-primary"></i></span>
-              <input class="form-control" type="text" required="" placeholder="Entrer votre nom"
+              <input class="form-control" type="text" required="true" placeholder="Entrer votre nom"
                 formControlName="name" />
             </div>
           </div>
@@ -20,7 +20,7 @@
             <label>Email</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fa fa-envelope-o text-primary"></i></span>
-              <input class="form-control" type="email" required="" placeholder="Entrer votre adresse mail"
+              <input class="form-control" type="email" required="true" placeholder="Entrer votre adresse mail"
                 formControlName="email" />
             </div>
           </div>
@@ -59,8 +59,8 @@
               </div>
             </div>
 
-            <div *ngIf="isClicked && registerForm.controls['phoneNumber'].invalid" class="text text-danger mt-1">
-              Ne correspond pas à un numéro de téléphone
+            <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched" class="text text-danger mt-1">
+              Le numéro doit commencer par 6 et contenir 9 chiffres
             </div>
           </div>
           <div class="form-group">
@@ -90,18 +90,12 @@
                 <span class="Hide text-primary"></span>
               </div>
             </div>
-            <div
-              *ngIf="isClicked && (registerForm.controls['password'].value != registerForm.controls['confirmPassword'].value)"
-              class="text text-danger mt-1">
+            <div *ngIf="registerForm.hasError('mismatch')" class="text text-danger mt-1">
               Les mots de passe ne correspondent pas
             </div>
-            <div
-              *ngIf="isClicked && (registerForm.controls['password'].value.length < 8 || registerForm.controls['confirmPassword'].value.length < 8)"
-              class="text text-danger mt-1">
-              Les mots de passe doivent avoir au moins 8 caractères
-            </div>
-            <div *ngIf="isClicked && !passwordIsCorrect" class="text text-danger mt-1">
-              Les mots de passe doivent avoir au moins une lettre majuscule, un chiffre et un caractère spécial
+
+            <div *ngIf="registerForm.get('password')?.errors?.['pattern']" class="text text-danger mt-1">
+              Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 1 caractère spécial
             </div>
           </div>
 
@@ -116,9 +110,12 @@
           </ngx-recaptcha2><br>
 
           <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit"
-              [disabled]="(!registerForm.valid || textBtn === 'Chargement...' || !selectedCountry) && !isClicked"
-              (click)="register()">
+            <button 
+              class="btn btn-primary btn-block" 
+              type="submit"
+              [disabled]="!registerForm.valid || textBtn === 'Chargement...'"
+              (click)="register()"
+            >
               {{ textBtn }}
             </button>
           </div>
