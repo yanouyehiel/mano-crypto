@@ -26,21 +26,69 @@ export interface CryptoConversionResponse {
   };
 }
 
+// models/pricings-elements.ts
 export interface PricingItem {
+  // Informations de base
   name: string;
   abv: string;
+  icon: string;
+  
+  // Valeurs de référence
   usdValue: string;
   xafValue: string;
-  manenFee: string;
-  manenXafFee: string;
-  minCryptoByingValue: string;
-  minByingValue: string;
-  minByingXafValue: string;
-  minCryptoTransferableValue: string;
-  minTransferableValue: string;
-  minTransferableXafValue: string;
-  icon: string;
+  
+  // RECHARGE - Frais de recharge crypto
+  recharge: {
+    feePercentage: number;
+    cryptoFee: string;
+    usdFee: string;
+    xafFee: string;
+  };
+  
+  // ACHAT - Frais d'achat crypto
+  buy: {
+    feePercentage: number;
+    cryptoFee: string;
+    usdFee: string;
+    xafFee: string;
+    minCryptoBuyingValue: string;
+    minBuyingValue: string;
+    minBuyingXafValue: string;
+  };
+  
+  // VENTE - Frais de vente crypto
+  sell: {
+    feePercentage: number;
+    cryptoFee: string;
+    usdFee: string;
+    xafFee: string;
+    minCryptoSellingValue: string;
+    minSellingValue: string;
+    minSellingXafValue: string;
+  };
+  
+  // TRANSFERT INTERNE - Transfert vers un ami
+  internalTransfer: {
+    feePercentage: number;
+    cryptoFee: string;
+    usdFee: string;
+    xafFee: string;
+    minCryptoTransferValue: string;
+    minTransferValue: string;
+    minTransferXafValue: string;
+  };
+  
+  // TRANSFERT EXTERNE - Transfert vers autre wallet
+  externalTransfer: {
+    fixedCryptoFee: string;  // Frais fixe en crypto
+    fixedUsdFee: string;     // Équivalent USD
+    fixedXafFee: string;     // Équivalent XAF
+    minCryptoTransferValue: string;
+    minTransferValue: string;
+    minTransferXafValue: string;
+  };
 }
+
 
 export interface CryptoCurrency {
   symbol: string;

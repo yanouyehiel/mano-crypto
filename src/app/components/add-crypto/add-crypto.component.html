@@ -21,46 +21,59 @@
                           <th scope="col">Valeur d'achat (Avec frais)</th>
                           <th scope="col">Frais Manen</th>
                           <th scope="col">Montant Min. Achat</th>
-                          <th scope="col">Montant Min. Transferable </th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
+                      <tbody>
+                        <tr *ngFor="let item of items$ | async">
+                          <!-- Crypto-monnaie -->
+                          <th scope="row">
+                            <div class="d-flex justify-content-start">
+                              <img [src]="item.icon" width="45" [alt]="item.abv" class="image-thumbail" />
+                              <div>
+                                {{ item.name }}<br />
+                                <span class="text-muted fw-lighter">{{ item.abv }}</span>
+                              </div>
+                            </div>
+                          </th>
 
-                      <tr *ngFor="let item of items$ | async">
-                        <th scope="row">
-                          <div class="d-flex justify-content-start"><img [src]="item.icon" width="45" [alt]="item.abv"
-                              class="image-thumbail" />
-                            <div>{{ item.name }}<br /> <span class="text-muted fw-lighter">{{ item.abv
-                                }}</span></div>
-                          </div>
-                        </th>
-                        <td>
-                          <div><span class="fw-bolder">{{item.usdValue}}</span><br /> <span
-                              class="text-muted fw-light">{{item.xafValue}}</span></div>
+                          <!-- Valeur d'achat (Avec frais) -->
+                          <td>
+                            <div>
+                              <span class="fw-bolder">{{ item.usdValue }}</span><br />
+                              <span class="text-muted fw-light">{{ item.xafValue }}</span>
+                            </div>
+                          </td>
 
-                        </td>
-                        <td>
-                          <div><span class="fw-bolder">{{item.manenFee}}</span><br /> <span
-                              class="text-muted fw-light">{{item.manenXafFee}}</span></div>
-                        </td>
-                        <td>
-                          <div><span class="fw-bolder">{{item.minCryptoByingValue}} </span><br /> <span
-                              class="text-muted fw-light">{{ item.minByingValue }}</span><br /> <span
-                              class="text-muted fw-light">{{ item.minByingXafValue }}</span></div>
-                        </td>
-                        <td>
-                          <div><span class="fw-bolder">{{item.minCryptoTransferableValue}} </span><br /> <span
-                              class="text-muted fw-light">{{ item.minTransferableValue }}</span><br /> <span
-                              class="text-muted fw-light">{{ item.minTransferableXafValue }}</span></div>
-                        </td>
-                        <td>
-                          <button class="btn btn-primary-gradien" type="button" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalCenter" (click)="initBuyingProcess(item.abv)">
-                            Acheter
-                          </button>
-                        </td>
-                      </tr>
+                          <!-- Frais Manen (frais d'achat) -->
+                          <td>
+                            <div>
+                              <span class="fw-bolder">{{ item.buy.cryptoFee }}</span><br />
+                              <span class="text-muted fw-light">{{ item.buy.usdFee }}</span><br />
+                              <span class="text-muted fw-light">{{ item.buy.xafFee }}</span>
+                              <small *ngIf="item.buy.feePercentage>0" class="text-info d-block">({{ item.buy.feePercentage }}%)</small>
+                            </div>
+                          </td>
+
+                          <!-- Montant Min. Achat -->
+                          <td>
+                            <div>
+                              <span class="fw-bolder">{{ item.buy.minCryptoBuyingValue }}</span><br />
+                              <span class="text-muted fw-light">{{ item.buy.minBuyingValue }}</span><br />
+                              <span class="text-muted fw-light">{{ item.buy.minBuyingXafValue }}</span>
+                            </div>
+                          </td>
+
+                          <td>
+                            <button class="btn btn-primary-gradien" type="button" data-bs-toggle="modal"
+                              data-bs-target="#exampleModalCenter" (click)="initBuyingProcess(item.abv)">
+                              Acheter
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
+
                   </div>
                 </div>
               </div>
@@ -93,22 +106,22 @@
     </div>
   </div>
   <div class="pricing-container">
-  <!-- Indicateur de chargement -->
-  <div *ngIf="loading$ | async" class="loading-indicator">
-    <p>Mise à jour des prix en cours...</p>
-  </div>
+    <!-- Indicateur de chargement -->
+    <div *ngIf="loading$ | async" class="loading-indicator">
+      <p>Mise à jour des prix en cours...</p>
+    </div>
 
-  <!-- Affichage des erreurs -->
-  <div *ngIf="error$ | async as error" class="error-message">
-    <p>{{ error }}</p>
-    <button (click)="onRefresh()" class="retry-button">Réessayer</button>
-  </div>
+    <!-- Affichage des erreurs -->
+    <div *ngIf="error$ | async as error" class="error-message">
+      <p>{{ error }}</p>
+      <button (click)="onRefresh()" class="retry-button">Réessayer</button>
+    </div>
 
-  <!-- Bouton de rafraîchissement manuel -->
-  <div class="refresh-controls">
-    <button (click)="onRefresh()" [disabled]="loading$ | async" class="refresh-button">
-      Actualiser les prix
-    </button>
+    <!-- Bouton de rafraîchissement manuel -->
+    <div class="refresh-controls">
+      <button (click)="onRefresh()" [disabled]="loading$ | async" class="refresh-button">
+        Actualiser les prix
+      </button>
+    </div>
   </div>
-</div>
 </div>
