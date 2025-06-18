@@ -29,7 +29,7 @@
             <div class="select2-drpdwn mb-3">
               <div class="input-group">
                 <span class="input-group-text"><i class="fa fa-flag text-primary"></i></span>
-                <input #inpt type="text" class="form-control" [value]="selectedCountry!.name" id="countrySelector"
+                <input #inpt type="text" class="form-control" style="border-width: 1px; border-color: #333;" [value]="selectedCountry!.name" id="countrySelector"
                   (click)="toogleSelectorState()" (keydown)="filterCountry(inpt.value)">
                 <div id="selector" class="card">
                   <ul class="d-flex flex-column">
@@ -53,15 +53,15 @@
                 <div class="input-group">
                   <span class="input-group-text"><i class="fa fa-mobile text-primary"></i></span>
                   <span class="input-group-text">{{selectedCountry!.dial_code}}</span>
-                  <input class="form-control" type="tel" name="phoneNumber" pattern="6\d{8}"
+                  <input class="form-control" type="tel" name="phoneNumber"
                     placeholder="Entrer votre numéro de téléphone" formControlName="phoneNumber" autocomplete="tel" required/>
                 </div>
               </div>
             </div>
-
             <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched" class="text text-danger mt-1">
-              Le numéro doit commencer par 6 et contenir 9 chiffres
+              Veuillez entrer un numéro de téléphone valide
             </div>
+
           </div>
           <div class="form-group">
             <label>Mot de passe</label>
