@@ -22,17 +22,20 @@ export class RechargeCompteComponent implements OnInit {
   public classStep1: string;
   public classStep2: string;
   public classStep3: string;
+  operators: any[] = [];
+  selectedOperator: any
+  loading = false;
   public step!: number;
   public depositForm: FormGroup;
   public response?: ResponseDeposit;
   reloadHistory = false;
-  setReload(){
+  setReload() {
     this.reloadHistory = !this.reloadHistory
   }
   private userSaved: any
   private statusTransaction: string = "";
   private isProcessing: boolean;
-  private nbBoucle: number = 0  
+  private nbBoucle: number = 0
 
   constructor(
     private depositService: TransactionService,
@@ -40,9 +43,11 @@ export class RechargeCompteComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router,
     private userService: UserService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.loadOperators()
+
     this.step = 1;
     this.classStep1 = 'current';
     this.depositForm = this.fb.group({
@@ -51,6 +56,7 @@ export class RechargeCompteComponent implements OnInit {
       paiementMethod: ['', Validators.required],
     });
     this.getProfileUser()
+    this.setupFormValidation();
   }
 
   verifyPhoneNumber(): boolean {
@@ -89,14 +95,14 @@ export class RechargeCompteComponent implements OnInit {
   }
 
   async initBuyingProcess() {
-    const data ={amount:this.depositForm.controls['amount'].value, phoneNumber:this.depositForm.controls['phoneNumber'].value.toString()}
+    const data = { amount: this.depositForm.controls['amount'].value, phoneNumber: this.depositForm.controls['phoneNumber'].value.toString() }
 
     if (isNaN(data.amount) || data.amount <= 0) {
       Swal.fire('Erreur', 'Veuillez entrer un montant valide.', 'error');
       return;
     }
 
-    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+    if ((this.userSaved.kyc as any[]).filter((e) => e.status != 'approved').length > 0) {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
@@ -111,7 +117,7 @@ export class RechargeCompteComponent implements OnInit {
         // type: 'warning',
         confirmButtonText: 'Valider mon compte',
         reverseButtons: true
-      }).then(()=>{
+      }).then(() => {
         this.router.navigate(['/client/profile-edit'])
       })
       return
@@ -119,13 +125,11 @@ export class RechargeCompteComponent implements OnInit {
 
     Swal.fire({
       titleText: `Recharge de compte`,
-      html: `Vous voulez effectuer une recharge de ${
-        data.amount
-      } F\nVeuillez saisir <b>${
-        this.depositForm.value['paiementMethod'] == 'OM'
+      html: `Vous voulez effectuer une recharge de ${data.amount
+        } F\n${(this.getSelectedOperator().slug.includes('mtn') || this.getSelectedOperator().slug.includes('orange')) ? `Veuillez saisir <b>${this.getSelectedOperator().slug.includes('orange')
           ? '<span style="color:orange;">#150*50#</span>'
           : '<span style="color:yellow;">*126#</span>'
-      }</b> pour valider la transaction.`,
+          }</b>` : 'Veuillez suivre la procedure'} pour valider la transaction.`,
       showLoaderOnConfirm: true,
       didRender: () => {
         try {
@@ -193,8 +197,8 @@ export class RechargeCompteComponent implements OnInit {
                 this.isProcessing = false;
               },
 
-              complete: () =>{
-                
+              complete: () => {
+
               }
 
             });
@@ -206,7 +210,7 @@ export class RechargeCompteComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-    
+
     this.stepAttribute(0);
   }
 
@@ -224,6 +228,8 @@ export class RechargeCompteComponent implements OnInit {
       `,
       allowOutsideClick: () => !Swal.isLoading(),
     })
+
+
   }
 
 
@@ -234,5 +240,83 @@ export class RechargeCompteComponent implements OnInit {
       takeWhile(value => value.data?.transaction.status === 'PENDING', true),
       take(3)
     );
+  }
+
+
+  loadOperators() {
+    this.loading = true;
+    this.depositService.getOperators().subscribe({
+      next: (response) => {
+        if (response.statusCode === 1000) {
+          this.operators = response.data
+          // .filter((op: any) => op.isActive);
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des opérateurs:', error);
+        this.loading = false;
+      }
+    });
+  }
+  setupFormValidation() {
+    this.depositForm.get('paiementMethod')?.valueChanges.subscribe(operatorSlug => {
+      this.selectedOperator = this.operators.find(op => op.slug === operatorSlug) || null;
+      this.updatePhoneValidation();
+    });
+  }
+
+  updatePhoneValidation() {
+    const phoneControl = this.depositForm.get('phoneNumber');
+
+    if (this.selectedOperator && phoneControl) {
+      phoneControl.clearValidators();
+
+      const validators = [Validators.required];
+
+      if (this.selectedOperator.phoneRegex) {
+        validators.push(Validators.pattern(this.selectedOperator.phoneRegex));
+      }
+
+      phoneControl.setValidators(validators);
+      phoneControl.updateValueAndValidity();
+    }
+  }
+
+  getSelectedOperator(): any {
+    return this.selectedOperator;
+  }
+
+  getPhoneErrorMessage(): string {
+    const phoneControl = this.depositForm.get('phoneNumber');
+
+    if (phoneControl?.hasError('required')) {
+      return 'Le numéro de téléphone est requis';
+    }
+
+    if (phoneControl?.hasError('pattern') && this.selectedOperator) {
+      return `Format invalide pour ${this.selectedOperator.name}`;
+    }
+
+    return '';
+  }
+
+  isPhoneValid(): boolean {
+    return this.depositForm.get('phoneNumber')?.valid || false;
+  }
+
+  getPhonePlaceholder(): string {
+    if (!this.selectedOperator) {
+      return 'Sélectionnez d\'abord un opérateur';
+    }
+
+    const examples: { [key: string]: string } = {
+      'orange-cm': 'Ex: 699123456',
+      'mtn-cm': 'Ex: 677123456',
+      'airtel-money-ga': 'Ex: 066123456',
+      'moov-money-ga': 'Ex: 025123456'
+    };
+
+    return examples[this.selectedOperator.slug] || `Numéro ${this.selectedOperator.name}`;
   }
 }

@@ -13,6 +13,7 @@ import { ResponseProfile } from '../models/User';
   providedIn: 'root',
 })
 export class TransactionService {
+  private baseUrl = environment.backend_api_url
   private urlDeposit = environment.backend_api_url + environment.url_deposit;
   private urlUser = environment.backend_api_url + environment.user_url;
   private urlTransactionList = environment.backend_api_url + environment.url_transaction_list;
@@ -36,7 +37,12 @@ export class TransactionService {
       this.getConfig()
     );
   }
-
+  getOperators(): Observable<ResponseParent> {
+    return this.http.get<ResponseDeposit>(
+      `${this.baseUrl}/operators`,
+      this.getConfig()
+    );
+  }
   addDeposit(data: any): Observable<ResponseDeposit> {
     return this.http.post<ResponseDeposit>(
       `${this.urlDeposit}/deposits`,

@@ -36,136 +36,88 @@
               </div>
             </div>
             <div class="col-lg-8">
-              <form
-                class="mega-inline form theme-form"
-                [formGroup]="depositForm"
-              >
+              <form class="mega-inline form theme-form" [formGroup]="depositForm">
                 <div class="row" *ngIf="step === 1">
                   <h4 class="title-method">Choisissez une méthode de paiement</h4>
-                  <div class="col-sm-6">
-                    <div class="card">
+
+                  <!-- Loading state -->
+                  <div *ngIf="loading" class="col-12 text-center">
+                    <div class="spinner-border" role="status">
+                    </div>
+                    <p>Chargement des opérateurs...</p>
+                  </div>
+
+                  <div class="col-sm-6" *ngFor="let operator of operators; let i = index">
+                    <label [for]="'radio-' + operator._id" class="card operator-card operator-label"
+                      [class.selected]="depositForm.get('paiementMethod')?.value === operator.slug">
                       <div class="media p-20">
                         <div class="radio radio-primary me-3">
-                          <input
-                            id="radio14"
-                            type="radio"
-                            name="paiementMethod"
-                            formControlName="paiementMethod"
-                            value="MOMO"
-                          />
-                          <label for="radio14"></label>
+                          <input [id]="'radio-' + operator._id" type="radio" name="paiementMethod"
+                            formControlName="paiementMethod" [value]="operator.slug" />
+                          <label [for]="'radio-' + operator._id"></label>
                         </div>
                         <div class="media-body">
-                          <img
-                            src="../../../assets/images/mtn.png"
-                          />
-                          <p>Mobile Money</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="media p-20">
-                        <div class="radio radio-secondary me-3">
-                          <input
-                            id="radio13"
-                            type="radio"
-                            formControlName="paiementMethod"
-                            name="paiementMethod"
-                            value="OM"
-                          />
-                          <label for="radio13"></label>
-                        </div>
-                        <div class="media-body">
-                          <div class="media-body">
-                            <img
-                              src="../../../assets/images/om.png"
-                              alt="logo_mtn"
-                              height="100px"
-                              width="150px"
-                            />
-                            <p>Orange Money</p>
+                          <div class="operator-logo">
+                            <img [src]="operator.logoUrl" [alt]="operator.name + ' logo'" class="operator-image" />
                           </div>
+                          <p class="operator-name">{{ operator.name }}</p>
+                          <small class="operator-description text-muted">
+                            {{ operator.description }}
+                          </small>
                         </div>
                       </div>
+                    </label>
+                  </div>
+
+
+                  <!-- Message si aucun opérateur actif -->
+                  <div *ngIf="!loading && operators.length === 0" class="col-12">
+                    <div class="alert alert-warning text-center">
+                      Aucun opérateur de paiement mobile n'est actuellement disponible.
                     </div>
                   </div>
-                  <div class="col-sm-12">
-                    <button
-                      [disabled]="
-                        depositForm.controls['paiementMethod'].invalid
-                      "
-                      class="btn btn-primary col-lg-3"
-                      (click)="stepAttribute(1)"
-                      style="margin-bottom: 40px"
-                    >
+
+                  <div class="col-sm-12" *ngIf="operators.length > 0">
+                    <button [disabled]="depositForm.controls['paiementMethod'].invalid" class="btn btn-primary col-lg-3"
+                      (click)="stepAttribute(1)" style="margin-bottom: 40px">
                       Suivant
                     </button>
                   </div>
                 </div>
+
                 <div class="row" *ngIf="step === 2">
                   <h5 class="title-method">Téléphone</h5>
                   <div class="mb-5">
-                    <input
-                      *ngIf="
-                        depositForm.controls['paiementMethod'].value != 'OM'
-                      "
-                      class="form-control input"
-                      id="exampleFormControlInput1"
-                      type="number"
-                      placeholder="Entrer le numero de téléphone"
-                      formControlName="phoneNumber"
-                      pattern="6(5[0-4]|7[0-9]|8[0-4])\d{6}"
-                      required
-                    />
-                    <input
-                      *ngIf="
-                        depositForm.controls['paiementMethod'].value == 'OM'
-                      "
-                      class="form-control input"
-                      id="exampleFormControlInput1"
-                      type="number"
-                      placeholder="Entrer le numero de téléphone"
-                      formControlName="phoneNumber"
-                      pattern="6(5[5-9]|9[0-9])\d{6}"
-                      required
-                    />
+                    <div class="form-group">
+                      <label for="phoneNumber">Numéro de téléphone</label>
+                      <input class="form-control input" id="exampleFormControlInput1"
+                        type="tel" [placeholder]="getPhonePlaceholder()" formControlName="phoneNumber"
+                        [class.is-invalid]="depositForm.get('phoneNumber')?.invalid && depositForm.get('phoneNumber')?.touched"
+                        required />
+
+                      <div class="invalid-feedback"
+                        *ngIf="depositForm.get('phoneNumber')?.touched && depositForm.get('phoneNumber')?.invalid">
+                        {{ getPhoneErrorMessage() }}
+                      </div>
+                    </div>
                   </div>
                   <h5 class="title-method">Montant</h5>
                   <div class="col-sm-12">
                     <div class="mb-5">
-                      <input
-                        class="form-control input"
-                        id="exampleFormControlInput1"
-                        type="number"
-                        placeholder="Entrer le montant"
-                        pattern="^[1-9]\d*$"
-                        formControlName="amount"
-                        required
-                      />
+                      <input class="form-control input" id="exampleFormControlInput1" type="number"
+                        placeholder="Entrer le montant" pattern="^[1-9]\d*$" formControlName="amount" required />
                     </div>
-                    <div
-                      class="row mt-4"
-                      style="margin-top: 20px; margin-bottom: 40px"
-                    >
+                    <div class="row mt-4" style="margin-top: 20px; margin-bottom: 40px">
                       <div class="col-md-4">
-                        <button
-                          class="btn btn-secondary"
-                          (click)="stepAttribute(0)"
-                        >
+                        <button class="btn btn-secondary" (click)="stepAttribute(0)">
                           Précédent
                         </button>
                       </div>
                       <div class="col-md-4">
-                        <button
-                          [disabled]="
+                        <button [disabled]="
                             depositForm.controls['phoneNumber'].invalid ||
                             depositForm.controls['amount'].invalid
-                          "
-                          class="btn btn-primary"
-                          (click)="stepAttribute(2)"
-                        >
+                          " class="btn btn-primary" (click)="stepAttribute(2)">
                           Suivant
                         </button>
                       </div>
@@ -181,9 +133,9 @@
                         <h5>Type de paiement</h5>
                         <p style="font-size: 15px">
                           {{
-                            depositForm.controls["paiementMethod"].value == "OM"
-                              ? "Orange Money"
-                              : "MTN Mobile Money"
+                          depositForm.controls["paiementMethod"].value == "OM"
+                          ? "Orange Money"
+                          : "MTN Mobile Money"
                           }}
                         </p>
                       </div>
@@ -205,15 +157,9 @@
                       </div>
                     </div>
 
-                    <div
-                      class="row mt-4"
-                      style="margin-top: 40px; margin-bottom: 40px"
-                    >
+                    <div class="row mt-4" style="margin-top: 40px; margin-bottom: 40px">
                       <div class="col-md-4">
-                        <button
-                          class="btn btn-secondary"
-                          (click)="stepAttribute(1)"
-                        >
+                        <button class="btn btn-secondary" (click)="stepAttribute(1)">
                           Retour
                         </button>
                       </div>
@@ -235,7 +181,9 @@
   <div class="row">
     <div class="col-xl-12 box-col-12 des-xl-100">
       <div class="card">
-        <div class="card-header"><h5>Précédentes recharges de compte</h5></div>
+        <div class="card-header">
+          <h5>Précédentes recharges de compte</h5>
+        </div>
         <div class="card-body">
           <div class="table-responsive">
             <app-history-table type="DEPOSIT" [reloadHistory]="reloadHistory"></app-history-table>
