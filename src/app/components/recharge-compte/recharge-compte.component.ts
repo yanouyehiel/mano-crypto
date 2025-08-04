@@ -249,7 +249,7 @@ export class RechargeCompteComponent implements OnInit {
       next: (response) => {
         if (response.statusCode === 1000) {
           this.operators = response.data
-          // .filter((op: any) => op.isActive);
+          .filter((op: any) => op.isActive);
         }
         this.loading = false;
       },
