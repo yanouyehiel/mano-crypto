@@ -11,15 +11,16 @@ import {
   map,
   of,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs';
 import { PricingItem } from 'src/app/models/pricings-elements';
 import { ResponseParent } from 'src/app/models/Transaction';
+import { BuyPricingService } from 'src/app/services/buyService';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
-import { PricingService } from 'src/app/services/pricingService';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -29,7 +30,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-crypto.component.scss'],
 })
 export class AddCryptoComponent implements OnInit, OnDestroy {
-  
+
   public items$: Observable<PricingItem[]>;
   public loading$: Observable<boolean>;
   public error$: Observable<string | null>;
@@ -46,7 +47,8 @@ export class AddCryptoComponent implements OnInit, OnDestroy {
   liveResponse$: Observable<any>;
   liveSpinner: HTMLElement | null;
   liveContent: HTMLElement | null;
-
+  loading = false;
+  pricingItems: PricingItem[] = [];
   constructor(
     private modalService: NgbModal,
     public navService: NavService,
@@ -54,12 +56,10 @@ export class AddCryptoComponent implements OnInit, OnDestroy {
     private cryptoService: CryptoTransactionService,
     private router: Router,
     private userService: UserService,
-    private pricingService: PricingService,
+    private buyPricingService: BuyPricingService,
     private configurationService: ConfigurationService
   ) {
-    this.items$ = this.pricingService.pricingItems$;
-    this.loading$ = this.pricingService.loading$;
-    this.error$ = this.pricingService.error$;
+
   }
   setReload() {
     this.reloadHistory = !this.reloadHistory
@@ -73,12 +73,35 @@ export class AddCryptoComponent implements OnInit, OnDestroy {
   }
 
 
-onRefresh(): void {
-    this.pricingService.refreshPricing();
-}
+  onRefresh(): void {
+    // this.buyPricingService.refreshPricing();
+  }
+
+
+  loadBuyData(): void {
+    console.log('🛒 Chargement données BUY...');
+    this.loading = true;
+
+    this.buyPricingService.getBuyPricingData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (pricingItems: PricingItem[]) => {
+          console.log('✅ Données BUY reçues:', pricingItems);
+          this.pricingItems = pricingItems;
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('❌ Erreur chargement BUY:', error);
+          this.loading = false;
+          // Optionnel : afficher un toast d'erreur
+        }
+      });
+  }
+
   ngOnInit(): void {
+    this.loadBuyData();
     this.configurationService.updateConfigurations();
-   
+
     this.getProfileUser()
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
@@ -148,7 +171,7 @@ onRefresh(): void {
   }
 
   // onRefresh(): void {
-  //   this.pricingService.refreshPricing();
+  //   this.buyPricingService.refreshPricing();
   // }
 
   get layoutClass() {

@@ -51,7 +51,7 @@ export class RetirerFondsComponent implements OnInit {
   public loader: boolean = true;
   public response: ResponseDeposit;
   reloadHistory = false;
-  setReload(){
+  setReload() {
     this.reloadHistory = !this.reloadHistory
   }
 
@@ -87,7 +87,7 @@ export class RetirerFondsComponent implements OnInit {
 
   initTransaction() {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
-    if((user.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+    if ((user.kyc as any[]).filter((e) => e.status != 'approved').length > 0) {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
@@ -102,7 +102,7 @@ export class RetirerFondsComponent implements OnInit {
         // type: 'warning',
         confirmButtonText: 'Valider mon compte',
         reverseButtons: true
-      }).then(()=>{
+      }).then(() => {
         this.router.navigate(['/client/profile-edit'])
       })
       return
@@ -122,44 +122,45 @@ export class RetirerFondsComponent implements OnInit {
           html: `
           <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
           <ul>
-            <li>Montant initié : <span style="color:green;">${res.data.xaf_amount} XAF</span></li>
-            <li>Frais de réseau : <span style="color:green;">${res.data.xaf_network_fees} XAF</span></li>
-            <li>Net à recevoir : <span style="color:green;">${res.data.xaf_total} XAF</span></li>
+            <li>Montant initié : <span style="color:green;">${res.data.amount} XAF</span></li>
+            <li>Frais de réseau : <span style="color:green;">${res.data.usd_network_fees} XAF</span></li>
+            <li>Net à recevoir : <span style="color:green;">${res.data.total} XAF</span></li>
           </ul>`,
           confirmButtonText: 'Continuer',
           cancelButtonText: 'Annuler',
           showLoaderOnConfirm: true,
           preConfirm: async (value) => {
             this.authService
-            .sendOtp()
-            .pipe(
-              catchError((error) => {
-                if (error.status === 0 || error.statusText === 'Unknown Error') {
-                  Swal.fire(
-                    'Erreur',
-                    `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-                    'error'
-                  );
-                }
-                return of(error.error);
-              })
-            )
-            .subscribe({
-              next: (value) => {
-                if (value.statusCode != 1000) {
-                  Swal.fire(
-                    'Erreur',
-                    value.message ||
+              .sendOtp()
+              .pipe(
+                catchError((error) => {
+                  if (error.status === 0 || error.statusText === 'Unknown Error') {
+                    Swal.fire(
+                      'Erreur',
                       `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
-                    'error'
-                  );
-                } else if (value.statusCode === 1001) {
-                  this.router.navigate(['/auth/login'])
-                } else {
-                  this.otpVerificationAndWithdraw(value.data!.secret);
-                }
-              },
-            });
+                      'error'
+                    );
+                  }
+                  return of(error.error);
+                })
+              )
+              .subscribe({
+                next: (value) => {
+                  if (value.statusCode != 1000) {
+                    Swal.fire(
+                      'Erreur',
+                      value.message ||
+                      `Erreur de connexion Internet. Veuillez vérifier votre connexion.`,
+                      'error'
+                    );
+                  } else if (value.statusCode === 1001) {
+                    this.router.navigate(['/auth/login'])
+                  } else {
+                    this.otpVerificationAndWithdraw(value.data!.secret);
+                    this.stepAttribute(0);
+                  }
+                },
+              });
           },
           allowOutsideClick: () => !Swal.isLoading(),
         })
@@ -171,7 +172,7 @@ export class RetirerFondsComponent implements OnInit {
         );
       }
     })
-    this.stepAttribute(0);
+
   }
 
   async otpVerificationAndWithdraw(secret: string) {
@@ -230,7 +231,7 @@ export class RetirerFondsComponent implements OnInit {
       );
     } else {
       Swal.fire('Terminé', 'Retrait initié avec succès.', 'success');
-      
+
       this.setReload()
       setTimeout(() => {
         Swal.close();
