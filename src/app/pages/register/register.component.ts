@@ -66,9 +66,9 @@ export class RegisterComponent implements OnInit {
       confirmPassword: ['', Validators.required],
       phoneNumber: ['', [
         Validators.required,
-        Validators.pattern(/^6\d{8}$/)
+        Validators.pattern(/^[0-9]{6,14}$/)
       ]],
-      country: ['', Validators.required],
+      country: [this.selectedCountry?.name, Validators.required],
       recaptcha: ['', Validators.required]
       }, 
       {
@@ -82,8 +82,7 @@ export class RegisterComponent implements OnInit {
       : { mismatch: true };
   }
 
-  filterCountry(countryCriteria: any
-  ) {
+  filterCountry(countryCriteria: any) {
     let selector = document.getElementById('selector');
     selector!.style.display = "block";
     this.searchCountries = this.countries.filter((country) => country.name.toLowerCase().includes(countryCriteria.toLowerCase().trim()))
