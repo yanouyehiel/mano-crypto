@@ -40,8 +40,8 @@ export class PricingService {
     ];
 
     // Configuration
-    private readonly REFRESH_INTERVAL = 15000; // 15 secondes
-    private readonly TIMEOUT_DURATION = 10000; // 10 secondes
+    private readonly REFRESH_INTERVAL = 60000; // 15 secondes
+    private readonly TIMEOUT_DURATION = 5000; // 10 secondes
 
     constructor(
         private cryptoService: CryptoTransactionService,

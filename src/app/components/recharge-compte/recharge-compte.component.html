@@ -133,9 +133,7 @@
                         <h5>Type de paiement</h5>
                         <p style="font-size: 15px">
                           {{
-                          depositForm.controls["paiementMethod"].value == "OM"
-                          ? "Orange Money"
-                          : "MTN Mobile Money"
+                          selectedOperator.name
                           }}
                         </p>
                       </div>
