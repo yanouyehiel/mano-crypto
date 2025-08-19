@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of } from 'rxjs';
@@ -26,6 +26,8 @@ import Swal from 'sweetalert2';
 })
 export class RetirerFondsComponent implements OnInit {
   private userSaved = localStorage.getItem('user-mansexch')
+  public loading = false;
+  public operators: any[] = [];
 
   constructor(
     private router: Router,
@@ -51,18 +53,63 @@ export class RetirerFondsComponent implements OnInit {
   public loader: boolean = true;
   public response: ResponseDeposit;
   reloadHistory = false;
+  public phonePlaceholder = 'Entrer le numéro de téléphone';
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
 
   ngOnInit(): void {
+    this.loadOperators()
     this.step = 1;
     this.classStep1 = 'current';
     this.depositForm = this.fb.group({
       amount: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, this.phoneValidator.bind(this)]],
       paiementMethod: ['', Validators.required],
     });
+
+    const paiementMethodControl = this.depositForm.get('paiementMethod');
+    if (paiementMethodControl) {
+      paiementMethodControl.valueChanges.subscribe(() => {
+        this.updatePhonePlaceholder();
+      });
+    }
+
+    this.updatePhonePlaceholder();
+  }
+
+  updatePhonePlaceholder() {
+    const selectedOperator = this.depositForm.controls['paiementMethod'].value;
+    switch (selectedOperator) {
+      case 'airtel-gabon':
+        this.phonePlaceholder = 'Ex: 066123456';
+        break;
+      case 'orange-cameroun':
+        this.phonePlaceholder = 'Ex: 699123456';
+        break;
+      case 'mtn-cameroun':
+        this.phonePlaceholder = 'Ex: 651234567';
+        break;
+      default:
+        this.phonePlaceholder = 'Entrer le numéro de téléphone';
+    }
+  }
+
+  get phoneOperator(): string {
+    const phoneNumber = this.depositForm.controls['phoneNumber'].value;
+    if (!phoneNumber) return '';
+
+    const operator = this.checkPhoneNumber(phoneNumber);
+    switch (operator) {
+      case 'Airtel Gabon':
+        return 'Airtel Gabon';
+      case 'Orange Cameroun':
+        return 'Orange Cameroun';
+      case 'MTN Cameroun':
+        return 'MTN Cameroun';
+      default:
+        return 'Opérateur inconnu';
+    }
   }
 
   stepAttribute(step: number): void {
@@ -84,6 +131,32 @@ export class RetirerFondsComponent implements OnInit {
     }
   }
 
+  // Validateur personnalisé Angular pour le champ numéro de téléphone
+  phoneValidator(control: AbstractControl): ValidationErrors | null {
+    const val = control.value;
+    if (!val) return null;
+    return this.checkPhoneNumber(val) === 'Invalid' ? { invalidPhoneNumber: true } : null;
+  }
+
+  checkPhoneNumber(phoneNumber: string): 'Airtel Gabon' | 'Orange Cameroun' | 'MTN Cameroun' | 'Invalid' {
+    const normalized = phoneNumber.replace(/\s|-/g, '');
+
+    const airtelGabonRegex = /^0[67]\d{7}$/;
+
+    const orangeCameroonRegex = /^(69\d{7}|65[5-9]\d{6})$/;
+
+    const mtnCameroonRegex = /^(67\d{7}|65[0-4]\d{6}|68[0-3]\d{6})$/;
+
+    if (airtelGabonRegex.test(normalized)) {
+      return 'Airtel Gabon';
+    } else if (orangeCameroonRegex.test(normalized)) {
+      return 'Orange Cameroun';
+    } else if (mtnCameroonRegex.test(normalized)) {
+      return 'MTN Cameroun';
+    } else {
+      return 'Invalid';
+    }
+  }
 
   initTransaction() {
     let user = JSON.parse(localStorage.getItem('user-mansexch')!).user;
@@ -122,9 +195,9 @@ export class RetirerFondsComponent implements OnInit {
           html: `
           <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
           <ul>
-            <li>Montant initié : <span style="color:green;">${res.data.xaf_amount} XAF</span></li>
-            <li>Frais de réseau : <span style="color:green;">${res.data.xaf_network_fees} XAF</span></li>
-            <li>Net à recevoir : <span style="color:green;">${res.data.xaf_total} XAF</span></li>
+            <li>Montant initié : <span style="color:green;">${res.data.amount} XAF</span></li>
+            <li>Frais de réseau : <span style="color:green;">${res.data.amount - res.data.total} XAF</span></li>
+            <li>Net à recevoir : <span style="color:green;">${res.data.total} XAF</span></li>
           </ul>`,
           confirmButtonText: 'Continuer',
           cancelButtonText: 'Annuler',
@@ -175,6 +248,24 @@ export class RetirerFondsComponent implements OnInit {
   }
 
   async otpVerificationAndWithdraw(secret: string) {
+    const phoneNumberControl = this.depositForm.controls['phoneNumber'];
+    let phoneNumber = phoneNumberControl.value.toString();
+
+    const operator = this.checkPhoneNumber(phoneNumber);
+    switch(operator) {
+      case 'Orange Cameroun':
+        phoneNumber = '237' + phoneNumber;
+        break;
+      case 'MTN Cameroun':
+        phoneNumber = '237' + phoneNumber;
+        break;
+      case 'Airtel Gabon':
+        phoneNumber = '241' + phoneNumber;
+        break;
+      default:
+        break;
+    }
+
     const { value: result } = await Swal.fire({
       titleText: `Verification`,
       html: `Un code a été envoyé sur votre email, Veuillez le renseigner !`,
@@ -200,7 +291,7 @@ export class RetirerFondsComponent implements OnInit {
             otpSecret: `${secret}`,
             otpCode: `${value}`,
             amount: parseInt(this.depositForm.controls['amount'].value),
-            phoneNumber: this.depositForm.controls['phoneNumber'].value.toString(),
+            phoneNumber: phoneNumber
           };
           const responseWithdraw = await this.depositService
             .withdraw(data)
@@ -242,4 +333,20 @@ export class RetirerFondsComponent implements OnInit {
     Swal.fire('Retrait initié !');
   }
 
+  loadOperators() {
+    this.loading = true;
+    this.depositService.getOperators().subscribe({
+      next: (response) => {
+        if (response.statusCode === 1000) {
+          this.operators = response.data
+          .filter((op: any) => op.isActive);
+          console.log('operators', this.operators);
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        this.loading = false;
+      }
+    });
+  }
 }

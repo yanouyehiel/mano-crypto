@@ -43,60 +43,46 @@
               >
                 <div class="row" *ngIf="step === 1">
                   <h4 class="title-method">Choisissez une méthode de paiement</h4>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="media p-20">
-                        <div class="radio radio-primary me-3">
-                          <input
-                            id="radio14"
-                            type="radio"
-                            name="paiementMethod"
-                            formControlName="paiementMethod"
-                            value="MOMO"
-                          />
-                          <label for="radio14"></label>
-                        </div>
-                        <div class="media-body">
-                          <img
-                            src="../../../assets/images/mtn.png"
-                          />
-                          <p>Mobile Money</p>
-                        </div>
-                      </div>
+                  <!-- Loading state -->
+                  <div *ngIf="loading" class="col-12 text-center">
+                    <div class="spinner-border" role="status">
                     </div>
+                    <p>Chargement des opérateurs...</p>
                   </div>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="media p-20">
-                        <div class="radio radio-secondary me-3">
-                          <input
-                            id="radio13"
-                            type="radio"
-                            formControlName="paiementMethod"
-                            name="paiementMethod"
-                            value="OM"
-                          />
-                          <label for="radio13"></label>
-                        </div>
-                        <div class="media-body">
-                          <div class="media-body">
-                            <img
-                              src="../../../assets/images/om.png"
-                              alt="logo_mtn"
-                              height="100px"
-                              width="150px"
+
+                  <div class="row col-lg-12">
+                    <div class="col-lg-3" *ngFor="let operator of operators; let i = index">
+                      <div class="card">
+                        <div class="media p-20 col-lg-12 d-flex align-items-center">
+                          <div class="radio radio-primary me-3 col-lg-3 d-flex justify-content-center align-items-center">
+                            <input
+                              [id]="'radio-' + i"
+                              type="radio"
+                              name="paiementMethod"
+                              formControlName="paiementMethod"
+                              [value]="operator.slug"
                             />
-                            <p>Orange Money</p>
+                            <label [for]="'radio-' + i"></label>
+                          </div>
+                          <div class="media-body col-lg-9">
+                            <img
+                              [src]="operator.logoUrl"
+                              alt="{{ operator.name }} logo"
+                              width="40"
+                              height="40"
+                              class="img-fluid"
+                              style="object-fit: contain; max-width: 100%; max-height: 40px;"
+                            />
+                            <p class="mb-0 ms-2" style="font-size: 10px;">{{ operator.name }}</p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
                   <div class="col-sm-12">
                     <button
-                      [disabled]="
-                        depositForm.controls['paiementMethod'].invalid
-                      "
+                      [disabled]="depositForm.controls['paiementMethod'].invalid"
                       class="btn btn-primary col-lg-3"
                       (click)="stepAttribute(1)"
                       style="margin-bottom: 40px"
@@ -109,29 +95,20 @@
                   <h5 class="title-method">Téléphone</h5>
                   <div class="mb-5">
                     <input
-                      *ngIf="
-                        depositForm.controls['paiementMethod'].value != 'OM'
-                      "
                       class="form-control input"
-                      id="exampleFormControlInput1"
-                      type="number"
-                      placeholder="Entrer le Numero de telephone"
+                      type="tel"
+                      [placeholder]="phonePlaceholder"
                       formControlName="phoneNumber"
-                      pattern="6(5[0-4]|7[0-9]|8[0-4])\d{6}"
                       required
                     />
-                    <input
-                      *ngIf="
-                        depositForm.controls['paiementMethod'].value == 'OM'
-                      "
-                      class="form-control input"
-                      id="exampleFormControlInput1"
-                      type="number"
-                      placeholder="Entrer le Numero de telephone"
-                      formControlName="phoneNumber"
-                      pattern="6(5[5-9]|9[0-9])\d{6}"
-                      required
-                    />
+                    <!-- Affichage du message d'erreur en cas de numéro invalide -->
+                    <div 
+                      *ngIf="depositForm.controls['phoneNumber'].invalid && depositForm.controls['phoneNumber'].touched" 
+                      class="text-danger" 
+                      style="font-size: 13px; margin-top: 5px;"
+                    >
+                      Numéro de téléphone invalide pour Airtel Gabon, Orange Cameroun ou MTN Cameroun.
+                    </div>
                   </div>
                   <h5 class="title-method">Montant</h5>
                   <div class="col-sm-12">
@@ -181,11 +158,7 @@
                       <div class="col">
                         <h5>Type de paiement</h5>
                         <p style="font-size: 15px">
-                          {{
-                            depositForm.controls["paiementMethod"].value == "OM"
-                              ? "Orange Money"
-                              : "MTN Mobile Money"
-                          }}
+                          {{ phoneOperator }}
                         </p>
                       </div>
                     </div>
