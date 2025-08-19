@@ -15,6 +15,7 @@ import { ResponseParent } from 'src/app/models/Transaction';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
+import { CryptoSellPricingService } from 'src/app/services/pricings/sell-pricing.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import { parse } from 'url';
@@ -38,6 +39,9 @@ export class VenteCryptoComponent implements OnInit {
   liveResponse$: Observable<any>;
   liveSpinner: HTMLElement | null;
   liveContent: HTMLElement | null;
+  sellPricingItems$ = this.sellPricingService.sellPricingItems$;
+  loading$ = this.sellPricingService.loading$;
+  error$ = this.sellPricingService.error$;
   setReload() {
     this.reloadHistory = !this.reloadHistory
   }
@@ -48,9 +52,12 @@ export class VenteCryptoComponent implements OnInit {
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService,
     private router: Router,
-    private userService: UserService
-  ) {}
-
+    private userService: UserService,
+    private sellPricingService: CryptoSellPricingService
+  ) { }
+  refreshPricing() {
+        this.sellPricingService.refreshPricing();
+    }
   getProfileUser(): void {
     this.userService.getProfile().subscribe((response: any) => {
       this.userSaved = response.data.user
@@ -67,17 +74,17 @@ export class VenteCryptoComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((term) => {
         if (parseFloat(term) > 0) {
-           
+
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "block";
           }
           return this.cryptoService.transactionFees({
             amount: term,
             currency: this.typeCrypto,
-            
+
             type: "SELL_CRYPTO"
           });
-          
+
         } else {
           return of(null);
         }
@@ -90,33 +97,33 @@ export class VenteCryptoComponent implements OnInit {
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
       }
-      const liveContent = document.getElementById('live-content'); 
-      if(liveContent){
+      const liveContent = document.getElementById('live-content');
+      if (liveContent) {
         liveContent.style.display = 'flex';
       }
-     
+
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR') + ' XAF'}`;
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2)+' USDT'}`;
+        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2) + ' USDT'}`;
       }
-     
+
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2)+' USDT'}`;
+        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2) + ' USDT'}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2)+' USDT'}`;
+        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2) + ' USDT'}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2)+' USDT'}`;
+        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2) + ' USDT'}`;
       }
-     
+
     })
   }
 
@@ -126,16 +133,16 @@ export class VenteCryptoComponent implements OnInit {
 
       if (value && value.statusCode == 1000) {
         this.wallet = value.data.details.filter((e: any) => e.image_url != null);
-      }else if (value.statusCode == 1001) {
+      } else if (value.statusCode == 1001) {
         this.router.navigate(['/auth/login'])
-      } 
+      }
     });
   }
 
 
   async initSellingProcess(crypto: string) {
 
-    if((this.userSaved.kyc as any[]).filter((e)=>e.status!='approved').length>0){
+    if ((this.userSaved.kyc as any[]).filter((e) => e.status != 'approved').length > 0) {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
@@ -150,12 +157,12 @@ export class VenteCryptoComponent implements OnInit {
         // type: 'warning',
         confirmButtonText: 'Valider mon compte',
         reverseButtons: true
-      }).then(()=>{
+      }).then(() => {
         this.router.navigate(['/client/profile-edit'])
       })
       return
     }
-    
+
     await Swal.fire({
       titleText: `Vente de ${crypto}`,
       html: `Combien de ${crypto} voulez vous vendre?

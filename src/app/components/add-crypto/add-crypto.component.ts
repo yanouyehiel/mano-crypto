@@ -19,7 +19,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
-import { PricingService } from 'src/app/services/pricingService';
+import { PricingService } from 'src/app/services/pricings/buy-pricingService';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 

@@ -2,9 +2,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, interval, of } from 'rxjs';
 import { switchMap, map, catchError, startWith } from 'rxjs/operators';
-import { CryptoTransactionService } from './crypto-transaction.service';
-import { Configuration, CryptoCurrency, PricingItem } from '../models/pricings-elements';
-import { ConfigurationService } from './configuration.service';
+import { CryptoTransactionService } from '../crypto-transaction.service';
+import { Configuration, CryptoCurrency, PricingItem } from '../../models/pricings-elements';
+import { ConfigurationService } from '../configuration.service';
 
 @Injectable({
     providedIn: 'root'
@@ -180,7 +180,7 @@ export class PricingService {
 
         return {
             name: crypto.name,
-            abv: crypto.symbol === 'USDT' ? 'USDT-TRC20' : crypto.symbol,
+            abv: crypto.symbol,
             usdValue: this.formatCurrency(rates.usd, 'USD'),
             xafValue: this.formatCurrency(rates.xaf, 'XAF'),
             manenFee: `${this.formatCurrency(fees.usd, 'USD')} (${buyFeePercentage}%)`,
@@ -321,7 +321,7 @@ export class PricingService {
         return [
             {
                 name: 'Tether',
-                abv: 'USDT-TRC20',
+                abv: 'USDT',
                 usdValue: '$0.99',
                 xafValue: '604 XAF',
                 manenFee: '$0,03 (3%)',
