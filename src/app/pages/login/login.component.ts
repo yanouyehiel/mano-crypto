@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.controls['password'].value
       }
       this.authService.login(data).subscribe((response: ResponseUser) => {
+        console.log('login : ', response)
         if (response.statusCode == 1000) {
           const token = {
             token: response.data?.token

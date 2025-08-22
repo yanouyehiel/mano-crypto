@@ -12,7 +12,6 @@ export class AuthService {
 
   private url = environment.backend_api_url + environment.auth_url;
 
-
   private getConfig() {
     return {
       headers: new HttpHeaders(
@@ -24,6 +23,7 @@ export class AuthService {
       )
     }
   };
+  
   private getConfigAuthorized() {
     let tokenRegistred: any = localStorage.getItem('token-mansexch') || '{}'
     let data: any = JSON.parse(tokenRegistred)

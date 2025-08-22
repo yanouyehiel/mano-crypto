@@ -53,6 +53,7 @@ export class RetirerFondsComponent implements OnInit {
   public loader: boolean = true;
   public response: ResponseDeposit;
   reloadHistory = false;
+  public phonePlaceholder = 'Entrer le numéro de téléphone';
   setReload(){
     this.reloadHistory = !this.reloadHistory
   }
@@ -66,6 +67,32 @@ export class RetirerFondsComponent implements OnInit {
       phoneNumber: ['', [Validators.required, this.phoneValidator.bind(this)]],
       paiementMethod: ['', Validators.required],
     });
+
+    const paiementMethodControl = this.depositForm.get('paiementMethod');
+    if (paiementMethodControl) {
+      paiementMethodControl.valueChanges.subscribe(() => {
+        this.updatePhonePlaceholder();
+      });
+    }
+
+    this.updatePhonePlaceholder();
+  }
+
+  updatePhonePlaceholder() {
+    const selectedOperator = this.depositForm.controls['paiementMethod'].value;
+    switch (selectedOperator) {
+      case 'airtel-gabon':
+        this.phonePlaceholder = 'Ex: 066123456';
+        break;
+      case 'orange-cameroun':
+        this.phonePlaceholder = 'Ex: 699123456';
+        break;
+      case 'mtn-cameroun':
+        this.phonePlaceholder = 'Ex: 651234567';
+        break;
+      default:
+        this.phonePlaceholder = 'Entrer le numéro de téléphone';
+    }
   }
 
   get phoneOperator(): string {
@@ -87,7 +114,6 @@ export class RetirerFondsComponent implements OnInit {
 
   stepAttribute(step: number): void {
     this.step = step + 1;
-    console.log('deposit form : ', this.depositForm.controls)
     if (this.step === 1) {
       this.classStep1 = 'current';
       this.classStep2 = '';
@@ -115,14 +141,11 @@ export class RetirerFondsComponent implements OnInit {
   checkPhoneNumber(phoneNumber: string): 'Airtel Gabon' | 'Orange Cameroun' | 'MTN Cameroun' | 'Invalid' {
     const normalized = phoneNumber.replace(/\s|-/g, '');
 
-    // Airtel Gabon : préfixes courants 066X, 067X etc. (exemple)
-    const airtelGabonRegex = /^06(6|7)\d{7}$/;
+    const airtelGabonRegex = /^0[67]\d{7}$/;
 
-    // Orange Cameroun : préfixes par exemple 69[0-9]
-    const orangeCameroonRegex = /^6(5[5-9]|9[0-9])\d{6}$/;
+    const orangeCameroonRegex = /^(69\d{7}|65[5-9]\d{6})$/;
 
-    // MTN Cameroun : ex : 65[0-4], 67[0-9], 68[0-4]
-    const mtnCameroonRegex = /^6(5[0-4]|7[0-9]|8[0-4])\d{6}$/;
+    const mtnCameroonRegex = /^(67\d{7}|65[0-4]\d{6}|68[0-3]\d{6})$/;
 
     if (airtelGabonRegex.test(normalized)) {
       return 'Airtel Gabon';
@@ -165,7 +188,6 @@ export class RetirerFondsComponent implements OnInit {
     }
 
     this.depositService.getFees(data).subscribe(res => {
-      console.log('get fees : ', res)
       if (res.statusCode === 1000) {
         Swal.fire({
           titleText: "Récapitulatif financier du retrait",
@@ -174,7 +196,7 @@ export class RetirerFondsComponent implements OnInit {
           <p><i class="fa fa-spin fa-spinner" style="display:none;" id="live-spinner"></i></p>
           <ul>
             <li>Montant initié : <span style="color:green;">${res.data.amount} XAF</span></li>
-            <li>Frais de réseau : <span style="color:green;">${res.data.xaf_total} XAF</span></li>
+            <li>Frais de réseau : <span style="color:green;">${res.data.amount - res.data.total} XAF</span></li>
             <li>Net à recevoir : <span style="color:green;">${res.data.total} XAF</span></li>
           </ul>`,
           confirmButtonText: 'Continuer',
@@ -271,7 +293,6 @@ export class RetirerFondsComponent implements OnInit {
             amount: parseInt(this.depositForm.controls['amount'].value),
             phoneNumber: phoneNumber
           };
-          console.log('payload : ', data)
           const responseWithdraw = await this.depositService
             .withdraw(data)
             .pipe(catchError((error) => of(error.error)))
@@ -319,12 +340,11 @@ export class RetirerFondsComponent implements OnInit {
         if (response.statusCode === 1000) {
           this.operators = response.data
           .filter((op: any) => op.isActive);
-          console.log('operators après : ', this.operators)
+          console.log('operators', this.operators);
         }
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erreur lors du chargement des opérateurs:', error);
         this.loading = false;
       }
     });
