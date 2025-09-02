@@ -17,6 +17,8 @@ import { CryptoTransactionService } from 'src/app/services/crypto-transaction.se
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavService } from 'src/app/services/nav.service';
 import { UserService } from 'src/app/services/user.service';
+import { CryptoRechargePricingService, RechargePricingItem } from 'src/app/services/pricings/recharge-pricing.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -25,6 +27,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./recharge-crypto.component.scss'],
 })
 export class RechargeCryptoComponent implements OnInit {
+
+  public rechargeItems$: Observable<RechargePricingItem[]>;
+  public loading$: Observable<boolean>;
+  public error$: Observable<string | null>;
 
   public earningData = [
     {
@@ -108,8 +114,14 @@ export class RechargeCryptoComponent implements OnInit {
     public layoutService: LayoutService,
     private cryptoService: CryptoTransactionService,
     private router: Router,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private rechargePricingService: CryptoRechargePricingService,
+    private configurationService: ConfigurationService
+  ) {
+    this.rechargeItems$ = this.rechargePricingService.rechargePricingItems$;
+    this.loading$ = this.rechargePricingService.loading$;
+    this.error$ = this.rechargePricingService.error$;
+  }
 
   getProfileUser(): void {
     this.userService.getProfile().subscribe((response: any) => {
@@ -120,6 +132,7 @@ export class RechargeCryptoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.configurationService.updateConfigurations();
     this.getProfileUser()
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
@@ -181,6 +194,10 @@ export class RechargeCryptoComponent implements OnInit {
       }
      
     })
+  }
+
+  onRefresh(): void {
+    this.rechargePricingService.refreshPricing();
   }
 
   VerticallyCenteredModal(verticallyContent: any, item: any) {

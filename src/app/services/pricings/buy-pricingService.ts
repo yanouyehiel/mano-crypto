@@ -145,7 +145,15 @@ export class PricingService {
             crypto_currency: crypto.symbol
         }).pipe(
             map(response => this.createPricingItemFromResponse(crypto, response.data, referenceAmount)),
-            catchError(() => this.createDefaultPricingItem(crypto))
+            catchError(() => {
+                const currentItems = this.pricingItemsSubject.getValue();
+                const existingItem = currentItems.find(item => item.abv === crypto.symbol);
+                if (existingItem) {
+                    return of(existingItem);
+                } else {
+                    return this.createDefaultPricingItem(crypto);
+                }
+            })
         );
     }
 
@@ -287,7 +295,7 @@ export class PricingService {
     private handleUpdateError(error: any): void {
         this.loadingSubject.next(false);
         this.handleError(error);
-        this.pricingItemsSubject.next([]);
+        // this.pricingItemsSubject.next([]);
     }
 
     // Gestion générale des erreurs

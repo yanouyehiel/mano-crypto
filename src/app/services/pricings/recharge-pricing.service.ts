@@ -3,16 +3,16 @@ import { BehaviorSubject, Observable, interval, switchMap, startWith, map, catch
 import { CryptoTransactionService } from '../crypto-transaction.service';
 import { ConfigurationService } from '../configuration.service';
 
-export interface SellPricingItem {
+export interface RechargePricingItem {
     name: string;
     abv: string;
     usdValue: string;
     xafValue: string;
-    sellFee: string;
-    sellXafFee: string;
-    minCryptoSellingValue: string;
-    minSellingValue: string;
-    minSellingXafValue: string;
+    rechargeFee: string;
+    rechargeXafFee: string;
+    minCryptoRechargeValue: string;
+    minRechargeValue: string;
+    minRechargeXafValue: string;
     networkFee: string;
     networkXafFee: string;
     icon: string;
@@ -21,17 +21,17 @@ export interface SellPricingItem {
 @Injectable({
     providedIn: 'root'
 })
-export class CryptoSellPricingService {
-    private sellPricingItemsSubject = new BehaviorSubject<SellPricingItem[]>([]);
+export class CryptoRechargePricingService {
+    private rechargePricingItemsSubject = new BehaviorSubject<RechargePricingItem[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
     private errorSubject = new BehaviorSubject<string | null>(null);
     
-    public sellPricingItems$ = this.sellPricingItemsSubject.asObservable();
+    public rechargePricingItems$ = this.rechargePricingItemsSubject.asObservable();
     public loading$ = this.loadingSubject.asObservable();
     public error$ = this.errorSubject.asObservable();
     
-    private readonly REFRESH_INTERVAL = 30000; // 5 minutes
-    private readonly TIMEOUT_DURATION = 10000; // 10 secondes
+    private readonly REFRESH_INTERVAL = 30000; // 30 seconds
+    private readonly TIMEOUT_DURATION = 10000; // 10 seconds
     private readonly supportedCryptos = [
         {
             symbol: 'USDT',
@@ -51,15 +51,15 @@ export class CryptoSellPricingService {
     ];
 
     constructor(
-        private cryptoService: CryptoTransactionService, // CryptoTransactionService
-        private configurationService: ConfigurationService // ConfigurationService
+        private cryptoService: CryptoTransactionService,
+        private configurationService: ConfigurationService
     ) {
         this.initializeAutoRefresh();
     }
 
     public refreshPricing(): void {
         this.loadingSubject.next(true);
-        this.updateSellPricingData().subscribe({
+        this.updateRechargePricingData().subscribe({
             next: () => this.handleUpdateSuccess(),
             error: (error) => this.handleUpdateError(error)
         });
@@ -71,7 +71,7 @@ export class CryptoSellPricingService {
             startWith(0),
             switchMap(() => {
                 this.loadingSubject.next(true);
-                return this.updateSellPricingData();
+                return this.updateRechargePricingData();
             })
         ).subscribe({
             next: () => this.handleUpdateSuccess(),
@@ -79,7 +79,7 @@ export class CryptoSellPricingService {
         });
     }
 
-    private updateSellPricingData(): Observable<void> {
+    private updateRechargePricingData(): Observable<void> {
         return this.configurationService.configuration$.pipe(
             switchMap(() => {
                 this.initializeItemsIfEmpty();
@@ -93,25 +93,25 @@ export class CryptoSellPricingService {
     }
 
     private initializeItemsIfEmpty(): void {
-        const currentItems = this.sellPricingItemsSubject.getValue();
+        const currentItems = this.rechargePricingItemsSubject.getValue();
         if (currentItems.length === 0) {
-            this.sellPricingItemsSubject.next(this.getDefaultSellPricingItems());
+            this.rechargePricingItemsSubject.next(this.getDefaultRechargePricingItems());
         }
     }
 
-    private getDefaultSellPricingItems(): SellPricingItem[] {
+    private getDefaultRechargePricingItems(): RechargePricingItem[] {
         return this.supportedCryptos.map(crypto => ({
             name: crypto.name,
             abv: crypto.symbol,
             usdValue: 'Loading...',
             xafValue: 'Loading...',
-            sellFee: 'Loading...',
-            sellXafFee: 'Loading...',
-            minCryptoSellingValue: 'Loading...',
-            minSellingValue: 'Loading...',
-            minSellingXafValue: 'Loading...',
-            networkFee: 'Loading...',
-            networkXafFee: 'Loading...',
+            rechargeFee: 'Loading...',
+            rechargeXafFee: 'Loading...',
+            minCryptoRechargeValue: 'Loading...',
+            minRechargeValue: 'Loading...',
+            minRechargeXafValue: 'Loading...',
+            networkFee: 'Loading...', // Assuming network fee is also applicable for recharge
+            networkXafFee: 'Loading...', // Assuming network fee is also applicable for recharge
             icon: crypto.icon
         }));
     }
@@ -122,9 +122,9 @@ export class CryptoSellPricingService {
 
         return new Observable<void>(observer => {
             this.supportedCryptos.forEach(crypto => {
-                this.buildSellPricingItem(crypto).subscribe({
+                this.buildRechargePricingItem(crypto).subscribe({
                     next: (pricingItem) => {
-                        this.replaceSellPricingItem(pricingItem);
+                        this.replaceRechargePricingItem(pricingItem);
                         this.checkCompletion(++completedCount, totalCryptos, observer);
                     },
                     error: () => {
@@ -138,53 +138,39 @@ export class CryptoSellPricingService {
         });
     }
 
-    private buildSellPricingItem(crypto: any): Observable<SellPricingItem> {
+    private buildRechargePricingItem(crypto: any): Observable<RechargePricingItem> {
         const referenceAmount = this.getReferenceAmount(crypto.symbol);
 
-        // Récupérer les frais de transaction pour la vente
-        const transactionFeesObs = this.cryptoService.transactionFees({
-            amount: 1,
-            currency: crypto.symbol,
-            type: 'SELL_CRYPTO'
-        });
-
-        // Convertir vers fiat pour avoir les taux
         const conversionObs = this.cryptoService.convertToFiat({
             amount: referenceAmount,
             crypto_currency: crypto.symbol
         });
 
-        // Récupérer les minimums depuis la config
         const minXafAmount = this.configurationService.getConfigByKey('MIN_XAF_AMOUNT');
         const minCryptoObs = this.cryptoService.convertToCrypto({
-            amount: minXafAmount??500
+            amount: minXafAmount ?? 500
         });
 
-        // Combiner toutes les données
         return conversionObs.pipe(
             switchMap(conversionResponse => {
-                return transactionFeesObs.pipe(
-                    switchMap(feesResponse => {
-                        return minCryptoObs.pipe(
-                            map(minResponse => this.createSellPricingItemFromResponses(
-                                crypto, 
-                                conversionResponse.data, 
-                                feesResponse.data,
-                                minResponse.data,
-                                referenceAmount, 
-                                minXafAmount
-                            ))
-                        );
-                    })
+                return minCryptoObs.pipe(
+                    map(minResponse => this.createRechargePricingItemFromResponses(
+                        crypto,
+                        conversionResponse.data,
+                        null, // No transaction fees for recharge, assuming direct conversion
+                        minResponse.data,
+                        referenceAmount,
+                        minXafAmount
+                    ))
                 );
             }),
             catchError(() => {
-                const currentItems = this.sellPricingItemsSubject.getValue();
+                const currentItems = this.rechargePricingItemsSubject.getValue();
                 const existingItem = currentItems.find(item => item.abv === crypto.symbol);
                 if (existingItem) {
                     return of(existingItem);
                 } else {
-                    return this.createDefaultSellPricingItem(crypto);
+                    return this.createDefaultRechargePricingItem(crypto);
                 }
             })
         );
@@ -199,80 +185,83 @@ export class CryptoSellPricingService {
         }
     }
 
-    private createSellPricingItemFromResponses(
-        crypto: any, 
-        conversionData: any, 
-        feesData: any,
+    private createRechargePricingItemFromResponses(
+        crypto: any,
+        conversionData: any,
+        feesData: any, // Can be null for recharge
         minData: any,
-        referenceAmount: number, 
+        referenceAmount: number,
         minXafAmount: number
-    ): SellPricingItem {
-        const sellFeePercentage = this.configurationService.getConfigByKey('CRYPTO_SELL_SERVICE_FEES_PERCENTAGE');
+    ): RechargePricingItem {
+        const rechargeFeePercentage = this.configurationService.getConfigByKey('CRYPTO_RECHARGE_SERVICE_FEES_PERCENTAGE');
         
-        return this.createSellPricingItem(
-            crypto, 
-            conversionData, 
+        return this.createRechargePricingItem(
+            crypto,
+            conversionData,
             feesData,
             minData,
-            sellFeePercentage, 
-            minXafAmount, 
+            rechargeFeePercentage,
+            minXafAmount,
             referenceAmount
         );
     }
 
-    private createSellPricingItem(
+    private createRechargePricingItem(
         crypto: any,
         conversionData: any,
         feesData: any,
         minData: any,
-        sellFeePercentage: number,
+        rechargeFeePercentage: number,
         minXafAmount: number,
         referenceAmount: number
-    ): SellPricingItem {
-        const rates = this.calculateRates(conversionData, referenceAmount);
-        const fees = this.calculateSellFees(rates, sellFeePercentage);
-        const minimums = this.calculateMinimums(crypto.symbol, minData, minXafAmount);
-        const networkFees = this.calculateNetworkFees(feesData, rates);
+    ): RechargePricingItem {
+        const rates = this.calculateRates(conversionData);
+        const fees = this.calculateRechargeFees(rates, rechargeFeePercentage);
+        const minimums = this.calculateMinimums(crypto.symbol, minData, minXafAmount, conversionData);
+        const networkFees = this.calculateNetworkFees(feesData, rates); // feesData might be null
+
         return {
             name: crypto.name,
             abv: crypto.symbol,
             usdValue: this.formatCurrency(rates.usd, 'USD'),
             xafValue: this.formatCurrency(rates.xaf, 'XAF'),
-            sellFee: `${this.formatCurrency(fees.usd, 'USD')} (${sellFeePercentage}%)`,
-            sellXafFee: this.formatCurrency(fees.xaf, 'XAF'),
-            minCryptoSellingValue: `${this.formatCrypto(minimums.minCrypto)} ${crypto.symbol}`,
-            minSellingValue: this.formatCurrency(minimums.minUsd, 'USD'),
-            minSellingXafValue: this.formatCurrency(minXafAmount, 'XAF'),
+            rechargeFee: `${this.formatCurrency(fees.usd, 'USD')} (${rechargeFeePercentage}%)`,
+            rechargeXafFee: this.formatCurrency(fees.xaf, 'XAF'),
+            minCryptoRechargeValue: `${this.formatCrypto(minimums.minCrypto)} ${crypto.symbol}`,
+            minRechargeValue: this.formatCurrency(minimums.minUsd, 'USD'),
+            minRechargeXafValue: this.formatCurrency(minXafAmount, 'XAF'),
             networkFee: this.formatCurrency(networkFees.usd, 'USD'),
             networkXafFee: this.formatCurrency(networkFees.xaf, 'XAF'),
             icon: crypto.icon
         };
     }
 
-    private calculateRates(conversionData: any, referenceAmount: number) {
+    private calculateRates(conversionData: any) {
         return {
             usd: conversionData.usd_amount / conversionData.crypto_amount,
             xaf: conversionData.xaf_amount / conversionData.crypto_amount
         };
     }
 
-    private calculateSellFees(rates: any, sellFeePercentage: number) {
+    private calculateRechargeFees(rates: any, rechargeFeePercentage: number) {
         return {
-            usd: (rates.usd * sellFeePercentage) / 100,
-            xaf: (rates.xaf * sellFeePercentage) / 100
+            usd: (rates.usd * rechargeFeePercentage) / 100,
+            xaf: (rates.xaf * rechargeFeePercentage) / 100
         };
     }
 
     private calculateNetworkFees(feesData: any, rates: any) {
+        // For recharge, network fees might not be directly from transactionFees API
+        // If feesData is null, assume 0 for now or derive from another config if available
         return {
-            usd: feesData.usd_network_fees || 0,
-            xaf: (feesData.usd_network_fees || 0) * (rates.xaf / rates.usd)
+            usd: feesData?.usd_network_fees || 0,
+            xaf: (feesData?.usd_network_fees || 0) * (rates.xaf / rates.usd)
         };
     }
 
-    private calculateMinimums(cryptoSymbol: string, minData: any, minXafAmount: number) {
-        const minCrypto = minData[`${cryptoSymbol.toLowerCase()}_amount`];
-        const minUsd = minData.usd_amount;
+    private calculateMinimums(cryptoSymbol: string, minData: any, minXafAmount: number, conversionData: any) {
+        const minCrypto = minXafAmount / (conversionData.xaf_amount / conversionData.crypto_amount);
+        const minUsd = minXafAmount / (conversionData.xaf_amount / conversionData.usd_amount);
 
         return {
             minCrypto,
@@ -281,28 +270,28 @@ export class CryptoSellPricingService {
         };
     }
 
-    private createDefaultSellPricingItem(crypto: any): Observable<SellPricingItem> {
+    private createDefaultRechargePricingItem(crypto: any): Observable<RechargePricingItem> {
         return new Observable(observer => {
             observer.next({
                 name: crypto.name,
                 abv: crypto.symbol,
-                usdValue: 'Loading...',
-                xafValue: 'Loading...',
-                sellFee: 'Loading...',
-                sellXafFee: 'Loading...',
-                minCryptoSellingValue: 'Loading...',
-                minSellingValue: 'Loading...',
-                minSellingXafValue: 'Loading...',
-                networkFee: 'Loading...',
-                networkXafFee: 'Loading...',
+                usdValue: 'Loading...', 
+                xafValue: 'Loading...', 
+                rechargeFee: 'Loading...', 
+                rechargeXafFee: 'Loading...', 
+                minCryptoRechargeValue: 'Loading...', 
+                minRechargeValue: 'Loading...', 
+                minRechargeXafValue: 'Loading...', 
+                networkFee: 'Loading...', 
+                networkXafFee: 'Loading...', 
                 icon: crypto.icon
             });
             observer.complete();
         });
     }
 
-    private replaceSellPricingItem(newItem: SellPricingItem): void {
-        const currentItems = [...this.sellPricingItemsSubject.getValue()];
+    private replaceRechargePricingItem(newItem: RechargePricingItem): void {
+        const currentItems = [...this.rechargePricingItemsSubject.getValue()];
         const index = currentItems.findIndex(item =>
             item.abv === newItem.abv || item.abv.startsWith(newItem.abv.split('-')[0])
         );
@@ -313,18 +302,18 @@ export class CryptoSellPricingService {
             currentItems.push(newItem);
         }
 
-        this.sellPricingItemsSubject.next(currentItems);
+        this.rechargePricingItemsSubject.next(currentItems);
     }
 
     private ensureDefaultItem(crypto: any): void {
-        const currentItems = this.sellPricingItemsSubject.getValue();
+        const currentItems = this.rechargePricingItemsSubject.getValue();
         const existingItem = currentItems.find(item =>
             item.abv === crypto.symbol || item.abv.startsWith(crypto.symbol)
         );
 
         if (!existingItem) {
-            this.createDefaultSellPricingItem(crypto).subscribe(defaultItem => {
-                this.replaceSellPricingItem(defaultItem);
+            this.createDefaultRechargePricingItem(crypto).subscribe(defaultItem => {
+                this.replaceRechargePricingItem(defaultItem);
             });
         }
     }
@@ -353,11 +342,10 @@ export class CryptoSellPricingService {
     private handleUpdateError(error: any): void {
         this.loadingSubject.next(false);
         this.handleError(error);
-        // this.sellPricingItemsSubject.next(this.getDefaultSellPricingItems());
     }
 
     private handleError(error: any): void {
-        const errorMessage = error.error?.message || error.message || 'Une erreur est survenue lors du chargement des données de vente';
+        const errorMessage = error.error?.message || error.message || 'Une erreur est survenue lors du chargement des données de recharge';
         this.errorSubject.next(errorMessage);
     }
 
