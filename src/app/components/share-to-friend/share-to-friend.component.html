@@ -1,52 +1,60 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container-fluid general-widget">
   <div class="row">
-    
+
     <div class="col-xl-8 box-col-12 des-xl-100">
       <div class="card">
         <div class="card-header">
           <h5>Transfert de crypto-monnaies vers un autre compte</h5>
         </div>
         <form [formGroup]="sendForm">
-        <div class="card-body">
-          <div class="row g-3">
-            <div class="col-lg-5 col-12 d-flex">
-              <input type="text" formControlName="address" class="form-control border-black" placeholder="Adresse mail ou le numéro de télephone du receveur" />
-            </div>
-            <div class="col-lg-2 col-6 d-flex">
-              
-              <select class="form-control form-control-primary-fill border-black" (change)="getCryptoMinimumAmount()" formControlName="currency">
-                <option value="XAF" [selected]="true">XAF</option>
-                <option value="USDT">USDT</option>
-                <option value="BTC">BTC</option>
-                <option value="ETH">ETH</option>
-              </select>
-            </div>
-            <div class="col-lg-3 col-6">
-              <input type="number"  (keyup)="bindInputValue()" class="form-control border-black {{(minimumCryptoWithdrawAmount && !sendForm.value['amount'].invalid && minimumCryptoWithdrawAmount<=sendForm.value['amount'])?'border-success':(minimumCryptoWithdrawAmount && sendForm.value['amount']!='' && minimumCryptoWithdrawAmount! > sendForm.value['amount'] )?'border-danger':''}}"  placeholder="Montant" formControlName="amount" />
-              
-            </div>
-            
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-lg-5 col-12 d-flex">
+                <input type="text" formControlName="address" class="form-control border-black"
+                  placeholder="Adresse mail ou le numéro de télephone du receveur" />
+              </div>
+              <div class="col-lg-2 col-6 d-flex">
 
-            <div class="col-lg-2 col-6">
-              <button class="btn btn-primary" type="submit" [disabled]="sendForm.value['address'].invalid || sendForm.value['amount'].invalid || loadingTransfert" (click)="confirmIdentityModal()">
-                {{!loadingTransfert ? "Envoyer" : ""}}<i *ngIf="loadingTransfert" class="fa fa-spin fa-circle-o-notch"></i>
-               </button>
+                <select class="form-control form-control-primary-fill border-black" (change)="getCryptoMinimumAmount()"
+                  formControlName="currency">
+                  <option value="XAF" [selected]="true">XAF</option>
+                  <option value="USDT">USDT</option>
+                  <option value="BTC">BTC</option>
+                  <option value="ETH">ETH</option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-6">
+                <input type="number" (keyup)="bindInputValue()"
+                  class="form-control border-black {{(minimumCryptoWithdrawAmount && !sendForm.value['amount'].invalid && minimumCryptoWithdrawAmount<=sendForm.value['amount'])?'border-success':(minimumCryptoWithdrawAmount && sendForm.value['amount']!='' && minimumCryptoWithdrawAmount! > sendForm.value['amount'] )?'border-danger':''}}"
+                  placeholder="Montant" formControlName="amount" />
+
+              </div>
+
+
+              <div class="col-lg-2 col-6">
+                <button class="btn btn-primary" type="submit"
+                  [disabled]="sendForm.value['address'].invalid || sendForm.value['amount'].invalid || loadingTransfert"
+                  (click)="confirmIdentityModal()">
+                  {{!loadingTransfert ? "Envoyer" : ""}}<i *ngIf="loadingTransfert"
+                    class="fa fa-spin fa-circle-o-notch"></i>
+                </button>
+              </div>
+              <div *ngIf="alertMsg">
+                <p class="text-danger">{{alertMsg}}</p>
+
+              </div>
+              <p style="display:none;" id="live-spinner"><i class="fa fa-spin fa-spinner"></i></p>
+              <ul id="live-content" style="display:none; justify-content: space-around;">
+                <li><b id="live-value6" class="text-success h5 "></b> de cout total</li>
+                <li><b id="live-value1"></b> </li>
+                <!-- <li><b id="live-value3"></b> </li> -->
+                <li><b id="live-value4"></b> de frais manen crypto</li>
+                <li><b id="live-value5"></b> de frais réseau crypto</li>
+              </ul>
             </div>
-            <div *ngIf="alertMsg"><p class="text-danger">{{alertMsg}}</p>
-              
-            </div>
-            <p style="display:none;" id="live-spinner"><i class="fa fa-spin fa-spinner"></i></p>
-      <ul id="live-content" style="display:none; justify-content: space-around;">
-        <li><b id="live-value6"  class="text-success h5 "></b> de cout total</li>
-        <li><b id="live-value1"></b> </li>
-        <!-- <li><b id="live-value3"></b> </li> -->
-        <li><b id="live-value4"></b> de frais manen crypto</li>
-        <li><b id="live-value5"></b> de frais réseau crypto</li>
-      </ul>
           </div>
-        </div>
-      </form>
+        </form>
       </div>
     </div>
     <div class="col-xl-4 box-col-12 des-xl-100">
@@ -56,6 +64,54 @@
         </div>
         <div class="card-body p-0">
           <app-crypto-balance></app-crypto-balance>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card mt-4">
+    <div class="card-header">
+      <h5>GRILLE TARIFAIRE</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordernone table-responsive-sm table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Crypto-monnaie</th>
+                <th scope="col">Valeur</th>
+                <th scope="col">Frais Manen</th>
+                <th scope="col">Montant Min. Transferable</th>
+              </tr>
+            </thead>
+
+            <tr *ngFor="let item of transfertPricingItems$ | async">
+              <th scope="row">
+                <div class="d-flex justify-content-start"><img src="{{item.abv!='XAF'? item.icon:'../../../../assets/images/XAF.png'}}" width="45" [alt]="item.abv"
+                    class="image-thumbail" />
+                  <div>{{ item.name }}<br /> <span class="text-muted fw-lighter">{{ item.abv
+                      }}</span></div>
+                </div>
+              </th>
+              <td>
+                <div><span class="fw-bolder">{{item.usdValue}}</span><br /> <span
+                    class="text-muted fw-light">{{item.abv!='XAF'?item.xafValue:""}}</span></div>
+
+              </td>
+              <td>
+                <div><span class="fw-bolder">{{item.transferFee}}</span><br /> <span
+                    class="text-muted fw-light">{{item.abv!='XAF'?item.transferXafFee:""}}</span></div>
+              </td>
+              <td>
+                <div><span class="fw-bolder">{{item.minCryptoTransferValue}} </span><br /> <span
+                    class="text-muted fw-light">{{
+                    item.abv!='XAF'?item.minTransferValue:'' }}</span><br /> <span class="text-muted fw-light">{{item.abv!='XAF'? item.minTransferXafValue:""
+                    }}</span></div>
+              </td>
+
+
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -75,9 +131,4 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <app-pricing-grid></app-pricing-grid>
-    </div>
-  </div>
 </div>

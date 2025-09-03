@@ -103,12 +103,5 @@
     <p>{{ error }}</p>
     <button (click)="onRefresh()" class="retry-button">Réessayer</button>
   </div>
-
-  <!-- Bouton de rafraîchissement manuel -->
-  <div class="refresh-controls">
-    <button (click)="onRefresh()" [disabled]="loading$ | async" class="refresh-button">
-      Actualiser les prix
-    </button>
-  </div>
 </div>
 </div>

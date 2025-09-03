@@ -14,6 +14,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { CryptoTransactionService } from 'src/app/services/crypto-transaction.service';
+import { CryptoTransferPricingService } from 'src/app/services/pricings/transfer-pricing.service';
 import { ConfirmPasswordComponent } from 'src/app/shared/components/confirm-password/confirm-password.component';
 import Swal from 'sweetalert2';
 
@@ -29,6 +30,7 @@ export class SendCryptoComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private fb: FormBuilder,
+    private cryptoTransfertPricingService: CryptoTransferPricingService,
     private transactionService: CryptoTransactionService) {
     if (this.userSaved == null) {
       this.router.navigate(['/auth/login'])
@@ -46,11 +48,16 @@ export class SendCryptoComponent implements OnInit {
   liveSpinner: HTMLElement | null;
   liveContent: HTMLElement | null;
   loadingTransfert = false;
+  transfertPricingItems$ = this.cryptoTransfertPricingService.transferPricingItems$;
+  loading$ = this.cryptoTransfertPricingService.loading$;
+  error$ = this.cryptoTransfertPricingService.error$;
 
   setReload() {
     this.reloadHistory = !this.reloadHistory
   }
-
+  refreshPricing() {
+    this.cryptoTransfertPricingService.refreshPricing();
+  }
 
   ngOnInit(): void {
     this.liveSpinner = document.getElementById('live-spinner')
@@ -61,7 +68,7 @@ export class SendCryptoComponent implements OnInit {
       currency: ['USDT', Validators.required],
     });
     this.getCryptoMinimumAmount()
-   
+
     this.liveResponse$ = this.swalInputValue.pipe(
       //On va attendre un certain temps avant de lancer la requete au serveur
       debounceTime(300),
@@ -69,7 +76,7 @@ export class SendCryptoComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((term) => {
         if (parseFloat(term) > 0) {
-           
+
           if (this.liveSpinner) {
             this.liveSpinner.style.display = "block";
           }
@@ -77,10 +84,10 @@ export class SendCryptoComponent implements OnInit {
           return this.transactionService.transactionFees({
             amount: term,
             currency: this.sendForm.value['currency'],
-            
+
             type: "WITHDRAW_CRYPTO"
           });
-          
+
         } else {
           return of(null);
         }
@@ -88,38 +95,38 @@ export class SendCryptoComponent implements OnInit {
     );
 
     this.liveResponse$.subscribe((response) => {
-      
+
       this.liveSpinner!.style.display = 'none';
       if (this.liveContent) {
         this.liveContent.style.display = 'flex';
       }
-      const liveContent = document.getElementById('live-content'); 
-      if(liveContent){
+      const liveContent = document.getElementById('live-content');
+      if (liveContent) {
         liveContent.style.display = 'flex';
       }
-      
+
       const liveValue1 = document.getElementById('live-value1');
       if (liveValue1) {
-        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR')+' XAF'}`;
+        liveValue1.innerText = `${parseInt(response.data.xaf_total).toLocaleString('fr-FR') + ' XAF'}`;
       }
       const liveValue3 = document.getElementById('live-value3');
       if (liveValue3) {
-        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2)+' USDT'}`;
+        liveValue3.innerText = `${parseFloat(response.data.usdc_total).toFixed(2) + ' USDT'}`;
       }
-     
+
       const liveValue4 = document.getElementById('live-value4');
       if (liveValue4) {
-        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2)+' USDT'}`;
+        liveValue4.innerText = `${parseFloat(response.data.usd_fees).toFixed(2) + ' USDT'}`;
       }
       const liveValue5 = document.getElementById('live-value5');
       if (liveValue5) {
-        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2)+' USDT'}`;
+        liveValue5.innerText = `${parseFloat(response.data.usd_network_fees).toFixed(2) + ' USDT'}`;
       }
       const liveValue6 = document.getElementById('live-value6');
       if (liveValue6) {
-        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2)+' USDT'}`;
+        liveValue6.innerText = `${(parseFloat(response.data.usdc_total)).toFixed(2) + ' USDT'}`;
       }
-     
+
     })
   }
 
@@ -128,14 +135,14 @@ export class SendCryptoComponent implements OnInit {
   }
 
   getCryptoMinimumAmount() {
-    if(this.sendForm.value['amount']){
+    if (this.sendForm.value['amount']) {
       this.bindInputValue()
     }
-    
+
     this.transactionService.getMinimumCryptoWithdrawAmount({ "currency": this.sendForm.value['currency'] }).subscribe((result) => {
       this.minimumCryptoWithdrawAmount = parseFloat(result.data.result)
     })
-    
+
   }
 
   confirmIdentityModal() {
@@ -232,10 +239,10 @@ export class SendCryptoComponent implements OnInit {
           setTimeout(() => {
             Swal.close();
           }, 2000);
-        }else if (result.value.statusCode == 1001) {
+        } else if (result.value.statusCode == 1001) {
           //this.router.navigate(['/auth/login'])
           Swal.fire('L\'operation a echoue', result.value.message, 'error');
-        }  else {
+        } else {
           Swal.fire('L\'operation a echoue', result.value.message, 'error');
         }
 
