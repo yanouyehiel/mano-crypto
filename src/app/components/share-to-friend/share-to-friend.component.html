@@ -87,23 +87,23 @@
 
             <tr *ngFor="let item of transfertPricingItems$ | async">
               <th scope="row">
-                <div class="d-flex justify-content-start"><img src="{{item.abv!='XAF'? item.icon:'../../../../assets/images/XAF.png'}}" width="45" [alt]="item.abv"
+                <div class="d-flex justify-content-start" style="background-color: transparent !important;" ><img src="{{item.abv!='XAF'? item.icon:'../../../../assets/images/XAF.png'}}" width="45" [alt]="item.abv"
                     class="image-thumbail" />
-                  <div>{{ item.name }}<br /> <span class="text-muted fw-lighter">{{ item.abv
+                  <div><span class="text-body fw-bold">{{ item.name }}</span><br /> <span class="text-muted fw-lighter">{{ item.abv
                       }}</span></div>
                 </div>
               </th>
               <td>
-                <div><span class="fw-bolder">{{item.usdValue}}</span><br /> <span
+                <div style="background-color: transparent !important;"><span class="text-body fw-bolder">{{item.usdValue}}</span><br /> <span
                     class="text-muted fw-light">{{item.abv!='XAF'?item.xafValue:""}}</span></div>
 
               </td>
               <td>
-                <div><span class="fw-bolder">{{item.transferFee}}</span><br /> <span
+                <div style="background-color: transparent !important;"><span class="text-body fw-bolder">{{item.transferFee}}</span><br /> <span
                     class="text-muted fw-light">{{item.abv!='XAF'?item.transferXafFee:""}}</span></div>
               </td>
               <td>
-                <div><span class="fw-bolder">{{item.minCryptoTransferValue}} </span><br /> <span
+                <div style="background-color: transparent !important;"><span class="text-body fw-bolder">{{item.minCryptoTransferValue}} </span><br /> <span
                     class="text-muted fw-light">{{
                     item.abv!='XAF'?item.minTransferValue:'' }}</span><br /> <span class="text-muted fw-light">{{item.abv!='XAF'? item.minTransferXafValue:""
                     }}</span></div>

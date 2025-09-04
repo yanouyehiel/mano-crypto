@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, interval, switchMap, startWith, map, catchError, of } from 'rxjs';
 import { CryptoTransactionService } from '../crypto-transaction.service';
 import { ConfigurationService } from '../configuration.service';
+import { ResponseParent, ResponseCryptoFee } from 'src/app/models/Transaction';
 
 export interface RechargePricingItem {
     name: string;
@@ -146,6 +147,11 @@ export class CryptoRechargePricingService {
             crypto_currency: crypto.symbol
         });
 
+        const networkFeesObs = this.cryptoService.transactionFees({
+            crypto_currency: crypto.symbol,
+            transaction_type: 'RECHARGE_CRYPTO'
+        });
+
         const minXafAmount = this.configurationService.getConfigByKey('MIN_XAF_AMOUNT');
         const minCryptoObs = this.cryptoService.convertToCrypto({
             amount: minXafAmount ?? 500
@@ -153,15 +159,34 @@ export class CryptoRechargePricingService {
 
         return conversionObs.pipe(
             switchMap(conversionResponse => {
-                return minCryptoObs.pipe(
-                    map(minResponse => this.createRechargePricingItemFromResponses(
-                        crypto,
-                        conversionResponse.data,
-                        null, // No transaction fees for recharge, assuming direct conversion
-                        minResponse.data,
-                        referenceAmount,
-                        minXafAmount
-                    ))
+                return networkFeesObs.pipe(
+                    switchMap((feesResponse: ResponseParent) => {
+                        if (!feesResponse.data) {
+                            throw new Error('Network fees data is missing');
+                        }
+                        return minCryptoObs.pipe(
+                            map(minResponse => this.createRechargePricingItemFromResponses(
+                                crypto,
+                                conversionResponse.data,
+                                feesResponse.data,
+                                minResponse.data,
+                                referenceAmount,
+                                minXafAmount
+                            ))
+                        );
+                    }),
+                    catchError(() => {
+                        return minCryptoObs.pipe(
+                            map(minResponse => this.createRechargePricingItemFromResponses(
+                                crypto,
+                                conversionResponse.data,
+                                null, // Network fees might fail, so pass null
+                                minResponse.data,
+                                referenceAmount,
+                                minXafAmount
+                            ))
+                        );
+                    })
                 );
             }),
             catchError(() => {
@@ -188,7 +213,7 @@ export class CryptoRechargePricingService {
     private createRechargePricingItemFromResponses(
         crypto: any,
         conversionData: any,
-        feesData: any, // Can be null for recharge
+        feesData: ResponseCryptoFee['data'] | null,
         minData: any,
         referenceAmount: number,
         minXafAmount: number
@@ -209,7 +234,7 @@ export class CryptoRechargePricingService {
     private createRechargePricingItem(
         crypto: any,
         conversionData: any,
-        feesData: any,
+        feesData: ResponseCryptoFee['data'] | null,
         minData: any,
         rechargeFeePercentage: number,
         minXafAmount: number,
@@ -250,9 +275,7 @@ export class CryptoRechargePricingService {
         };
     }
 
-    private calculateNetworkFees(feesData: any, rates: any) {
-        // For recharge, network fees might not be directly from transactionFees API
-        // If feesData is null, assume 0 for now or derive from another config if available
+    private calculateNetworkFees(feesData: any | null, rates: any) {
         return {
             usd: feesData?.usd_network_fees || 0,
             xaf: (feesData?.usd_network_fees || 0) * (rates.xaf / rates.usd)

@@ -66,62 +66,80 @@
     </div>
   </div>
   <div class="row">
-    <div class="table-responsive">
-      <table class="table table-bordernone table-responsive-sm table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Crypto-monnaie</th>
-            <th scope="col">Valeur</th>
-            <th scope="col">Frais Manen</th>
-            <th scope="col">Frais Reseau</th>
-            <th scope="col">Montant Min. Transferable</th>
-          </tr>
-        </thead>
-
-        <tr *ngFor="let item of transfertPricingItems$ | async">
-          <th scope="row">
-            <div class="d-flex justify-content-start"><img [src]="item.icon" width="45" [alt]="item.abv"
-                class="image-thumbail" />
-              <div>{{ item.name }}<br /> <span class="text-muted fw-lighter">{{ item.abv
-                  }}</span></div>
-            </div>
-          </th>
-          <td>
-            <div><span class="fw-bolder">{{item.usdValue}}</span><br /> <span
-                class="text-muted fw-light">{{item.xafValue}}</span></div>
-
-          </td>
-          <td>
-            <div><span class="fw-bolder">{{item.transferFee}}</span><br /> <span
-                class="text-muted fw-light">{{item.transferXafFee}}</span></div>
-          </td>
-          <td>
-            <div><span class="fw-bolder">{{item.networkFee}} </span><br /> <span class="text-muted fw-light">{{
-                item.networkXafFee }}</span>
-            </div>
-          </td>
-          <td>
-            <div><span class="fw-bolder">{{item.minCryptoTransferValue}} </span><br /> <span
-                class="text-muted fw-light">{{
-                item.minTransferValue }}</span><br /> <span class="text-muted fw-light">{{ item.minTransferXafValue
-                }}</span></div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xl-12 box-col-12 des-xl-100">
+    <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
-          <h5>Précédents transfert de cryptomonnaies</h5>
+          <h5>Grille tarifaire</h5>
+          <!-- <span>A <code>&lt;caption&gt;</code> functions like a heading for a table. It helps users with screen readers to find a table and understand what it’s about and decide if they want to read it.</span> -->
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <app-history-table type="WITHDRAW_CRYPTO" [reloadHistory]="reloadHistory"></app-history-table>
+        <div class="card-block row">
+          <div class="col-sm-12 col-lg-12 col-xl-12">
+            <div class="table-responsive">
+              <table class="table table-bordernone table-responsive-sm table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Crypto-monnaie</th>
+                    <th scope="col">Valeur</th>
+                    <th scope="col">Frais Manen</th>
+                    <th scope="col">Frais Reseau</th>
+                    <th scope="col">Montant Min. Transferable</th>
+                  </tr>
+                </thead>
+
+                <tr *ngFor="let item of transfertPricingItems$ | async">
+                  <th scope="row">
+                    <div class="d-flex justify-content-start" style="background-color: transparent !important;"><img
+                        [src]="item.icon" width="45" [alt]="item.abv" class="image-thumbail" />
+                      <div><span class="text-body fw-bold">{{ item.name }}</span><br /> <span
+                          class="text-muted fw-lighter">{{ item.abv
+                          }}</span></div>
+                    </div>
+                  </th>
+                  <td>
+                    <div style="background-color: transparent !important;"><span
+                        class="text-body fw-bolder">{{item.usdValue}}</span><br /> <span
+                        class="text-muted fw-light">{{item.xafValue}}</span></div>
+
+                  </td>
+                  <td>
+                    <div style="background-color: transparent !important;"><span
+                        class="text-body fw-bolder">{{item.transferFee}}</span><br /> <span
+                        class="text-muted fw-light">{{item.transferXafFee}}</span></div>
+                  </td>
+                  <td>
+                    <div style="background-color: transparent !important;"><span
+                        class="text-body fw-bolder">{{item.networkFee}} </span><br /> <span
+                        class="text-muted fw-light">{{
+                        item.networkXafFee }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="background-color: transparent !important;"><span
+                        class="text-body fw-bolder">{{item.minCryptoTransferValue}} </span><br /> <span
+                        class="text-muted fw-light">{{
+                        item.minTransferValue }}</span><br /> <span class="text-muted fw-light">{{
+                        item.minTransferXafValue
+                        }}</span></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 box-col-12 des-xl-100">
+        <div class="card">
+          <div class="card-header">
+            <h5>Précédents transfert de cryptomonnaies</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <app-history-table type="WITHDRAW_CRYPTO" [reloadHistory]="reloadHistory"></app-history-table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
