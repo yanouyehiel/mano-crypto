@@ -2,9 +2,12 @@ a{
     cursor: pointer;
 }
 input.search-input {
-    border: 1px solid black;
+    border: 1px solid #8a8a8a2e;
 }
 
 .history-details{
     overflow: scroll;
+}
+.bg-selected{
+  background-color: rgba($color: #8a8a8a2e, $alpha: 0.3) !important;
 }

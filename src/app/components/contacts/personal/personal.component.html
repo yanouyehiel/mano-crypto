@@ -14,7 +14,7 @@
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
           <p *ngIf="users.length===0" class="text-center f-20">Pas de compte</p>
           <ng-container *ngFor="let userItem of users">
-            <a (click)="setUserDisplay(userItem)" [ngClass]="user==userItem?'bg-secondary-subtle':''"
+            <a (click)="setUserDisplay(userItem)" [ngClass]="user==userItem?'bg-selected':''"
               class="contact-tab-0 nav-link" role="tab">
               <div class="media">
                 <!-- <img class="img-50 img-fluid m-r-20 rounded-circle update_img_1" src="assets/images/dashboard/1.png" alt=""> -->
