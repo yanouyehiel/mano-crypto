@@ -122,6 +122,9 @@
                         formControlName="amount"
                         required
                       />
+                      <div class="text-warning" *ngIf="depositForm.get('amount')?.value < getMinAmount()">
+                      Le montant minimum est de {{ getMinAmount() }} FCFA
+                    </div>
                     </div>
                     <div
                       class="row mt-4"
@@ -139,7 +142,8 @@
                         <button
                           [disabled]="
                             depositForm.controls['phoneNumber'].invalid ||
-                            depositForm.controls['amount'].invalid
+                            depositForm.controls['amount'].invalid || depositForm.get('amount')?.value < getMinAmount()
+
                           "
                           class="btn btn-primary"
                           (click)="stepAttribute(2)"
@@ -225,9 +229,5 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <app-pricing-grid></app-pricing-grid>
-    </div>
-  </div>
+ 
 </div>

@@ -9,12 +9,14 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of } from 'rxjs';
+import { Configuration } from 'src/app/models/pricings-elements';
 import {
   ResponseDeposit,
   ResponseParent,
   ResponseTransactionList,
 } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ConfirmPasswordComponent } from 'src/app/shared/components/confirm-password/confirm-password.component';
 import Swal from 'sweetalert2';
@@ -28,13 +30,14 @@ export class RetirerFondsComponent implements OnInit {
   private userSaved = localStorage.getItem('user-mansexch')
   public loading = false;
   public operators: any[] = [];
-
+  configs: Configuration[] = []
   constructor(
     private router: Router,
     private modalService: NgbModal,
     private authService: AuthService,
     private depositService: TransactionService,
     private fb: FormBuilder,
+        private configurationService: ConfigurationService
   ) {
     if (this.userSaved == null) {
       this.router.navigate(['/auth/login'])
@@ -59,6 +62,9 @@ export class RetirerFondsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+     this.configurationService.getConfigurations().subscribe((configs) => {
+      this.configs = configs
+    })
     this.loadOperators()
     this.step = 1;
     this.classStep1 = 'current';
@@ -94,7 +100,9 @@ export class RetirerFondsComponent implements OnInit {
         this.phonePlaceholder = 'Entrer le numéro de téléphone';
     }
   }
-
+ getMinAmount(){
+    return this.configs.find(c => c.key === 'MIN_XAF_AMOUNT') ? parseInt(this.configs.find(c => c.key === 'MIN_XAF_AMOUNT')!.value.toString()) : 500;
+  }
   get phoneOperator(): string {
     const phoneNumber = this.depositForm.controls['phoneNumber'].value;
     if (!phoneNumber) return '';

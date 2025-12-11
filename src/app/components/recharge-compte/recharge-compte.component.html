@@ -33,6 +33,7 @@
                     <p>Vérifiez et validez</p>
                   </div>
                 </div>
+                
               </div>
             </div>
             <div class="col-lg-8">
@@ -106,6 +107,9 @@
                     <div class="mb-5">
                       <input class="form-control input" id="exampleFormControlInput1" type="number"
                         placeholder="Entrer le montant" pattern="^[1-9]\d*$" formControlName="amount" required />
+                    <div class="text-warning" *ngIf="depositForm.get('amount')?.value < getMinAmount()">
+                      Le montant minimum est de {{ getMinAmount() }} FCFA
+                    </div>
                     </div>
                     <div class="row mt-4" style="margin-top: 20px; margin-bottom: 40px">
                       <div class="col-md-4">
@@ -116,7 +120,7 @@
                       <div class="col-md-4">
                         <button [disabled]="
                             depositForm.controls['phoneNumber'].invalid ||
-                            depositForm.controls['amount'].invalid
+                            depositForm.controls['amount'].invalid || depositForm.get('amount')?.value < getMinAmount()
                           " class="btn btn-primary" (click)="stepAttribute(2)">
                           Suivant
                         </button>
@@ -190,9 +194,5 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <app-pricing-grid></app-pricing-grid>
-    </div>
-  </div>
+  
 </div>

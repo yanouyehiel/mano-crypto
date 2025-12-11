@@ -40,70 +40,7 @@ export class HomeAdminComponent implements OnInit {
   }
 
 
-  getConfigKey(key:string):string{
-    switch (key) {
-      case 'SALT_ROUNDS':
-        return "Nombre de tours pour le hachage"
-        break;
-      case 'TOKEN_EXPIRATION_TIME':
-        return "Durée de validité des tokens"
-        break;
-      case 'CRYPTO_BUY_SERVICE_FEES_PERCENTAGE':
-        return "Pourcentage de frais pour l'achat de cryptos"
-        break;
-      case 'MIN_XAF_AMOUNT':
-        return "Montant minimal de transaction (XAF)"
-        break;
-      case 'CRYPTO_WITHDRAW_FEES_PERCENTAGE':
-        return 'Frais de retrait crypto (x100 (%))'
-        break;
-      case 'CRYPTO_WITHDRAW_MIN_AMOUNT':
-        return 'Montant minimal de retrait crypto'
-        break;
-      case 'MIN_CRYPTO_INVOICE_XAF_AMOUNT':
-        return 'Montant minimum pour les factures en crypto'
-        break;
-      case 'MIN_CRYPTO_WITHDRAW_VERIFY_AMOUNT':
-        return 'Montant minimal pour vérifier les retraits'
-        break;
-      case 'CRYPTO_BUY_SERVICE_NETWORK_FEES_PERCENTAGE':
-        return "Pourcentage des frais de réseau d'achat crypto"
-        break;
-      case 'CRYPTO_RECHARGE_SERVICE_FEES_PERCENTAGE':
-        return 'Pourcentage de frais pour la recharge crypto'
-        break;
-      case 'USDT_OTHER_WALLET_TRANSFER_FEES':
-        return "Frais de transfert de l'USDT"
-        break;
-      case 'CRYPTO_SEND_TO_FRIEND_FEES_PERCENTAGE':
-        return "Frais pour envoyer des cryptos à un ami"
-        break;
-      case 'BTC_OTHER_WALLET_TRANSFER_FEES':
-        return "Frais pour les transferts de portefeuille BTC"
-        break;
-      case 'ETH_OTHER_WALLET_TRANSFER_FEES':
-        return "Frais pour les transferts de portefeuille ETH"
-        break;
-      case 'XAF_DEPOSITS_FEES':
-        return "Frais pour les dépôts en XAF"
-        break;
-      case 'CRYPTO_SELL_SERVICE_FEES_PERCENTAGE':
-        return "Pourcentage de frais pour la vente de cryptos"
-        break;
-      case 'BASE_STABLE_CRYPTO':
-        return 'Crypto stable par défaut'
-        break;
-      case 'DISPLAY_MIN_WALLET_TRANSFER_AMOUNT_CONFIGS':
-        return 'Afficher les seuils minimaux de transfert de portefeuille'
-        break;
-      case 'XAF_OTHER_WALLET_TRANSFER_FEES':
-        return 'Frais pour les trainsferts de portefeuille XAF'
-        break;
-      default:
-        return "Frais de retrait mobile (x100 (%))";
-        break;
-    }
-  }
+  
 
   getConfigIcon(key:string):string{
     switch (key) {
@@ -132,7 +69,7 @@ export class HomeAdminComponent implements OnInit {
         return 'money'
         break;
       case 'DISPLAY_MIN_WALLET_TRANSFER_AMOUNT_CONFIGS':
-        return 'question'
+        return 'credit-card'
         break;
       case 'XAF_OTHER_WALLET_TRANSFER_FEES':
         return 'money'
@@ -165,7 +102,13 @@ export class HomeAdminComponent implements OnInit {
         return "percent"
         break;
       default:
-        return "money";
+        if(key.includes("PERCENT")){
+          return "percent"
+        }
+        if(key.includes("AMOUNT")){
+          return "money"
+        }
+        return "money"
         break;
     }
   }
@@ -205,7 +148,7 @@ export class HomeAdminComponent implements OnInit {
 
   async updateConfigs(element: any) {
     Swal.fire({
-      titleText: `Modification du ${this.getConfigKey(element.key)}`,
+      titleText: `Modification du ${element.description_fr}`,
       html: `Quelle est la nouvelle valeur ?`,
       input: 'text',
       inputAutoFocus: true,
@@ -230,7 +173,7 @@ export class HomeAdminComponent implements OnInit {
 
   askConfirmTransaction(element: any) {
     Swal.fire({
-      titleText: `Modification du ${this.getConfigKey(element.key)}`,
+      titleText: `Modification du ${element.description_fr}`,
       html: `Voulez vous vraiment effectuer cette opération ?`,
       showDenyButton: true,
       confirmButtonText: 'Oui',

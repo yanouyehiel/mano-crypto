@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, Observable, of, switchMap, take, takeWhile, timer } from 'rxjs';
+import { Configuration } from 'src/app/models/pricings-elements';
 import {
   ResponseDeposit,
   ResponseParent,
 } from 'src/app/models/Transaction';
 import { AdminService } from 'src/app/services/admin.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { UserService } from 'src/app/services/user.service';
 import { PricingItem } from 'src/app/shared/components/pricing-grid/pricing-grid.component';
@@ -23,6 +25,7 @@ export class RechargeCompteComponent implements OnInit {
   public classStep2: string;
   public classStep3: string;
   operators: any[] = [];
+  configs: Configuration[] = []
   selectedOperator: any
   loading = false;
   public step!: number;
@@ -43,16 +46,20 @@ export class RechargeCompteComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router,
     private userService: UserService,
+    private configurationService: ConfigurationService
   ) { }
 
   ngOnInit(): void {
+    this.configurationService.getConfigurations().subscribe((configs) => {
+      this.configs = configs
+    })
     this.loadOperators()
 
     this.step = 1;
     this.classStep1 = 'current';
     this.depositForm = this.fb.group({
-      amount: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      amount: ['', Validators.required,],
+      phoneNumber: ['', Validators.required,],
       paiementMethod: ['', Validators.required],
     });
     this.getProfileUser()
@@ -61,6 +68,10 @@ export class RechargeCompteComponent implements OnInit {
 
   verifyPhoneNumber(): boolean {
     return true;
+  }
+
+  getMinAmount(){
+    return this.configs.find(c => c.key === 'MIN_XAF_AMOUNT') ? parseInt(this.configs.find(c => c.key === 'MIN_XAF_AMOUNT')!.value.toString()) : 500;
   }
 
   getProfileUser(): void {
@@ -249,7 +260,7 @@ export class RechargeCompteComponent implements OnInit {
       next: (response) => {
         if (response.statusCode === 1000) {
           this.operators = response.data
-          .filter((op: any) => op.isActive);
+            .filter((op: any) => op.isActive);
         }
         this.loading = false;
       },
